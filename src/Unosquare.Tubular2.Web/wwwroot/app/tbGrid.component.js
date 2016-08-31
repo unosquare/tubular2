@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var BehaviorSubject_1 = require('rxjs/BehaviorSubject');
 var tbData_service_1 = require('./tbData.service');
+require('rxjs/add/operator/debounceTime');
 var TbGrid = (function () {
     function TbGrid(tbDataService) {
         this.tbDataService = tbDataService;
@@ -26,6 +27,7 @@ var TbGrid = (function () {
         // values that to observe and allow to push from children
         this.page = new BehaviorSubject_1.BehaviorSubject(0);
         this.columns = new BehaviorSubject_1.BehaviorSubject([]);
+        this.freeTextSearch = new BehaviorSubject_1.BehaviorSubject("");
         this.requestCount = 0;
         this.pageSize = 10;
         this.search = {
@@ -40,6 +42,15 @@ var TbGrid = (function () {
         // subscriptions to events
         this.columns.subscribe(function (c) { return _this.refresh(); });
         this.page.subscribe(function (c) { return _this.refresh(); });
+        this.freeTextSearch
+            .debounceTime(500)
+            .subscribe(function (c) {
+            if (c === _this.search.Text)
+                return;
+            _this.search.Text = c;
+            _this.search.Operator = !c ? "None" : "Auto";
+            _this.refresh();
+        });
     };
     TbGrid.prototype.refresh = function () {
         var _this = this;

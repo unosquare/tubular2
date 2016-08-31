@@ -3,6 +3,7 @@ import { Observable }       from 'rxjs/Observable';
 import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
 
 import { TbDataService } from './tbData.service';
+import 'rxjs/add/operator/debounceTime';
 
 @Component({
     selector: 'tb-grid',
@@ -28,11 +29,12 @@ export class TbGrid {
     // values that to observe and allow to push from children
     page = new BehaviorSubject(0);
     columns = new BehaviorSubject([]);
+    freeTextSearch = new BehaviorSubject("");
 
     requestCount = 0;
     pageSize = 10;
     errorMessage: string;
-    search: any = {
+    search = {
         Text: "",
         Operator: "None"
     };
@@ -51,6 +53,14 @@ export class TbGrid {
         // subscriptions to events
         this.columns.subscribe(c => this.refresh());
         this.page.subscribe(c => this.refresh());
+        this.freeTextSearch
+            .debounceTime(500)
+            .subscribe(c => {
+                if (c === this.search.Text) return;
+                this.search.Text = c;
+                this.search.Operator = !c ? "None" : "Auto";
+                this.refresh();
+            });
     }
     
     refresh() {

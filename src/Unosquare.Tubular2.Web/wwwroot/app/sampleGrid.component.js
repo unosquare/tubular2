@@ -23,9 +23,9 @@ var SampleGrid = (function (_super) {
         this.tbGrid = tbGrid;
         this.addColumns([
             { Name: "OrderID", Sortable: true },
-            { Name: "CustomerName", Sortable: true },
+            { Name: "CustomerName", Sortable: true, Searchable: true },
             { Name: "ShippedDate", Sortable: false },
-            { Name: "ShipperCity", Sortable: true }
+            { Name: "ShipperCity", Sortable: true, Searchable: true }
         ]);
     }
     SampleGrid = __decorate([
