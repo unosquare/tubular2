@@ -1,0 +1,17 @@
+﻿<h1>Tubular</h1>
+
+<tb-grid server-url="http://tubular.azurewebsites.net/api/orders/paged" require-authentication="false">
+    <div class="row">
+        <tb-grid-pager></tb-grid-pager>
+        <tb-page-size-selector class="col-md-3 col-xs-6" selectorcss="input-sm">
+        </tb-page-size-selector>
+        <tb-grid-pager-info class="col-md-3 col-xs-6"></tb-grid-pager-info>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default panel-rounded">
+                <grid></grid>
+            </div>
+        </div>
+    </div>
+</tb-grid>

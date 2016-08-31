@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="scripts/lib/systemjs/dist/system.js"></script>
+    <script src="scripts/lib/zone.js/dist/zone.js"></script>
+    <script src="scripts/lib/reflect/Reflect.js"></script>
+    <script>
+            // map tells the System loader where to look for things
+            var map = {
+                'app': 'app', // 'dist',
+                '@angular': 'scripts/lib/@angular',
+                'rxjs': 'scripts/lib/rxjs'
+            };
+
+            // packages tells the System loader how to load when no filename and/or no extension
+            var packages = {
+                'app': { main: 'main.js', defaultExtension: 'js' },
+                'rxjs': { defaultExtension: 'js' }
+            };
+
+            var ngPackageNames = [
+              'common',
+              'compiler',
+              'core',
+              'forms',
+              'http',
+              'platform-browser',
+              'platform-browser-dynamic',
+              'router'
+            ];
+
+            // Bundled (~40 requests):
+            function packUmd(pkgName) {
+                packages['@angular/' + pkgName] = { main: pkgName + '.umd.js', defaultExtension: 'js' };
+            }
+
+            // Add package entries for angular packages
+            ngPackageNames.forEach(packUmd);
+
+            // No umd for router yet
+            packages['@angular/router'] = { main: 'index.js', defaultExtension: 'js' };
+
+            System.config({
+                map: map,
+                packages: packages
+            });
+
+            System.import('app/main').then(null, console.error.bind(console));
+    </script>
+    <title>Tubular2</title>
+</head>
+<body>
+    <my-app>Loading...</my-app>
+</body>
+</html>
