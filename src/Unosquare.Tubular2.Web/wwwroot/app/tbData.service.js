@@ -14,27 +14,19 @@ var Observable_1 = require('rxjs/Observable');
 require('rxjs/add/operator/map');
 require('rxjs/add/operator/catch');
 require('rxjs/add/observable/throw');
+// TODO: Add debounceTime?
 var TbDataService = (function () {
     function TbDataService(http) {
         this.http = http;
     }
     TbDataService.prototype.retrieveData = function (url, req) {
-        var _this = this;
-        var extraDataWithRequest = function (res) { return _this.extractData(res, req); };
         return this.http.post(url, req)
-            .map(extraDataWithRequest)
+            .map(this.extractData)
             .catch(this.handleError);
     };
-    TbDataService.prototype.transformToObj = function (columns, data) {
-        var obj = {};
-        columns.forEach(function (column, key) { return obj[column.Name] = data[key] || data[column.Name]; });
-        return obj;
-    };
-    TbDataService.prototype.extractData = function (res, req) {
-        var _this = this;
+    TbDataService.prototype.extractData = function (res) {
         var body = res.json();
-        var transform = function (data) { return _this.transformToObj(req.Columns, data); };
-        return (body.Payload || {}).map(transform);
+        return body || {};
     };
     TbDataService.prototype.handleError = function (error) {
         var errMsg = (error.message) ? error.message :

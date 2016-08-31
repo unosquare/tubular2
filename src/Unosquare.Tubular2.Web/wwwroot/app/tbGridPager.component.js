@@ -13,14 +13,26 @@ var tbGrid_component_1 = require('./tbGrid.component');
 var TbGridPager = (function () {
     function TbGridPager(tbGrid) {
         this.tbGrid = tbGrid;
+        this.totalPages = 0;
+        this.totalRecords = 0;
+        this.filteredRecordCount = 0;
     }
+    TbGridPager.prototype.ngOnInit = function () {
+        var _this = this;
+        this.tbGrid.totalPages.subscribe(function (pages) {
+            _this.totalPages = pages;
+            _this.pages = Array(pages).fill().map(function (x, i) { return i; });
+        });
+        this.tbGrid.totalRecordCount.subscribe(function (x) { return _this.totalRecords = x; });
+        this.tbGrid.filteredRecordCount.subscribe(function (x) { return _this.filteredRecordCount = x; });
+    };
     TbGridPager.prototype.goTo = function (page) {
         this.tbGrid.page.next(page);
     };
     TbGridPager = __decorate([
         core_1.Component({
             selector: 'tb-grid-pager',
-            template: "\n    <ul>\n        <li><button (click)=\"goTo(0)\">1</button></li>\n        <li><button (click)=\"goTo(1)\">2</button></li>\n    </ul>",
+            template: "\n    <ul>\n        <li *ngFor=\"let page of pages\" [hidden]=\"page < 0\"><button (click)=\"goTo(page)\">{{page + 1}}</button></li>\n        <li>Total rows: {{totalRecords}} (Filtered records: {{filteredRecordCount}})</li>\n    </ul>",
             styles: [
                 'li { display: inline; } '
             ]

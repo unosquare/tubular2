@@ -6,32 +6,22 @@ import { Observable }     from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
+// TODO: Add debounceTime?
 
 @Injectable()
 export class TbDataService {
     constructor(private http: Http) { }
 
     retrieveData(url: string, req: any): Observable<any> {
-        let extraDataWithRequest = res => this.extractData(res, req);
-
         return this.http.post(url, req)
-            .map(extraDataWithRequest)
+            .map(this.extractData)
             .catch(this.handleError);
     }
 
-    private transformToObj(columns: any, data: any) {
-        let obj = {};
-
-        columns.forEach((column, key) => obj[column.Name] = data[key] || data[column.Name]);
-
-        return obj;
-    }
-
-    private extractData(res: Response, req: any) {
+    private extractData(res: Response) {
         let body = res.json();
-        let transform = data => this.transformToObj(req.Columns, data);
 
-        return (body.Payload || {}).map(transform);
+        return body || {};
     }
 
     private handleError(error: any) {

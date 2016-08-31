@@ -14,16 +14,24 @@ var tbData_service_1 = require('./tbData.service');
 var TbGrid = (function () {
     function TbGrid(tbDataService) {
         this.tbDataService = tbDataService;
-        this.data = new BehaviorSubject_1.BehaviorSubject([]);
+        // data is just observable and children can't push
+        this._data = new BehaviorSubject_1.BehaviorSubject([]);
+        this.dataStream = this._data.asObservable();
+        this._totalPages = new BehaviorSubject_1.BehaviorSubject(0);
+        this.totalPages = this._totalPages.asObservable();
+        this._totalRecordCount = new BehaviorSubject_1.BehaviorSubject(0);
+        this.totalRecordCount = this._totalRecordCount.asObservable();
+        this._filteredRecordCount = new BehaviorSubject_1.BehaviorSubject(0);
+        this.filteredRecordCount = this._filteredRecordCount.asObservable();
+        // values that to observe and allow to push from children
         this.page = new BehaviorSubject_1.BehaviorSubject(0);
-        this.dataStream = this.data.asObservable();
+        this.columns = new BehaviorSubject_1.BehaviorSubject([]);
         this.requestCount = 0;
         this.pageSize = 10;
         this.search = {
             Text: "",
             Operator: "None"
         };
-        this.columns = new BehaviorSubject_1.BehaviorSubject([]);
     }
     TbGrid.prototype.ngOnInit = function () {
         var _this = this;
@@ -43,7 +51,19 @@ var TbGrid = (function () {
             Search: this.search,
             TimezoneOffset: new Date().getTimezoneOffset()
         };
-        this.tbDataService.retrieveData(this.serverUrl, req).subscribe(function (payload) { return _this.data.next(payload); }, function (error) { return _this.errorMessage = error; });
+        this.tbDataService.retrieveData(this.serverUrl, req).subscribe(function (data) {
+            var transform = function (d) { return _this.transformToObj(req.Columns, d); };
+            var payload = (data.Payload || {}).map(transform);
+            _this._data.next(payload);
+            _this._filteredRecordCount.next(data.FilteredRecordCount);
+            _this._totalPages.next(data.TotalPages);
+            _this._totalRecordCount.next(data.TotalRecordCount);
+        }, function (error) { return _this.errorMessage = error; });
+    };
+    TbGrid.prototype.transformToObj = function (columns, data) {
+        var obj = {};
+        columns.forEach(function (column, key) { return obj[column.Name] = data[key] || data[column.Name]; });
+        return obj;
     };
     __decorate([
         core_1.Input('server-url'), 

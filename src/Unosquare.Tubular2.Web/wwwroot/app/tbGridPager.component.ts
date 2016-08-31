@@ -1,5 +1,4 @@
 ﻿import { Component, Input } from '@angular/core';
-import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
 
 import { TbGrid }           from './tbGrid.component';
 
@@ -7,16 +6,28 @@ import { TbGrid }           from './tbGrid.component';
     selector: 'tb-grid-pager',
     template: `
     <ul>
-        <li><button (click)="goTo(0)">1</button></li>
-        <li><button (click)="goTo(1)">2</button></li>
+        <li *ngFor="let page of pages" [hidden]="page < 0"><button (click)="goTo(page)">{{page + 1}}</button></li>
+        <li>Total rows: {{totalRecords}} (Filtered records: {{filteredRecordCount}})</li>
     </ul>`,
     styles: [
         'li { display: inline; } '
     ]
 })
 export class TbGridPager {
-    constructor(private tbGrid: TbGrid) {
-        
+    totalPages = 0;
+    totalRecords = 0;
+    filteredRecordCount = 0;
+    pages: number[];
+
+    constructor(private tbGrid: TbGrid) { }
+
+    ngOnInit() {
+        this.tbGrid.totalPages.subscribe(pages => {
+            this.totalPages = pages
+            this.pages = Array<number>(pages).fill().map((x, i) => i);
+        });
+        this.tbGrid.totalRecordCount.subscribe(x => this.totalRecords = x);
+        this.tbGrid.filteredRecordCount.subscribe(x => this.filteredRecordCount = x);
     }
 
     goTo(page: number) {

@@ -15,10 +15,19 @@ import { TbDataService } from './tbData.service';
     </div>`
 })
 export class TbGrid {
-    private data = new BehaviorSubject([]);
-    page = new BehaviorSubject(0);
+    // data is just observable and children can't push
+    private _data = new BehaviorSubject([]);
+    dataStream = this._data.asObservable();
+    private _totalPages = new BehaviorSubject(0);
+    totalPages = this._totalPages.asObservable();
+    private _totalRecordCount = new BehaviorSubject(0);
+    totalRecordCount = this._totalRecordCount.asObservable();
+    private _filteredRecordCount = new BehaviorSubject(0);
+    filteredRecordCount = this._filteredRecordCount.asObservable();
 
-    dataStream = this.data.asObservable();
+    // values that to observe and allow to push from children
+    page = new BehaviorSubject(0);
+    columns = new BehaviorSubject([]);
 
     requestCount = 0;
     pageSize = 10;
@@ -27,7 +36,6 @@ export class TbGrid {
         Text: "",
         Operator: "None"
     };
-    columns = new BehaviorSubject([]);
     
     @Input('server-url')
     serverUrl: string;
@@ -56,8 +64,24 @@ export class TbGrid {
         };
 
         this.tbDataService.retrieveData(this.serverUrl, req).subscribe(
-            payload => this.data.next(payload),
+            data => {
+                let transform = d => this.transformToObj(req.Columns, d);
+                let payload = (data.Payload || {}).map(transform);
+                this._data.next(payload);
+                this._filteredRecordCount.next(data.FilteredRecordCount);
+                this._totalPages.next(data.TotalPages);
+                this._totalRecordCount.next(data.TotalRecordCount);
+            },
             error => this.errorMessage = error
         );
     }
+
+    private transformToObj(columns: any, data: any) {
+        let obj = {};
+
+        columns.forEach((column, key) => obj[column.Name] = data[key] || data[column.Name]);
+
+        return obj;
+    }
+
 }
