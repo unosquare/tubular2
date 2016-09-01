@@ -1,0 +1,15 @@
+﻿td.sortable {
+    text-decoration: underline;
+    cursor: pointer;
+}
+td.sortable:hover {
+    color: yellow;
+}
+td.sortAsc::after {
+   font-family: FontAwesome;
+   content: "\f176";
+}
+td.sortDesc::after {
+   font-family: FontAwesome;
+   content: "\f175";
+}

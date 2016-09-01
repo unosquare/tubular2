@@ -28,6 +28,7 @@ var TbGrid = (function () {
         this.page = new BehaviorSubject_1.BehaviorSubject(0);
         this.columns = new BehaviorSubject_1.BehaviorSubject([]);
         this.freeTextSearch = new BehaviorSubject_1.BehaviorSubject("");
+        this.showLoading = false;
         this.requestCount = 0;
         this.pageSize = 10;
         this.search = {
@@ -87,7 +88,7 @@ var TbGrid = (function () {
     TbGrid = __decorate([
         core_1.Component({
             selector: 'tb-grid',
-            template: "\n    <div>\n        <div class=\"tubular-overlay\" [hidden]=\"showLoading && currentRequest != null\">\n            <div><div class=\"fa fa-refresh fa-2x fa-spin\"></div>\n        </div></div>\n        <ng-content></ng-content>\n    </div>"
+            template: "\n    <div>\n        <div class=\"tubular-overlay\" [hidden]=\"!showLoading\">\n            <div><div class=\"fa fa-refresh fa-2x fa-spin\"></div>\n        </div></div>\n        <ng-content></ng-content>\n    </div>"
         }), 
         __metadata('design:paramtypes', [tbData_service_1.TbDataService])
     ], TbGrid);

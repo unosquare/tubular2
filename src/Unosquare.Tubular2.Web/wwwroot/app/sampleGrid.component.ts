@@ -7,15 +7,19 @@ import { TbColumnModel } from './tbColumn.model';
 @Component({
     selector: 'grid',
     template: `
-    <table>
+    <table class="table table">
         <thead>
-            <td *ngFor="let column of columns | async" columnHeader [sortable]="column.sortable">
-                {{column.name}}
-            </td>
+            <tr>
+                <td *ngFor="let column of columns | async" 
+                    [ngClass]="{sortable: column.sortable, sortNone: column.direction == 0, sortAsc: column.direction == 1, sortDesc: column.direction == 2}"
+                    (click)="sort(column)">
+                    {{column.label}}
+                </td>
+            </tr>
         </thead>
         <tbody>
         <tr *ngFor="let row of rows">
-            <td>{{row.OrderID}}</td>
+            <td >{{row.OrderID}}</td>
             <td>{{row.CustomerName}}</td>
             <td>{{row.ShippedDate | date}}</td>
             <td>{{row.ShipperCity}}</td>
@@ -26,6 +30,7 @@ import { TbColumnModel } from './tbColumn.model';
 export class SampleGrid extends TbGridTable {
     constructor(private tbGrid: TbGrid) {
         super(tbGrid);
+
         this.addColumns([
             new TbColumnModel("OrderID", false, true),
             new TbColumnModel("CustomerName"),

@@ -5,12 +5,13 @@
 })
 export class TbColumnHeader {
     @Input() sortable: boolean = true;
+    @Input() sortDirection: number = 0;
 
     constructor(private el: ElementRef, private renderer: Renderer) { }
 
     ngOnInit() {
         if (!this.sortable) return;
 
-        this.renderer.setElementStyle(this.el.nativeElement, 'backgroundColor', 'yellow');
+        this.renderer.setElementClass(this.el.nativeElement, 'sortable', true);
     }
 }

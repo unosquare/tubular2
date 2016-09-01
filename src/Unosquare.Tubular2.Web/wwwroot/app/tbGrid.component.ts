@@ -11,7 +11,7 @@ import 'rxjs/add/operator/debounceTime';
     selector: 'tb-grid',
     template: `
     <div>
-        <div class="tubular-overlay" [hidden]="showLoading && currentRequest != null">
+        <div class="tubular-overlay" [hidden]="!showLoading">
             <div><div class="fa fa-refresh fa-2x fa-spin"></div>
         </div></div>
         <ng-content></ng-content>
@@ -33,6 +33,7 @@ export class TbGrid {
     columns = new BehaviorSubject([]);
     freeTextSearch = new BehaviorSubject("");
 
+    showLoading = false;
     requestCount = 0;
     pageSize = 10;
     errorMessage: string;
@@ -79,6 +80,7 @@ export class TbGrid {
             data => {
                 let transform = d => this.transformToObj(req.columns, d);
                 let payload = (data.Payload || {}).map(transform);
+
                 this._data.next(payload);
                 this._filteredRecordCount.next(data.FilteredRecordCount);
                 this._totalPages.next(data.TotalPages);

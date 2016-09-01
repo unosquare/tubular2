@@ -14,16 +14,21 @@ var TbColumnHeader = (function () {
         this.el = el;
         this.renderer = renderer;
         this.sortable = true;
+        this.sortDirection = 0;
     }
     TbColumnHeader.prototype.ngOnInit = function () {
         if (!this.sortable)
             return;
-        this.renderer.setElementStyle(this.el.nativeElement, 'backgroundColor', 'yellow');
+        this.renderer.setElementClass(this.el.nativeElement, 'sortable', true);
     };
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Boolean)
     ], TbColumnHeader.prototype, "sortable", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Number)
+    ], TbColumnHeader.prototype, "sortDirection", void 0);
     TbColumnHeader = __decorate([
         core_1.Directive({
             selector: '[columnHeader]'

@@ -20,9 +20,22 @@ var TbDataService = (function () {
         this.http = http;
     }
     TbDataService.prototype.retrieveData = function (url, req) {
+        req.columns.forEach(this.transformSortDirection);
         return this.http.post(url, req)
             .map(this.extractData)
             .catch(this.handleError);
+    };
+    TbDataService.prototype.transformSortDirection = function (column) {
+        switch (column.direction) {
+            case 1:
+                column.sortDirection = "Ascending";
+                break;
+            case 2:
+                column.sortDirection = "Descending";
+                break;
+            default:
+                column.sortDirection = "None";
+        }
     };
     TbDataService.prototype.extractData = function (res) {
         var body = res.json();

@@ -11,11 +11,26 @@ import 'rxjs/add/observable/throw';
 @Injectable()
 export class TbDataService {
     constructor(private http: Http) { }
-
+    
     retrieveData(url: string, req: any): Observable<any> {
+        req.columns.forEach(this.transformSortDirection);
+
         return this.http.post(url, req)
             .map(this.extractData)
             .catch(this.handleError);
+    }
+
+    private transformSortDirection(column) {
+        switch (column.direction) {
+            case 1:
+                column.sortDirection = "Ascending";
+                break;
+            case 2:
+                column.sortDirection = "Descending";
+                break;
+            default:
+                column.sortDirection = "None";
+        }
     }
 
     private extractData(res: Response) {

@@ -2,11 +2,11 @@
 import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
 
 import { TbGrid }           from './tbGrid.component';
-import { TbColumnModel } from './tbColumn.model';
+import { TbColumnModel, TbColumnSortDirection } from './tbColumn.model';
 
 export class TbGridTable {
     rows: any[];
-    private columnObservable = new BehaviorSubject([]);
+    private columnObservable: BehaviorSubject<TbColumnModel[]> = new BehaviorSubject([]);
 
     columns = this.columnObservable.asObservable();
 
@@ -21,5 +21,20 @@ export class TbGridTable {
             val.push(c);
             this.columnObservable.next(val);
         });
+    }
+
+    sort(column: TbColumnModel) {
+        // TODO: Check logic
+        if (column.direction == TbColumnSortDirection.None)
+            column.direction = TbColumnSortDirection.Asc;
+        else if (column.direction == TbColumnSortDirection.Asc)
+            column.direction = TbColumnSortDirection.Desc;
+        else if (column.direction == TbColumnSortDirection.Desc)
+            column.direction = TbColumnSortDirection.None;
+
+        column.sortOrder = column.direction == TbColumnSortDirection.None ? 0 : 1;
+
+        var val = this.columnObservable.getValue();
+        this.columnObservable.next(val);
     }
 }
