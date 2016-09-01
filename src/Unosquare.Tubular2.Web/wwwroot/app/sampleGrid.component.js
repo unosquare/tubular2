@@ -16,22 +16,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var tbGrid_component_1 = require('./tbGrid.component');
 var tbGridTablecomponent_1 = require('./tbGridTablecomponent');
+var tbColumn_model_1 = require('./tbColumn.model');
 var SampleGrid = (function (_super) {
     __extends(SampleGrid, _super);
     function SampleGrid(tbGrid) {
         _super.call(this, tbGrid);
         this.tbGrid = tbGrid;
         this.addColumns([
-            { Name: "OrderID", Sortable: true },
-            { Name: "CustomerName", Sortable: true, Searchable: true },
-            { Name: "ShippedDate", Sortable: false },
-            { Name: "ShipperCity", Sortable: true, Searchable: true }
+            new tbColumn_model_1.TbColumnModel("OrderID", false, true),
+            new tbColumn_model_1.TbColumnModel("CustomerName"),
+            new tbColumn_model_1.TbColumnModel("ShippedDate", false, false),
+            new tbColumn_model_1.TbColumnModel("ShipperCity")
         ]);
     }
     SampleGrid = __decorate([
         core_1.Component({
             selector: 'grid',
-            template: "\n    <table>\n        <thead>\n            <td *ngFor=\"let column of columns | async\" columnHeader [sortable]=\"column.Sortable\">{{column.Name}}</td>\n        </thead>\n        <tbody>\n        <tr *ngFor=\"let row of rows\">\n            <td>{{row.OrderID}}</td>\n            <td>{{row.CustomerName}}</td>\n            <td>{{row.ShippedDate | date}}</td>\n            <td>{{row.ShipperCity}}</td>\n        </tr>\n        </tbody>\n    </table>"
+            template: "\n    <table>\n        <thead>\n            <td *ngFor=\"let column of columns | async\" columnHeader [sortable]=\"column.sortable\">\n                {{column.name}}\n            </td>\n        </thead>\n        <tbody>\n        <tr *ngFor=\"let row of rows\">\n            <td>{{row.OrderID}}</td>\n            <td>{{row.CustomerName}}</td>\n            <td>{{row.ShippedDate | date}}</td>\n            <td>{{row.ShipperCity}}</td>\n        </tr>\n        </tbody>\n    </table>"
         }), 
         __metadata('design:paramtypes', [tbGrid_component_1.TbGrid])
     ], SampleGrid);

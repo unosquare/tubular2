@@ -21,8 +21,9 @@ var TbGridPager = (function () {
         var _this = this;
         this.tbGrid.totalPages.subscribe(function (pages) {
             _this.totalPages = pages;
-            _this.pages = Array(pages).fill().map(function (x, i) { return i; });
+            _this.pages = Array(pages).fill(0).map(function (x, i) { return i; });
         });
+        // live update properties
         this.tbGrid.totalRecordCount.subscribe(function (x) { return _this.totalRecords = x; });
         this.tbGrid.filteredRecordCount.subscribe(function (x) { return _this.filteredRecordCount = x; });
     };

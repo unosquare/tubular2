@@ -3,6 +3,8 @@ import { Observable }       from 'rxjs/Observable';
 import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
 
 import { TbDataService } from './tbData.service';
+import { TbColumnModel } from './tbColumn.model';
+
 import 'rxjs/add/operator/debounceTime';
 
 @Component({
@@ -35,8 +37,8 @@ export class TbGrid {
     pageSize = 10;
     errorMessage: string;
     search = {
-        Text: "",
-        Operator: "None"
+        text: "",
+        operator: "None"
     };
     
     @Input('server-url')
@@ -56,26 +58,26 @@ export class TbGrid {
         this.freeTextSearch
             .debounceTime(500)
             .subscribe(c => {
-                if (c === this.search.Text) return;
-                this.search.Text = c;
-                this.search.Operator = !c ? "None" : "Auto";
+                if (c === this.search.text) return;
+                this.search.text = c;
+                this.search.operator = !c ? "None" : "Auto";
                 this.refresh();
             });
     }
     
     refresh() {
         let req = {
-            Count: this.requestCount++,
-            Columns: this.columns.getValue(),
-            Skip: this.page.getValue() * this.pageSize,
-            Take: this.pageSize,
-            Search: this.search,
-            TimezoneOffset: new Date().getTimezoneOffset()
+            count: this.requestCount++,
+            columns: this.columns.getValue(),
+            skip: this.page.getValue() * this.pageSize,
+            take: this.pageSize,
+            search: this.search,
+            timezoneOffset: new Date().getTimezoneOffset()
         };
 
         this.tbDataService.retrieveData(this.serverUrl, req).subscribe(
             data => {
-                let transform = d => this.transformToObj(req.Columns, d);
+                let transform = d => this.transformToObj(req.columns, d);
                 let payload = (data.Payload || {}).map(transform);
                 this._data.next(payload);
                 this._filteredRecordCount.next(data.FilteredRecordCount);
@@ -86,10 +88,10 @@ export class TbGrid {
         );
     }
 
-    private transformToObj(columns: any, data: any) {
+    private transformToObj(columns: TbColumnModel[], data: any) {
         let obj = {};
 
-        columns.forEach((column, key) => obj[column.Name] = data[key] || data[column.Name]);
+        columns.forEach((column, key) => obj[column.name] = data[key] || data[column.name]);
 
         return obj;
     }

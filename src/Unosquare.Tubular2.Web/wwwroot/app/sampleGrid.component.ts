@@ -2,13 +2,16 @@
 
 import { TbGrid } from './tbGrid.component';
 import { TbGridTable } from './tbGridTablecomponent';
+import { TbColumnModel } from './tbColumn.model';
 
 @Component({
     selector: 'grid',
     template: `
     <table>
         <thead>
-            <td *ngFor="let column of columns | async" columnHeader [sortable]="column.Sortable">{{column.Name}}</td>
+            <td *ngFor="let column of columns | async" columnHeader [sortable]="column.sortable">
+                {{column.name}}
+            </td>
         </thead>
         <tbody>
         <tr *ngFor="let row of rows">
@@ -24,10 +27,10 @@ export class SampleGrid extends TbGridTable {
     constructor(private tbGrid: TbGrid) {
         super(tbGrid);
         this.addColumns([
-            { Name: "OrderID", Sortable: true },
-            { Name: "CustomerName", Sortable: true, Searchable: true },
-            { Name: "ShippedDate", Sortable: false },
-            { Name: "ShipperCity", Sortable: true, Searchable: true }
+            new TbColumnModel("OrderID", false, true),
+            new TbColumnModel("CustomerName"),
+            new TbColumnModel("ShippedDate", false, false),
+            new TbColumnModel("ShipperCity")
         ]);
     }
 }

@@ -24,8 +24,10 @@ export class TbGridPager {
     ngOnInit() {
         this.tbGrid.totalPages.subscribe(pages => {
             this.totalPages = pages
-            this.pages = Array<number>(pages).fill().map((x, i) => i);
+            this.pages = Array(pages).fill(0).map((x, i) => i);
         });
+
+        // live update properties
         this.tbGrid.totalRecordCount.subscribe(x => this.totalRecords = x);
         this.tbGrid.filteredRecordCount.subscribe(x => this.filteredRecordCount = x);
     }

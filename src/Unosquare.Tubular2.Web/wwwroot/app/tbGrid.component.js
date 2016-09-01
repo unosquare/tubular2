@@ -31,8 +31,8 @@ var TbGrid = (function () {
         this.requestCount = 0;
         this.pageSize = 10;
         this.search = {
-            Text: "",
-            Operator: "None"
+            text: "",
+            operator: "None"
         };
     }
     TbGrid.prototype.ngOnInit = function () {
@@ -45,25 +45,25 @@ var TbGrid = (function () {
         this.freeTextSearch
             .debounceTime(500)
             .subscribe(function (c) {
-            if (c === _this.search.Text)
+            if (c === _this.search.text)
                 return;
-            _this.search.Text = c;
-            _this.search.Operator = !c ? "None" : "Auto";
+            _this.search.text = c;
+            _this.search.operator = !c ? "None" : "Auto";
             _this.refresh();
         });
     };
     TbGrid.prototype.refresh = function () {
         var _this = this;
         var req = {
-            Count: this.requestCount++,
-            Columns: this.columns.getValue(),
-            Skip: this.page.getValue() * this.pageSize,
-            Take: this.pageSize,
-            Search: this.search,
-            TimezoneOffset: new Date().getTimezoneOffset()
+            count: this.requestCount++,
+            columns: this.columns.getValue(),
+            skip: this.page.getValue() * this.pageSize,
+            take: this.pageSize,
+            search: this.search,
+            timezoneOffset: new Date().getTimezoneOffset()
         };
         this.tbDataService.retrieveData(this.serverUrl, req).subscribe(function (data) {
-            var transform = function (d) { return _this.transformToObj(req.Columns, d); };
+            var transform = function (d) { return _this.transformToObj(req.columns, d); };
             var payload = (data.Payload || {}).map(transform);
             _this._data.next(payload);
             _this._filteredRecordCount.next(data.FilteredRecordCount);
@@ -73,7 +73,7 @@ var TbGrid = (function () {
     };
     TbGrid.prototype.transformToObj = function (columns, data) {
         var obj = {};
-        columns.forEach(function (column, key) { return obj[column.Name] = data[key] || data[column.Name]; });
+        columns.forEach(function (column, key) { return obj[column.name] = data[key] || data[column.name]; });
         return obj;
     };
     __decorate([

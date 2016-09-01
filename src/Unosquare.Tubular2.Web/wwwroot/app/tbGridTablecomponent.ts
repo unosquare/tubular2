@@ -2,6 +2,7 @@
 import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
 
 import { TbGrid }           from './tbGrid.component';
+import { TbColumnModel } from './tbColumn.model';
 
 export class TbGridTable {
     rows: any[];
@@ -14,7 +15,7 @@ export class TbGridTable {
         this.columnObservable.subscribe(payload => tbGrid.columns.next(payload));
     }
 
-    addColumns(columns: any[]) {
+    addColumns(columns: TbColumnModel[]) {
         columns.forEach(c => {
             var val = this.columnObservable.getValue();
             val.push(c);
