@@ -22,6 +22,7 @@ var TbColumnModel = (function () {
         this.direction = TbColumnSortDirection.None;
         this.visible = true;
         this.columnType = TbColumnType.String;
+        this.hasFilter = false;
         this.name = name;
         this.label = name.replace(/([a-z])([A-Z])/g, '$1 $2');
         if (searchable != null)

@@ -18,7 +18,7 @@ var TbGridTable = (function () {
         });
     };
     TbGridTable.prototype.sort = function (column) {
-        // TODO: Check logic
+        // TODO: Check logic from previous
         if (column.direction == tbColumn_model_1.TbColumnSortDirection.None)
             column.direction = tbColumn_model_1.TbColumnSortDirection.Asc;
         else if (column.direction == tbColumn_model_1.TbColumnSortDirection.Asc)

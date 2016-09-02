@@ -4,7 +4,9 @@ import { TbGrid }           from './tbGrid.component';
 
 @Component({
     selector: 'tb-grid-search',
-    template: `<input type="text" [ngModel]="search" (ngModelChange)="setSearch($event)" placeholder="search . . ."  />`
+    template: `<input type="text" [ngModel]="search" (ngModelChange)="setSearch($event)" 
+                    class="form-control"
+                    placeholder="search . . ."  />`
 })
 export class TbGridSearch {
     search: string;

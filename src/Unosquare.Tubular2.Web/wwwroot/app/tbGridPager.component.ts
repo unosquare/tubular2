@@ -5,17 +5,26 @@ import { TbGrid }           from './tbGrid.component';
 @Component({
     selector: 'tb-grid-pager',
     template: `
-    <ul>
-        <li *ngFor="let page of pages" [hidden]="page < 0"><button (click)="goTo(page)">{{page + 1}}</button></li>
-        <li>Total rows: {{totalRecords}} (Filtered records: {{filteredRecordCount}})</li>
-    </ul>`,
-    styles: [
-        'li { display: inline; } '
-    ]
+    <div class="btn-group">
+        <button (click)="goTo(0)" class="btn btn-primary"
+            [disabled]="currentPage == 0">
+            <i class="fa fa-fast-backward"></i>
+        </button>
+        <button *ngFor="let page of pages" [hidden]="page < 0"
+            (click)="goTo(page)" class="btn btn-secondary"
+            [ngClass]="{active: page == currentPage}">
+            {{page + 1}}
+        </button>
+        <button (click)="goTo(totalPages)" class="btn btn-primary"
+            [disabled]="currentPage == (totalPages-1)">
+            <i class="fa fa-fast-forward"></i>
+        </button>
+    </div>`
 })
 export class TbGridPager {
     totalPages = 0;
     totalRecords = 0;
+    currentPage = 0;
     filteredRecordCount = 0;
     pages: number[];
 
@@ -33,6 +42,7 @@ export class TbGridPager {
     }
 
     goTo(page: number) {
+        this.currentPage = page;
         this.tbGrid.page.next(page);
     }
 }

@@ -32,7 +32,7 @@ var SampleGrid = (function (_super) {
     SampleGrid = __decorate([
         core_1.Component({
             selector: 'grid',
-            template: "\n    <table class=\"table table\">\n        <thead>\n            <tr>\n                <td *ngFor=\"let column of columns | async\" \n                    [ngClass]=\"{sortable: column.sortable, sortNone: column.direction == 0, sortAsc: column.direction == 1, sortDesc: column.direction == 2}\"\n                    (click)=\"sort(column)\">\n                    {{column.label}}\n                </td>\n            </tr>\n        </thead>\n        <tbody>\n        <tr *ngFor=\"let row of rows\">\n            <td >{{row.OrderID}}</td>\n            <td>{{row.CustomerName}}</td>\n            <td>{{row.ShippedDate | date}}</td>\n            <td>{{row.ShipperCity}}</td>\n        </tr>\n        </tbody>\n    </table>"
+            template: "\n    <table class=\"table table-sm table-striped table-inverse\">\n        <thead>\n            <tr>\n                <th *ngFor=\"let column of columns | async\" \n                    [ngClass]=\"{sortable: column.sortable, sortNone: column.direction == 0, sortAsc: column.direction == 1, sortDesc: column.direction == 2}\"\n                    (click)=\"sort(column)\">\n                    {{column.label}}\n                </th>\n            </tr>\n        </thead>\n        <tbody>\n        <tr *ngFor=\"let row of rows\">\n            <td >{{row.OrderID}}</td>\n            <td>{{row.CustomerName}}</td>\n            <td>{{row.ShippedDate | date}}</td>\n            <td>{{row.ShipperCity}}</td>\n        </tr>\n        </tbody>\n    </table>"
         }), 
         __metadata('design:paramtypes', [tbGrid_component_1.TbGrid])
     ], SampleGrid);

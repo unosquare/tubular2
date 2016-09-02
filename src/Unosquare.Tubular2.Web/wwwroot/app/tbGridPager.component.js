@@ -15,6 +15,7 @@ var TbGridPager = (function () {
         this.tbGrid = tbGrid;
         this.totalPages = 0;
         this.totalRecords = 0;
+        this.currentPage = 0;
         this.filteredRecordCount = 0;
     }
     TbGridPager.prototype.ngOnInit = function () {
@@ -28,15 +29,13 @@ var TbGridPager = (function () {
         this.tbGrid.filteredRecordCount.subscribe(function (x) { return _this.filteredRecordCount = x; });
     };
     TbGridPager.prototype.goTo = function (page) {
+        this.currentPage = page;
         this.tbGrid.page.next(page);
     };
     TbGridPager = __decorate([
         core_1.Component({
             selector: 'tb-grid-pager',
-            template: "\n    <ul>\n        <li *ngFor=\"let page of pages\" [hidden]=\"page < 0\"><button (click)=\"goTo(page)\">{{page + 1}}</button></li>\n        <li>Total rows: {{totalRecords}} (Filtered records: {{filteredRecordCount}})</li>\n    </ul>",
-            styles: [
-                'li { display: inline; } '
-            ]
+            template: "\n    <div class=\"btn-group\">\n        <button (click)=\"goTo(0)\" class=\"btn btn-primary\"\n            [disabled]=\"currentPage == 0\">\n            <i class=\"fa fa-fast-backward\"></i>\n        </button>\n        <button *ngFor=\"let page of pages\" [hidden]=\"page < 0\"\n            (click)=\"goTo(page)\" class=\"btn btn-secondary\"\n            [ngClass]=\"{active: page == currentPage}\">\n            {{page + 1}}\n        </button>\n        <button (click)=\"goTo(totalPages)\" class=\"btn btn-primary\"\n            [disabled]=\"currentPage == (totalPages-1)\">\n            <i class=\"fa fa-fast-forward\"></i>\n        </button>\n    </div>"
         }), 
         __metadata('design:paramtypes', [tbGrid_component_1.TbGrid])
     ], TbGridPager);

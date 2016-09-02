@@ -10,22 +10,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var tbGrid_component_1 = require('./tbGrid.component');
-var TbGridSearch = (function () {
-    function TbGridSearch(tbGrid) {
+var TbGridPagerInfo = (function () {
+    function TbGridPagerInfo(tbGrid) {
         this.tbGrid = tbGrid;
+        // todo: probably extend normal to pager?
+        this.totalRecords = 0;
+        this.filteredRecordCount = 0;
     }
-    // TODO: Restore value from localstorage?
-    TbGridSearch.prototype.setSearch = function (event) {
-        this.tbGrid.freeTextSearch.next(event);
+    TbGridPagerInfo.prototype.ngOnInit = function () {
+        var _this = this;
+        // live update properties
+        this.tbGrid.totalRecordCount.subscribe(function (x) { return _this.totalRecords = x; });
+        this.tbGrid.filteredRecordCount.subscribe(function (x) { return _this.filteredRecordCount = x; });
     };
-    TbGridSearch = __decorate([
+    TbGridPagerInfo = __decorate([
         core_1.Component({
-            selector: 'tb-grid-search',
-            template: "<input type=\"text\" [ngModel]=\"search\" (ngModelChange)=\"setSearch($event)\" \n                    class=\"form-control\"\n                    placeholder=\"search . . .\"  />"
+            selector: 'tb-grid-pager-info',
+            template: "Total rows: {{totalRecords}} (Filtered records: {{filteredRecordCount}})"
         }), 
         __metadata('design:paramtypes', [tbGrid_component_1.TbGrid])
-    ], TbGridSearch);
-    return TbGridSearch;
+    ], TbGridPagerInfo);
+    return TbGridPagerInfo;
 }());
-exports.TbGridSearch = TbGridSearch;
-//# sourceMappingURL=tbGridSearch.component.js.map
+exports.TbGridPagerInfo = TbGridPagerInfo;
+//# sourceMappingURL=tbGridPagerInfo.component.js.map

@@ -24,7 +24,7 @@ export class TbGridTable {
     }
 
     sort(column: TbColumnModel) {
-        // TODO: Check logic
+        // TODO: Check logic from previous
         if (column.direction == TbColumnSortDirection.None)
             column.direction = TbColumnSortDirection.Asc;
         else if (column.direction == TbColumnSortDirection.Asc)

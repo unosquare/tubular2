@@ -22,6 +22,7 @@ export class TbColumnModel {
     direction: TbColumnSortDirection = TbColumnSortDirection.None;
     visible: boolean = true;
     columnType: TbColumnType = TbColumnType.String;
+    hasFilter: boolean = false;
 
     constructor(name: string, searchable?: boolean, sortable?: boolean) {
         this.name = name;

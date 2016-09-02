@@ -21,7 +21,9 @@ var paths = {
         'zone.js': 'node_modules/zone.js/**/*',
         'rxjs': 'node_modules/rxjs/**/*',
         'reflect': 'node_modules/reflect-metadata/*',
-        'systemjs': 'node_modules/systemjs/**/*'
+        'systemjs': 'node_modules/systemjs/**/*',
+        'momentjs': 'node_modules/momentjs/build/*',
+        'bootstrap': 'node_modules/bootstrap/dist/**/*'
     }
 };
 

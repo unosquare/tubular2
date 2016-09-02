@@ -7,14 +7,14 @@ import { TbColumnModel } from './tbColumn.model';
 @Component({
     selector: 'grid',
     template: `
-    <table class="table table">
+    <table class="table table-sm table-striped table-inverse">
         <thead>
             <tr>
-                <td *ngFor="let column of columns | async" 
+                <th *ngFor="let column of columns | async" 
                     [ngClass]="{sortable: column.sortable, sortNone: column.direction == 0, sortAsc: column.direction == 1, sortDesc: column.direction == 2}"
                     (click)="sort(column)">
                     {{column.label}}
-                </td>
+                </th>
             </tr>
         </thead>
         <tbody>

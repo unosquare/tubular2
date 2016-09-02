@@ -10,11 +10,15 @@ import { SampleGrid } from './sampleGrid.component';
 import { TbGrid } from './tbGrid.component';
 import { TbGridSearch } from './tbGridSearch.component';
 import { TbGridPager } from './tbGridPager.component';
+import { TbGridPagerInfo } from './tbGridPagerInfo.component';
 import { TbColumnHeader } from './tbColumnHeader.directive';
 
 @NgModule({
     imports: [BrowserModule, HttpModule, FormsModule],
-    declarations: [AppComponent, TbGrid, SampleGrid, TbColumnHeader, TbGridPager, TbGridSearch ],
+    declarations: [
+        AppComponent, TbGrid, SampleGrid, TbColumnHeader,
+        TbGridPager, TbGridPagerInfo, TbGridSearch
+    ],
     providers: [TbDataService],
     bootstrap: [AppComponent]
 })
