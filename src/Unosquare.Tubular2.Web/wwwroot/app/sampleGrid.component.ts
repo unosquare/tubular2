@@ -1,40 +1,27 @@
 ﻿import { Component, Input } from '@angular/core';
 
-import { TbGrid } from './tbGrid.component';
-import { TbGridTable } from './tbGridTablecomponent';
-import { TbColumnModel } from './tbColumn.model';
+import { TbGrid, TbGridTable, TbColumnModel, ColumnFilterMode } from 'tubular/tubular';
 
 @Component({
     selector: 'grid',
-    template: `
-    <table class="table table-sm table-striped table-inverse table-hover">
-        <thead>
-            <tr>
-                <th *ngFor="let column of columns | async">
-                    <column-header [column]="column" (onSort)="sort($event)">
-                    </column-header>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let row of rows">
-            <td>{{row.OrderID}}</td>
-            <td>{{row.CustomerName}}</td>
-            <td>{{row.ShippedDate | date}}</td>
-            <td>{{row.ShipperCity}}</td>
-        </tr>
-        </tbody>
-    </table>`
+    templateUrl: '/app/sampleGrid.component.html'
 })
 export class SampleGrid extends TbGridTable {
     constructor(private tbGrid: TbGrid) {
         super(tbGrid);
+        
+        let customerColumn = new TbColumnModel("CustomerName");
+        customerColumn.filterMode = ColumnFilterMode.String;
 
         this.addColumns([
             new TbColumnModel("OrderID", false, true),
-            new TbColumnModel("CustomerName"),
+            customerColumn,
             new TbColumnModel("ShippedDate", false, false),
             new TbColumnModel("ShipperCity")
         ]);
+    }
+
+    layoutChange(isFiltering: boolean) {
+        this.isFiltering = isFiltering;
     }
 }

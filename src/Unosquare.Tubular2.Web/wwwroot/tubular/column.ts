@@ -1,4 +1,4 @@
-﻿export enum TbColumnType {
+﻿export enum DataType {
     String = 1,
     Number,
     Boolean,
@@ -7,10 +7,20 @@
     DateTimeUtc,
 }
 
-export enum TbColumnSortDirection {
+export enum ColumnSortDirection {
     None = 0,
     Asc,
     Desc
+}
+
+export enum ColumnFilterMode {
+    None = 0,
+    String
+}
+
+export enum FilterOperator {
+    None = 0,
+    Equals
 }
 
 export class TbColumnModel {
@@ -19,10 +29,15 @@ export class TbColumnModel {
     searchable: boolean = true;
     sortable: boolean = true;
     sortOrder: number = 0;
-    direction: TbColumnSortDirection = TbColumnSortDirection.None;
+    direction: ColumnSortDirection = ColumnSortDirection.None;
     visible: boolean = true;
-    columnType: TbColumnType = TbColumnType.String;
+    dataType: DataType = DataType.String;
     hasFilter: boolean = false;
+    filterMode: ColumnFilterMode = ColumnFilterMode.None;
+    filter: {
+        text: string,
+        operator: FilterOperator
+    }
 
     constructor(name: string, searchable?: boolean, sortable?: boolean) {
         this.name = name;

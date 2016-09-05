@@ -10,27 +10,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
-var http_1 = require('@angular/http');
 var forms_1 = require('@angular/forms');
-var tbData_service_1 = require('./tbData.service');
+var tubular_1 = require('tubular/tubular');
 var app_component_1 = require('./app.component');
 var sampleGrid_component_1 = require('./sampleGrid.component');
-var tbGrid_component_1 = require('./tbGrid.component');
-var tbGridSearch_component_1 = require('./tbGridSearch.component');
-var tbGridPager_component_1 = require('./tbGridPager.component');
-var tbGridPagerInfo_component_1 = require('./tbGridPagerInfo.component');
-var tbColumnHeader_directive_1 = require('./tbColumnHeader.directive');
 var AppModule = (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         core_1.NgModule({
-            imports: [platform_browser_1.BrowserModule, http_1.HttpModule, forms_1.FormsModule],
-            declarations: [
-                app_component_1.AppComponent, tbGrid_component_1.TbGrid, sampleGrid_component_1.SampleGrid, tbColumnHeader_directive_1.TbColumnHeader,
-                tbGridPager_component_1.TbGridPager, tbGridPagerInfo_component_1.TbGridPagerInfo, tbGridSearch_component_1.TbGridSearch
-            ],
-            providers: [tbData_service_1.TbDataService],
+            imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, tubular_1.TubularModule],
+            declarations: [app_component_1.AppComponent, sampleGrid_component_1.SampleGrid],
+            providers: [tubular_1.TbDataService],
             bootstrap: [app_component_1.AppComponent]
         }), 
         __metadata('design:paramtypes', [])

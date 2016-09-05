@@ -14,29 +14,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var tbGrid_component_1 = require('./tbGrid.component');
-var tbGridTablecomponent_1 = require('./tbGridTablecomponent');
-var tbColumn_model_1 = require('./tbColumn.model');
+var tubular_1 = require('tubular/tubular');
 var SampleGrid = (function (_super) {
     __extends(SampleGrid, _super);
     function SampleGrid(tbGrid) {
         _super.call(this, tbGrid);
         this.tbGrid = tbGrid;
+        var customerColumn = new tubular_1.TbColumnModel("CustomerName");
+        customerColumn.filterMode = tubular_1.ColumnFilterMode.String;
         this.addColumns([
-            new tbColumn_model_1.TbColumnModel("OrderID", false, true),
-            new tbColumn_model_1.TbColumnModel("CustomerName"),
-            new tbColumn_model_1.TbColumnModel("ShippedDate", false, false),
-            new tbColumn_model_1.TbColumnModel("ShipperCity")
+            new tubular_1.TbColumnModel("OrderID", false, true),
+            customerColumn,
+            new tubular_1.TbColumnModel("ShippedDate", false, false),
+            new tubular_1.TbColumnModel("ShipperCity")
         ]);
     }
+    SampleGrid.prototype.layoutChange = function (isFiltering) {
+        this.isFiltering = isFiltering;
+    };
     SampleGrid = __decorate([
         core_1.Component({
             selector: 'grid',
-            template: "\n    <table class=\"table table-sm table-striped table-inverse table-hover\">\n        <thead>\n            <tr>\n                <th *ngFor=\"let column of columns | async\">\n                    <column-header [column]=\"column\" (onSort)=\"sort($event)\">\n                    </column-header>\n                </th>\n            </tr>\n        </thead>\n        <tbody>\n        <tr *ngFor=\"let row of rows\">\n            <td>{{row.OrderID}}</td>\n            <td>{{row.CustomerName}}</td>\n            <td>{{row.ShippedDate | date}}</td>\n            <td>{{row.ShipperCity}}</td>\n        </tr>\n        </tbody>\n    </table>"
+            templateUrl: '/app/sampleGrid.component.html'
         }), 
-        __metadata('design:paramtypes', [tbGrid_component_1.TbGrid])
+        __metadata('design:paramtypes', [(typeof (_a = typeof tubular_1.TbGrid !== 'undefined' && tubular_1.TbGrid) === 'function' && _a) || Object])
     ], SampleGrid);
     return SampleGrid;
-}(tbGridTablecomponent_1.TbGridTable));
+    var _a;
+}(tubular_1.TbGridTable));
 exports.SampleGrid = SampleGrid;
 //# sourceMappingURL=sampleGrid.component.js.map

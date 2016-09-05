@@ -3,7 +3,7 @@ import { Observable }       from 'rxjs/Observable';
 import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
 
 import { TbDataService } from './tbData.service';
-import { TbColumnModel } from './tbColumn.model';
+import { TbColumnModel } from './column';
 
 import 'rxjs/add/operator/debounceTime';
 

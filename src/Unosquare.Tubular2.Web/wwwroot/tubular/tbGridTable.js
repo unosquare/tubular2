@@ -1,9 +1,10 @@
 "use strict";
 var BehaviorSubject_1 = require('rxjs/BehaviorSubject');
-var tbColumn_model_1 = require('./tbColumn.model');
+var column_1 = require('./column');
 var TbGridTable = (function () {
     function TbGridTable(tbGrid) {
         var _this = this;
+        this.isFiltering = false;
         this.columnObservable = new BehaviorSubject_1.BehaviorSubject([]);
         this.columns = this.columnObservable.asObservable();
         tbGrid.dataStream.subscribe(function (payload) { return _this.rows = payload; });
@@ -19,17 +20,17 @@ var TbGridTable = (function () {
     };
     TbGridTable.prototype.sort = function (column) {
         // TODO: Check logic from previous
-        if (column.direction == tbColumn_model_1.TbColumnSortDirection.None)
-            column.direction = tbColumn_model_1.TbColumnSortDirection.Asc;
-        else if (column.direction == tbColumn_model_1.TbColumnSortDirection.Asc)
-            column.direction = tbColumn_model_1.TbColumnSortDirection.Desc;
-        else if (column.direction == tbColumn_model_1.TbColumnSortDirection.Desc)
-            column.direction = tbColumn_model_1.TbColumnSortDirection.None;
-        column.sortOrder = column.direction == tbColumn_model_1.TbColumnSortDirection.None ? 0 : 1;
+        if (column.direction == column_1.ColumnSortDirection.None)
+            column.direction = column_1.ColumnSortDirection.Asc;
+        else if (column.direction == column_1.ColumnSortDirection.Asc)
+            column.direction = column_1.ColumnSortDirection.Desc;
+        else if (column.direction == column_1.ColumnSortDirection.Desc)
+            column.direction = column_1.ColumnSortDirection.None;
+        column.sortOrder = column.direction == column_1.ColumnSortDirection.None ? 0 : 1;
         var val = this.columnObservable.getValue();
         this.columnObservable.next(val);
     };
     return TbGridTable;
 }());
 exports.TbGridTable = TbGridTable;
-//# sourceMappingURL=tbGridTablecomponent.js.map
+//# sourceMappingURL=tbGridTable.js.map

@@ -1,0 +1,20 @@
+﻿<table class="table table-sm table-striped table-inverse table-hover">
+    <thead>
+        <tr>
+            <th *ngFor="let column of columns | async">
+                <column-header [column]="column"
+                               (onSort)="sort($event)"
+                               (onFilteringChange)="layoutChange($event)">
+                </column-header>
+            </th>
+        </tr>
+    </thead>
+    <tbody [hidden]="isFiltering">
+        <tr *ngFor="let row of rows">
+            <td>{{row.OrderID}}</td>
+            <td>{{row.CustomerName}}</td>
+            <td>{{row.ShippedDate | date}}</td>
+            <td>{{row.ShipperCity}}</td>
+        </tr>
+    </tbody>
+</table>
