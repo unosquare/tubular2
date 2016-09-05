@@ -3,6 +3,7 @@
     cursor: pointer;
 }
 .sortable:hover {
+    text-decoration: none;
     color: yellow;
 }
 .sortAsc::after {

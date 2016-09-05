@@ -9,31 +9,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var tbColumn_model_1 = require('./tbColumn.model');
 var TbColumnHeader = (function () {
-    function TbColumnHeader(el, renderer) {
-        this.el = el;
-        this.renderer = renderer;
-        this.sortable = true;
-        this.sortDirection = 0;
+    function TbColumnHeader() {
+        this.onSort = new core_1.EventEmitter();
     }
-    TbColumnHeader.prototype.ngOnInit = function () {
-        if (!this.sortable)
-            return;
-        this.renderer.setElementClass(this.el.nativeElement, 'sortable', true);
+    TbColumnHeader.prototype.sort = function () {
+        this.onSort.emit(this.column);
     };
     __decorate([
         core_1.Input(), 
-        __metadata('design:type', Boolean)
-    ], TbColumnHeader.prototype, "sortable", void 0);
+        __metadata('design:type', tbColumn_model_1.TbColumnModel)
+    ], TbColumnHeader.prototype, "column", void 0);
     __decorate([
-        core_1.Input(), 
-        __metadata('design:type', Number)
-    ], TbColumnHeader.prototype, "sortDirection", void 0);
+        core_1.Output(), 
+        __metadata('design:type', Object)
+    ], TbColumnHeader.prototype, "onSort", void 0);
     TbColumnHeader = __decorate([
-        core_1.Directive({
-            selector: '[columnHeader]'
+        core_1.Component({
+            selector: 'column-header',
+            template: "\n    <span [ngClass]=\"{sortable: column.sortable, sortNone: column.direction == 0, sortAsc: column.direction == 1, sortDesc: column.direction == 2}\"\n        (click)=\"sort()\">\n        {{column.label }}\n    </span>"
         }), 
-        __metadata('design:paramtypes', [core_1.ElementRef, core_1.Renderer])
+        __metadata('design:paramtypes', [])
     ], TbColumnHeader);
     return TbColumnHeader;
 }());

@@ -7,19 +7,18 @@ import { TbColumnModel } from './tbColumn.model';
 @Component({
     selector: 'grid',
     template: `
-    <table class="table table-sm table-striped table-inverse">
+    <table class="table table-sm table-striped table-inverse table-hover">
         <thead>
             <tr>
-                <th *ngFor="let column of columns | async" 
-                    [ngClass]="{sortable: column.sortable, sortNone: column.direction == 0, sortAsc: column.direction == 1, sortDesc: column.direction == 2}"
-                    (click)="sort(column)">
-                    {{column.label}}
+                <th *ngFor="let column of columns | async">
+                    <column-header [column]="column" (onSort)="sort($event)">
+                    </column-header>
                 </th>
             </tr>
         </thead>
         <tbody>
         <tr *ngFor="let row of rows">
-            <td >{{row.OrderID}}</td>
+            <td>{{row.OrderID}}</td>
             <td>{{row.CustomerName}}</td>
             <td>{{row.ShippedDate | date}}</td>
             <td>{{row.ShipperCity}}</td>

@@ -1,17 +1,20 @@
-﻿import { Directive, ElementRef, Input, Renderer } from '@angular/core';
+﻿import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-@Directive({
-    selector: '[columnHeader]'
+import { TbColumnModel } from './tbColumn.model';
+
+@Component({
+    selector: 'column-header',
+    template: `
+    <span [ngClass]="{sortable: column.sortable, sortNone: column.direction == 0, sortAsc: column.direction == 1, sortDesc: column.direction == 2}"
+        (click)="sort()">
+        {{column.label }}
+    </span>`
 })
 export class TbColumnHeader {
-    @Input() sortable: boolean = true;
-    @Input() sortDirection: number = 0;
+    @Input() column: TbColumnModel;
+    @Output() onSort = new EventEmitter<TbColumnModel>();
 
-    constructor(private el: ElementRef, private renderer: Renderer) { }
-
-    ngOnInit() {
-        if (!this.sortable) return;
-
-        this.renderer.setElementClass(this.el.nativeElement, 'sortable', true);
+    sort() {
+        this.onSort.emit(this.column);
     }
 }
