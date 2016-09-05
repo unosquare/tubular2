@@ -251,3 +251,6 @@ paket-files/
 .idea/
 *.sln.iml
 /src/Unosquare.Tubular2.Web/wwwroot/scripts/lib
+
+# Typescript
+*.js.map
