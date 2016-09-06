@@ -5,11 +5,11 @@ import { TbGrid }           from './tbGrid.component';
 import { TbColumnModel, ColumnSortDirection } from './column';
 
 export class TbGridTable {
-    isFiltering: boolean = false;
-    rows: any[];
     private columnObservable: BehaviorSubject<TbColumnModel[]> = new BehaviorSubject([]);
 
     columns = this.columnObservable.asObservable();
+    isFiltering: boolean = false;
+    rows: any[];
 
     constructor(tbGrid: TbGrid) {
         tbGrid.dataStream.subscribe(payload => this.rows = payload);

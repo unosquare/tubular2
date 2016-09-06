@@ -21,4 +21,4 @@ exports.TbGridPagerInfo = tbGridPagerInfo_component_1.TbGridPagerInfo;
 var tbColumnHeader_directive_1 = require('./tbColumnHeader.directive');
 exports.TbColumnHeader = tbColumnHeader_directive_1.TbColumnHeader;
 __export(require('./column'));
-//# sourceMappingURL=tubular.js.map
+//# sourceMappingURL=index.js.map

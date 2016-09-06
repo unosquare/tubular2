@@ -12,8 +12,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Unosquare.Tubular2.Web", "src\Unosquare.Tubular2.Web\Unosquare.Tubular2.Web.xproj", "{E57CD0C7-6812-46E4-B868-6C15B1AC2BD1}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Unosquare.Tubular2.Lib", "src\Unosquare.Tubular2.Lib\Unosquare.Tubular2.Lib.xproj", "{72C89E4D-E4E9-4A97-B159-064E8A4997E1}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,10 +22,6 @@ Global
 		{E57CD0C7-6812-46E4-B868-6C15B1AC2BD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E57CD0C7-6812-46E4-B868-6C15B1AC2BD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E57CD0C7-6812-46E4-B868-6C15B1AC2BD1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{72C89E4D-E4E9-4A97-B159-064E8A4997E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{72C89E4D-E4E9-4A97-B159-064E8A4997E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{72C89E4D-E4E9-4A97-B159-064E8A4997E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{72C89E4D-E4E9-4A97-B159-064E8A4997E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

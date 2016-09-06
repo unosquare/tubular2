@@ -4,9 +4,9 @@ var column_1 = require('./column');
 var TbGridTable = (function () {
     function TbGridTable(tbGrid) {
         var _this = this;
-        this.isFiltering = false;
         this.columnObservable = new BehaviorSubject_1.BehaviorSubject([]);
         this.columns = this.columnObservable.asObservable();
+        this.isFiltering = false;
         tbGrid.dataStream.subscribe(function (payload) { return _this.rows = payload; });
         this.columnObservable.subscribe(function (payload) { return tbGrid.columns.next(payload); });
     }
