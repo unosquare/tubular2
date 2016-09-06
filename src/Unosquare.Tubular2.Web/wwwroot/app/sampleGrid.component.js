@@ -35,7 +35,21 @@ var SampleGrid = (function (_super) {
     SampleGrid = __decorate([
         core_1.Component({
             selector: 'grid',
-            templateUrl: '/app/sampleGrid.component.html'
+            templateUrl: '/app/sampleGrid.component.html',
+            animations: [
+                core_1.trigger('rowState', [
+                    core_1.state('false', core_1.style({
+                        'max-height': '100%',
+                        display: 'block'
+                    })),
+                    core_1.state('true', core_1.style({
+                        'max-height': '0',
+                        display: 'none'
+                    })),
+                    core_1.transition('false => true', core_1.animate('1s ease-in')),
+                    core_1.transition('true => false', core_1.animate('1s ease-out'))
+                ])
+            ]
         }), 
         __metadata('design:paramtypes', [tubular_1.TbGrid])
     ], SampleGrid);

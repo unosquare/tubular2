@@ -9,12 +9,20 @@
             </th>
         </tr>
     </thead>
-    <tbody [hidden]="isFiltering">
+    <tbody>
         <tr *ngFor="let row of rows">
-            <td>{{row.OrderID}}</td>
-            <td>{{row.CustomerName}}</td>
-            <td>{{row.ShippedDate | date}}</td>
-            <td>{{row.ShipperCity}}</td>
+            <td>
+                <div [@rowState]="isFiltering">{{row.OrderID}}</div>
+            </td>
+            <td>
+                <div [@rowState]="isFiltering">{{row.CustomerName}}</div>
+</td>
+            <td>
+                <div [@rowState]="isFiltering">{{row.ShippedDate | date}}</div>
+</td>
+            <td>
+                <div [@rowState]="isFiltering">{{row.ShipperCity}}</div>
+</td>
         </tr>
     </tbody>
 </table>
