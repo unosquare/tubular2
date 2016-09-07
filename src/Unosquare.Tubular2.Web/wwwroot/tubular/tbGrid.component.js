@@ -16,8 +16,8 @@ var TbGrid = (function () {
     function TbGrid(tbDataService) {
         this.tbDataService = tbDataService;
         // data is just observable and children can't push
-        this._data = new BehaviorSubject_1.BehaviorSubject([]);
-        this.dataStream = this._data.asObservable();
+        this.data = new BehaviorSubject_1.BehaviorSubject([]);
+        this.dataStream = this.data.asObservable();
         this._totalPages = new BehaviorSubject_1.BehaviorSubject(0);
         this.totalPages = this._totalPages.asObservable();
         this._totalRecordCount = new BehaviorSubject_1.BehaviorSubject(0);
@@ -66,7 +66,7 @@ var TbGrid = (function () {
         this.tbDataService.retrieveData(this.serverUrl, req).subscribe(function (data) {
             var transform = function (d) { return _this.transformToObj(req.columns, d); };
             var payload = (data.Payload || {}).map(transform);
-            _this._data.next(payload);
+            _this.data.next(payload);
             _this._filteredRecordCount.next(data.FilteredRecordCount);
             _this._totalPages.next(data.TotalPages);
             _this._totalRecordCount.next(data.TotalRecordCount);

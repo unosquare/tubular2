@@ -24,8 +24,14 @@ var ColumnFilterMode = exports.ColumnFilterMode;
     FilterOperator[FilterOperator["Equals"] = 1] = "Equals";
 })(exports.FilterOperator || (exports.FilterOperator = {}));
 var FilterOperator = exports.FilterOperator;
-var TbColumnModel = (function () {
-    function TbColumnModel(name, searchable, sortable) {
+var ColumnFilter = (function () {
+    function ColumnFilter() {
+    }
+    return ColumnFilter;
+}());
+exports.ColumnFilter = ColumnFilter;
+var ColumnModel = (function () {
+    function ColumnModel(name, searchable, sortable) {
         this.searchable = true;
         this.sortable = true;
         this.sortOrder = 0;
@@ -34,6 +40,7 @@ var TbColumnModel = (function () {
         this.dataType = DataType.String;
         this.hasFilter = false;
         this.filterMode = ColumnFilterMode.None;
+        this.filter = new ColumnFilter();
         this.name = name;
         this.label = name.replace(/([a-z])([A-Z])/g, '$1 $2');
         if (searchable != null)
@@ -41,7 +48,7 @@ var TbColumnModel = (function () {
         if (sortable != null)
             this.sortable = sortable;
     }
-    return TbColumnModel;
+    return ColumnModel;
 }());
-exports.TbColumnModel = TbColumnModel;
+exports.ColumnModel = ColumnModel;
 //# sourceMappingURL=column.js.map

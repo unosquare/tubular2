@@ -12,6 +12,7 @@ var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
 var forms_1 = require('@angular/forms');
 var http_1 = require('@angular/http');
+var ng_bootstrap_1 = require('@ng-bootstrap/ng-bootstrap');
 var tbGrid_component_1 = require('./tbGrid.component');
 var tbColumnHeader_directive_1 = require('./tbColumnHeader.directive');
 var tbGridSearch_component_1 = require('./tbGridSearch.component');
@@ -22,9 +23,9 @@ var TubularModule = (function () {
     }
     TubularModule = __decorate([
         core_1.NgModule({
-            imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, http_1.HttpModule],
+            imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, http_1.HttpModule, ng_bootstrap_1.NgbModule],
             declarations: [tbGrid_component_1.TbGrid, tbColumnHeader_directive_1.TbColumnHeader, tbGridSearch_component_1.TbGridSearch, tbGridPager_component_1.TbGridPager, tbGridPagerInfo_component_1.TbGridPagerInfo],
-            exports: [tbGrid_component_1.TbGrid, tbColumnHeader_directive_1.TbColumnHeader, tbGridSearch_component_1.TbGridSearch, tbGridPager_component_1.TbGridPager, tbGridPagerInfo_component_1.TbGridPagerInfo]
+            exports: [tbGrid_component_1.TbGrid, tbColumnHeader_directive_1.TbColumnHeader, tbGridSearch_component_1.TbGridSearch, tbGridPager_component_1.TbGridPager, tbGridPagerInfo_component_1.TbGridPagerInfo, ng_bootstrap_1.NgbModule]
         }), 
         __metadata('design:paramtypes', [])
     ], TubularModule);

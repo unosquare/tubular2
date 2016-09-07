@@ -23,7 +23,12 @@ export enum FilterOperator {
     Equals
 }
 
-export class TbColumnModel {
+export class ColumnFilter {
+    text: string;
+    operator: FilterOperator;
+}
+
+export class ColumnModel {
     name: string;
     label: string;
     searchable: boolean = true;
@@ -34,10 +39,7 @@ export class TbColumnModel {
     dataType: DataType = DataType.String;
     hasFilter: boolean = false;
     filterMode: ColumnFilterMode = ColumnFilterMode.None;
-    filter: {
-        text: string,
-        operator: FilterOperator
-    }
+    filter: ColumnFilter = new ColumnFilter();
 
     constructor(name: string, searchable?: boolean, sortable?: boolean) {
         this.name = name;

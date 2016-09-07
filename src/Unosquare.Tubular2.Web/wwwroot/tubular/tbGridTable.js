@@ -20,13 +20,13 @@ var TbGridTable = (function () {
     };
     TbGridTable.prototype.sort = function (column) {
         // TODO: Check logic from previous
-        if (column.direction == column_1.ColumnSortDirection.None)
+        if (column.direction === column_1.ColumnSortDirection.None)
             column.direction = column_1.ColumnSortDirection.Asc;
-        else if (column.direction == column_1.ColumnSortDirection.Asc)
+        else if (column.direction === column_1.ColumnSortDirection.Asc)
             column.direction = column_1.ColumnSortDirection.Desc;
-        else if (column.direction == column_1.ColumnSortDirection.Desc)
+        else if (column.direction === column_1.ColumnSortDirection.Desc)
             column.direction = column_1.ColumnSortDirection.None;
-        column.sortOrder = column.direction == column_1.ColumnSortDirection.None ? 0 : 1;
+        column.sortOrder = column.direction === column_1.ColumnSortDirection.None ? 0 : 1;
         var val = this.columnObservable.getValue();
         this.columnObservable.next(val);
     };

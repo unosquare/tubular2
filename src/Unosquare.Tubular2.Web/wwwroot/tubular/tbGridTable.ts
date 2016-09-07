@@ -2,10 +2,10 @@
 import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
 
 import { TbGrid }           from './tbGrid.component';
-import { TbColumnModel, ColumnSortDirection } from './column';
+import { ColumnModel, ColumnSortDirection } from './column';
 
 export class TbGridTable {
-    private columnObservable: BehaviorSubject<TbColumnModel[]> = new BehaviorSubject([]);
+    private columnObservable: BehaviorSubject<ColumnModel[]> = new BehaviorSubject([]);
 
     columns = this.columnObservable.asObservable();
     isFiltering: boolean = false;
@@ -16,7 +16,7 @@ export class TbGridTable {
         this.columnObservable.subscribe(payload => tbGrid.columns.next(payload));
     }
 
-    addColumns(columns: TbColumnModel[]) {
+    addColumns(columns: ColumnModel[]) {
         columns.forEach(c => {
             var val = this.columnObservable.getValue();
             val.push(c);
@@ -24,18 +24,18 @@ export class TbGridTable {
         });
     }
 
-    sort(column: TbColumnModel) {
+    sort(column: ColumnModel) {
         // TODO: Check logic from previous
-        if (column.direction == ColumnSortDirection.None)
+        if (column.direction === ColumnSortDirection.None)
             column.direction = ColumnSortDirection.Asc;
-        else if (column.direction == ColumnSortDirection.Asc)
+        else if (column.direction === ColumnSortDirection.Asc)
             column.direction = ColumnSortDirection.Desc;
-        else if (column.direction == ColumnSortDirection.Desc)
+        else if (column.direction === ColumnSortDirection.Desc)
             column.direction = ColumnSortDirection.None;
 
-        column.sortOrder = column.direction == ColumnSortDirection.None ? 0 : 1;
+        column.sortOrder = column.direction === ColumnSortDirection.None ? 0 : 1;
 
-        var val = this.columnObservable.getValue();
+        let val = this.columnObservable.getValue();
         this.columnObservable.next(val);
     }
 }

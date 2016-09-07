@@ -23,7 +23,8 @@ var paths = {
         'reflect': 'node_modules/reflect-metadata/*',
         'systemjs': 'node_modules/systemjs/**/*',
         'momentjs': 'node_modules/momentjs/build/*',
-        'bootstrap': 'node_modules/bootstrap/dist/**/*'
+        'bootstrap': 'node_modules/bootstrap/dist/**/*',
+        '@ng-bootstrap': 'node_modules/@ng-bootstrap/ng-bootstrap/**/*'
     }
 };
 

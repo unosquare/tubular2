@@ -20,13 +20,13 @@ var SampleGrid = (function (_super) {
     function SampleGrid(tbGrid) {
         _super.call(this, tbGrid);
         this.tbGrid = tbGrid;
-        var customerColumn = new tubular_1.TbColumnModel("CustomerName");
+        var customerColumn = new tubular_1.ColumnModel("CustomerName");
         customerColumn.filterMode = tubular_1.ColumnFilterMode.String;
         this.addColumns([
-            new tubular_1.TbColumnModel("OrderID", false, true),
+            new tubular_1.ColumnModel("OrderID", false, true),
             customerColumn,
-            new tubular_1.TbColumnModel("ShippedDate", false, false),
-            new tubular_1.TbColumnModel("ShipperCity")
+            new tubular_1.ColumnModel("ShippedDate", false, false),
+            new tubular_1.ColumnModel("ShipperCity")
         ]);
     }
     SampleGrid.prototype.layoutChange = function (isFiltering) {
@@ -35,21 +35,7 @@ var SampleGrid = (function (_super) {
     SampleGrid = __decorate([
         core_1.Component({
             selector: 'grid',
-            templateUrl: '/app/sampleGrid.component.html',
-            animations: [
-                core_1.trigger('rowState', [
-                    core_1.state('false', core_1.style({
-                        'max-height': '100%',
-                        display: 'block'
-                    })),
-                    core_1.state('true', core_1.style({
-                        'max-height': '0',
-                        display: 'none'
-                    })),
-                    core_1.transition('false => true', core_1.animate('1s ease-in')),
-                    core_1.transition('true => false', core_1.animate('1s ease-out'))
-                ])
-            ]
+            templateUrl: '/app/sampleGrid.component.html'
         }), 
         __metadata('design:paramtypes', [tubular_1.TbGrid])
     ], SampleGrid);

@@ -3,7 +3,7 @@ import { Observable }       from 'rxjs/Observable';
 import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
 
 import { TbDataService } from './tbData.service';
-import { TbColumnModel } from './column';
+import { ColumnModel } from './column';
 
 import 'rxjs/add/operator/debounceTime';
 
@@ -19,8 +19,8 @@ import 'rxjs/add/operator/debounceTime';
 })
 export class TbGrid {
     // data is just observable and children can't push
-    private _data = new BehaviorSubject([]);
-    dataStream = this._data.asObservable();
+    private data = new BehaviorSubject([]);
+    dataStream = this.data.asObservable();
     private _totalPages = new BehaviorSubject(0);
     totalPages = this._totalPages.asObservable();
     private _totalRecordCount = new BehaviorSubject(0);
@@ -81,7 +81,7 @@ export class TbGrid {
                 let transform = d => this.transformToObj(req.columns, d);
                 let payload = (data.Payload || {}).map(transform);
 
-                this._data.next(payload);
+                this.data.next(payload);
                 this._filteredRecordCount.next(data.FilteredRecordCount);
                 this._totalPages.next(data.TotalPages);
                 this._totalRecordCount.next(data.TotalRecordCount);
@@ -90,7 +90,7 @@ export class TbGrid {
         );
     }
 
-    private transformToObj(columns: TbColumnModel[], data: any) {
+    private transformToObj(columns: ColumnModel[], data: any) {
         let obj = {};
 
         columns.forEach((column, key) => obj[column.name] = data[key] || data[column.name]);
