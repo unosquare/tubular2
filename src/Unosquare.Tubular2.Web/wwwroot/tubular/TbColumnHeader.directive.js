@@ -35,10 +35,14 @@ var TbColumnHeader = (function () {
         core_1.Output(), 
         __metadata('design:type', Object)
     ], TbColumnHeader.prototype, "onFilteringChange", void 0);
+    __decorate([
+        core_1.ContentChild("filterPopover"), 
+        __metadata('design:type', core_1.TemplateRef)
+    ], TbColumnHeader.prototype, "filterPopoverTemplate", void 0);
     TbColumnHeader = __decorate([
         core_1.Component({
             selector: 'column-header',
-            template: "\n    <template #popContent>\n        <div class=\"form-group\">\n            <label for=\"filter\">Text</label>\n            <input type=\"text\" id=\"filter\" class=\"form-control\" ([ngModel])=\"column.filter.text\" />\n        </div>\n        <div class=\"form-group\">\n            <label for=\"operator\">Operator</label>\n            <select id=\"operator\" class=\"form-control\"></select>\n        </div>\n        <div class=\"pull-xs-right clearfix\">\n            <button class=\"btn btn-sm btn-success\">Filter</button>\n            <button class=\"btn btn-sm btn-danger\">Clear</button>\n        </div>\n    </template>\n\n    <div class=\"column-header\">\n    <span [ngClass]=\"{sortable: column.sortable, sortNone: column.direction == 0, sortAsc: column.direction == 1, sortDesc: column.direction == 2}\"\n        (click)=\"sort()\">\n        {{column.label}}\n    </span>\n    <div class=\"pull-xs-right\" [hidden]=\"column.filterMode == 0\"  [ngbPopover]=\"popContent\" placement=\"bottom\" title=\"Filter\">\n        <i class=\"fa\" [ngClass]=\"{ 'fa-filter': !isFiltering, 'fa-times': isFiltering }\"></i>\n    </div>\n    </div>"
+            template: "\n    <div class=\"column-header\">\n        <span [ngClass]=\"{sortable: column.sortable, sortNone: column.direction == 0, sortAsc: column.direction == 1, sortDesc: column.direction == 2}\"\n            (click)=\"sort()\">\n            {{column.label}}\n        </span>\n        <div class=\"pull-xs-right\" [hidden]=\"column.filterMode == 0\"  [ngbPopover]=\"filterPopoverTemplate\" placement=\"bottom\" title=\"Filter\">\n            <i class=\"fa\" [ngClass]=\"{ 'fa-filter': !isFiltering, 'fa-times': isFiltering }\"></i>\n        </div>\n    </div>"
         }), 
         __metadata('design:paramtypes', [])
     ], TbColumnHeader);
