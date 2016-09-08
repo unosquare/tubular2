@@ -10,18 +10,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var column_1 = require('./column');
+var ng_bootstrap_1 = require('@ng-bootstrap/ng-bootstrap');
 var TbColumnHeader = (function () {
     function TbColumnHeader() {
         this.onSort = new core_1.EventEmitter();
-        this.onFilteringChange = new core_1.EventEmitter();
-        this.isFiltering = false;
+        this.onFilter = new core_1.EventEmitter();
     }
     TbColumnHeader.prototype.sort = function () {
         this.onSort.emit(this.column);
     };
-    TbColumnHeader.prototype.toggleFilter = function () {
-        this.isFiltering = !this.isFiltering;
-        this.onFilteringChange.emit(this.isFiltering);
+    TbColumnHeader.prototype.filter = function (hasValue) {
+        this.popover.close();
+        this.onFilter.emit(this.column);
     };
     __decorate([
         core_1.Input(), 
@@ -34,11 +34,15 @@ var TbColumnHeader = (function () {
     __decorate([
         core_1.Output(), 
         __metadata('design:type', Object)
-    ], TbColumnHeader.prototype, "onFilteringChange", void 0);
+    ], TbColumnHeader.prototype, "onFilter", void 0);
     __decorate([
         core_1.ContentChild("filterPopover"), 
         __metadata('design:type', core_1.TemplateRef)
     ], TbColumnHeader.prototype, "filterPopoverTemplate", void 0);
+    __decorate([
+        core_1.ViewChild('popover'), 
+        __metadata('design:type', (typeof (_a = typeof ng_bootstrap_1.NgbPopover !== 'undefined' && ng_bootstrap_1.NgbPopover) === 'function' && _a) || Object)
+    ], TbColumnHeader.prototype, "popover", void 0);
     TbColumnHeader = __decorate([
         core_1.Component({
             selector: 'column-header',
@@ -47,6 +51,7 @@ var TbColumnHeader = (function () {
         __metadata('design:paramtypes', [])
     ], TbColumnHeader);
     return TbColumnHeader;
+    var _a;
 }());
 exports.TbColumnHeader = TbColumnHeader;
 //# sourceMappingURL=tbColumnHeader.directive.js.map

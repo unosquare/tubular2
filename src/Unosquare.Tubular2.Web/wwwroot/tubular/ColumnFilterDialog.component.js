@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var forms_1 = require('@angular/forms');
 var column_1 = require('./column');
-var ng_bootstrap_1 = require('@ng-bootstrap/ng-bootstrap');
 var ColumnFilterDialog = (function () {
     function ColumnFilterDialog(fb) {
         var _this = this;
@@ -30,16 +29,16 @@ var ColumnFilterDialog = (function () {
         setTimeout(function (_) { return _this.form.patchValue({ "text": _this.column.filter.text }); });
     };
     ColumnFilterDialog.prototype.onSubmit = function () {
-        this.onFilteringChange.emit(this.column);
+        this.onFilteringChange.emit(true);
+    };
+    ColumnFilterDialog.prototype.reset = function () {
+        this.onFilteringChange.emit(false);
+        this.form.reset();
     };
     __decorate([
         core_1.Input(), 
         __metadata('design:type', column_1.ColumnModel)
     ], ColumnFilterDialog.prototype, "column", void 0);
-    __decorate([
-        core_1.Input(), 
-        __metadata('design:type', (typeof (_a = typeof ng_bootstrap_1.NgbPopover !== 'undefined' && ng_bootstrap_1.NgbPopover) === 'function' && _a) || Object)
-    ], ColumnFilterDialog.prototype, "popover", void 0);
     __decorate([
         core_1.Output(), 
         __metadata('design:type', Object)
@@ -47,12 +46,11 @@ var ColumnFilterDialog = (function () {
     ColumnFilterDialog = __decorate([
         core_1.Component({
             selector: 'filter-dialog',
-            template: "\n   <form [formGroup]=\"form\" (ngSubmit)=\"onSubmit()\">\n        <div class=\"form-group\">\n            <label>Text</label>\n            <input type=\"text\" class=\"form-control\" formControlName=\"text\" />\n        </div>\n        <div class=\"form-group\">\n            <label for=\"operator\">Operator</label>\n            <select id=\"operator\" class=\"form-control\" formControlName=\"operator\">\n                <option>None</option>\n                <option>Contains</option>\n            </select>\n        </div>\n        <div class=\"pull-xs-right clearfix\">\n            <button type=\"submit\" class=\"btn btn-sm btn-success\" [disabled]=\"!form.valid\">Filter</button>\n            <button class=\"btn btn-sm btn-danger\" (click)=\"form.reset()\">Clear</button>\n        </div>\n    </form>"
+            template: "\n   <form [formGroup]=\"form\" (ngSubmit)=\"onSubmit()\">\n        <div class=\"form-group\">\n            <label>Text</label>\n            <input type=\"text\" class=\"form-control\" formControlName=\"text\" />\n        </div>\n        <div class=\"form-group\">\n            <label for=\"operator\">Operator</label>\n            <select id=\"operator\" class=\"form-control\" formControlName=\"operator\">\n                <option>None</option>\n                <option>Contains</option>\n            </select>\n        </div>\n        <div class=\"row\">\n            <div class=\"col-xs-6\">\n                <button type=\"submit\" class=\"btn btn-sm btn-success btn-block\" \n                        [disabled]=\"!form.valid\">Filter</button>\n            </div>\n            <div class=\"col-xs-6\">\n                <button class=\"btn btn-sm btn-danger btn-block\" \n                        (click)=\"reset()\">Clear</button>\n            </div>\n        </div>\n    </form>"
         }), 
         __metadata('design:paramtypes', [forms_1.FormBuilder])
     ], ColumnFilterDialog);
     return ColumnFilterDialog;
-    var _a;
 }());
 exports.ColumnFilterDialog = ColumnFilterDialog;
 //# sourceMappingURL=ColumnFilterDialog.component.js.map

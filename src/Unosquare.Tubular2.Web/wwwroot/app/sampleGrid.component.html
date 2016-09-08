@@ -2,11 +2,12 @@
     <thead>
         <tr>
             <th *ngFor="let column of columns | async">
-                <column-header [column]="column"
-                               (onSort)="sort($event)">
+                <column-header #header [column]="column"
+                               (onSort)="sort($event)"
+                               (onFilter)="applyFilter($event)">
                     <template #filterPopover>
-                        <filter-dialog [column]="column" [popover]="popover"
-                                       (onFilteringChange)="applyFilter($event)"></filter-dialog>
+                        <filter-dialog [column]="column"
+                                       (onFilteringChange)="header.filter($event)"></filter-dialog>
                     </template>
                 </column-header>
             </th>

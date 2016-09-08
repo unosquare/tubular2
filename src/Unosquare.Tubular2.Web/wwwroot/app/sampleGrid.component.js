@@ -31,9 +31,6 @@ var SampleGrid = (function (_super) {
             cityColumn
         ]);
     }
-    SampleGrid.prototype.layoutChange = function (isFiltering) {
-        this.isFiltering = isFiltering;
-    };
     SampleGrid = __decorate([
         core_1.Component({
             selector: 'grid',

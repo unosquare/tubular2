@@ -1,5 +1,6 @@
-﻿import { Component, Input, Output, EventEmitter, ContentChild, TemplateRef } from '@angular/core';
+﻿import { Component, Input, Output, EventEmitter, ContentChild, TemplateRef, ViewChild, AfterViewInit } from '@angular/core';
 import { ColumnModel } from './column';
+import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'column-header',
@@ -17,17 +18,16 @@ import { ColumnModel } from './column';
 export class TbColumnHeader {
     @Input() column: ColumnModel;
     @Output() onSort = new EventEmitter<ColumnModel>();
-    @Output() onFilteringChange = new EventEmitter<boolean>();
+    @Output() onFilter = new EventEmitter<ColumnModel>();
     @ContentChild("filterPopover") private filterPopoverTemplate: TemplateRef<Object>;
-    isFiltering = false;
+    @ViewChild('popover') popover: NgbPopover;
     
     sort() {
         this.onSort.emit(this.column);
     }
 
-    toggleFilter() {
-        this.isFiltering = !this.isFiltering;
-
-        this.onFilteringChange.emit(this.isFiltering);
+    filter(hasValue: boolean) {
+        this.popover.close();
+        this.onFilter.emit(this.column);
     }
 }

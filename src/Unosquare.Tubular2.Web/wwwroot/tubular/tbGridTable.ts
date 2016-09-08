@@ -8,7 +8,6 @@ export class TbGridTable {
     private columnObservable: BehaviorSubject<ColumnModel[]> = new BehaviorSubject([]);
 
     columns = this.columnObservable.asObservable();
-    isFiltering: boolean = false;
     rows: any[];
 
     constructor(tbGrid: TbGrid) {

@@ -1,7 +1,6 @@
 ﻿import { Component, Input, Output, EventEmitter, ContentChild, TemplateRef, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ColumnModel } from './column';
-import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'filter-dialog',
@@ -18,16 +17,21 @@ import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
                 <option>Contains</option>
             </select>
         </div>
-        <div class="pull-xs-right clearfix">
-            <button type="submit" class="btn btn-sm btn-success" [disabled]="!form.valid">Filter</button>
-            <button class="btn btn-sm btn-danger" (click)="form.reset()">Clear</button>
+        <div class="row">
+            <div class="col-xs-6">
+                <button type="submit" class="btn btn-sm btn-success btn-block" 
+                        [disabled]="!form.valid">Filter</button>
+            </div>
+            <div class="col-xs-6">
+                <button class="btn btn-sm btn-danger btn-block" 
+                        (click)="reset()">Clear</button>
+            </div>
         </div>
     </form>`
 })
 export class ColumnFilterDialog implements AfterViewInit {
     @Input() column: ColumnModel;
-    @Input() popover: NgbPopover;
-    @Output() onFilteringChange = new EventEmitter<ColumnModel>();
+    @Output() onFilteringChange = new EventEmitter<boolean>();
     form: FormGroup;
 
     constructor(fb: FormBuilder) {
@@ -47,6 +51,11 @@ export class ColumnFilterDialog implements AfterViewInit {
     }
 
     onSubmit() {
-        this.onFilteringChange.emit(this.column);
+        this.onFilteringChange.emit(true);
+    }
+
+    reset() {
+        this.onFilteringChange.emit(false);
+        this.form.reset();
     }
 }

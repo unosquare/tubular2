@@ -23,8 +23,4 @@ export class SampleGrid extends TbGridTable {
             cityColumn
         ]);
     }
-
-    layoutChange(isFiltering: boolean) {
-        this.isFiltering = isFiltering;
-    }
 }
