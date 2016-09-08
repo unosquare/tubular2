@@ -1,5 +1,4 @@
 ﻿import { Component, Input, Output, EventEmitter, ContentChild, TemplateRef } from '@angular/core';
-
 import { ColumnModel } from './column';
 
 @Component({
@@ -10,7 +9,7 @@ import { ColumnModel } from './column';
             (click)="sort()">
             {{column.label}}
         </span>
-        <div class="pull-xs-right" [hidden]="column.filterMode == 0"  [ngbPopover]="filterPopoverTemplate" placement="bottom" title="Filter">
+        <div class="pull-xs-right" [hidden]="column.filterMode == 0" #popover="ngbPopover" [ngbPopover]="filterPopoverTemplate" placement="bottom" title="Filter">
             <i class="fa" [ngClass]="{ 'fa-filter': !isFiltering, 'fa-times': isFiltering }"></i>
         </div>
     </div>`
@@ -21,7 +20,7 @@ export class TbColumnHeader {
     @Output() onFilteringChange = new EventEmitter<boolean>();
     @ContentChild("filterPopover") private filterPopoverTemplate: TemplateRef<Object>;
     isFiltering = false;
-
+    
     sort() {
         this.onSort.emit(this.column);
     }

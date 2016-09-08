@@ -3,21 +3,10 @@
         <tr>
             <th *ngFor="let column of columns | async">
                 <column-header [column]="column"
-                               (onSort)="sort($event)"
-                               (onFilteringChange)="layoutChange($event)">
+                               (onSort)="sort($event)">
                     <template #filterPopover>
-                        <div class="form-group">
-                            <label for="filter">Text</label>
-                            <input type="text" id="filter" class="form-control" ([ngModel])="column.filter.text" />
-                        </div>
-                        <div class="form-group">
-                            <label for="operator">Operator</label>
-                            <select id="operator" class="form-control" ([ngModel])="column.filter.operator"></select>
-                        </div>
-                        <div class="pull-xs-right clearfix">
-                            <button class="btn btn-sm btn-success">Filter</button>
-                            <button class="btn btn-sm btn-danger">Clear</button>
-                        </div>
+                        <filter-dialog [column]="column" [popover]="popover"
+                                       (onFilteringChange)="applyFilter($event)"></filter-dialog>
                     </template>
                 </column-header>
             </th>

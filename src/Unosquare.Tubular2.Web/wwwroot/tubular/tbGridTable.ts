@@ -38,4 +38,9 @@ export class TbGridTable {
         let val = this.columnObservable.getValue();
         this.columnObservable.next(val);
     }
+
+    applyFilter(column: ColumnModel) {
+        let val = this.columnObservable.getValue();
+        this.columnObservable.next(val);
+    }
 }

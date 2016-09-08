@@ -19,7 +19,7 @@ var AppModule = (function () {
     }
     AppModule = __decorate([
         core_1.NgModule({
-            imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, tubular_1.TubularModule],
+            imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, forms_1.ReactiveFormsModule, tubular_1.TubularModule],
             declarations: [app_component_1.AppComponent, sampleGrid_component_1.SampleGrid],
             providers: [tubular_1.TbDataService],
             bootstrap: [app_component_1.AppComponent]

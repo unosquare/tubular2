@@ -13,11 +13,14 @@ export class SampleGrid extends TbGridTable {
         let customerColumn = new ColumnModel("CustomerName");
         customerColumn.filterMode = ColumnFilterMode.String;
 
+        let cityColumn = new ColumnModel("ShipperCity");
+        cityColumn.filterMode = ColumnFilterMode.String;
+
         this.addColumns([
             new ColumnModel("OrderID", false, true),
             customerColumn,
             new ColumnModel("ShippedDate", false, false),
-            new ColumnModel("ShipperCity")
+            cityColumn
         ]);
     }
 

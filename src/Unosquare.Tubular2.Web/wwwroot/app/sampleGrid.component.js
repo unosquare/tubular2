@@ -22,11 +22,13 @@ var SampleGrid = (function (_super) {
         this.tbGrid = tbGrid;
         var customerColumn = new tubular_1.ColumnModel("CustomerName");
         customerColumn.filterMode = tubular_1.ColumnFilterMode.String;
+        var cityColumn = new tubular_1.ColumnModel("ShipperCity");
+        cityColumn.filterMode = tubular_1.ColumnFilterMode.String;
         this.addColumns([
             new tubular_1.ColumnModel("OrderID", false, true),
             customerColumn,
             new tubular_1.ColumnModel("ShippedDate", false, false),
-            new tubular_1.ColumnModel("ShipperCity")
+            cityColumn
         ]);
     }
     SampleGrid.prototype.layoutChange = function (isFiltering) {

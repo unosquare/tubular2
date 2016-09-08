@@ -30,6 +30,10 @@ var TbGridTable = (function () {
         var val = this.columnObservable.getValue();
         this.columnObservable.next(val);
     };
+    TbGridTable.prototype.applyFilter = function (column) {
+        var val = this.columnObservable.getValue();
+        this.columnObservable.next(val);
+    };
     return TbGridTable;
 }());
 exports.TbGridTable = TbGridTable;

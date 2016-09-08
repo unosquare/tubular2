@@ -42,7 +42,7 @@ var TbColumnHeader = (function () {
     TbColumnHeader = __decorate([
         core_1.Component({
             selector: 'column-header',
-            template: "\n    <div class=\"column-header\">\n        <span [ngClass]=\"{sortable: column.sortable, sortNone: column.direction == 0, sortAsc: column.direction == 1, sortDesc: column.direction == 2}\"\n            (click)=\"sort()\">\n            {{column.label}}\n        </span>\n        <div class=\"pull-xs-right\" [hidden]=\"column.filterMode == 0\"  [ngbPopover]=\"filterPopoverTemplate\" placement=\"bottom\" title=\"Filter\">\n            <i class=\"fa\" [ngClass]=\"{ 'fa-filter': !isFiltering, 'fa-times': isFiltering }\"></i>\n        </div>\n    </div>"
+            template: "\n    <div class=\"column-header\">\n        <span [ngClass]=\"{sortable: column.sortable, sortNone: column.direction == 0, sortAsc: column.direction == 1, sortDesc: column.direction == 2}\"\n            (click)=\"sort()\">\n            {{column.label}}\n        </span>\n        <div class=\"pull-xs-right\" [hidden]=\"column.filterMode == 0\" #popover=\"ngbPopover\" [ngbPopover]=\"filterPopoverTemplate\" placement=\"bottom\" title=\"Filter\">\n            <i class=\"fa\" [ngClass]=\"{ 'fa-filter': !isFiltering, 'fa-times': isFiltering }\"></i>\n        </div>\n    </div>"
         }), 
         __metadata('design:paramtypes', [])
     ], TbColumnHeader);
