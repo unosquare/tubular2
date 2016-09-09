@@ -1,6 +1,6 @@
 ﻿import { Component, Input, Output, EventEmitter, ContentChild, TemplateRef, ViewChild, AfterViewInit } from '@angular/core';
 import { ColumnModel } from './column';
-import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPopover } from '@ng-bootstrap/ng-bootstrap/popover/popover';
 
 @Component({
     selector: 'column-header',

@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var column_1 = require('./column');
-var ng_bootstrap_1 = require('@ng-bootstrap/ng-bootstrap');
+var popover_1 = require('@ng-bootstrap/ng-bootstrap/popover/popover');
 var TbColumnHeader = (function () {
     function TbColumnHeader() {
         this.onSort = new core_1.EventEmitter();
@@ -41,7 +41,7 @@ var TbColumnHeader = (function () {
     ], TbColumnHeader.prototype, "filterPopoverTemplate", void 0);
     __decorate([
         core_1.ViewChild('popover'), 
-        __metadata('design:type', (typeof (_a = typeof ng_bootstrap_1.NgbPopover !== 'undefined' && ng_bootstrap_1.NgbPopover) === 'function' && _a) || Object)
+        __metadata('design:type', popover_1.NgbPopover)
     ], TbColumnHeader.prototype, "popover", void 0);
     TbColumnHeader = __decorate([
         core_1.Component({
@@ -51,7 +51,6 @@ var TbColumnHeader = (function () {
         __metadata('design:paramtypes', [])
     ], TbColumnHeader);
     return TbColumnHeader;
-    var _a;
 }());
 exports.TbColumnHeader = TbColumnHeader;
 //# sourceMappingURL=tbColumnHeader.directive.js.map
