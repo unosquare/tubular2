@@ -1,17 +1,17 @@
 ﻿import { Component, Input } from '@angular/core';
 
-import { TbGrid }           from './tbGrid.component';
+import { TubularGrid }      from './grid.component';
 
 @Component({
-    selector: 'tb-grid-pager-info',
+    selector: 'grid-pager-info',
     template: `Total rows: {{totalRecords}} (Filtered records: {{filteredRecordCount}})`
 })
-export class TbGridPagerInfo {
+export class GridPagerInfo {
     // todo: probably extend normal to pager?
     totalRecords = 0;
     filteredRecordCount = 0;
     
-    constructor(private tbGrid: TbGrid) { }
+    constructor(private tbGrid: TubularGrid) { }
 
     ngOnInit() {
         // live update properties

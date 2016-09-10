@@ -9,16 +9,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var tbGrid_component_1 = require('./tbGrid.component');
-var TbGridPager = (function () {
-    function TbGridPager(tbGrid) {
+var grid_component_1 = require('./grid.component');
+var GridPager = (function () {
+    function GridPager(tbGrid) {
         this.tbGrid = tbGrid;
         this.totalPages = 0;
         this.totalRecords = 0;
         this.currentPage = 0;
         this.filteredRecordCount = 0;
     }
-    TbGridPager.prototype.ngOnInit = function () {
+    GridPager.prototype.ngOnInit = function () {
         var _this = this;
         this.tbGrid.totalPages.subscribe(function (pages) {
             _this.totalPages = pages;
@@ -28,18 +28,18 @@ var TbGridPager = (function () {
         this.tbGrid.totalRecordCount.subscribe(function (x) { return _this.totalRecords = x; });
         this.tbGrid.filteredRecordCount.subscribe(function (x) { return _this.filteredRecordCount = x; });
     };
-    TbGridPager.prototype.goTo = function (page) {
+    GridPager.prototype.goTo = function (page) {
         this.currentPage = page;
         this.tbGrid.page.next(page);
     };
-    TbGridPager = __decorate([
+    GridPager = __decorate([
         core_1.Component({
-            selector: 'tb-grid-pager',
+            selector: 'grid-pager',
             template: "\n    <div class=\"btn-group\">\n        <button (click)=\"goTo(0)\" class=\"btn btn-primary\"\n            [disabled]=\"currentPage == 0\">\n            <i class=\"fa fa-fast-backward\"></i>\n        </button>\n        <button *ngFor=\"let page of pages\" [hidden]=\"page < 0\"\n            (click)=\"goTo(page)\" class=\"btn btn-secondary\"\n            [ngClass]=\"{active: page == currentPage}\">\n            {{page + 1}}\n        </button>\n        <button (click)=\"goTo(totalPages)\" class=\"btn btn-primary\"\n            [disabled]=\"currentPage == (totalPages-1)\">\n            <i class=\"fa fa-fast-forward\"></i>\n        </button>\n    </div>"
         }), 
-        __metadata('design:paramtypes', [tbGrid_component_1.TbGrid])
-    ], TbGridPager);
-    return TbGridPager;
+        __metadata('design:paramtypes', [grid_component_1.TubularGrid])
+    ], GridPager);
+    return GridPager;
 }());
-exports.TbGridPager = TbGridPager;
-//# sourceMappingURL=tbGridPager.component.js.map
+exports.GridPager = GridPager;
+//# sourceMappingURL=grid-pager.component.js.map

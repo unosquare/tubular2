@@ -5,17 +5,17 @@ import { HttpModule } from '@angular/http';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
-import { TbGrid }  from './tbGrid.component';
-import { TbColumnHeader } from './tbColumnHeader.directive';
-import { TbGridSearch } from './tbGridSearch.component';
-import { TbGridPager } from './tbGridPager.component';
-import { ColumnFilterDialog }  from './ColumnFilterDialog.component';
-import { TbGridPagerInfo } from './tbGridPagerInfo.component';
+import { TubularGrid }  from './grid.component';
+import { ColumnHeader } from './column-header.component';
+import { GridSearch } from './grid-search.component';
+import { GridPager } from './grid-pager.component';
+import { ColumnFilterDialog }  from './column-filter-dialog.component';
+import { GridPagerInfo } from './grid-pager-info.component';
 
 @NgModule({
     imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule, NgbModule],
-    declarations: [TbGrid, TbColumnHeader, TbGridSearch, TbGridPager, TbGridPagerInfo, ColumnFilterDialog],
-    exports: [TbGrid, TbColumnHeader, TbGridSearch, TbGridPager, TbGridPagerInfo, ColumnFilterDialog,
+    declarations: [TubularGrid, ColumnHeader, GridSearch, GridPager, GridPagerInfo, ColumnFilterDialog],
+    exports: [TubularGrid, ColumnHeader, GridSearch, GridPager, GridPagerInfo, ColumnFilterDialog,
         NgbModule]
 })
 export class TubularModule { }

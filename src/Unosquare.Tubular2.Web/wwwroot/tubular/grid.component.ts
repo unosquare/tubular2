@@ -2,13 +2,13 @@
 import { Observable }       from 'rxjs/Observable';
 import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
 
-import { TbDataService } from './tbData.service';
+import { TubularDataService } from './tubular-data.service';
 import { ColumnModel } from './column';
 
 import 'rxjs/add/operator/debounceTime';
 
 @Component({
-    selector: 'tb-grid',
+    selector: 'tubular-grid',
     template: `
     <div>
         <div class="tubular-overlay" [hidden]="!showLoading">
@@ -17,7 +17,7 @@ import 'rxjs/add/operator/debounceTime';
         <ng-content></ng-content>
     </div>`
 })
-export class TbGrid {
+export class TubularGrid {
     // data is just observable and children can't push
     private data = new BehaviorSubject([]);
     dataStream = this.data.asObservable();
@@ -47,7 +47,7 @@ export class TbGrid {
     @Input('require-authentication')
     requireAuthentication: boolean;
 
-    constructor(private tbDataService: TbDataService) { }
+    constructor(private tbDataService: TubularDataService) { }
 
     ngOnInit() {
         // just a logging

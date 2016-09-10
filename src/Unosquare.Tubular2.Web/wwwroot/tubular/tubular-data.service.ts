@@ -9,7 +9,7 @@ import 'rxjs/add/observable/throw';
 // TODO: Add debounceTime?
 
 @Injectable()
-export class TbDataService {
+export class TubularDataService {
     constructor(private http: Http) { }
     
     retrieveData(url: string, req: any): Observable<any> {

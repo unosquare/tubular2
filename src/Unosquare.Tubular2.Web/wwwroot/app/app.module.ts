@@ -2,7 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { TubularModule, TbDataService } from '../tubular';
+import { TubularModule, TubularDataService } from '../tubular';
 
 import { AppComponent }  from './app.component';
 import { SampleGrid } from './sampleGrid.component';
@@ -10,7 +10,7 @@ import { SampleGrid } from './sampleGrid.component';
 @NgModule({
     imports: [BrowserModule, FormsModule, ReactiveFormsModule, TubularModule ],
     declarations: [AppComponent, SampleGrid],
-    providers: [TbDataService],
+    providers: [TubularDataService],
     bootstrap: [ AppComponent ]
 })
 export class AppModule { }

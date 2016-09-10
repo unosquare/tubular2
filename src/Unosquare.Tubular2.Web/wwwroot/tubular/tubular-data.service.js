@@ -15,17 +15,17 @@ require('rxjs/add/operator/map');
 require('rxjs/add/operator/catch');
 require('rxjs/add/observable/throw');
 // TODO: Add debounceTime?
-var TbDataService = (function () {
-    function TbDataService(http) {
+var TubularDataService = (function () {
+    function TubularDataService(http) {
         this.http = http;
     }
-    TbDataService.prototype.retrieveData = function (url, req) {
+    TubularDataService.prototype.retrieveData = function (url, req) {
         req.columns.forEach(this.transformSortDirection);
         return this.http.post(url, req)
             .map(this.extractData)
             .catch(this.handleError);
     };
-    TbDataService.prototype.transformSortDirection = function (column) {
+    TubularDataService.prototype.transformSortDirection = function (column) {
         switch (column.direction) {
             case 1:
                 column.sortDirection = "Ascending";
@@ -37,20 +37,20 @@ var TbDataService = (function () {
                 column.sortDirection = "None";
         }
     };
-    TbDataService.prototype.extractData = function (res) {
+    TubularDataService.prototype.extractData = function (res) {
         var body = res.json();
         return body || {};
     };
-    TbDataService.prototype.handleError = function (error) {
+    TubularDataService.prototype.handleError = function (error) {
         var errMsg = (error.message) ? error.message :
             error.status ? error.status + " - " + error.statusText : 'Server error';
         return Observable_1.Observable.throw(errMsg);
     };
-    TbDataService = __decorate([
+    TubularDataService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http])
-    ], TbDataService);
-    return TbDataService;
+    ], TubularDataService);
+    return TubularDataService;
 }());
-exports.TbDataService = TbDataService;
-//# sourceMappingURL=tbData.service.js.map
+exports.TubularDataService = TubularDataService;
+//# sourceMappingURL=tubular-data.service.js.map

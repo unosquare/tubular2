@@ -26,7 +26,6 @@ var ColumnFilterMode = exports.ColumnFilterMode;
 var FilterOperator = exports.FilterOperator;
 var ColumnFilter = (function () {
     function ColumnFilter() {
-        this.text = "TEST";
     }
     return ColumnFilter;
 }());

@@ -1,16 +1,16 @@
 ﻿import { Component, Input } from '@angular/core';
 import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
 
-import { TbGrid }           from './tbGrid.component';
+import { TubularGrid }      from './grid.component';
 import { ColumnModel, ColumnSortDirection } from './column';
 
-export class TbGridTable {
+export class GridTable {
     private columnObservable: BehaviorSubject<ColumnModel[]> = new BehaviorSubject([]);
 
     columns = this.columnObservable.asObservable();
     rows: any[];
 
-    constructor(tbGrid: TbGrid) {
+    constructor(tbGrid: TubularGrid) {
         tbGrid.dataStream.subscribe(payload => this.rows = payload);
         this.columnObservable.subscribe(payload => tbGrid.columns.next(payload));
     }

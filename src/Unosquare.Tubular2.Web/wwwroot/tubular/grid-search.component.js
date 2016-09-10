@@ -9,23 +9,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var tbGrid_component_1 = require('./tbGrid.component');
-var TbGridSearch = (function () {
-    function TbGridSearch(tbGrid) {
+var grid_component_1 = require('./grid.component');
+var GridSearch = (function () {
+    function GridSearch(tbGrid) {
         this.tbGrid = tbGrid;
     }
     // TODO: Restore value from localstorage?
-    TbGridSearch.prototype.setSearch = function (event) {
+    GridSearch.prototype.setSearch = function (event) {
         this.tbGrid.freeTextSearch.next(event);
     };
-    TbGridSearch = __decorate([
+    GridSearch = __decorate([
         core_1.Component({
-            selector: 'tb-grid-search',
+            selector: 'grid-search',
             template: "<input type=\"text\" [ngModel]=\"search\" (ngModelChange)=\"setSearch($event)\" \n                    class=\"form-control\"\n                    placeholder=\"search . . .\"  />"
         }), 
-        __metadata('design:paramtypes', [tbGrid_component_1.TbGrid])
-    ], TbGridSearch);
-    return TbGridSearch;
+        __metadata('design:paramtypes', [grid_component_1.TubularGrid])
+    ], GridSearch);
+    return GridSearch;
 }());
-exports.TbGridSearch = TbGridSearch;
-//# sourceMappingURL=tbGridSearch.component.js.map
+exports.GridSearch = GridSearch;
+//# sourceMappingURL=grid-search.component.js.map

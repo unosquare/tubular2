@@ -9,28 +9,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var tbGrid_component_1 = require('./tbGrid.component');
-var TbGridPagerInfo = (function () {
-    function TbGridPagerInfo(tbGrid) {
+var grid_component_1 = require('./grid.component');
+var GridPagerInfo = (function () {
+    function GridPagerInfo(tbGrid) {
         this.tbGrid = tbGrid;
         // todo: probably extend normal to pager?
         this.totalRecords = 0;
         this.filteredRecordCount = 0;
     }
-    TbGridPagerInfo.prototype.ngOnInit = function () {
+    GridPagerInfo.prototype.ngOnInit = function () {
         var _this = this;
         // live update properties
         this.tbGrid.totalRecordCount.subscribe(function (x) { return _this.totalRecords = x; });
         this.tbGrid.filteredRecordCount.subscribe(function (x) { return _this.filteredRecordCount = x; });
     };
-    TbGridPagerInfo = __decorate([
+    GridPagerInfo = __decorate([
         core_1.Component({
-            selector: 'tb-grid-pager-info',
+            selector: 'grid-pager-info',
             template: "Total rows: {{totalRecords}} (Filtered records: {{filteredRecordCount}})"
         }), 
-        __metadata('design:paramtypes', [tbGrid_component_1.TbGrid])
-    ], TbGridPagerInfo);
-    return TbGridPagerInfo;
+        __metadata('design:paramtypes', [grid_component_1.TubularGrid])
+    ], GridPagerInfo);
+    return GridPagerInfo;
 }());
-exports.TbGridPagerInfo = TbGridPagerInfo;
-//# sourceMappingURL=tbGridPagerInfo.component.js.map
+exports.GridPagerInfo = GridPagerInfo;
+//# sourceMappingURL=grid-pager-info.component.js.map

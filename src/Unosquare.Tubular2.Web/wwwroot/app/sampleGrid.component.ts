@@ -1,13 +1,13 @@
 ﻿import { Component, Input } from '@angular/core';
 
-import { TbGrid, TbGridTable, ColumnModel, ColumnFilterMode } from '../tubular';
+import { TubularGrid, GridTable, ColumnModel, ColumnFilterMode } from '../tubular';
 
 @Component({
     selector: 'grid',
     templateUrl: '/app/sampleGrid.component.html'
 })
-export class SampleGrid extends TbGridTable {
-    constructor(private tbGrid: TbGrid) {
+export class SampleGrid extends GridTable {
+    constructor(private tbGrid: TubularGrid) {
         super(tbGrid);
         
         let customerColumn = new ColumnModel("CustomerName");

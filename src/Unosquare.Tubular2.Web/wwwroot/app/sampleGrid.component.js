@@ -36,9 +36,9 @@ var SampleGrid = (function (_super) {
             selector: 'grid',
             templateUrl: '/app/sampleGrid.component.html'
         }), 
-        __metadata('design:paramtypes', [tubular_1.TbGrid])
+        __metadata('design:paramtypes', [tubular_1.TubularGrid])
     ], SampleGrid);
     return SampleGrid;
-}(tubular_1.TbGridTable));
+}(tubular_1.GridTable));
 exports.SampleGrid = SampleGrid;
 //# sourceMappingURL=sampleGrid.component.js.map

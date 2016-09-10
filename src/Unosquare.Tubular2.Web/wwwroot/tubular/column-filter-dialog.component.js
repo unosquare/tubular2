@@ -53,4 +53,4 @@ var ColumnFilterDialog = (function () {
     return ColumnFilterDialog;
 }());
 exports.ColumnFilterDialog = ColumnFilterDialog;
-//# sourceMappingURL=ColumnFilterDialog.component.js.map
+//# sourceMappingURL=column-filter-dialog.component.js.map

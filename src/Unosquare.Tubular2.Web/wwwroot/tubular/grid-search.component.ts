@@ -1,17 +1,17 @@
-﻿import { Component, Input, SimpleChange } from '@angular/core';
+﻿import { Component } from '@angular/core';
 
-import { TbGrid }           from './tbGrid.component';
+import { TubularGrid }           from './grid.component';
 
 @Component({
-    selector: 'tb-grid-search',
+    selector: 'grid-search',
     template: `<input type="text" [ngModel]="search" (ngModelChange)="setSearch($event)" 
                     class="form-control"
                     placeholder="search . . ."  />`
 })
-export class TbGridSearch {
+export class GridSearch {
     search: string;
 
-    constructor(private tbGrid: TbGrid) { }
+    constructor(private tbGrid: TubularGrid) { }
 
     // TODO: Restore value from localstorage?
 

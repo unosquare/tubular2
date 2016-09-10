@@ -10,10 +10,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var BehaviorSubject_1 = require('rxjs/BehaviorSubject');
-var tbData_service_1 = require('./tbData.service');
+var tubular_data_service_1 = require('./tubular-data.service');
 require('rxjs/add/operator/debounceTime');
-var TbGrid = (function () {
-    function TbGrid(tbDataService) {
+var TubularGrid = (function () {
+    function TubularGrid(tbDataService) {
         this.tbDataService = tbDataService;
         // data is just observable and children can't push
         this.data = new BehaviorSubject_1.BehaviorSubject([]);
@@ -36,7 +36,7 @@ var TbGrid = (function () {
             operator: "None"
         };
     }
-    TbGrid.prototype.ngOnInit = function () {
+    TubularGrid.prototype.ngOnInit = function () {
         var _this = this;
         // just a logging
         this.dataStream.subscribe(function (p) { return console.log("New data", p); });
@@ -53,7 +53,7 @@ var TbGrid = (function () {
             _this.refresh();
         });
     };
-    TbGrid.prototype.refresh = function () {
+    TubularGrid.prototype.refresh = function () {
         var _this = this;
         var req = {
             count: this.requestCount++,
@@ -72,7 +72,7 @@ var TbGrid = (function () {
             _this._totalRecordCount.next(data.TotalRecordCount);
         }, function (error) { return _this.errorMessage = error; });
     };
-    TbGrid.prototype.transformToObj = function (columns, data) {
+    TubularGrid.prototype.transformToObj = function (columns, data) {
         var obj = {};
         columns.forEach(function (column, key) { return obj[column.name] = data[key] || data[column.name]; });
         return obj;
@@ -80,19 +80,19 @@ var TbGrid = (function () {
     __decorate([
         core_1.Input('server-url'), 
         __metadata('design:type', String)
-    ], TbGrid.prototype, "serverUrl", void 0);
+    ], TubularGrid.prototype, "serverUrl", void 0);
     __decorate([
         core_1.Input('require-authentication'), 
         __metadata('design:type', Boolean)
-    ], TbGrid.prototype, "requireAuthentication", void 0);
-    TbGrid = __decorate([
+    ], TubularGrid.prototype, "requireAuthentication", void 0);
+    TubularGrid = __decorate([
         core_1.Component({
-            selector: 'tb-grid',
+            selector: 'tubular-grid',
             template: "\n    <div>\n        <div class=\"tubular-overlay\" [hidden]=\"!showLoading\">\n            <div><div class=\"fa fa-refresh fa-2x fa-spin\"></div>\n        </div></div>\n        <ng-content></ng-content>\n    </div>"
         }), 
-        __metadata('design:paramtypes', [tbData_service_1.TbDataService])
-    ], TbGrid);
-    return TbGrid;
+        __metadata('design:paramtypes', [tubular_data_service_1.TubularDataService])
+    ], TubularGrid);
+    return TubularGrid;
 }());
-exports.TbGrid = TbGrid;
-//# sourceMappingURL=tbGrid.component.js.map
+exports.TubularGrid = TubularGrid;
+//# sourceMappingURL=grid.component.js.map

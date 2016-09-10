@@ -5,13 +5,13 @@ function __export(m) {
 // export module
 __export(require('./tubular.module'));
 // export injectables
-__export(require('./tbData.service'));
+__export(require('./tubular-data.service'));
 // Export components and directives
-__export(require('./tbGrid.component'));
-__export(require('./tbGridTable'));
-__export(require('./tbGridSearch.component'));
-__export(require('./tbGridPager.component'));
-__export(require('./tbGridPagerInfo.component'));
-__export(require('./tbColumnHeader.directive'));
+__export(require('./grid.component'));
+__export(require('./grid-table'));
+__export(require('./grid-search.component'));
+__export(require('./grid-pager.component'));
+__export(require('./grid-pager-info.component'));
+__export(require('./column-header.component'));
 __export(require('./column'));
 //# sourceMappingURL=index.js.map

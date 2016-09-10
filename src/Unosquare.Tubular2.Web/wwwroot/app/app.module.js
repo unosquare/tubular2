@@ -21,7 +21,7 @@ var AppModule = (function () {
         core_1.NgModule({
             imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, forms_1.ReactiveFormsModule, tubular_1.TubularModule],
             declarations: [app_component_1.AppComponent, sampleGrid_component_1.SampleGrid],
-            providers: [tubular_1.TbDataService],
+            providers: [tubular_1.TubularDataService],
             bootstrap: [app_component_1.AppComponent]
         }), 
         __metadata('design:paramtypes', [])

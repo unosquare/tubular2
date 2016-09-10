@@ -11,46 +11,46 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var column_1 = require('./column');
 var popover_1 = require('@ng-bootstrap/ng-bootstrap/popover/popover');
-var TbColumnHeader = (function () {
-    function TbColumnHeader() {
+var ColumnHeader = (function () {
+    function ColumnHeader() {
         this.onSort = new core_1.EventEmitter();
         this.onFilter = new core_1.EventEmitter();
     }
-    TbColumnHeader.prototype.sort = function () {
+    ColumnHeader.prototype.sort = function () {
         this.onSort.emit(this.column);
     };
-    TbColumnHeader.prototype.filter = function (hasValue) {
+    ColumnHeader.prototype.filter = function (hasValue) {
         this.popover.close();
         this.onFilter.emit(this.column);
     };
     __decorate([
         core_1.Input(), 
         __metadata('design:type', column_1.ColumnModel)
-    ], TbColumnHeader.prototype, "column", void 0);
+    ], ColumnHeader.prototype, "column", void 0);
     __decorate([
         core_1.Output(), 
         __metadata('design:type', Object)
-    ], TbColumnHeader.prototype, "onSort", void 0);
+    ], ColumnHeader.prototype, "onSort", void 0);
     __decorate([
         core_1.Output(), 
         __metadata('design:type', Object)
-    ], TbColumnHeader.prototype, "onFilter", void 0);
+    ], ColumnHeader.prototype, "onFilter", void 0);
     __decorate([
         core_1.ContentChild("filterPopover"), 
         __metadata('design:type', core_1.TemplateRef)
-    ], TbColumnHeader.prototype, "filterPopoverTemplate", void 0);
+    ], ColumnHeader.prototype, "filterPopoverTemplate", void 0);
     __decorate([
         core_1.ViewChild('popover'), 
         __metadata('design:type', popover_1.NgbPopover)
-    ], TbColumnHeader.prototype, "popover", void 0);
-    TbColumnHeader = __decorate([
+    ], ColumnHeader.prototype, "popover", void 0);
+    ColumnHeader = __decorate([
         core_1.Component({
             selector: 'column-header',
             template: "\n    <div class=\"column-header\">\n        <span [ngClass]=\"{sortable: column.sortable, sortNone: column.direction == 0, sortAsc: column.direction == 1, sortDesc: column.direction == 2}\"\n            (click)=\"sort()\">\n            {{column.label}}\n        </span>\n        <div class=\"pull-xs-right\" [hidden]=\"column.filterMode == 0\" #popover=\"ngbPopover\" [ngbPopover]=\"filterPopoverTemplate\" placement=\"bottom\" title=\"Filter\">\n            <i class=\"fa\" [ngClass]=\"{ 'fa-filter': !isFiltering, 'fa-times': isFiltering }\"></i>\n        </div>\n    </div>"
         }), 
         __metadata('design:paramtypes', [])
-    ], TbColumnHeader);
-    return TbColumnHeader;
+    ], ColumnHeader);
+    return ColumnHeader;
 }());
-exports.TbColumnHeader = TbColumnHeader;
-//# sourceMappingURL=tbColumnHeader.directive.js.map
+exports.ColumnHeader = ColumnHeader;
+//# sourceMappingURL=column-header.component.js.map

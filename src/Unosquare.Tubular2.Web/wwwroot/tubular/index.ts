@@ -2,13 +2,13 @@
 export * from './tubular.module';
 
 // export injectables
-export * from './tbData.service';
+export * from './tubular-data.service';
 
 // Export components and directives
-export * from './tbGrid.component';
-export * from './tbGridTable';
-export * from './tbGridSearch.component';
-export * from './tbGridPager.component';
-export * from './tbGridPagerInfo.component';
-export * from './tbColumnHeader.directive';
+export * from './grid.component';
+export * from './grid-table';
+export * from './grid-search.component';
+export * from './grid-pager.component';
+export * from './grid-pager-info.component';
+export * from './column-header.component';
 export * from './column';

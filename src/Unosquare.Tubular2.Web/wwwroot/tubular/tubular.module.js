@@ -13,20 +13,20 @@ var platform_browser_1 = require('@angular/platform-browser');
 var forms_1 = require('@angular/forms');
 var http_1 = require('@angular/http');
 var ng_bootstrap_1 = require('@ng-bootstrap/ng-bootstrap');
-var tbGrid_component_1 = require('./tbGrid.component');
-var tbColumnHeader_directive_1 = require('./tbColumnHeader.directive');
-var tbGridSearch_component_1 = require('./tbGridSearch.component');
-var tbGridPager_component_1 = require('./tbGridPager.component');
-var ColumnFilterDialog_component_1 = require('./ColumnFilterDialog.component');
-var tbGridPagerInfo_component_1 = require('./tbGridPagerInfo.component');
+var grid_component_1 = require('./grid.component');
+var column_header_component_1 = require('./column-header.component');
+var grid_search_component_1 = require('./grid-search.component');
+var grid_pager_component_1 = require('./grid-pager.component');
+var column_filter_dialog_component_1 = require('./column-filter-dialog.component');
+var grid_pager_info_component_1 = require('./grid-pager-info.component');
 var TubularModule = (function () {
     function TubularModule() {
     }
     TubularModule = __decorate([
         core_1.NgModule({
             imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, forms_1.ReactiveFormsModule, http_1.HttpModule, ng_bootstrap_1.NgbModule],
-            declarations: [tbGrid_component_1.TbGrid, tbColumnHeader_directive_1.TbColumnHeader, tbGridSearch_component_1.TbGridSearch, tbGridPager_component_1.TbGridPager, tbGridPagerInfo_component_1.TbGridPagerInfo, ColumnFilterDialog_component_1.ColumnFilterDialog],
-            exports: [tbGrid_component_1.TbGrid, tbColumnHeader_directive_1.TbColumnHeader, tbGridSearch_component_1.TbGridSearch, tbGridPager_component_1.TbGridPager, tbGridPagerInfo_component_1.TbGridPagerInfo, ColumnFilterDialog_component_1.ColumnFilterDialog,
+            declarations: [grid_component_1.TubularGrid, column_header_component_1.ColumnHeader, grid_search_component_1.GridSearch, grid_pager_component_1.GridPager, grid_pager_info_component_1.GridPagerInfo, column_filter_dialog_component_1.ColumnFilterDialog],
+            exports: [grid_component_1.TubularGrid, column_header_component_1.ColumnHeader, grid_search_component_1.GridSearch, grid_pager_component_1.GridPager, grid_pager_info_component_1.GridPagerInfo, column_filter_dialog_component_1.ColumnFilterDialog,
                 ng_bootstrap_1.NgbModule]
         }), 
         __metadata('design:paramtypes', [])

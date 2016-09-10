@@ -15,7 +15,7 @@ import { NgbPopover } from '@ng-bootstrap/ng-bootstrap/popover/popover';
         </div>
     </div>`
 })
-export class TbColumnHeader {
+export class ColumnHeader {
     @Input() column: ColumnModel;
     @Output() onSort = new EventEmitter<ColumnModel>();
     @Output() onFilter = new EventEmitter<ColumnModel>();

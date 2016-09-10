@@ -1,9 +1,9 @@
 ﻿import { Component, Input } from '@angular/core';
 
-import { TbGrid }           from './tbGrid.component';
+import { TubularGrid }      from './grid.component';
 
 @Component({
-    selector: 'tb-grid-pager',
+    selector: 'grid-pager',
     template: `
     <div class="btn-group">
         <button (click)="goTo(0)" class="btn btn-primary"
@@ -21,14 +21,14 @@ import { TbGrid }           from './tbGrid.component';
         </button>
     </div>`
 })
-export class TbGridPager {
+export class GridPager {
     totalPages = 0;
     totalRecords = 0;
     currentPage = 0;
     filteredRecordCount = 0;
     pages: number[];
 
-    constructor(private tbGrid: TbGrid) { }
+    constructor(private tbGrid: TubularGrid) { }
 
     ngOnInit() {
         this.tbGrid.totalPages.subscribe(pages => {
