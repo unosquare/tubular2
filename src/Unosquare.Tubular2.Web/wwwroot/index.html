@@ -11,58 +11,8 @@
     <!-- Polyfill for Web Animations -->
     <script src="https://unpkg.com/web-animations-js@2.2.1"></script>
 
-    <script src="scripts/lib/systemjs/dist/system.js"></script>
-    <script src="scripts/lib/zone.js/dist/zone.js"></script>
-    <script src="scripts/lib/reflect/Reflect.js"></script>
-    <script src="scripts/lib/momentjs/moment.js"></script>
-
-    <script>
-        // map tells the System loader where to look for things
-        var map = {
-            'app': 'app',
-            'tubular': 'tubular',
-            '@angular': 'scripts/lib/@angular',
-            '@ng-bootstrap/ng-bootstrap': 'scripts/lib/@ng-bootstrap',
-            'rxjs': 'scripts/lib/rxjs'
-        };
-
-        // packages tells the System loader how to load when no filename and/or no extension
-        var packages = {
-            'app': { main: 'main.js', defaultExtension: 'js' },
-            'tubular': { main: 'index.js', defaultExtension: 'js' },
-            '@ng-bootstrap/ng-bootstrap': { main: 'index.js', defaultExtension: 'js' },
-            'rxjs': { defaultExtension: 'js' }
-        };
-
-        var ngPackageNames = [
-          'common',
-          'compiler',
-          'core',
-          'forms',
-          'http',
-          'platform-browser',
-          'platform-browser-dynamic',
-          'router'
-        ];
-
-        // Bundled (~40 requests):
-        function packUmd(pkgName) {
-            packages['@angular/' + pkgName] = { main: pkgName + '.umd.js', defaultExtension: 'js' };
-        }
-
-        // Add package entries for angular packages
-        ngPackageNames.forEach(packUmd);
-
-        // No umd for router yet
-        packages['@angular/router'] = { main: 'index.js', defaultExtension: 'js' };
-
-        System.config({
-            map: map,
-            packages: packages
-        });
-
-        System.import('app/main').then(null, console.error.bind(console));
-    </script>
+    <script src="build/bundle.js"></script>
+    
     <title>Tubular2</title>
 </head>
 <body>
