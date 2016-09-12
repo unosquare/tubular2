@@ -41,6 +41,8 @@ gulp.task('clean', function () {
 
 gulp.task('default', ['lib'], function () {
     gulp.src('wwwroot/app/main.js')
-        .pipe(webpack())
+        .pipe(webpack({
+            devtool: 'source-map'
+        }))
         .pipe(gulp.dest('wwwroot/dist/'));
 });
