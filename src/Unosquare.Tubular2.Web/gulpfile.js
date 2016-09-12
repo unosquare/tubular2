@@ -1,16 +1,10 @@
-﻿/// <binding AfterBuild='default' Clean='clean' />
-/*
-This file is the main entry point for defining Gulp tasks and using Gulp plugins.
-Click here to learn more. http://go.microsoft.com/fwlink/?LinkId=518007
-*/
-
+﻿/// <binding Clean='clean' ProjectOpened='default' />
 var gulp = require('gulp');
 var del = require('del');
 var webpack = require('webpack');
 var webpackStream = require('webpack-stream');
 
 var paths = {
-    scripts: ['scripts/**/*.js', 'scripts/**/*.ts', 'scripts/**/*.map'],
     libs: {
         '@angular/core': 'node_modules/@angular/core/bundles/core.umd.js',
         '@angular/common': 'node_modules/@angular/common/bundles/common.umd.js',
@@ -41,6 +35,8 @@ gulp.task('clean', function () {
 });
 
 gulp.task('default', ['lib'], function () {
+    // TODO: Add task to build only tubular into a dist folder in root
+    // TODO: Create a webpack config file
     gulp.src('wwwroot/app/main.ts')
         .pipe(webpackStream({
             devtool: 'source-map',
@@ -57,7 +53,8 @@ gulp.task('default', ['lib'], function () {
                 loaders: [
                   { test: /\.ts$/, loader: 'ts-loader' }
                 ]
-            }
+            },
+            watch: true
         }))
         .pipe(gulp.dest('wwwroot/dist/'));
 });

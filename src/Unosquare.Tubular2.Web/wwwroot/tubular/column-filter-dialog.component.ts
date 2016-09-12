@@ -13,8 +13,7 @@ import { ColumnModel } from './column';
         <div class="form-group">
             <label for="operator">Operator</label>
             <select id="operator" class="form-control" formControlName="operator">
-                <option>None</option>
-                <option>Contains</option>
+                <option *ngFor="let operator of operators">{{operator.name}}</option>
             </select>
         </div>
         <div class="row">
@@ -33,6 +32,11 @@ export class ColumnFilterDialog implements AfterViewInit {
     @Input() column: ColumnModel;
     @Output() onFilteringChange = new EventEmitter<boolean>();
     form: FormGroup;
+    operators: Object[] = [
+        { name: "None", value: "None" },
+        { name: "Contains", value: "Contains" },
+        { name: "Equals", value: "Equals" }
+    ];
 
     constructor(fb: FormBuilder) {
         this.form = fb.group({
