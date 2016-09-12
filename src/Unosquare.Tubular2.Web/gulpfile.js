@@ -6,7 +6,8 @@ Click here to learn more. http://go.microsoft.com/fwlink/?LinkId=518007
 
 var gulp = require('gulp');
 var del = require('del');
-var webpack = require('webpack-stream');
+var webpack = require('webpack');
+var webpackStream = require('webpack-stream');
 
 var paths = {
     scripts: ['scripts/**/*.js', 'scripts/**/*.ts', 'scripts/**/*.map'],
@@ -40,11 +41,22 @@ gulp.task('clean', function () {
 });
 
 gulp.task('default', ['lib'], function () {
-    gulp.src('wwwroot/app/main.js')
-        .pipe(webpack({
+    gulp.src('wwwroot/app/main.ts')
+        .pipe(webpackStream({
             devtool: 'source-map',
             output: {
                 filename: '[name].js',
+            },
+            resolve: {
+                extensions: ['', '.webpack.js', '.web.js', '.ts', '.js']
+            },
+            //plugins: [
+            //  new webpack.optimize.UglifyJsPlugin()
+            //],
+            module: {
+                loaders: [
+                  { test: /\.ts$/, loader: 'ts-loader' }
+                ]
             }
         }))
         .pipe(gulp.dest('wwwroot/dist/'));

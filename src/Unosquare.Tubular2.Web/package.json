@@ -29,6 +29,7 @@
     "typescript": "^1.8.10",
     "typings": "^1.0.4",
     "webpack": "^1.13.2",
-    "webpack-stream": "^3.2.0"
+    "webpack-stream": "^3.2.0",
+    "ts-loader": "^0.8.2"
   }
 }
