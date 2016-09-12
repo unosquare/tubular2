@@ -254,6 +254,7 @@ paket-files/
 # Typescript
 /src/Unosquare.Tubular2.Web/wwwroot/scripts/lib
 /src/Unosquare.Tubular2.Web/wwwroot/app/*.js
+/src/Unosquare.Tubular2.Web/wwwroot/tubular/*.js
 *.js.map
 /src/Unosquare.Tubular2.Web/wwwroot/build
 /src/Unosquare.Tubular2.Web/wwwroot/dist
