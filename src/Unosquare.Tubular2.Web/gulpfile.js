@@ -42,7 +42,10 @@ gulp.task('clean', function () {
 gulp.task('default', ['lib'], function () {
     gulp.src('wwwroot/app/main.js')
         .pipe(webpack({
-            devtool: 'source-map'
+            devtool: 'source-map',
+            output: {
+                filename: '[name].js',
+            }
         }))
         .pipe(gulp.dest('wwwroot/dist/'));
 });
