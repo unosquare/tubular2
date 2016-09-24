@@ -32,11 +32,7 @@ export class ColumnFilterDialog implements AfterViewInit {
     @Input() column: ColumnModel;
     @Output() onFilteringChange = new EventEmitter<boolean>();
     form: FormGroup;
-    operators: Object[] = [
-        { name: "None", value: "None" },
-        { name: "Contains", value: "Contains" },
-        { name: "Equals", value: "Equals" }
-    ];
+    operators: Object[];
 
     constructor(fb: FormBuilder) {
         this.form = fb.group({
@@ -51,7 +47,16 @@ export class ColumnFilterDialog implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        setTimeout(_ => this.form.patchValue({ "text": this.column.filter.text }));
+        // set initial value in form with a timeout
+        setTimeout(_ => {
+            // load operator directly from the column
+            this.operators = this.column.getOperators();
+
+            console.log(this.column.filter);
+            // set initial value in form with a timeout
+            this.form.patchValue({ "text": this.column.filter.text });
+            this.form.patchValue({ "operator": this.column.filter.operator });
+        });
     }
 
     onSubmit() {

@@ -48,4 +48,13 @@ export class ColumnModel {
         if (searchable != null) this.searchable = searchable;
         if (sortable != null) this.sortable = sortable;
     }
+
+    getOperators(): Object[] {
+        return [
+            { name: "None", value: "None" },
+            { name: "Contains", value: "Contains" },
+            { name: "Equals", value: "Equals" },
+            { name: "NotEquals", value: "Not Equals" }
+        ];
+    }
 }
