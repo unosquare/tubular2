@@ -4,9 +4,23 @@ import { TubularGrid }           from './grid.component';
 
 @Component({
     selector: 'grid-search',
-    template: `<input type="text" [ngModel]="search" (ngModelChange)="setSearch($event)" 
-                    class="form-control"
-                    placeholder="search . . ."  />`
+    template: `<div>
+                    <div class="input-group input-group-sm">
+                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                        <input type="text" class="form-control" 
+                        [ngModel]="search"
+                        (ngModelChange)="setSearch($event)"
+                        placeholder="search . . ."  
+                        />
+                        <span class="input-group-btn" 
+                        ng-show="">
+                            <button class="btn btn-default" uib-tooltip="" 
+                            ng-click="">
+                            <i class="fa fa-times-circle"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>`
 })
 export class GridSearch {
     search: string;
