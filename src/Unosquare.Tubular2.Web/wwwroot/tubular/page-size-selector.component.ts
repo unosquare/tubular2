@@ -2,8 +2,6 @@
 import { Observable }       from 'rxjs/Observable';
 import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
 
-import { TubularDataService } from './tubular-data.service';
-import { ColumnModel } from './column';
 import { TubularGrid }      from './grid.component';
 
 import 'rxjs/add/operator/debounceTime';
