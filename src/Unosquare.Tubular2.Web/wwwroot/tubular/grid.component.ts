@@ -27,6 +27,8 @@ export class TubularGrid {
     totalRecordCount = this._totalRecordCount.asObservable();
     private _filteredRecordCount = new BehaviorSubject(0);
     filteredRecordCount = this._filteredRecordCount.asObservable();
+    _pageSize = new BehaviorSubject(10);
+    pageSize = this._pageSize.asObservable();
 
     // values that to observe and allow to push from children
     page = new BehaviorSubject(0);
@@ -35,7 +37,6 @@ export class TubularGrid {
 
     showLoading = false;
     requestCount = 0;
-    pageSize = 10;
     errorMessage: string;
     search = {
         text: "",
@@ -54,6 +55,7 @@ export class TubularGrid {
         this.dataStream.subscribe(p => console.log("New data", p));
 
         // subscriptions to events
+        this.pageSize.subscribe(c => this.refresh());
         this.columns.subscribe(c => this.refresh());
         this.page.subscribe(c => this.refresh());
         this.freeTextSearch
@@ -70,8 +72,8 @@ export class TubularGrid {
         let req = {
             count: this.requestCount++,
             columns: this.columns.getValue(),
-            skip: this.page.getValue() * this.pageSize,
-            take: this.pageSize,
+            skip: this.page.getValue() * this._pageSize.getValue(),
+            take: this._pageSize.getValue(),
             search: this.search,
             timezoneOffset: new Date().getTimezoneOffset()
         };

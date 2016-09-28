@@ -11,11 +11,12 @@ import { GridSearch } from './grid-search.component';
 import { GridPager } from './grid-pager.component';
 import { ColumnFilterDialog }  from './column-filter-dialog.component';
 import { GridPagerInfo } from './grid-pager-info.component';
+import { PageSizeSelector } from './page-size-selector.component';
 
 @NgModule({
     imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule, NgbModule],
-    declarations: [TubularGrid, ColumnHeader, GridSearch, GridPager, GridPagerInfo, ColumnFilterDialog],
-    exports: [TubularGrid, ColumnHeader, GridSearch, GridPager, GridPagerInfo, ColumnFilterDialog,
+    declarations: [TubularGrid, ColumnHeader, GridSearch, GridPager, GridPagerInfo, ColumnFilterDialog, PageSizeSelector],
+    exports: [TubularGrid, ColumnHeader, GridSearch, GridPager, GridPagerInfo, ColumnFilterDialog, PageSizeSelector,
         NgbModule]
 })
 export class TubularModule { }
