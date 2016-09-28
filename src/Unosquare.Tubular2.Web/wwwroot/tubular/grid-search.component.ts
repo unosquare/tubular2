@@ -12,7 +12,7 @@ import { TubularGrid }           from './grid.component';
                         (ngModelChange)="setSearch($event)"
                         placeholder="search . . ."  
                         />
-                        <span class="input-group-btn" >
+                        <span class="input-group-btn" [hidden]="!toSearch.value">
                             <button class="btn btn-default" (click)="clearInput()">
                             <i class="fa fa-times-circle"></i>
                             </button>
@@ -22,7 +22,7 @@ import { TubularGrid }           from './grid.component';
 })
 export class GridSearch {
     search: string;
-
+    
     constructor(private tbGrid: TubularGrid) { }
 
     // TODO: Restore value from localstorage?
