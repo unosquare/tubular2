@@ -13,7 +13,7 @@ import { ColumnModel } from './column';
         <div class="form-group">
             <label for="operator">Operator</label>
             <select id="operator" class="form-control" formControlName="operator">
-                <option *ngFor="let operator of operators">{{operator.name}}</option>
+                <option *ngFor="let operator of operators" [value]="operator.value">{{operator.name}}</option>
             </select>
         </div>
         <div class="row">
@@ -37,7 +37,7 @@ export class ColumnFilterDialog implements AfterViewInit {
     constructor(fb: FormBuilder) {
         this.form = fb.group({
             "text": ["", Validators.required],
-            "operator": ["None", Validators.required]
+            "operator": ["None",Validators.required]
         });
 
         this.form.valueChanges.subscribe((value) => {
@@ -54,8 +54,7 @@ export class ColumnFilterDialog implements AfterViewInit {
 
             console.log(this.column.filter);
             // set initial value in form with a timeout
-            this.form.patchValue({ "text": this.column.filter.text });
-            this.form.patchValue({ "operator": this.column.filter.operator });
+            this.form.patchValue({ "text": this.column.filter.text, "operator": this.column.filter.operator || "None"});
         });
     }
 
