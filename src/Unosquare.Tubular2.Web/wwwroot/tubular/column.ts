@@ -15,7 +15,8 @@ export enum ColumnSortDirection {
 
 export enum ColumnFilterMode {
     None = 0,
-    String
+    String,
+    Number
 }
 
 export enum FilterOperator {
@@ -49,12 +50,27 @@ export class ColumnModel {
         if (sortable != null) this.sortable = sortable;
     }
 
-    getOperators(): Object[] {
-        return [
-            { name: "None", value: "None" },
-            { name: "Contains", value: "Contains" },
-            { name: "Equals", value: "Equals" },
-            { name: "NotEquals", value: "Not Equals" }
-        ];
+    getOperators(type): Object[] {
+        switch (type) {
+            case "1":
+                return [
+                    { name: "None", value: "None" },
+                    { name: "Contains", value: "Contains" },
+                    { name: "Equals", value: "Equals" },
+                    { name: "Not Equals", value: "NotEquals" }
+                ];
+            case "2":
+                return [
+                    { name: "None", value: "None" },
+                    { name: "Equals", value: "Equals" },
+                    { name: "Between", value: "Between" },
+                    { name: ">=", value: ">=" },
+                    { name: ">", value: ">" },
+                    { name: "<=", value: "<=" },
+                    { name: "<", value: "<" },
+                ]
+
+        }
+        
     }
 }
