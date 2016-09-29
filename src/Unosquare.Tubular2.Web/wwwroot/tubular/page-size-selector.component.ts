@@ -25,7 +25,7 @@ export class PageSizeSelector {
 
     @Input('options')
     set in(options: any[]) {
-        options != undefined ? this._options = options : this._options = [10, 20, 50, 100];
+        this._options = options != undefined ? options : [10, 20, 50, 100];
     }
 
 
