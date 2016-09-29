@@ -23,7 +23,7 @@ export class ColumnHeader {
     @ViewChild('popover') popover: NgbPopover;
     
     sort() {
-        this.onSort.emit(this.column);
+        if (this.column.sortable) this.onSort.emit(this.column);
     }
 
     filter(hasValue: boolean) {
