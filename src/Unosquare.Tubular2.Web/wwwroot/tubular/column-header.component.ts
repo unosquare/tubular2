@@ -18,14 +18,13 @@ import { NgbPopover } from '@ng-bootstrap/ng-bootstrap/popover/popover';
 export class ColumnHeader {
     @Input() column: ColumnModel;
     @Output() onSort = new EventEmitter<ColumnModel>();
-    @Output() isMulti = new EventEmitter();
     @Output() onFilter = new EventEmitter<ColumnModel>();
     @ContentChild("filterPopover") private filterPopoverTemplate: TemplateRef<Object>;
     @ViewChild('popover') popover: NgbPopover;
     
     sort($event) {
+        this.column.isMultiSort =  $event.ctrlKey;
         if (this.column.sortable) {
-            this.isMulti.emit($event.ctrlKey);
             this.onSort.emit(this.column);
         }
     }
@@ -34,8 +33,4 @@ export class ColumnHeader {
         this.popover.close();
         this.onFilter.emit(this.column);
     }
-}
-
-export class multiSort {
-
 }
