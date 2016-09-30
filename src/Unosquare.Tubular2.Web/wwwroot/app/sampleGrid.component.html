@@ -4,6 +4,7 @@
             <th *ngFor="let column of columns | async">
                 <column-header #header [column]="column"
                                (onSort)="sort($event)"
+                               (isMulti)="isMulti($event)"
                                (onFilter)="applyFilter($event)">
                     <template #filterPopover>
                         <filter-dialog [column]="column"

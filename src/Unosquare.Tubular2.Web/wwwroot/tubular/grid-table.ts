@@ -6,6 +6,7 @@ import { ColumnModel, ColumnSortDirection } from './column';
 
 export class GridTable {
     private columnObservable: BehaviorSubject<ColumnModel[]> = new BehaviorSubject([]);
+    private multi;
 
     columns = this.columnObservable.asObservable();
     rows: any[];
@@ -23,8 +24,14 @@ export class GridTable {
         });
     }
 
+    isMulti($event) {
+        this.multi = $event;
+    }
+
     sort(column: ColumnModel) {
-        // TODO: Check logic from previous
+
+        if (column.sortable === false) return;
+
         if (column.direction === ColumnSortDirection.None)
             column.direction = ColumnSortDirection.Asc;
         else if (column.direction === ColumnSortDirection.Asc)
@@ -32,7 +39,16 @@ export class GridTable {
         else if (column.direction === ColumnSortDirection.Desc)
             column.direction = ColumnSortDirection.None;
 
-        column.sortOrder = column.direction === ColumnSortDirection.None ? 0 : 1;
+        column.sortOrder = column.direction === ColumnSortDirection.None ? -1 : Number.MAX_VALUE;
+               
+        if (this.multi === false) {
+            var value = this.columnObservable.getValue();
+            value.forEach(v => v.sortOrder = v.name == column.name ? v.sortOrder : -1);
+            value.forEach(v => v.direction = v.name == column.name ? v.direction : ColumnSortDirection.None);
+        }
+
+        //Re-index the sort order
+        value.forEach(v => v.sortOrder = v.sortOrder > 0? v.sortOrder+1 : v.sortOrder);
 
         let val = this.columnObservable.getValue();
         this.columnObservable.next(val);

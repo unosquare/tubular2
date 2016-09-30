@@ -19,7 +19,7 @@ export class SampleGrid extends GridTable {
         this.addColumns([
             new ColumnModel("OrderID", false, true),
             customerColumn,
-            new ColumnModel("ShippedDate", false, false),
+            new ColumnModel("ShippedDate", false, false ),
             cityColumn
         ]);
     }

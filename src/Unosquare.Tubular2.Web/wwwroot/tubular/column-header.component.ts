@@ -7,7 +7,7 @@ import { NgbPopover } from '@ng-bootstrap/ng-bootstrap/popover/popover';
     template: `
     <div class="column-header">
         <span [ngClass]="{sortable: column.sortable, sortNone: column.direction == 0, sortAsc: column.direction == 1, sortDesc: column.direction == 2}"
-            (click)="sort()">
+            (click)="sort($event)">
             {{column.label}}
         </span>
         <div class="pull-xs-right" [hidden]="column.filterMode == 0" #popover="ngbPopover" [ngbPopover]="filterPopoverTemplate" placement="bottom" title="Filter">
@@ -18,16 +18,24 @@ import { NgbPopover } from '@ng-bootstrap/ng-bootstrap/popover/popover';
 export class ColumnHeader {
     @Input() column: ColumnModel;
     @Output() onSort = new EventEmitter<ColumnModel>();
+    @Output() isMulti = new EventEmitter();
     @Output() onFilter = new EventEmitter<ColumnModel>();
     @ContentChild("filterPopover") private filterPopoverTemplate: TemplateRef<Object>;
     @ViewChild('popover') popover: NgbPopover;
     
-    sort() {
-        if (this.column.sortable) this.onSort.emit(this.column);
+    sort($event) {
+        if (this.column.sortable) {
+            this.isMulti.emit($event.ctrlKey);
+            this.onSort.emit(this.column);
+        }
     }
 
     filter(hasValue: boolean) {
         this.popover.close();
         this.onFilter.emit(this.column);
     }
+}
+
+export class multiSort {
+
 }
