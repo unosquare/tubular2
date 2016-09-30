@@ -30,6 +30,7 @@ export class ColumnFilter {
     operator: FilterOperator;
 }
 
+
 export class ColumnModel {
     name: string;
     label: string;
@@ -42,6 +43,7 @@ export class ColumnModel {
     hasFilter: boolean = false;
     filterMode: ColumnFilterMode = ColumnFilterMode.None;
     filter: ColumnFilter = new ColumnFilter();
+    isMultiSort: boolean = false;
 
     constructor(name: string, searchable?: boolean, sortable?: boolean) {
         this.name = name;
