@@ -50,12 +50,7 @@ export class ColumnFilterDialog implements AfterViewInit {
             this.column.filter.text = value.text;
             this.column.filter.text2 = value.text2;
             this.column.filter.operator = value.operator;
-            if (value.operator == "Between") {
-                this.isBetween = true;
-            }
-            else {
-                this.isBetween = false;
-            }
+            this.isBetween = value.operator == "Between";
         });
     }
 
