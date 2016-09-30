@@ -10,7 +10,7 @@ import { NgbPopover } from '@ng-bootstrap/ng-bootstrap/popover/popover';
             (click)="sort()">
             {{column.label}}
         </span>
-        <div class="pull-xs-right" [hidden]="column.filterMode == 0" #popover="ngbPopover" [ngbPopover]="filterPopoverTemplate" placement="bottom" title="Filter">
+        <div class="pull-xs-right" [hidden]="column.filterMode == 0" #popover="ngbPopover" [ngbPopover]="filterPopoverTemplate" placement="left-bottom" title="Filter">
             <i class="fa" [ngClass]="{ 'fa-filter': !isFiltering, 'fa-times': isFiltering }"></i>
         </div>
     </div>`

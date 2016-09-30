@@ -9,6 +9,8 @@ import { ColumnModel } from './column';
         <div class="form-group">
             <label>Text</label>
             <input type="text" class="form-control" formControlName="text" />
+            <label *ngIf="isBetween">Text 2</label>
+            <input *ngIf="isBetween" type="text" class="form-control" formControlName="text2" />
         </div>
         <div class="form-group">
             <label for="operator">Operator</label>
@@ -33,16 +35,22 @@ export class ColumnFilterDialog implements AfterViewInit {
     @Output() onFilteringChange = new EventEmitter<boolean>();
     form: FormGroup;
     operators: Object[];
+    public isBetween: boolean;
 
     constructor(fb: FormBuilder) {
         this.form = fb.group({
             "text": ["", Validators.required],
+            "text2": [""],
             "operator": ["None",Validators.required]
         });
 
+        this.isBetween = false;
+
         this.form.valueChanges.subscribe((value) => {
             this.column.filter.text = value.text;
+            this.column.filter.text2 = value.text2;
             this.column.filter.operator = value.operator;
+            this.isBetween = value.operator == "Between";
         });
     }
 
@@ -50,14 +58,15 @@ export class ColumnFilterDialog implements AfterViewInit {
         // set initial value in form with a timeout
         setTimeout(_ => {
             // load operator directly from the column
-            this.operators = this.column.getOperators();
+            var dataType = this.column.filterMode.toPrecision();
+            this.operators = this.column.getOperators(dataType);
 
             console.log(this.column.filter);
             // set initial value in form with a timeout
-            this.form.patchValue({ "text": this.column.filter.text, "operator": this.column.filter.operator || "None"});
+            this.form.patchValue({ "text": this.column.filter.text, "text2": this.column.filter.text2, "operator": this.column.filter.operator || "None"});
         });
     }
-
+        
     onSubmit() {
         this.onFilteringChange.emit(true);
     }
