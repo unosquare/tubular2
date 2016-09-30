@@ -26,6 +26,7 @@ export enum FilterOperator {
 
 export class ColumnFilter {
     text: string;
+    text2: string;
     operator: FilterOperator;
 }
 
