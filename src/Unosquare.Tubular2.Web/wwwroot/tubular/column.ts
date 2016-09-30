@@ -26,7 +26,7 @@ export enum FilterOperator {
 
 export class ColumnFilter {
     text: string;
-    text2: string;
+    argument: string | string[];
     operator: FilterOperator;
 }
 

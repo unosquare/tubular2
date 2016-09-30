@@ -9,8 +9,8 @@ import { ColumnModel } from './column';
         <div class="form-group">
             <label>Text</label>
             <input type="text" class="form-control" formControlName="text" />
-            <label *ngIf="isBetween">Text 2</label>
-            <input *ngIf="isBetween" type="text" class="form-control" formControlName="text2" />
+            <label *ngIf="isBetween">Argument</label>
+            <input *ngIf="isBetween" type="text" class="form-control" formControlName="argument" />
         </div>
         <div class="form-group">
             <label for="operator">Operator</label>
@@ -40,7 +40,7 @@ export class ColumnFilterDialog implements AfterViewInit {
     constructor(fb: FormBuilder) {
         this.form = fb.group({
             "text": ["", Validators.required],
-            "text2": [""],
+            "argument": [""],
             "operator": ["None",Validators.required]
         });
 
@@ -48,7 +48,7 @@ export class ColumnFilterDialog implements AfterViewInit {
 
         this.form.valueChanges.subscribe((value) => {
             this.column.filter.text = value.text;
-            this.column.filter.text2 = value.text2;
+            this.column.filter.argument = value.argument;
             this.column.filter.operator = value.operator;
             this.isBetween = value.operator == "Between";
         });
@@ -63,7 +63,7 @@ export class ColumnFilterDialog implements AfterViewInit {
 
             console.log(this.column.filter);
             // set initial value in form with a timeout
-            this.form.patchValue({ "text": this.column.filter.text, "text2": this.column.filter.text2, "operator": this.column.filter.operator || "None"});
+            this.form.patchValue({ "text": this.column.filter.text, "argument": this.column.filter.argument, "operator": this.column.filter.operator || "None" });
         });
     }
         
