@@ -24,6 +24,7 @@ export class GridTable {
     }
 
     sort(column: ColumnModel) {
+        var value = this.columnObservable.getValue();
 
         if (column.sortable === false) return;
 
@@ -34,21 +35,18 @@ export class GridTable {
         else if (column.direction === ColumnSortDirection.Desc)
             column.direction = ColumnSortDirection.None;
 
-        column.sortOrder = column.direction === ColumnSortDirection.None ? -1 : Number.MAX_VALUE;
-
-
-        var value = this.columnObservable.getValue();
+        column.sortOrder = column.direction === ColumnSortDirection.None ? 0 : value.length;
+                       
         if (column.isMultiSort === false) {
-            value.forEach(v => v.sortOrder = v.name == column.name ? v.sortOrder : -1);
-            value.forEach(v => v.direction = v.name == column.name ? v.direction : ColumnSortDirection.None);
+            value.forEach(v => v.sortOrder = v.name == column.name ? v.sortOrder : 0);
+            value.forEach(v => v.direction = v.name == column.name ? column.direction : ColumnSortDirection.None);
         }
 
         //Re-index the sort order
         if (column.isMultiSort === true)
             value.forEach(v => v.sortOrder = v.sortOrder > 0? v.sortOrder+1 : v.sortOrder);
 
-        let val = this.columnObservable.getValue();
-        this.columnObservable.next(val);
+        this.columnObservable.next(value);
     }
 
     applyFilter(column: ColumnModel) {
