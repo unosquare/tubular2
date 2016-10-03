@@ -10,7 +10,7 @@ import { NgbPopover } from '@ng-bootstrap/ng-bootstrap/popover/popover';
             (click)="sort($event)">
             {{column.label}}
         </span>
-        <div class="pull-xs-right" [hidden]="column.filterMode == 0" #popover="ngbPopover" [ngbPopover]="filterPopoverTemplate" placement="left-bottom" title="Filter">
+        <div class="pull-xs-right" [hidden]="column.filterMode == 0" #popover="ngbPopover" [ngbPopover]="filterPopoverTemplate" placement="left-bottom" title="Filter" (click)="pops()">
             <i class="fa" [ngClass]="{ 'fa-filter': !isFiltering, 'fa-times': isFiltering }"></i>
         </div>
     </div>`
@@ -21,7 +21,27 @@ export class ColumnHeader {
     @Output() onFilter = new EventEmitter<ColumnModel>();
     @ContentChild("filterPopover") private filterPopoverTemplate: TemplateRef<Object>;
     @ViewChild('popover') popover: NgbPopover;
-    
+    public static openedPop = null;
+    public static newPop = null;
+
+    pops() {
+        if (ColumnHeader.newPop != null && ColumnHeader.openedPop != null) {
+            ColumnHeader.newPop = null;
+            ColumnHeader.openedPop.close();
+            ColumnHeader.openedPop = null;
+        }
+        if (ColumnHeader.newPop == null && ColumnHeader.openedPop == null) {
+            ColumnHeader.newPop = this.popover;
+        }
+        if (ColumnHeader.newPop != null && ColumnHeader.openedPop == null) {
+            ColumnHeader.openedPop = ColumnHeader.newPop;
+        }
+        if (ColumnHeader.newPop == null && ColumnHeader.openedPop != null) {
+            ColumnHeader.openedPop.close();
+            ColumnHeader.openedPop = null;
+        }
+    }
+
     sort($event) {
         this.column.isMultiSort =  $event.ctrlKey;
         if (this.column.sortable) {
