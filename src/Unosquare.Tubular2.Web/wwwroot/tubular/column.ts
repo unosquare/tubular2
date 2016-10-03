@@ -16,7 +16,11 @@ export enum ColumnSortDirection {
 export enum ColumnFilterMode {
     None = 0,
     String,
-    Number
+    Number,
+    Boolean,
+    Date,
+    DateTime,
+    DateTimeUtc,
 }
 
 export enum FilterOperator {
@@ -59,8 +63,13 @@ export class ColumnModel {
                 return [
                     { name: "None", value: "None" },
                     { name: "Contains", value: "Contains" },
+                    { name: "Not Contains", value: "NotContains" },
                     { name: "Equals", value: "Equals" },
-                    { name: "Not Equals", value: "NotEquals" }
+                    { name: "Not Equals", value: "NotEquals" },
+                    { name: "Starts With", value: "StartsWith" },
+                    { name: "Not Starts With", value: "NotStartsWith" },
+                    { name: "Ends With", value: "EndsWith" },
+                    {name:"Not Ends With", value: "NotEndsWith"}
                 ];
             case "2":
                 return [
@@ -71,8 +80,46 @@ export class ColumnModel {
                     { name: ">", value: ">" },
                     { name: "<=", value: "<=" },
                     { name: "<", value: "<" },
-                ]
-
+                ];
+            case "3":
+                return [
+                    { name: "None", value: "None" },
+                    { name: "Equals", value: "Equals" },
+                    {name:"Not Equals", value: "NotEquals"}
+                ];
+            case "4":
+                return [
+                    { name: "None", value: "None" },
+                    { name: "Equals", value: "Equals" },
+                    { name: "Not Equals", value: "NotEquals" },
+                    { name: "Between", value: "Between" },
+                    { name: ">=", value: ">=" },
+                    { name: ">", value: ">" },
+                    { name: "<=", value: "<=" },
+                    { name: "<", value: "<" },
+                ];
+            case "5":
+                return [
+                    { name: "None", value: "None" },
+                    { name: "Equals", value: "Equals" },
+                    { name: "Not Equals", value: "NotEquals" },
+                    { name: "Between", value: "Between" },
+                    { name: ">=", value: ">=" },
+                    { name: ">", value: ">" },
+                    { name: "<=", value: "<=" },
+                    { name: "<", value: "<" },
+                ];
+            case "6":
+                return [
+                    { name: "None", value: "None" },
+                    { name: "Equals", value: "Equals" },
+                    { name: "Not Equals", value: "NotEquals" },
+                    { name: "Between", value: "Between" },
+                    { name: ">=", value: ">=" },
+                    { name: ">", value: ">" },
+                    { name: "<=", value: "<=" },
+                    { name: "<", value: "<" },
+                ];
         }
         
     }

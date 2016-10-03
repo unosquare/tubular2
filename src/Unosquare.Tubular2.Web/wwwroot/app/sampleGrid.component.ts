@@ -17,13 +17,16 @@ export class SampleGrid extends GridTable {
         let customerColumn = new ColumnModel("CustomerName");
         customerColumn.filterMode = ColumnFilterMode.String;
 
+        let dateColumn = new ColumnModel("ShippedDate");
+        dateColumn.filterMode = ColumnFilterMode.Date;
+
         let cityColumn = new ColumnModel("ShipperCity");
         cityColumn.filterMode = ColumnFilterMode.String;
         
         this.addColumns([
             orderIdColumn,
             customerColumn,
-            new ColumnModel("ShippedDate", false, false ),
+            dateColumn,
             cityColumn
         ]);
     }
