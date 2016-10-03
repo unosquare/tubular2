@@ -16,11 +16,7 @@ export class Popup {
     }
 
     ngOnInit() {
-        this.detailsForm = this.formBuilder.group({
-            CustomerName: this._row.CustomerName,
-            ShippedDate: this._row.ShippedDate,
-            ShipperCity: this._row.ShipperCity
-        });
+        this.detailsForm = this.formBuilder.group(this._row);
     }
 
     @Input('row')
