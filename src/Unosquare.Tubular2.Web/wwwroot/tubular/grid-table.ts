@@ -42,9 +42,9 @@ export class GridTable {
             value.forEach(v => v.direction = v.name == column.name ? column.direction : ColumnSortDirection.None);
         }
 
-        var currentlySortedColumns = value.filter(function (col) { return col.sortOrder > 0 });
-        currentlySortedColumns.sort(function (a, b) { return a.sortOrder === b.sortOrder ? 1 : 0 });
-        currentlySortedColumns.forEach(function (col, index) { col.sortOrder = index + 1; });
+        var currentlySortedColumns = value.filter((col) => { return col.sortOrder > 0 });
+        currentlySortedColumns.sort((a, b) => { return a.sortOrder === b.sortOrder ? 0 : 1 });
+        currentlySortedColumns.forEach((col, index) => {col.sortOrder = index + 1; });
 
         this.columnObservable.next(value);
     }
