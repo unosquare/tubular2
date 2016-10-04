@@ -1,7 +1,8 @@
-﻿import { Component, Input } from '@angular/core';
+﻿import { Component, Input, Directive, ComponentRef, Renderer, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {listenToTriggers} from '@ng-bootstrap/ng-bootstrap/util/triggers';
 
 @Component({
     selector: 'popup-details',

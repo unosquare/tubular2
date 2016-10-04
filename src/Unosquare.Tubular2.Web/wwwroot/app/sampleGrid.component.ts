@@ -4,7 +4,7 @@ import { TubularGrid, GridTable, ColumnModel, ColumnFilterMode } from '../tubula
 
 @Component({
     selector: 'grid',
-    templateUrl: '/app/sampleGrid.component.html',
+    templateUrl: '/app/sampleGrid.component.html'
 })
 
 export class SampleGrid extends GridTable {
