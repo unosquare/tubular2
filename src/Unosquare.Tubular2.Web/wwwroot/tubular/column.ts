@@ -58,9 +58,8 @@ export class ColumnModel {
     }
 
     getOperators(type): Object[] {
-        switch (type) {
-            case "1":
-                return [
+        if (type == "1") {
+            return [
                     { name: "None", value: "None" },
                     { name: "Contains", value: "Contains" },
                     { name: "Not Contains", value: "NotContains" },
@@ -71,49 +70,11 @@ export class ColumnModel {
                     { name: "Ends With", value: "EndsWith" },
                     {name:"Not Ends With", value: "NotEndsWith"}
                 ];
-            case "2":
-                return [
+        }
+        if (type == "2") {
+            return [
                     { name: "None", value: "None" },
                     { name: "Equals", value: "Equals" },
-                    { name: "Between", value: "Between" },
-                    { name: ">=", value: ">=" },
-                    { name: ">", value: ">" },
-                    { name: "<=", value: "<=" },
-                    { name: "<", value: "<" },
-                ];
-            case "3":
-                return [
-                    { name: "None", value: "None" },
-                    { name: "Equals", value: "Equals" },
-                    {name:"Not Equals", value: "NotEquals"}
-                ];
-            case "4":
-                return [
-                    { name: "None", value: "None" },
-                    { name: "Equals", value: "Equals" },
-                    { name: "Not Equals", value: "NotEquals" },
-                    { name: "Between", value: "Between" },
-                    { name: ">=", value: ">=" },
-                    { name: ">", value: ">" },
-                    { name: "<=", value: "<=" },
-                    { name: "<", value: "<" },
-                ];
-            case "5":
-                return [
-                    { name: "None", value: "None" },
-                    { name: "Equals", value: "Equals" },
-                    { name: "Not Equals", value: "NotEquals" },
-                    { name: "Between", value: "Between" },
-                    { name: ">=", value: ">=" },
-                    { name: ">", value: ">" },
-                    { name: "<=", value: "<=" },
-                    { name: "<", value: "<" },
-                ];
-            case "6":
-                return [
-                    { name: "None", value: "None" },
-                    { name: "Equals", value: "Equals" },
-                    { name: "Not Equals", value: "NotEquals" },
                     { name: "Between", value: "Between" },
                     { name: ">=", value: ">=" },
                     { name: ">", value: ">" },
@@ -121,6 +82,26 @@ export class ColumnModel {
                     { name: "<", value: "<" },
                 ];
         }
-        
+
+        if (type == "3") {
+            return [
+                    { name: "None", value: "None" },
+                    { name: "Equals", value: "Equals" },
+                    {name:"Not Equals", value: "NotEquals"}
+                ];
+        }
+
+        if (type == "4" || type == "5" || type == "6") {
+            return [
+                    { name: "None", value: "None" },
+                    { name: "Equals", value: "Equals" },
+                    { name: "Not Equals", value: "NotEquals" },
+                    { name: "Between", value: "Between" },
+                    { name: ">=", value: ">=" },
+                    { name: ">", value: ">" },
+                    { name: "<=", value: "<=" },
+                    { name: "<", value: "<" },
+                ];
+        }        
     }
 }
