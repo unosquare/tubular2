@@ -1,45 +1,42 @@
-﻿import { Component, Input, Directive, ComponentRef, Renderer, ElementRef } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+﻿import {
+        Component,
+        Input,
+        Directive,
+        ComponentRef,
+        Renderer,
+        ElementRef,
+        Injector,
+        ViewContainerRef,
+        ComponentFactoryResolver } from '@angular/core';
 
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {listenToTriggers} from '@ng-bootstrap/ng-bootstrap/util/triggers';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { PopupService } from '@ng-bootstrap/ng-bootstrap/util/popup';
+import { Popup } from './popup.component';
 
 @Directive({
     selector: '[popupDetails]',
-    //exportAs: 'popupDetails',
     host: {
         '(click)': 'onClick($event)',
     }
 })
 export class PopupDirective {
-    //@Input() _row: any;
-    @Input('popupDetails') _row;
+    @Input('popupDetails') _row : any;
+    private _popupService: PopupService<Popup>;
+    private _windowRef: ComponentRef<Popup>;
 
-    detailsForm: FormGroup;
-    private _unregisterListenersFn;
-
-    constructor(private modalService: NgbModal, private formBuilder: FormBuilder) {
+    constructor(injector: Injector, viewContainerRef: ViewContainerRef, private _renderer: Renderer,
+        private componentFactoryResolver: ComponentFactoryResolver) {
+        this._popupService = new PopupService<Popup>(
+            Popup, injector, viewContainerRef, _renderer, componentFactoryResolver);
     }
 
-    //ngOnInit() {
-    //    this._unregisterListenersFn = listenToTriggers(this._renderer, this._elementRef.nativeElement, 'click', this.open.bind(this), this.close.bind(this),
-    //        this.toggle.bind(this));
-    //}
-
     ngOnInit() { 
-        setTimeout(() => {
-            document.addEventListener('click', this._row);
-        }, 0);
     }
 
     onClick($event) {
+        this._windowRef = this._popupService.open();
         console.log('diste click' + this._row);
     }
-
-    //setRow(row: any) {
-    //    this._row = row;
-    //    this.detailsForm = this.formBuilder.group(this._row);
-    //}
 
     //open() {
     //    //this.modalService.open(popup);
@@ -55,5 +52,3 @@ export class PopupDirective {
     //    //this.modalService.open(popup);
     //}
 }
-
-//export const NGB_POPUP_DIRECTIVES = [PopupDirective];

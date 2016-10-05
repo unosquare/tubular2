@@ -14,6 +14,7 @@ import { PopupDirective }  from './popup.directive';
     declarations: [AppComponent, SampleGrid, Popup, PopupDirective],
     providers: [TubularDataService],
     bootstrap: [AppComponent],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA] 
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    entryComponents: [Popup]
 })
 export class AppModule { }
