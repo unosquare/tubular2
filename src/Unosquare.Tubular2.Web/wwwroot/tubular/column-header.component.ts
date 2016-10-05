@@ -1,6 +1,7 @@
 ﻿import { Component, Input, Output, EventEmitter, ContentChild, TemplateRef, ViewChild, AfterViewInit } from '@angular/core';
-import { ColumnModel } from './column';
 import { NgbPopover } from '@ng-bootstrap/ng-bootstrap/popover/popover';
+
+import { ColumnModel } from './column';
 
 @Component({
     selector: 'column-header',
@@ -10,7 +11,8 @@ import { NgbPopover } from '@ng-bootstrap/ng-bootstrap/popover/popover';
             (click)="sort($event)">
             {{column.label}}
         </span>
-        <div class="pull-xs-right" [hidden]="column.filterMode == 0" #popover="ngbPopover" [ngbPopover]="filterPopoverTemplate" placement="left-bottom" title="Filter" (click)="pops()">
+        <div class="pull-xs-right" [hidden]="column.filterMode == 0" #popover="ngbPopover" [ngbPopover]="filterPopoverTemplate" 
+                placement="left-bottom" title="Filter" (click)="togglePopover()">
             <i class="fa" [ngClass]="{ 'fa-filter': !isFiltering, 'fa-times': isFiltering }"></i>
         </div>
     </div>`
@@ -19,27 +21,23 @@ export class ColumnHeader {
     @Input() column: ColumnModel;
     @Output() onSort = new EventEmitter<ColumnModel>();
     @Output() onFilter = new EventEmitter<ColumnModel>();
-    @ContentChild("filterPopover") private filterPopoverTemplate: TemplateRef<Object>;
+    @ContentChild('filterPopover') private filterPopoverTemplate: TemplateRef<Object>;
     @ViewChild('popover') popover: NgbPopover;
-    public static openedPop = null;
-    public static newPop = null;
+    
+    public static prevPopover = null;
 
-    pops() {
-        if (ColumnHeader.newPop != null && ColumnHeader.openedPop != null) {
-            ColumnHeader.newPop = null;
-            ColumnHeader.openedPop.close();
-            ColumnHeader.openedPop = null;
+    togglePopover() {
+        if (ColumnHeader.prevPopover != null) {
+            ColumnHeader.prevPopover.close();
+
+            if (ColumnHeader.prevPopover == this.popover) {
+                ColumnHeader.prevPopover = null;
+                this.popover.toggle();
+                return;
+            }
         }
-        if (ColumnHeader.newPop == null && ColumnHeader.openedPop == null) {
-            ColumnHeader.newPop = this.popover;
-        }
-        if (ColumnHeader.newPop != null && ColumnHeader.openedPop == null) {
-            ColumnHeader.openedPop = ColumnHeader.newPop;
-        }
-        if (ColumnHeader.newPop == null && ColumnHeader.openedPop != null) {
-            ColumnHeader.openedPop.close();
-            ColumnHeader.openedPop = null;
-        }
+
+        ColumnHeader.prevPopover = this.popover;
     }
 
     sort($event) {
