@@ -23,13 +23,13 @@ export class TubularDataService {
     private transformSortDirection(column) {
         switch (column.direction) {
             case 1:
-                column.sortDirection = "Ascending";
+                column.sortDirection = 'Ascending';
                 break;
             case 2:
-                column.sortDirection = "Descending";
+                column.sortDirection = 'Descending';
                 break;
             default:
-                column.sortDirection = "None";
+                column.sortDirection = 'None';
         }
     }
 
