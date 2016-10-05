@@ -19,8 +19,7 @@ export enum ColumnFilterMode {
     Number,
     Boolean,
     Date,
-    DateTime,
-    DateTimeUtc,
+    DateTime
 }
 
 export enum FilterOperator {
@@ -57,9 +56,10 @@ export class ColumnModel {
         if (sortable != null) this.sortable = sortable;
     }
 
-    getOperators(type): Object[] {
-        if (type == "1") {
-            return [
+    getOperators(): Object[] {
+        switch (this.filterMode) {
+            case ColumnFilterMode.String:
+                return [
                     { name: "None", value: "None" },
                     { name: "Contains", value: "Contains" },
                     { name: "Not Contains", value: "NotContains" },
@@ -70,9 +70,8 @@ export class ColumnModel {
                     { name: "Ends With", value: "EndsWith" },
                     {name:"Not Ends With", value: "NotEndsWith"}
                 ];
-        }
-        if (type == "2") {
-            return [
+            case ColumnFilterMode.Number:
+                return [
                     { name: "None", value: "None" },
                     { name: "Equals", value: "Equals" },
                     { name: "Between", value: "Between" },
@@ -81,18 +80,15 @@ export class ColumnModel {
                     { name: "<=", value: "<=" },
                     { name: "<", value: "<" },
                 ];
-        }
-
-        if (type == "3") {
-            return [
+            case ColumnFilterMode.Boolean:
+                return [
                     { name: "None", value: "None" },
                     { name: "Equals", value: "Equals" },
                     {name:"Not Equals", value: "NotEquals"}
                 ];
-        }
-
-        if (type == "4" || type == "5" || type == "6") {
-            return [
+            case ColumnFilterMode.Date:
+            case ColumnFilterMode.DateTime:
+                return [
                     { name: "None", value: "None" },
                     { name: "Equals", value: "Equals" },
                     { name: "Not Equals", value: "NotEquals" },
@@ -101,7 +97,9 @@ export class ColumnModel {
                     { name: ">", value: ">" },
                     { name: "<=", value: "<=" },
                     { name: "<", value: "<" },
-                ];
-        }        
+                ]
+            default:
+                return [];     
+        }
     }
 }

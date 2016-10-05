@@ -58,8 +58,7 @@ export class ColumnFilterDialog implements AfterViewInit {
         // set initial value in form with a timeout
         setTimeout(_ => {
             // load operator directly from the column
-            var dataType = this.column.filterMode.toPrecision();
-            this.operators = this.column.getOperators(dataType);
+            this.operators = this.column.getOperators();
 
             console.log(this.column.filter);
             // set initial value in form with a timeout
