@@ -35,16 +35,14 @@ export class ColumnFilterDialog implements AfterViewInit {
     @Output() onFilteringChange = new EventEmitter<boolean>();
     form: FormGroup;
     operators: Object[];
-    public isBetween: boolean;
+    isBetween: boolean = false;
 
     constructor(fb: FormBuilder) {
         this.form = fb.group({
             "text": ["", Validators.required],
             "argument": [""],
-            "operator": ["None",Validators.required]
+            "operator": ["None", Validators.required]
         });
-
-        this.isBetween = false;
 
         this.form.valueChanges.subscribe((value) => {
             this.column.filter.text = value.text;
@@ -60,12 +58,15 @@ export class ColumnFilterDialog implements AfterViewInit {
             // load operator directly from the column
             this.operators = this.column.getOperators();
 
-            console.log(this.column.filter);
             // set initial value in form with a timeout
-            this.form.patchValue({ "text": this.column.filter.text, "argument": this.column.filter.argument, "operator": this.column.filter.operator || "None" });
+            this.form.patchValue({
+                "text": this.column.filter.text,
+                "argument": this.column.filter.argument,
+                "operator": this.column.filter.operator || "None"
+            });
         });
     }
-        
+
     onSubmit() {
         this.onFilteringChange.emit(true);
     }

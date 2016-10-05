@@ -32,7 +32,7 @@ export class ColumnHeader {
 
             if (ColumnHeader.prevPopover == this.popover) {
                 ColumnHeader.prevPopover = null;
-                this.popover.close();
+                this.popover.toggle();
                 return;
             }
         }

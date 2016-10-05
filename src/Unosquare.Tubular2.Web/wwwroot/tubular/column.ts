@@ -68,7 +68,7 @@ export class ColumnModel {
                     { name: "Starts With", value: "StartsWith" },
                     { name: "Not Starts With", value: "NotStartsWith" },
                     { name: "Ends With", value: "EndsWith" },
-                    {name:"Not Ends With", value: "NotEndsWith"}
+                    { name: "Not Ends With", value: "NotEndsWith" }
                 ];
             case ColumnFilterMode.Number:
                 return [
@@ -84,7 +84,7 @@ export class ColumnModel {
                 return [
                     { name: "None", value: "None" },
                     { name: "Equals", value: "Equals" },
-                    {name:"Not Equals", value: "NotEquals"}
+                    { name: "Not Equals", value: "NotEquals" }
                 ];
             case ColumnFilterMode.Date:
             case ColumnFilterMode.DateTime:
@@ -99,7 +99,7 @@ export class ColumnModel {
                     { name: "<", value: "<" },
                 ]
             default:
-                return [];     
+                return [];
         }
     }
 }
