@@ -34,9 +34,7 @@ export class TubularDataService {
     }
 
     private extractData(res: Response) {
-        let body = res.json();
-
-        return body || {};
+        return res.json() || {};
     }
 
     private handleError(error: any) {

@@ -15,7 +15,11 @@ import 'rxjs/add/operator/debounceTime';
             <div><div class="fa fa-refresh fa-2x fa-spin"></div>
         </div></div>
         <ng-content></ng-content>
-    </div>`
+    </div>`,
+    styles: [
+        ':host /deep/ div.row { margin-top: 4px; margin-bottom: 4px; }',
+        ':host /deep/ div.row:first { margin-top: 0; }'
+    ]
 })
 export class TubularGrid {
     // data is just observable and children can't push

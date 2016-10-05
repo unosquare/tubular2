@@ -11,6 +11,6 @@
    content: "\f176";
 }
 .sortDesc::after {
-   font-family: FontAwesome;
-   content: "\f175";
+    font-family: FontAwesome;
+    content: "\f175";
 }

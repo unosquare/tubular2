@@ -7,7 +7,6 @@ import { TubularGrid }      from './grid.component';
     template: `Total rows: {{totalRecords}} (Filtered records: {{filteredRecordCount}})`
 })
 export class GridPagerInfo {
-    // todo: probably extend normal to pager?
     totalRecords = 0;
     filteredRecordCount = 0;
     
