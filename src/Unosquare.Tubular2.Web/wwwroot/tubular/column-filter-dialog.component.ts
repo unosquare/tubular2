@@ -46,7 +46,7 @@ export class ColumnFilterDialog implements AfterViewInit {
 
         this.form.valueChanges.subscribe((value) => {
             this.column.filter.text = value.text;
-            this.column.filter.argument = value.argument;
+            this.column.filter.argument = [value.argument];
             this.column.filter.operator = value.operator;
             this.isBetween = value.operator == "Between";
         });
