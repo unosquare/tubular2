@@ -97,6 +97,7 @@ export class TubularGrid {
             error => this.errorMessage = error
         );
     }
+
     getFullDataSource(callback) {
         let req = {
             count: this.requestCount,
@@ -107,15 +108,14 @@ export class TubularGrid {
                 text: '',
                 operator: 'None'
             }
-        }
+        };
+
         this.tbDataService.retrieveData(this.serverUrl, req).subscribe(
-            data => {
-                let payload = (data.Payload).map(req);
-                this.data.next(payload);
-            },
+            data => callback(data.Payload),
             error => this.errorMessage = error
         );
     }
+
     private transformToObj(columns: ColumnModel[], data: any) {
         let obj = {};
 
