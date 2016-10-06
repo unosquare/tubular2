@@ -99,13 +99,13 @@ export class TubularGrid {
     }
     getFullDataSource(callback) {
         let req = {
-            Count: this.requestCount,
-            Columns: this.columns.getValue(),
-            Skip: 0,
-            Take: -1,
-            Search: {
-                Text: '',
-                Operator: 'None'
+            count: this.requestCount,
+            columns: this.columns.getValue(),
+            skip: 0,
+            take: -1,
+            search: {
+                text: '',
+                operator: 'None'
             }
         }
         this.tbDataService.retrieveData(this.serverUrl, req).subscribe(
