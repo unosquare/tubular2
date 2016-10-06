@@ -16,19 +16,19 @@ export class PrintButton {
                 let headers = this.tbGrid.columns.getValue().map(c => { return '<th>' + c.name + '</th>' });
                 let rows = data.map(row => {
                     if (typeof (row) === 'object') {
-                        row = Object.keys(row).map(key => { return row.key });
+                        return '<tr>' + row.map(function (cell, index) {
+                            return '<td>' + row[index] + '</td>'
+                        });
                     }
-                    return '<tr>' + row.map(function (cell, index) {
-                        return '<td>' + row[index] + '</td>'
-                    });
                 });
 
                 let tableHtml = '<table class="table table-bprdered table-striped"><thead><tr>'
                     + headers.join('')
-                    + '</tr></thead>'
+                    + '</tr></thead><tbody>'
                     + rows.join('');
+                    + '</tbody></table>'
 
-                var popup = window.open("about:blank", "Print", "menubar=0,location=0,height=500,width=800");
+                var popup = window.open("", "", "menubar=0,location=0,height=500,width=800");
                 popup.document.write('<link rel="stylesheet" href="scripts/lib/bootstrap/css/bootstrap.min.css" />');
                 popup.document.write('<body onload="window.print();">');
                 popup.document.write(tableHtml);
