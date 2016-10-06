@@ -1,17 +1,6 @@
-﻿import {
-        Component,
-        Input,
-        Directive,
-        ComponentRef,
-        Renderer,
-        ElementRef,
-        Injector,
-        ViewContainerRef,
-        ComponentFactoryResolver } from '@angular/core';
+﻿import { Directive, Input, TemplateRef } from '@angular/core';
 
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { PopupService } from '@ng-bootstrap/ng-bootstrap/util/popup';
-import { Popup } from './popup.component';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Directive({
     selector: '[popupDetails]',
@@ -20,35 +9,16 @@ import { Popup } from './popup.component';
     }
 })
 export class PopupDirective {
-    @Input('popupDetails') _row : any;
-    private _popupService: PopupService<Popup>;
-    private _windowRef: ComponentRef<Popup>;
+    @Input() popupDetails: string | TemplateRef<any>;
 
-    constructor(injector: Injector, viewContainerRef: ViewContainerRef, private _renderer: Renderer,
-        private componentFactoryResolver: ComponentFactoryResolver) {
-        this._popupService = new PopupService<Popup>(
-            Popup, injector, viewContainerRef, _renderer, componentFactoryResolver);
+    constructor(private modalService: NgbModal) {
     }
 
     ngOnInit() { 
     }
 
     onClick($event) {
-        this._windowRef = this._popupService.open();
-        console.log('diste click' + this._row);
+        this.modalService.open(this.popupDetails);
     }
 
-    //open() {
-    //    //this.modalService.open(popup);
-    //    console.log('open directive');
-    //}
-
-    //close() {
-    //    //this.modalService.open(popup);
-    //    console.log('close directive');
-    //}
-
-    //toggle() {
-    //    //this.modalService.open(popup);
-    //}
 }

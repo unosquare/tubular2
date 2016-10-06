@@ -22,7 +22,7 @@
     "zone.js": "^0.6.23",
     "momentjs": "1.1.15",
     "bootstrap": "4.0.0-alpha.4",
-    "@ng-bootstrap/ng-bootstrap": "1.0.0-alpha.5"
+    "@ng-bootstrap/ng-bootstrap": "1.0.0-alpha.4"
   },
   "devDependencies": {
     "del": "2.2.0",
