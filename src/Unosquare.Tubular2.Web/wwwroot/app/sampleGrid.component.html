@@ -17,22 +17,11 @@
     <tbody [hidden]="isFiltering">
         <tr *ngFor="let row of rows">
             <td>
-                <button class="btn btn-info" [popupDetails]="content">
+                <button class="btn btn-info" [popupDetails]="content" (popupUpdated)="setPopup($event)">
                     Details 
                 </button>
-                <template ngbModalContainer #content let-c="close">
-                    <div class="modal-header">
-                        <button type="button" class="close" aria-label="Close" (click)="c()">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h4 class="modal-title">Details</h4>
-                    </div>
-                    <div class="modal-body">
-                        <popup-details [row]="row"></popup-details>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" (click)="c()">Close</button>
-                    </div>
+                <template ngbModalContainer #content>
+                    <popup-details [row]="row" [popupRef]="popupRef"></popup-details>
                 </template>
             </td>
             <td>{{row.OrderID}}</td>

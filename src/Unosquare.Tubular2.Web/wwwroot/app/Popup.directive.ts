@@ -1,4 +1,4 @@
-﻿import { Directive, Input, TemplateRef } from '@angular/core';
+﻿import { Directive, Input, TemplateRef, Output, EventEmitter } from '@angular/core';
 
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
@@ -10,15 +10,12 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 })
 export class PopupDirective {
     @Input() popupDetails: string | TemplateRef<any>;
+    @Output() popupUpdated = new EventEmitter();
 
-    constructor(private modalService: NgbModal) {
-    }
-
-    ngOnInit() { 
-    }
-
+    constructor(private modalService: NgbModal) { }
+    
     onClick($event) {
-        this.modalService.open(this.popupDetails);
+        let winRef = this.modalService.open(this.popupDetails);
+        this.popupUpdated.emit(winRef);
     }
-
 }

@@ -8,16 +8,17 @@ import { TubularGrid, GridTable, ColumnModel, ColumnFilterMode } from '../tubula
 })
 
 export class SampleGrid extends GridTable {
+    popupRef: any;
 
     constructor(private tbGrid: TubularGrid) {
         super(tbGrid);
-        let orderIdColumn = new ColumnModel("OrderID");
+        let orderIdColumn = new ColumnModel("OrderID", false);
         orderIdColumn.filterMode = ColumnFilterMode.Number;
 
         let customerColumn = new ColumnModel("CustomerName");
         customerColumn.filterMode = ColumnFilterMode.String;
 
-        let dateColumn = new ColumnModel("ShippedDate");
+        let dateColumn = new ColumnModel("ShippedDate", false);
         dateColumn.filterMode = ColumnFilterMode.Date;
 
         let cityColumn = new ColumnModel("ShipperCity");
@@ -29,5 +30,11 @@ export class SampleGrid extends GridTable {
             dateColumn,
             cityColumn
         ]);
+    }
+
+    setPopup(ref) {
+        this.popupRef = ref;
+
+        // this.popupRef.result
     }
 }

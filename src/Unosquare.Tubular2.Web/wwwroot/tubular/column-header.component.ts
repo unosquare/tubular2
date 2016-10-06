@@ -1,5 +1,4 @@
 ﻿import { Component, Input, Output, EventEmitter, ContentChild, TemplateRef, ViewChild, AfterViewInit } from '@angular/core';
-import { NgbPopover } from '@ng-bootstrap/ng-bootstrap/popover/popover';
 
 import { ColumnModel } from './column';
 
@@ -22,7 +21,7 @@ export class ColumnHeader {
     @Output() onSort = new EventEmitter<ColumnModel>();
     @Output() onFilter = new EventEmitter<ColumnModel>();
     @ContentChild('filterPopover') private filterPopoverTemplate: TemplateRef<Object>;
-    @ViewChild('popover') popover: NgbPopover;
+    @ViewChild('popover') popover: any;
     
     public static prevPopover = null;
 

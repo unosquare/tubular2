@@ -9,6 +9,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 })
 
 export class Popup {
+    @Input('popupRef') popupRef: any;
     _row: any;
     detailsForm: FormGroup;
 
@@ -24,4 +25,7 @@ export class Popup {
         this._row = row;
     }
 
+    close() {
+        this.popupRef.close();
+    }
 }

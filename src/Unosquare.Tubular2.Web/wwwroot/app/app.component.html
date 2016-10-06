@@ -1,16 +1,22 @@
-﻿<h1>Tubular2 - Angular2 components</h1>
+﻿<h1 class="display-3">Tubular2</h1>
+<p class="lead">
+    Angular2 components
+</p>
 
 <tubular-grid server-url="http://tubular.azurewebsites.net/api/orders/paged" require-authentication="false">
     <div class="row">
-                <div class="col-md-4">
-                    <grid-print></grid-print>
-                </div>
-                <div class="col-md-4">
-                    <grid-export></grid-export>
-                </div>
-                <div class="col-md-4">
-                    <grid-search></grid-search>
-                </div>
+        <div class="col-md-6">
+            <grid-pager></grid-pager>
+        </div>
+        <div class="col-md-3">
+            <div class="btn-group-sm">
+                <grid-print></grid-print>
+                <grid-export></grid-export>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <grid-search></grid-search>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-12">
