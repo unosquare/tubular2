@@ -75,6 +75,10 @@ export class TubularGrid {
     }
     
     refresh() {
+        this.getCurrentPage((data, req) => this.transformDataset(data, req));
+    }
+
+    getCurrentPage(callback) {
         let req = {
             count: this.requestCount++,
             columns: this.columns.getValue(),
@@ -85,22 +89,14 @@ export class TubularGrid {
         };
 
         this.tbDataService.retrieveData(this.serverUrl, req).subscribe(
-            data => {
-                let transform = d => this.transformToObj(req.columns, d);
-                let payload = (data.Payload || {}).map(transform);
-
-                this.data.next(payload);
-                this._filteredRecordCount.next(data.FilteredRecordCount);
-                this._totalPages.next(data.TotalPages);
-                this._totalRecordCount.next(data.TotalRecordCount);
-            },
+            data => callback(data, req),
             error => this.errorMessage = error
         );
     }
 
     getFullDataSource(callback) {
         let req = {
-            count: this.requestCount,
+            count: this.requestCount++,
             columns: this.columns.getValue(),
             skip: 0,
             take: -1,
@@ -111,7 +107,7 @@ export class TubularGrid {
         };
 
         this.tbDataService.retrieveData(this.serverUrl, req).subscribe(
-            data => callback(data.Payload),
+            data => callback(data.Payload || {}),
             error => this.errorMessage = error
         );
     }
@@ -124,4 +120,13 @@ export class TubularGrid {
         return obj;
     }
 
+    private transformDataset(data, req) {
+        let transform = d => this.transformToObj(req.columns, d);
+        let payload = (data.Payload || {}).map(transform);
+
+        this.data.next(payload);
+        this._filteredRecordCount.next(data.FilteredRecordCount);
+        this._totalPages.next(data.TotalPages);
+        this._totalRecordCount.next(data.TotalRecordCount);
+    }
 }
