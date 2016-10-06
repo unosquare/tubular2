@@ -3,15 +3,15 @@ import { TubularGrid } from './grid.component';
 
 @Component({
     selector: 'tbExportButton',
-    template: `<div class="btn-group" uib-dropdown>
-                <button class="btn btn-info btn sm" uib-dropdown-toggle>
+    template: `<div ngbDropdown class="d-inline-block">
+                <button ngbDropdownToggle class="btn btn-outline-primary" id="dropdownExport">
                 <span class="fa fa-download"></span>&nbsp;EXPORT CSV&nbsp;<span class="caret"></span>
                </button>
-                <ul class="dropdown-menu" uib-dropdown-menu>
-                    <li><a  href="javascript:void(0)" (click)="downloadCsv()">Current rows</a></li>
-                    <li><a  href="javascript:void(0)" (click)="downloadAllCsv()">All rows</a></li>
-                </ul>
-                </div>`
+               <div class="dropdown-menu" aria-labelledby="dropdownExport">
+                <button class="dropdown-item" (click)="downloadCsv()">Current rows</button>
+                <button class="dropdown-item" (click)="downloadAllCsv()">All rows</button>
+               </div>
+               </div>`
 })
 export class tbExportButton {
     constructor(private tbGrid: TubularGrid) { }
