@@ -3,7 +3,14 @@
 <tubular-grid server-url="http://tubular.azurewebsites.net/api/orders/paged" require-authentication="false">
     <div class="row">
         <div class="col-md-2 offset-md-5">
-            <tbExportButton></tbExportButton>
+            <div class="row">
+                <div class="col-md-6">
+                    <grid-print></grid-print>
+                </div>
+                <div class="col-md-6">
+                    <tbExportButton></tbExportButton>
+                </div>
+            </div>
         </div>
         <div class="col-md-3 offset-md-2">
             <grid-search></grid-search>

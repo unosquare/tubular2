@@ -51,6 +51,10 @@ export class TubularGrid {
     serverUrl: string;
     @Input('require-authentication')
     requireAuthentication: boolean;
+    @Input('request-method')
+    requestMethod: string;
+    @Input('request-timeout')
+    requestTimeout: number;
 
     constructor(private tbDataService: TubularDataService) { }
 
@@ -95,7 +99,30 @@ export class TubularGrid {
             error => this.errorMessage = error
         );
     }
-
+    getFullDataRequest() {
+        let req = {
+            requestMethod: this.requestMethod,
+            timeout: this.requestTimeout,
+            requireAuthentication: this.requireAuthentication,
+            data: {
+                Count: this.requestCount,
+                Columns: this.columns,
+                Skip: 0,
+                Take: -1,
+                Search: {
+                    Text: '',
+                    Operator:'None'
+                }
+            }
+        }
+        this.tbDataService.retrieveData(this.serverUrl, req).subscribe(
+            data => {
+                let payload = (data.Payload).map(req.data);
+                this.data.next(payload);
+            },
+            error => this.errorMessage = error
+        );
+    }
     private transformToObj(columns: ColumnModel[], data: any) {
         let obj = {};
 
