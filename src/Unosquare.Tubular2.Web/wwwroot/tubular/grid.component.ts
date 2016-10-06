@@ -51,8 +51,6 @@ export class TubularGrid {
     serverUrl: string;
     @Input('require-authentication')
     requireAuthentication: boolean;
-    @Input('request-method')
-    requestMethod: string;
     @Input('request-timeout')
     requestTimeout: number;
 
@@ -99,25 +97,20 @@ export class TubularGrid {
             error => this.errorMessage = error
         );
     }
-    getFullDataRequest() {
+    getFullDataSource(callback) {
         let req = {
-            requestMethod: this.requestMethod,
-            timeout: this.requestTimeout,
-            requireAuthentication: this.requireAuthentication,
-            data: {
-                Count: this.requestCount,
-                Columns: this.columns,
-                Skip: 0,
-                Take: -1,
-                Search: {
-                    Text: '',
-                    Operator:'None'
-                }
+            Count: this.requestCount,
+            Columns: this.columns.getValue(),
+            Skip: 0,
+            Take: -1,
+            Search: {
+                Text: '',
+                Operator: 'None'
             }
         }
         this.tbDataService.retrieveData(this.serverUrl, req).subscribe(
             data => {
-                let payload = (data.Payload).map(req.data);
+                let payload = (data.Payload).map(req);
                 this.data.next(payload);
             },
             error => this.errorMessage = error
