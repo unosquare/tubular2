@@ -12,13 +12,13 @@ import { GridPager } from './grid-pager.component';
 import { ColumnFilterDialog }  from './column-filter-dialog.component';
 import { GridPagerInfo } from './grid-pager-info.component';
 import { PageSizeSelector } from './page-size-selector.component';
-import { tbExportButton } from './grid-export.component';
+import { ExportButton } from './grid-export.component';
 import { GridPrint } from './grid-print.component';
 
 @NgModule({
     imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule, NgbModule],
-    declarations: [TubularGrid, ColumnHeader, GridSearch, GridPager, GridPagerInfo, ColumnFilterDialog, PageSizeSelector, tbExportButton, GridPrint],
-    exports: [TubularGrid, ColumnHeader, GridSearch, GridPager, GridPagerInfo, ColumnFilterDialog, PageSizeSelector, tbExportButton, GridPrint,
+    declarations: [TubularGrid, ColumnHeader, GridSearch, GridPager, GridPagerInfo, ColumnFilterDialog, PageSizeSelector, ExportButton, GridPrint],
+    exports: [TubularGrid, ColumnHeader, GridSearch, GridPager, GridPagerInfo, ColumnFilterDialog, PageSizeSelector, ExportButton, GridPrint,
         NgbModule]
 })
 export class TubularModule { }
