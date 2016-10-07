@@ -13,14 +13,9 @@ export class PrintButton {
         this.tbGrid.getFullDataSource(
             data => {
                 // TODO: Change map to reduce
-                let headers = this.tbGrid.columns.getValue().map(c => {
-                    if (typeof (c) === 'object') {
-                        return '<th>' + c.reduce((a, b) => {
-                            return a + '<th>' + b + '</th>'
-                        }, '');
-                    }
-                    
-                });
+                let headers = this.tbGrid.columns.getValue().reduce((a, b) => {
+                     return a + '<th>' + b.name + '</th>'                
+                },'');
                 let rows = data.map(row => {
                     if (typeof (row) === 'object') {
                         return '<tr>' + row.reduce((a, b) => {
