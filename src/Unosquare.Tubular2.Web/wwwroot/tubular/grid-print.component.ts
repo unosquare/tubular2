@@ -13,7 +13,7 @@ export class PrintButton {
         this.tbGrid.getFullDataSource(
             data => {
                 let headers = this.tbGrid.columns.getValue().reduce((a, b) => {
-                     return a + '<th>' + b.name + '</th>'                
+                     return a + '<th>' + b.label + '</th>'                
                 },'');
                 let rows = data.map(row => {
                     if (typeof (row) === 'object') {

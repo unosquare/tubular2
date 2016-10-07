@@ -55,7 +55,18 @@ export class ColumnModel {
         if (searchable != null) this.searchable = searchable;
         if (sortable != null) this.sortable = sortable;
     }
-
+    getInputType() {
+        switch (this.filterMode) {
+            case ColumnFilterMode.Number:
+                return "number";
+            case ColumnFilterMode.Date:
+                return "date";
+            case ColumnFilterMode.DateTime:
+                return "datetime-local";
+            default:
+                return "text";
+        }
+    }
     getOperators(): Object[] {
         switch (this.filterMode) {
             case ColumnFilterMode.String:
