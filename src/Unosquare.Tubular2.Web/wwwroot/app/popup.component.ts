@@ -1,7 +1,9 @@
 ﻿import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { Observable }       from 'rxjs/Observable';
+import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
 
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { TubularGrid } from '../tubular';
 
 @Component({
     selector: 'popup-details',
@@ -13,7 +15,7 @@ export class Popup {
     _row: any;
     detailsForm: FormGroup;
 
-    constructor(private modalService: NgbModal, private formBuilder: FormBuilder) {
+    constructor(private tbGrid: TubularGrid, private formBuilder: FormBuilder) {
     }
 
     ngOnInit() {
@@ -26,6 +28,11 @@ export class Popup {
     }
 
     close() {
+        this.popupRef.close();
+    }
+
+    save() {
+        this.tbGrid._updateRow.next(this.detailsForm.value);
         this.popupRef.close();
     }
 }

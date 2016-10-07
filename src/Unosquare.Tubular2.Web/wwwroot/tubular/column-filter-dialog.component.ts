@@ -8,9 +8,9 @@ import { ColumnModel } from './column';
    <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label>Text</label>
-            <input type="text" class="form-control" formControlName="text" />
+            <input type="{{inputType}}" class="form-control" formControlName="text" />
             <label *ngIf="isBetween">Argument</label>
-            <input *ngIf="isBetween" type="text" class="form-control" formControlName="argument" />
+            <input *ngIf="isBetween" type="{{inputType}}" class="form-control" formControlName="argument" />
         </div>
         <div class="form-group">
             <label for="operator">Operator</label>
@@ -36,6 +36,7 @@ export class ColumnFilterDialog implements AfterViewInit {
     form: FormGroup;
     operators: Object[];
     isBetween: boolean = false;
+    inputType: string;
 
     constructor(fb: FormBuilder) {
         this.form = fb.group({
@@ -49,6 +50,7 @@ export class ColumnFilterDialog implements AfterViewInit {
             this.column.filter.argument = [value.argument];
             this.column.filter.operator = value.operator;
             this.isBetween = value.operator == "Between";
+            this.inputType = this.column.getInputType();
         });
     }
 
