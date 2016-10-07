@@ -1,4 +1,4 @@
-﻿import { Component} from '@angular/core';
+﻿import { Component, Input} from '@angular/core';
 import { TubularGrid } from './grid.component';
 
 @Component({
@@ -15,13 +15,23 @@ import { TubularGrid } from './grid.component';
 })
 export class ExportButton {
     constructor(private tbGrid: TubularGrid) { }
+    @Input() fileName: string;
 
     downloadCsv() {
-        //this.tbGrid...
+        this.tbGrid.getCurrentPage(
+            data => {
+                var csvFile = '';
+
+            }
+        );
     }
 
     downloadAllCsv() {
-        //this.tbGrid...
+        this.tbGrid.getFullDataSource(
+            data => {
+
+            }
+        );
     }
 
 }
