@@ -13,19 +13,26 @@ export class PrintButton {
         this.tbGrid.getFullDataSource(
             data => {
                 // TODO: Change map to reduce
-                let headers = this.tbGrid.columns.getValue().map(c => { return '<th>' + c.name + '</th>' });
+                let headers = this.tbGrid.columns.getValue().map(c => {
+                    if (typeof (c) === 'object') {
+                        return '<th>' + c.reduce((a, b) => {
+                            return a + '<th>' + b + '</th>'
+                        }, '');
+                    }
+                    
+                });
                 let rows = data.map(row => {
                     if (typeof (row) === 'object') {
-                        return '<tr>' + row.map(function (cell, index) {
-                            return '<td>' + row[index] + '</td>'
-                        });
+                        return '<tr>' + row.reduce((a, b) => {
+                            return a +'<td>' + b + '</td>'
+                        }, '') + '</tr>';
                     }
                 });
 
                 let tableHtml = '<table class="table table-bprdered table-striped"><thead><tr>'
-                    + headers.join('')
+                    + headers
                     + '</tr></thead><tbody>'
-                    + rows.join('');
+                    + rows
                     + '</tbody></table>'
 
                 var popup = window.open("", "", "menubar=0,location=0,height=500,width=800");
