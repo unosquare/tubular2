@@ -34,7 +34,5 @@ export class SampleGrid extends GridTable {
 
     setPopup(ref) {
         this.popupRef = ref;
-
-        // this.popupRef.result
     }
 }

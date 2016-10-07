@@ -33,6 +33,8 @@ export class TubularGrid {
     filteredRecordCount = this._filteredRecordCount.asObservable();
     _pageSize = new BehaviorSubject(10);
     pageSize = this._pageSize.asObservable();
+    _updateRow = new BehaviorSubject([]);
+    updateRow = this._updateRow.asObservable();
 
     // values that to observe and allow to push from children
     page = new BehaviorSubject(0);
@@ -53,6 +55,8 @@ export class TubularGrid {
     requireAuthentication: boolean;
     @Input('request-timeout')
     requestTimeout: number;
+    @Input('server-save-url')
+    serverSaveUrl: string;
 
     constructor(private tbDataService: TubularDataService) { }
 
@@ -72,6 +76,7 @@ export class TubularGrid {
                 this.search.operator = !c ? "None" : "Auto";
                 this.refresh();
             });
+        this.updateRow.subscribe(c => this.update());
     }
     
     refresh() {
@@ -128,5 +133,9 @@ export class TubularGrid {
         this._filteredRecordCount.next(data.FilteredRecordCount);
         this._totalPages.next(data.TotalPages);
         this._totalRecordCount.next(data.TotalRecordCount);
+    }
+
+    update() {
+        console.log(this._updateRow.value);
     }
 }
