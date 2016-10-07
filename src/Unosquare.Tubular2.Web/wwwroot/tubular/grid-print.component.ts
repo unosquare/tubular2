@@ -12,15 +12,9 @@ export class PrintButton {
     printGrid() {
         this.tbGrid.getFullDataSource(
             data => {
-                // TODO: Change map to reduce
-                let headers = this.tbGrid.columns.getValue().map(c => {
-                    if (typeof (c) === 'object') {
-                        return '<th>' + c.reduce((a, b) => {
-                            return a + '<th>' + b + '</th>'
-                        }, '');
-                    }
-                    
-                });
+                let headers = this.tbGrid.columns.getValue().reduce((a, b) => {
+                     return a + '<th>' + b.label + '</th>'                
+                },'');
                 let rows = data.map(row => {
                     if (typeof (row) === 'object') {
                         return '<tr>' + row.reduce((a, b) => {
@@ -36,7 +30,7 @@ export class PrintButton {
                     + '</tbody></table>'
 
                 var popup = window.open("", "", "menubar=0,location=0,height=500,width=800");
-                popup.document.write('<link rel="stylesheet" href="scripts/lib/bootstrap/css/bootstrap.min.css" />');
+                popup.document.write('<link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.min.css" />');
                 popup.document.write('<body onload="window.print();">');
                 popup.document.write(tableHtml);
                 popup.document.write('</body>');
