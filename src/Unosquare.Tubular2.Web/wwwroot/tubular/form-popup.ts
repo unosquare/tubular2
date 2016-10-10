@@ -6,14 +6,14 @@ import { TubularGrid }      from './grid.component';
 
 export abstract class FormPopup {
     @Input('popupRef') popupRef: any;
-    @Input('row') row: any = [];
+    @Input('row') row: any;
     detailsForm: FormGroup;
 
     constructor(public tbGrid: TubularGrid, public formBuilder: FormBuilder) {
     }
 
     ngOnInit() {
-        this.detailsForm = this.formBuilder.group(this.row);
+        this.detailsForm = this.formBuilder.group(this.row || this.getEmptyRow());
     }
     
     close() {
@@ -23,4 +23,6 @@ export abstract class FormPopup {
     save() {
         this.popupRef.close(this.detailsForm.value);
     }
+
+    abstract getEmptyRow(): any;
 }

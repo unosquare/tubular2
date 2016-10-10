@@ -4,6 +4,7 @@ import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
 
 import { TubularDataService } from './tubular-data.service';
 import { ColumnModel } from './column';
+import { PopupContainer } from './grid-table';
 
 import 'rxjs/add/operator/debounceTime';
 
@@ -21,7 +22,7 @@ import 'rxjs/add/operator/debounceTime';
         ':host /deep/ div.row:first { margin-top: 0; }'
     ]
 })
-export class TubularGrid {
+export class TubularGrid extends PopupContainer {
     // data is just observable and children can't push
     private data = new BehaviorSubject([]);
     dataStream = this.data.asObservable();
@@ -38,7 +39,7 @@ export class TubularGrid {
     page = new BehaviorSubject(0);
     columns = new BehaviorSubject([]);
     freeTextSearch = new BehaviorSubject("");
-
+    
     showLoading = false;
     private requestCount = 0;
     errorMessage: string;
@@ -52,7 +53,9 @@ export class TubularGrid {
     @Input('request-timeout') requestTimeout: number;
     @Input('server-save-url') serverSaveUrl: string;
 
-    constructor(private tbDataService: TubularDataService) { }
+    constructor(private tbDataService: TubularDataService) {
+        super();
+    }
 
     ngOnInit() {
         // just a logging
@@ -110,11 +113,14 @@ export class TubularGrid {
         );
     }
 
-    update(row) {
+    onUpdate(row) {
         //  TODO: Persist with tbDataService
-        console.log(row);
     }
 
+    onDismiss(reason) {
+        
+    }
+    
     private transformToObj(columns: ColumnModel[], data: any) {
         let obj = {};
 

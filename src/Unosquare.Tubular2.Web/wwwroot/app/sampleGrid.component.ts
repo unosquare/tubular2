@@ -31,8 +31,14 @@ export class SampleGrid extends GridTable {
             cityColumn
         ]);
     }
+    
+    onUpdate(row) {
+        console.log("SampleGrid Update", row);
+        this.tbGrid.onUpdate(row);
+    }
 
     onDismiss(reason) {
-        console.log("Closed popup", reason);
+        console.log("SampleGrid Dismiss", reason);
     }
+
 }

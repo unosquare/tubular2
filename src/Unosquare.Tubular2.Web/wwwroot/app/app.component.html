@@ -3,15 +3,21 @@
     Angular2 components
 </p>
 
-<tubular-grid server-url="http://tubular.azurewebsites.net/api/orders/paged" server-save-url="/api/orders/" require-authentication="false">
+<tubular-grid #grid server-url="http://tubular.azurewebsites.net/api/orders/paged" server-save-url="/api/orders/" require-authentication="false">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-5">
             <grid-pager></grid-pager>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="btn-group-sm">
                 <grid-print></grid-print>
                 <grid-export fileName="sampleCsv.csv"></grid-export>
+                <button class="btn btn-info" [popupDetails]="content" (popupUpdated)="grid.setPopup($event)">
+                    New Item
+                </button>
+                <template ngbModalContainer #content>
+                    <popup-details [popupRef]="grid.popupRef"></popup-details>
+                </template>
             </div>
         </div>
         <div class="col-md-3">
@@ -24,13 +30,13 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-5">
             <grid-pager></grid-pager>
         </div>
         <div class="col-md-3">
             <page-size-selector [options]=""></page-size-selector>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <grid-pager-info></grid-pager-info>
         </div>
     </div>

@@ -10,4 +10,12 @@ export class Popup extends FormPopup {
     constructor(tbGrid: TubularGrid, formBuilder: FormBuilder) {
         super(tbGrid, formBuilder);
     }
+
+    getEmptyRow(): any {
+        return {
+            CustomerName: "",
+            ShippedDate: Date,
+            ShipperCity: ""
+        };
+    }
 }
