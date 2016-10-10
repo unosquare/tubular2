@@ -9,7 +9,7 @@ import { TubularGrid, GridTable, ColumnModel, ColumnFilterMode } from '../tubula
 
 export class SampleGrid extends GridTable {
 
-    constructor(private tbGrid: TubularGrid) {
+    constructor(public tbGrid: TubularGrid) {
         super(tbGrid);
 
         let orderIdColumn = new ColumnModel("OrderID", false);

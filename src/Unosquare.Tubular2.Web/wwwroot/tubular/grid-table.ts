@@ -11,9 +11,9 @@ export class GridTable {
     rows: any[];
     popupRef: any;
 
-    constructor(tbGrid: TubularGrid) {
-        tbGrid.dataStream.subscribe(payload => this.rows = payload);
-        this.columnObservable.subscribe(payload => tbGrid.columns.next(payload));
+    constructor(public tbGrid: TubularGrid) {
+        this.tbGrid.dataStream.subscribe(payload => this.rows = payload);
+        this.columnObservable.subscribe(payload => this.tbGrid.columns.next(payload));
     }
 
     addColumns(columns: ColumnModel[]) {
@@ -37,7 +37,7 @@ export class GridTable {
             column.direction = ColumnSortDirection.None;
 
         column.sortOrder = column.direction === ColumnSortDirection.None ? 0 : Number.MAX_VALUE;
-                       
+
         if (!column.isMultiSort) {
             value.forEach(v => v.sortOrder = v.name == column.name ? v.sortOrder : 0);
             value.forEach(v => v.direction = v.name == column.name ? column.direction : ColumnSortDirection.None);
@@ -45,7 +45,7 @@ export class GridTable {
 
         let currentlySortedColumns = value.filter(col => col.sortOrder > 0);
         currentlySortedColumns.sort((a, b) => a.sortOrder === b.sortOrder ? 0 : 1);
-        currentlySortedColumns.forEach((col, index) => {col.sortOrder = index + 1; });
+        currentlySortedColumns.forEach((col, index) => { col.sortOrder = index + 1; });
 
         this.columnObservable.next(value);
     }
@@ -54,8 +54,9 @@ export class GridTable {
         let val = this.columnObservable.getValue();
         this.columnObservable.next(val);
     }
-    
+
     setPopup(ref) {
         this.popupRef = ref;
+        this.popupRef.result.then(row => this.tbGrid.update, (dismiss) => console.log(dismiss));
     }
 }

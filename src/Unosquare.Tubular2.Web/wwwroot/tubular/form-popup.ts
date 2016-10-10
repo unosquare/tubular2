@@ -17,11 +17,10 @@ export class FormPopup {
     }
     
     close() {
-        this.popupRef.close();
+        this.popupRef.dismiss();
     }
 
     save() {
-        this.tbGrid._updateRow.next(this.detailsForm.value);
-        this.popupRef.close();
+        this.popupRef.close(this.detailsForm.value);
     }
 }

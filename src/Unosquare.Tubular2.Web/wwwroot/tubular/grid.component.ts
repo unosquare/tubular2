@@ -33,8 +33,6 @@ export class TubularGrid {
     filteredRecordCount = this._filteredRecordCount.asObservable();
     _pageSize = new BehaviorSubject(10);
     pageSize = this._pageSize.asObservable();
-    _updateRow = new BehaviorSubject([]);
-    updateRow = this._updateRow.asObservable();
 
     // values that to observe and allow to push from children
     page = new BehaviorSubject(0);
@@ -42,21 +40,17 @@ export class TubularGrid {
     freeTextSearch = new BehaviorSubject("");
 
     showLoading = false;
-    requestCount = 0;
+    private requestCount = 0;
     errorMessage: string;
     search = {
         text: "",
         operator: "None"
     };
-    
-    @Input('server-url')
-    serverUrl: string;
-    @Input('require-authentication')
-    requireAuthentication: boolean;
-    @Input('request-timeout')
-    requestTimeout: number;
-    @Input('server-save-url')
-    serverSaveUrl: string;
+
+    @Input('server-url') serverUrl: string;
+    @Input('require-authentication') requireAuthentication: boolean;
+    @Input('request-timeout') requestTimeout: number;
+    @Input('server-save-url') serverSaveUrl: string;
 
     constructor(private tbDataService: TubularDataService) { }
 
@@ -76,9 +70,8 @@ export class TubularGrid {
                 this.search.operator = !c ? "None" : "Auto";
                 this.refresh();
             });
-        this.updateRow.subscribe(c => this.update());
     }
-    
+
     refresh() {
         this.getCurrentPage((data, req) => this.transformDataset(data, req));
     }
@@ -117,6 +110,11 @@ export class TubularGrid {
         );
     }
 
+    update(row) {
+        //  TODO: Persist with tbDataService
+        console.log(row);
+    }
+
     private transformToObj(columns: ColumnModel[], data: any) {
         let obj = {};
 
@@ -133,9 +131,5 @@ export class TubularGrid {
         this._filteredRecordCount.next(data.FilteredRecordCount);
         this._totalPages.next(data.TotalPages);
         this._totalRecordCount.next(data.TotalRecordCount);
-    }
-
-    update() {
-        console.log(this._updateRow.value);
     }
 }
