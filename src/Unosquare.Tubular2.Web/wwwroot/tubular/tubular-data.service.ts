@@ -12,10 +12,16 @@ import 'rxjs/add/observable/throw';
 export class TubularDataService {
     constructor(private http: Http) { }
     
-    retrieveData(url: string, req: any): Observable<any> {
+    retrieveData(url: string, req: any) : Observable<any> {
         req.columns.forEach(this.transformSortDirection);
 
         return this.http.post(url, req)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
+    save(url: string, row: any) : Observable<any> {
+        return this.http.post(url, row)
             .map(this.extractData)
             .catch(this.handleError);
     }

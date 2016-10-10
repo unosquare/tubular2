@@ -114,7 +114,10 @@ export class TubularGrid extends PopupContainer {
     }
 
     onUpdate(row) {
-        //  TODO: Persist with tbDataService
+        this.tbDataService.save(this.serverSaveUrl, row).subscribe(
+            data => console.log(data),
+            error => console.log(error)
+        );
     }
 
     onDismiss(reason) {
