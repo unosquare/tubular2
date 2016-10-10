@@ -8,7 +8,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
         '(click)': 'onClick($event)',
     }
 })
-export class PopupDirective {
+export class PopupDetails {
     @Input() popupDetails: string | TemplateRef<any>;
     @Output() popupUpdated = new EventEmitter();
 
