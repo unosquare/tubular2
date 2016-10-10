@@ -6,6 +6,7 @@ export * from './tubular-data.service';
 
 // Export components and directives
 export * from './grid.component';
+export * from './form-popup';
 export * from './grid-table';
 export * from './grid-search.component';
 export * from './grid-pager.component';

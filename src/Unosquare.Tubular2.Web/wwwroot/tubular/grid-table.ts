@@ -9,6 +9,7 @@ export class GridTable {
 
     columns = this.columnObservable.asObservable();
     rows: any[];
+    popupRef: any;
 
     constructor(tbGrid: TubularGrid) {
         tbGrid.dataStream.subscribe(payload => this.rows = payload);
@@ -52,5 +53,9 @@ export class GridTable {
     applyFilter(column: ColumnModel) {
         let val = this.columnObservable.getValue();
         this.columnObservable.next(val);
+    }
+    
+    setPopup(ref) {
+        this.popupRef = ref;
     }
 }
