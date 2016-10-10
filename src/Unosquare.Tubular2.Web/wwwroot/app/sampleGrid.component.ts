@@ -31,4 +31,8 @@ export class SampleGrid extends GridTable {
             cityColumn
         ]);
     }
+
+    onDismiss(reason) {
+        console.log("Closed popup", reason);
+    }
 }

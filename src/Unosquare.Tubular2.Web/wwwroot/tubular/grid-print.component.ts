@@ -3,22 +3,22 @@ import { TubularGrid } from './grid.component';
 
 @Component({
     selector: 'grid-print',
-    template: `<button class="btn btn-info btn-sm" (click)="printGrid()">
+    template: `<button class="btn btn-info btn-sm" (click)="print()">
                 <span class="fa fa-print"></span>&nbsp;PRINT</button>`
 })
 export class PrintButton {
     constructor(private tbGrid: TubularGrid) { }
 
-    printGrid() {
+    print() {
         this.tbGrid.getFullDataSource(
             data => {
                 let headers = this.tbGrid.columns.getValue().reduce((a, b) => {
-                     return a + '<th>' + b.label + '</th>'                
-                },'');
+                    return a + '<th>' + b.label + '</th>'
+                }, '');
                 let rows = data.map(row => {
                     if (typeof (row) === 'object') {
                         return '<tr>' + row.reduce((a, b) => {
-                            return a +'<td>' + b + '</td>'
+                            return a + '<td>' + b + '</td>'
                         }, '') + '</tr>';
                     }
                 });
@@ -26,7 +26,7 @@ export class PrintButton {
                 let tableHtml = '<table class="table table-bprdered table-striped"><thead><tr>'
                     + headers
                     + '</tr></thead><tbody>'
-                    + rows
+                    + rows.join("")
                     + '</tbody></table>'
 
                 var popup = window.open("", "", "menubar=0,location=0,height=500,width=800");
