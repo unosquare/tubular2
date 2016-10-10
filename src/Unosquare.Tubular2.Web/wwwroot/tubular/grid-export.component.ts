@@ -20,8 +20,21 @@ export class ExportButton {
     downloadCsv() {
         this.tbGrid.getCurrentPage(
             data => {
-                var csvFile = '';
+                let headers = this.tbGrid.columns.getValue().reduce((a, b) => {
+                    return a + b.label + ','
+                }, '');
+                headers = headers.slice(0, -1) + ',\n';
 
+                let rows = data.Payload.map(row => {
+                    if (typeof (row) === 'object') {
+                        return row.reduce((a, b) => {
+                            return a + b + ','
+                        }, '') + row.slice(0, -1) + ',\n';
+                    }
+                });
+                if (headers.length > 0) {
+                    this.processCsv(headers, rows);
+                }
             }
         );
     }
@@ -29,9 +42,31 @@ export class ExportButton {
     downloadAllCsv() {
         this.tbGrid.getFullDataSource(
             data => {
+                let headers = this.tbGrid.columns.getValue().reduce((a, b) => {
+                    return a + b.label + ','
+                }, '');
+                headers = headers.slice(0, -1) + ',\n';
 
-            }
-        );
+                let rows = data.map(row => {
+                    if (typeof (row) === 'object') {
+                        return row.reduce((a, b) => {
+                            return a + b + ','
+                        }, '') + row.slice(0,-1)+',\n';
+                    }
+                });
+                if (headers.length > 0) {
+                    this.processCsv(headers, rows);
+                }
+
+            });
     }
 
-}
+    processCsv(headers, rows) {
+        var csv = headers;
+        for (var i = 0; i < rows.length; i++){
+            csv += rows[i];
+        }
+        console.log(csv);
+        var blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+    }
+    }
