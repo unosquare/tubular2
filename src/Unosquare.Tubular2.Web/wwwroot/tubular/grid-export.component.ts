@@ -37,6 +37,8 @@ export class ExportButton {
             return a + b.label + ','
         }, '');
 
+        
+
         headers = headers.slice(0, -1) + '\r\n';
         var csv = headers;
 
@@ -48,9 +50,10 @@ export class ExportButton {
             }
         });
 
-        for (var i = 0; i < rows.length; i++){
-            csv += rows[i];
-        }
+        csv = rows.reduce((a, b) => {
+            return a + b
+        }, headers);
+
         console.log(csv);
         var blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
     }
