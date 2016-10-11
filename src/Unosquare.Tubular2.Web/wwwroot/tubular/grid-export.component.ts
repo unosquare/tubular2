@@ -20,21 +20,7 @@ export class ExportButton {
     downloadCsv() {
         this.tbGrid.getCurrentPage(
             data => {
-                let headers = this.tbGrid.columns.getValue().reduce((a, b) => {
-                    return a + b.label + ','
-                }, '');
-                headers = headers.slice(0, -1) + ',\n';
-
-                let rows = data.Payload.map(row => {
-                    if (typeof (row) === 'object') {
-                        return row.reduce((a, b) => {
-                            return a + b + ','
-                        }, '') + row.slice(0, -1) + ',\n';
-                    }
-                });
-                if (headers.length > 0) {
-                    this.processCsv(headers, rows);
-                }
+                    this.processCsv(data.Payload);
             }
         );
     }
@@ -42,27 +28,26 @@ export class ExportButton {
     downloadAllCsv() {
         this.tbGrid.getFullDataSource(
             data => {
-                let headers = this.tbGrid.columns.getValue().reduce((a, b) => {
-                    return a + b.label + ','
-                }, '');
-                headers = headers.slice(0, -1) + ',\n';
-
-                let rows = data.map(row => {
-                    if (typeof (row) === 'object') {
-                        return row.reduce((a, b) => {
-                            return a + b + ','
-                        }, '') + row.slice(0,-1)+',\n';
-                    }
-                });
-                if (headers.length > 0) {
-                    this.processCsv(headers, rows);
-                }
-
+                    this.processCsv(data);
             });
     }
 
-    processCsv(headers, rows) {
+    processCsv(data) {
+        let headers = this.tbGrid.columns.getValue().reduce((a, b) => {
+            return a + b.label + ','
+        }, '');
+
+        headers = headers.slice(0, -1) + '\r\n';
         var csv = headers;
+
+        let rows = data.map(row => {
+            if (typeof (row) === 'object') {
+                return row.reduce((a, b) => {
+                    return a + b + ','
+                }, '') + row.slice(0, -1) + '\r\n';
+            }
+        });
+
         for (var i = 0; i < rows.length; i++){
             csv += rows[i];
         }
