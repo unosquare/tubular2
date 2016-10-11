@@ -8,14 +8,15 @@ import 'rxjs/add/operator/debounceTime';
 
 @Component({
     selector: 'page-size-selector',
-    template: `<form class="form-inline">
-                <div class="form-group">
-                <label class="small">Page size</label>&nbsp;
-                <select (change)="onChange($event.target.value)" class="form-control input-sm">
-                    <option *ngFor="let obj of _options" [value]="obj">{{obj}}</option>
-                </select>
-                </div>
-                </form>`
+    template: `
+    <form class="form-inline">
+        <div class="form-group">
+            <label class="small">Page size</label>&nbsp;
+            <select (change)="onChange($event.target.value)" class="form-control input-sm">
+                <option *ngFor="let obj of _options" [value]="obj">{{obj}}</option>
+            </select>
+        </div>
+    </form>`
 })
 export class PageSizeSelector {
     _options: number[] = [10, 20, 50, 100];
@@ -27,7 +28,7 @@ export class PageSizeSelector {
         if (options != undefined) this._options = options;
     }
     
-    onChange(newVal) {
+    private onChange(newVal) {
         this.tbGrid._pageSize.next(newVal);
     }
 }

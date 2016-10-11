@@ -8,6 +8,15 @@ import { PopupContainer } from './grid-table';
 
 import 'rxjs/add/operator/debounceTime';
 
+export class GridPageInfo {
+    currentInitial = 0;
+    currentTop = 0;
+    currentPage = 0;
+    totalPages = 0;
+    totalRecordCount = 0;
+    filteredRecordCount = 0;
+}
+
 @Component({
     selector: 'tubular-grid',
     template: `
@@ -26,12 +35,9 @@ export class TubularGrid extends PopupContainer {
     // data is just observable and children can't push
     private data = new BehaviorSubject([]);
     dataStream = this.data.asObservable();
-    private _totalPages = new BehaviorSubject(0);
-    totalPages = this._totalPages.asObservable();
-    private _totalRecordCount = new BehaviorSubject(0);
-    totalRecordCount = this._totalRecordCount.asObservable();
-    private _filteredRecordCount = new BehaviorSubject(0);
-    filteredRecordCount = this._filteredRecordCount.asObservable();
+    private _pageInfo = new BehaviorSubject(new GridPageInfo());
+    pageInfo = this._pageInfo.asObservable();
+
     _pageSize = new BehaviorSubject(10);
     pageSize = this._pageSize.asObservable();
 
@@ -135,10 +141,24 @@ export class TubularGrid extends PopupContainer {
     private transformDataset(data, req) {
         let transform = d => this.transformToObj(req.columns, d);
         let payload = (data.Payload || {}).map(transform);
-
+        // push data
         this.data.next(payload);
-        this._filteredRecordCount.next(data.FilteredRecordCount);
-        this._totalPages.next(data.TotalPages);
-        this._totalRecordCount.next(data.TotalRecordCount);
+
+        let pageInfo = new GridPageInfo();
+        pageInfo.currentPage = data.CurrentPage;
+        pageInfo.totalPages = data.TotalPages;
+        pageInfo.filteredRecordCount = data.FilteredRecordCount;
+        pageInfo.totalRecordCount = data.TotalRecordCount;
+
+        pageInfo.currentInitial = ((pageInfo.currentPage - 1) * this._pageSize.getValue()) + 1;
+        if (pageInfo.currentInitial <= 0)
+            pageInfo.currentInitial = data.TotalRecordCount > 0 ? 1 : 0;
+
+        pageInfo.currentTop = this._pageSize.getValue() * pageInfo.currentPage;
+        if (pageInfo.currentTop <= 0 || pageInfo.currentTop > data.filteredRecordCount)
+            pageInfo.currentTop = data.filteredRecordCount;
+        
+        // push page Info
+        this._pageInfo.next(pageInfo);
     }
 }

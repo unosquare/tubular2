@@ -1,48 +1,41 @@
 ﻿import { Component, Input } from '@angular/core';
 
-import { TubularGrid }      from './grid.component';
+import { TubularGrid, GridPageInfo }      from './grid.component';
 
 @Component({
     selector: 'grid-pager',
     template: `
     <div class="btn-group">
         <button (click)="goTo(0)" class="btn btn-primary"
-            [disabled]="currentPage == 0">
+            [disabled]="info.currentPage == 0">
             <i class="fa fa-fast-backward"></i>
         </button>
         <button *ngFor="let page of pages" [hidden]="page < 0"
             (click)="goTo(page)" class="btn btn-secondary"
-            [ngClass]="{active: page == currentPage}">
+            [ngClass]="{active: page == info.currentPage - 1}">
             {{page + 1}}
         </button>
-        <button (click)="goTo(totalPages)" class="btn btn-primary"
-            [disabled]="currentPage == (totalPages-1)">
+        <button (click)="goTo(info.totalPages)" class="btn btn-primary"
+            [disabled]="currentPage == (info.totalPages-1)">
             <i class="fa fa-fast-forward"></i>
         </button>
     </div>`
 })
 export class GridPager {
-    totalPages = 0;
-    totalRecords = 0;
-    currentPage = 0;
-    filteredRecordCount = 0;
+    info = new GridPageInfo();
     pages: number[];
 
     constructor(private tbGrid: TubularGrid) { }
 
     ngOnInit() {
-        this.tbGrid.totalPages.subscribe(pages => {
-            this.totalPages = pages
-            this.pages = Array(pages).fill(0).map((x, i) => i);
+        this.tbGrid.pageInfo.subscribe((x: GridPageInfo) => {
+            this.info = x;
+            this.pages = Array(x.totalPages).fill(0).map((x, i) => i); 
         });
-
-        // live update properties
-        this.tbGrid.totalRecordCount.subscribe(x => this.totalRecords = x);
-        this.tbGrid.filteredRecordCount.subscribe(x => this.filteredRecordCount = x);
     }
 
     goTo(page: number) {
-        this.currentPage = page;
+        this.info.currentPage = page;
         this.tbGrid.page.next(page);
     }
 }
