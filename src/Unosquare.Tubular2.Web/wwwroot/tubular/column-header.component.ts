@@ -10,11 +10,18 @@ import { ColumnModel } from './column';
             (click)="sort($event)">
             {{column.label}}
         </span>
-        <div class="pull-xs-right" [hidden]="column.filterMode == 0" #popover="ngbPopover" [ngbPopover]="filterPopoverTemplate" 
+        <div class="column-menu" [hidden]="column.filterMode == 0">
+            <button class="btn btn-sm" [ngClass]="{ 'btn-success': hasFilter }"
+                #popover="ngbPopover" [ngbPopover]="filterPopoverTemplate" 
                 placement="left-bottom" title="Filter" (click)="togglePopover()">
-            <i class="fa" [ngClass]="{ 'fa-filter': !isFiltering, 'fa-times': isFiltering }"></i>
+                <i class="fa fa-filter"></i>
+            </button>
         </div>
-    </div>`
+    </div>`,
+    styles: [
+        '.column-menu { position: relative; display: block; text-align: center; vertical-align: top; float: right;}',
+        '.column-menu button { border-radius: 30px !important; line-height: 10px; margin: 0;}'
+    ]
 })
 export class ColumnHeader {
     @Input() column: ColumnModel;
@@ -22,10 +29,12 @@ export class ColumnHeader {
     @Output() onFilter = new EventEmitter<ColumnModel>();
     @ContentChild('filterPopover') private filterPopoverTemplate: TemplateRef<Object>;
     @ViewChild('popover') popover: any;
-    
+
+    private hasFilter: boolean;
+
     public static prevPopover = null;
 
-    togglePopover() {
+    private togglePopover() {
         if (ColumnHeader.prevPopover != null) {
             ColumnHeader.prevPopover.close();
 
@@ -39,16 +48,18 @@ export class ColumnHeader {
         ColumnHeader.prevPopover = this.popover;
     }
 
-    sort($event) {
-        this.column.isMultiSort =  $event.ctrlKey;
+    private sort($event) {
+        this.column.isMultiSort = $event.ctrlKey;
+
         if (this.column.sortable) {
             this.onSort.emit(this.column);
         }
     }
 
-    filter(hasValue: boolean) {
+    private filter(hasValue: boolean) {
         ColumnHeader.prevPopover = null;
         this.popover.close();
+        this.hasFilter = hasValue;
         this.onFilter.emit(this.column);
     }
 }

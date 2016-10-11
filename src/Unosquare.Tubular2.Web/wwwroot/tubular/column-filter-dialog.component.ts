@@ -1,13 +1,13 @@
-﻿import { Component, Input, Output, EventEmitter, ContentChild, TemplateRef, AfterViewInit } from '@angular/core';
+﻿import { Component, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { ColumnModel } from './column';
+import { ColumnModel, FilterOperator } from './column';
 
 @Component({
     selector: 'filter-dialog',
     template: `
    <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="form-group">
-            <label>Text</label>
+            <label>Value</label>
             <input type="{{inputType}}" class="form-control" formControlName="text" />
             <label *ngIf="isBetween">Argument</label>
             <input *ngIf="isBetween" type="{{inputType}}" class="form-control" formControlName="argument" />
@@ -24,7 +24,7 @@ import { ColumnModel } from './column';
                         [disabled]="!form.valid">Filter</button>
             </div>
             <div class="col-xs-6">
-                <button class="btn btn-sm btn-danger btn-block" 
+                <button type="button" class="btn btn-sm btn-danger btn-block" 
                         (click)="reset()">Clear</button>
             </div>
         </div>
@@ -45,10 +45,13 @@ export class ColumnFilterDialog implements AfterViewInit {
             "operator": ["None", Validators.required]
         });
 
-        this.form.valueChanges.subscribe((value) => {
+        this.form.valueChanges.subscribe(value => {
             this.column.filter.text = value.text;
-            this.column.filter.argument = [value.argument];
             this.column.filter.operator = value.operator;
+
+            if (value.argument)
+                this.column.filter.argument = [value.argument];
+
             this.isBetween = value.operator == "Between";
             this.inputType = this.column.getInputType();
         });
@@ -69,12 +72,15 @@ export class ColumnFilterDialog implements AfterViewInit {
         });
     }
 
-    onSubmit() {
+    private onSubmit() {
         this.onFilteringChange.emit(true);
     }
 
-    reset() {
-        this.onFilteringChange.emit(false);
+    private reset() {
         this.form.reset();
+        this.column.filter.argument = null;
+        this.column.filter.operator = FilterOperator.None;
+
+        this.onFilteringChange.emit(false);
     }
 }

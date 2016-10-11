@@ -25,6 +25,7 @@ export enum ColumnFilterMode {
 export enum FilterOperator {
     None = 0,
     Equals
+    // TODO: Complete
 }
 
 export class ColumnFilter {
@@ -55,6 +56,7 @@ export class ColumnModel {
         if (searchable != null) this.searchable = searchable;
         if (sortable != null) this.sortable = sortable;
     }
+
     getInputType() {
         switch (this.filterMode) {
             case ColumnFilterMode.Number:
@@ -67,6 +69,7 @@ export class ColumnModel {
                 return "text";
         }
     }
+
     getOperators(): Object[] {
         switch (this.filterMode) {
             case ColumnFilterMode.String:
