@@ -17,7 +17,7 @@
     <tbody [hidden]="isFiltering">
         <tr *ngFor="let row of rows">
             <td>
-                <button class="btn btn-info" [popupDetails]="content" (popupUpdated)="setPopup($event)">
+                <button class="btn btn-info btn-sm" [popupDetails]="content" (popupUpdated)="setPopup($event)">
                     Details 
                 </button>
                 <template ngbModalContainer #content>

@@ -1,6 +1,35 @@
 ﻿import { Component, Input} from '@angular/core';
 import { TubularGrid } from './grid.component';
 
+/**
+ * @summary Interface for "saveAs" function.
+ * @author  Cyril Schumacher
+ * @version 1.0
+ */
+interface FileSaver {
+    (
+        /**
+         * @summary Data.
+         * @type {Blob}
+         */
+        data: Blob,
+
+        /**
+         * @summary File name.
+         * @type {DOMString}
+         */
+        filename: string,
+
+        /**
+         * @summary Disable Unicode text encoding hints or not.
+         * @type {boolean}
+         */
+        disableAutoBOM?: boolean
+    ): void
+}
+
+declare var saveAs: FileSaver;
+
 @Component({
     selector: 'grid-export',
     template: `<div ngbDropdown class="d-inline-block">
@@ -14,47 +43,30 @@ import { TubularGrid } from './grid.component';
                </div>`
 })
 export class ExportButton {
-    constructor(private tbGrid: TubularGrid) { }
     @Input() fileName: string;
 
-    downloadCsv() {
-        this.tbGrid.getCurrentPage(
-            data => {
-                    this.processCsv(data.Payload);
-            }
-        );
+    constructor(private tbGrid: TubularGrid) { }
+    
+    private downloadCsv() {
+        this.tbGrid.getCurrentPage(data => this.processCsv(data.Payload));
     }
 
-    downloadAllCsv() {
-        this.tbGrid.getFullDataSource(
-            data => {
-                    this.processCsv(data);
-            });
+    private downloadAllCsv() {
+        this.tbGrid.getFullDataSource(data => this.processCsv(data));
     }
 
-    processCsv(data) {
-        let headers = this.tbGrid.columns.getValue().reduce((a, b) => {
-            return a + b.label + ','
-        }, '');
-
-        
-
-        headers = headers.slice(0, -1) + '\r\n';
-        var csv = headers;
+    private processCsv(data) {
+        let headers = this.tbGrid.columns.getValue().reduce((a, b) => a + b.label + ',', '').slice(0, -1) + '\r\n';
 
         let rows = data.map(row => {
-            if (typeof (row) === 'object') {
-                return row.reduce((a, b) => {
-                    return a + b + ','
-                }, '') + row.slice(0, -1) + '\r\n';
+            if (typeof row === 'object') {
+                return row.reduce((a, b) => a + '"' + b + '"' + ',', '').slice(0, -1) + '\r\n';
             }
         });
 
-        csv = rows.reduce((a, b) => {
-            return a + b
-        }, headers);
+        let csv = rows.reduce((a, b) => a + b, headers);
 
-        console.log(csv);
         var blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+        saveAs(blob, this.fileName);
     }
-    }
+}

@@ -20,6 +20,7 @@ var paths = {
         'systemjs': 'node_modules/systemjs/**/*',
         'momentjs': 'node_modules/momentjs/build/*',
         'bootstrap': 'node_modules/bootstrap/dist/**/*',
+        'filesaver': 'node_modules/filesaver.js/*.js',
         '@ng-bootstrap': 'node_modules/@ng-bootstrap/ng-bootstrap/**/*'
     }
 };
