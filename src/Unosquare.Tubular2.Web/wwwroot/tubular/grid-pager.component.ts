@@ -8,9 +8,13 @@ import { TubularGrid, GridPageInfo }      from './grid.component';
     `<div>
     <ngb-pagination 
     [collectionSize]="info.filteredRecordCount"
+    [pageSize]="tbGrid._pageSize.value"
     [(page)]="info.currentPage"
     [boundaryLinks]="true"
+    [rotate]="true"
+    [maxSize]="5"
     (pageChange)="goTo($event)"
+    size="sm"
     ></ngb-pagination>
     </div>`
 })
