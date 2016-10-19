@@ -7,6 +7,7 @@ import { TubularGrid }      from './grid.component';
 export abstract class FormPopup {
     @Input('popupRef') popupRef: any;
     @Input('row') row: any;
+    $isNew: boolean;
     detailsForm: FormGroup;
 
     constructor(public tbGrid: TubularGrid, public formBuilder: FormBuilder) {
@@ -14,6 +15,7 @@ export abstract class FormPopup {
 
     ngOnInit() {
         this.detailsForm = this.formBuilder.group(this.row || this.getEmptyRow());
+        this.$isNew = !this.row;
     }
     
     close() {
@@ -21,7 +23,10 @@ export abstract class FormPopup {
     }
 
     save() {
-        this.popupRef.close(this.detailsForm.value);
+        this.popupRef.close({
+            'values': this.detailsForm.value,
+            '$isNew': this.$isNew
+        });
     }
 
     abstract getEmptyRow(): any;

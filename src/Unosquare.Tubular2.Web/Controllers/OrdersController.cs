@@ -3,15 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Unosquare.Tubular2.Models;
 
 namespace Unosquare.Tubular2.Sample.Controllers
 {
     [Route("api/[controller]")]
     public class OrdersController : Controller
     {
-        // PUT api/values/5
+        // POST api/values
+        [HttpPost]
+        public IActionResult Save([FromBody]OrdersDto order)
+        {
+            return Ok();
+        }
+
+        // PUT api/values
         [HttpPut]
-        public IActionResult Put([FromBody]string value)
+        public IActionResult Put([FromBody]OrdersDto row)
         {
             return Ok();
         }

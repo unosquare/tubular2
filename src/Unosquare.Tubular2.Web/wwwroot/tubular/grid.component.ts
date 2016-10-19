@@ -124,6 +124,7 @@ export class TubularGrid extends PopupContainer {
             data => console.log(data),
             error => console.log(error)
         );
+        this.refresh();
     }
 
     onDismiss(reason) {
