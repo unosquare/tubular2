@@ -1,4 +1,5 @@
 ﻿import { Component, Input } from '@angular/core';
+import { RequestMethod } from '@angular/http';
 import { Observable }       from 'rxjs/Observable';
 import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
 
@@ -120,11 +121,16 @@ export class TubularGrid extends PopupContainer {
     }
 
     onUpdate(row) {
-        this.tbDataService.save(this.serverSaveUrl, row).subscribe(
-            data => console.log(data),
-            error => console.log(error)
+        this.tbDataService.save(this.serverSaveUrl, row.values, row.$isNew ? RequestMethod.Post : RequestMethod.Put).subscribe(
+            data => {
+                console.log(data);
+                this.refresh();
+            },
+            error => {
+                console.log(error);
+                this.refresh();
+            }
         );
-        this.refresh();
     }
 
     onDismiss(reason) {

@@ -1,5 +1,5 @@
 ﻿import { Injectable }     from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, RequestMethod, Request } from '@angular/http';
 
 import { Observable }     from 'rxjs/Observable';
 
@@ -20,17 +20,14 @@ export class TubularDataService {
             .catch(this.handleError);
     }
 
-    save(url: string, row: any): Observable<any> {
-        if (row.$isNew) {
-            return this.http.post(url, row.values)
-                .map(this.extractData)
-                .catch(this.handleError);
-        }
-        else {
-            return this.http.put(url, row.values)
-                .map(this.extractData)
-                .catch(this.handleError);
-        }        
+    save(url: string, row: any, method: RequestMethod = RequestMethod.Post): Observable<any> {
+        return this.http.request(new Request({
+            method: method,
+            url: url,
+            body : row
+        }))
+            .map(this.extractData)
+            .catch(this.handleError); 
     }
 
     private transformSortDirection(column) {
