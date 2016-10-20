@@ -42,6 +42,9 @@ export class TubularGrid extends PopupContainer {
     _pageSize = new BehaviorSubject(10);
     pageSize = this._pageSize.asObservable();
 
+    _error = new BehaviorSubject([]);
+    error = this._error.asObservable();
+
     // values that to observe and allow to push from children
     page = new BehaviorSubject(0);
     columns = new BehaviorSubject([]);
@@ -127,7 +130,7 @@ export class TubularGrid extends PopupContainer {
                 this.refresh();
             },
             error => {
-                console.log(error);
+                this.onError(error);
                 this.refresh();
             }
         );
@@ -136,7 +139,11 @@ export class TubularGrid extends PopupContainer {
     onDismiss(reason) {
         
     }
-    
+
+    onError(error) {
+        this._error.next(error);
+    }
+
     private transformToObj(columns: ColumnModel[], data: any) {
         let obj = {};
 
