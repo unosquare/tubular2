@@ -3,7 +3,10 @@
   "name": "tubular2",
   "private": true,
   "scripts": {
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "test": "karma start karma.conf.js",
+    "test-once": "tsc && karma start karma.conf.js --single-run",
+    "tsc:w": "tsc -w"
   },
   "dependencies": {
     "@angular/common": "2.0.0",
@@ -29,6 +32,13 @@
     "del": "2.2.0",
     "gulp": "3.9.0",
     "jasmine-core": "2.5.0",
+    "karma": "^1.3.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-cli": "^1.0.1",
+    "karma-htmlfile-reporter": "^0.3.4",
+    "karma-jasmine": "^1.0.2",
+    "karma-jasmine-html-reporter": "^0.2.2",
+    "protractor": "^4.0.9",
     "typescript": "^2.0.3",
     "typings": "^1.4.0",
     "webpack": "^1.13.2",
