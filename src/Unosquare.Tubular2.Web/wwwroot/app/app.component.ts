@@ -4,4 +4,8 @@
     selector: 'my-app',
     templateUrl: '/app/app.component.html'
 })
-export class AppComponent { }
+export class AppComponent {
+    errorHandler(error: any) {
+        console.log(error);
+    }
+}

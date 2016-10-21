@@ -4,8 +4,11 @@ import { TubularGrid, GridPageInfo }      from './grid.component';
 
 @Component({
     selector: 'grid-pager-info',
-    template: `Showing {{this.pageInfo.currentInitial}} to {{this.pageInfo.currentTop}} of {{pageInfo.filteredRecordCount}} records 
-                <span [hidden]="!filtered">(Filtered from {{pageInfo.totalRecordCount}} total records)</span>`
+    template: 
+    `<div class="small">
+        Showing {{this.pageInfo.currentInitial}} to {{this.pageInfo.currentTop}} of {{pageInfo.filteredRecordCount}} records 
+        <span [hidden]="!filtered">(Filtered from {{pageInfo.totalRecordCount}} total records)</span>
+    </div>`
 })
 export class GridPagerInfo {
     pageInfo = new GridPageInfo();

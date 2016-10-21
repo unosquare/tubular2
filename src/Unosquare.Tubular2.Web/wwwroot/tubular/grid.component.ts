@@ -1,4 +1,4 @@
-﻿import { Component, Input } from '@angular/core';
+﻿import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { RequestMethod } from '@angular/http';
 import { Observable }       from 'rxjs/Observable';
 import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
@@ -41,10 +41,7 @@ export class TubularGrid extends PopupContainer {
 
     _pageSize = new BehaviorSubject(10);
     pageSize = this._pageSize.asObservable();
-
-    _error = new BehaviorSubject([]);
-    error = this._error.asObservable();
-
+    
     // values that to observe and allow to push from children
     page = new BehaviorSubject(0);
     columns = new BehaviorSubject([]);
@@ -52,7 +49,6 @@ export class TubularGrid extends PopupContainer {
     
     showLoading = false;
     private requestCount = 0;
-    errorMessage: string;
     search = {
         text: "",
         operator: "None"
@@ -62,6 +58,9 @@ export class TubularGrid extends PopupContainer {
     @Input('require-authentication') requireAuthentication: boolean;
     @Input('request-timeout') requestTimeout: number;
     @Input('server-save-url') serverSaveUrl: string;
+
+    @Output() onDataError = new EventEmitter<any>();
+    @Output() onDataSaved = new EventEmitter<any>();
 
     constructor(private tbDataService: TubularDataService) {
         super();
@@ -101,7 +100,7 @@ export class TubularGrid extends PopupContainer {
 
         this.tbDataService.retrieveData(this.serverUrl, req).subscribe(
             data => callback(data, req),
-            error => this.errorMessage = error
+            error => this.onDataError.emit(error)
         );
     }
 
@@ -119,31 +118,24 @@ export class TubularGrid extends PopupContainer {
 
         this.tbDataService.retrieveData(this.serverUrl, req).subscribe(
             data => callback(data.Payload || {}),
-            error => this.errorMessage = error
+            error => this.onDataError.emit(error)
         );
     }
 
     onUpdate(row) {
-        this.tbDataService.save(this.serverSaveUrl, row.values, row.$isNew ? RequestMethod.Post : RequestMethod.Put).subscribe(
-            data => {
-                console.log(data);
-                this.refresh();
-            },
-            error => {
-                this.onError(error);
-                this.refresh();
-            }
-        );
+        this.tbDataService
+            .save(this.serverSaveUrl, row.values, row.$isNew ? RequestMethod.Post : RequestMethod.Put)
+            .subscribe(
+                data => this.onDataSaved.emit(data),
+                error => this.onDataError.emit(error),
+                () => this.refresh()
+            );
     }
 
     onDismiss(reason) {
         
     }
-
-    onError(error) {
-        this._error.next(error);
-    }
-
+    
     private transformToObj(columns: ColumnModel[], data: any) {
         let obj = {};
 
@@ -165,6 +157,7 @@ export class TubularGrid extends PopupContainer {
         pageInfo.totalRecordCount = data.TotalRecordCount;
 
         pageInfo.currentInitial = ((pageInfo.currentPage - 1) * this._pageSize.getValue()) + 1;
+
         if (pageInfo.currentInitial <= 0)
             pageInfo.currentInitial = data.TotalRecordCount > 0 ? 1 : 0;
 

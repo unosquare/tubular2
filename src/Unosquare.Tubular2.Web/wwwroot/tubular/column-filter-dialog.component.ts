@@ -28,14 +28,15 @@ import { ColumnModel, FilterOperator } from './column';
                         (click)="reset()">Clear</button>
             </div>
         </div>
-    </form>`
+    </form>`,
+    styles: [ 'form { min-width: 200px; }' ]
 })
 export class ColumnFilterDialog implements AfterViewInit {
     @Input() column: ColumnModel;
     @Output() onFilteringChange = new EventEmitter<boolean>();
     form: FormGroup;
     operators: Object[];
-    isBetween: boolean = false;
+    isBetween = false;
     inputType: string;
 
     constructor(fb: FormBuilder) {

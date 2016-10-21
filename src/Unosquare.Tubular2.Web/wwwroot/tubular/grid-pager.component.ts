@@ -5,18 +5,16 @@ import { TubularGrid, GridPageInfo }      from './grid.component';
 @Component({
     selector: 'grid-pager',
     template: 
-    `<div>
-    <ngb-pagination 
-    [collectionSize]="info.filteredRecordCount"
-    [pageSize]="tbGrid._pageSize.value"
-    [(page)]="info.currentPage"
-    [boundaryLinks]="true"
-    [rotate]="true"
-    [maxSize]="5"
-    (pageChange)="goTo($event)"
-    size="sm"
-    ></ngb-pagination>
-    </div>`
+    `<ngb-pagination 
+            [collectionSize]="info.filteredRecordCount"
+            [pageSize]="tbGrid._pageSize.value"
+            [(page)]="info.currentPage"
+            [boundaryLinks]="true"
+            [maxSize]="5"
+            (pageChange)="goTo($event)"
+            [ellipses]="false"
+            size="sm">
+    </ngb-pagination>`
 })
 export class GridPager {
     info = new GridPageInfo();
@@ -24,9 +22,7 @@ export class GridPager {
     constructor(private tbGrid: TubularGrid) { }
 
     ngOnInit() {
-        this.tbGrid.pageInfo.subscribe((x: GridPageInfo) => {
-            this.info = x;
-        });
+        this.tbGrid.pageInfo.subscribe((x: GridPageInfo) => this.info = x);
     }
 
     goTo(page: number) {

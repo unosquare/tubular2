@@ -19,8 +19,9 @@ import { ColumnModel } from './column';
         </div>
     </div>`,
     styles: [
-        '.column-menu { position: relative; display: block; text-align: center; vertical-align: top; float: right;}',
-        '.column-menu button { border-radius: 30px !important; line-height: 10px; margin: 0;}'
+        '.column-menu { position: relative; display: block; text-align: center; vertical-align: top; float: right; }',
+        '.column-menu button { border-radius: 30px !important; line-height: 10px; margin: 0; padding: .25rem; }',
+        '.column-menu button i { font-size: 12px; }'
     ]
 })
 export class ColumnHeader {
@@ -32,13 +33,13 @@ export class ColumnHeader {
 
     private hasFilter: boolean;
 
-    public static prevPopover = null;
+    static prevPopover = null;
 
     private togglePopover() {
         if (ColumnHeader.prevPopover != null) {
             ColumnHeader.prevPopover.close();
 
-            if (ColumnHeader.prevPopover == this.popover) {
+            if (ColumnHeader.prevPopover === this.popover) {
                 ColumnHeader.prevPopover = null;
                 this.popover.toggle();
                 return;

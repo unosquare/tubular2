@@ -38,16 +38,16 @@ export class ColumnFilter {
 export class ColumnModel {
     name: string;
     label: string;
-    searchable: boolean = true;
-    sortable: boolean = true;
-    sortOrder: number = 0;
-    direction: ColumnSortDirection = ColumnSortDirection.None;
-    visible: boolean = true;
-    dataType: DataType = DataType.String;
-    hasFilter: boolean = false;
-    filterMode: ColumnFilterMode = ColumnFilterMode.None;
-    filter: ColumnFilter = new ColumnFilter();
-    isMultiSort: boolean = false;
+    searchable = true;
+    sortable = true;
+    sortOrder = 0;
+    direction = ColumnSortDirection.None;
+    visible = true;
+    dataType = DataType.String;
+    hasFilter = false;
+    filterMode = ColumnFilterMode.None;
+    filter = new ColumnFilter();
+    isMultiSort = false;
 
     constructor(name: string, searchable?: boolean, sortable?: boolean) {
         this.name = name;
@@ -111,7 +111,7 @@ export class ColumnModel {
                     { name: ">", value: ">" },
                     { name: "<=", value: "<=" },
                     { name: "<", value: "<" },
-                ]
+                ];
             default:
                 return [];
         }

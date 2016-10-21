@@ -34,7 +34,7 @@ declare var saveAs: FileSaver;
     selector: 'grid-export',
     template: `<div ngbDropdown class="d-inline-block">
                 <button ngbDropdownToggle class="btn btn-outline-primary btn-sm">
-                <span class="fa fa-download"></span>&nbsp;EXPORT CSV&nbsp;<span class="caret"></span>
+                <span class="fa fa-download"></span>&nbsp;Export CSV&nbsp;<span class="caret"></span>
                </button>
                <div class="dropdown-menu">
                 <button class="dropdown-item" (click)="downloadCsv()">Current rows</button>
@@ -66,7 +66,7 @@ export class ExportButton {
 
         let csv = rows.reduce((a, b) => a + b, headers);
 
-        var blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+        let blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
         saveAs(blob, this.fileName);
     }
 }

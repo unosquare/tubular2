@@ -3,7 +3,10 @@
     Angular2 components
 </p>
 
-<tubular-grid #grid server-url="http://tubular.azurewebsites.net/api/orders/paged" server-save-url="/api/orders/" require-authentication="false">
+<tubular-grid #grid server-url="http://tubular.azurewebsites.net/api/orders/paged" 
+              server-save-url="/api/orders/" 
+              require-authentication="false"
+              (onDataError)="errorHandler($event)">
     <div class="row">
         <div class="col-md-5">
             <grid-pager></grid-pager>
@@ -34,7 +37,7 @@
             <grid-pager></grid-pager>
         </div>
         <div class="col-md-3">
-            <page-size-selector [options]=""></page-size-selector>
+            <page-size-selector></page-size-selector>
         </div>
         <div class="col-md-4">
             <grid-pager-info></grid-pager-info>
