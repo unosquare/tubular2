@@ -3,10 +3,7 @@ module.exports = function (config) {
 
     var appBase = 'e2e/';       // transpiled app JS and map files
     var appSrcBase = 'e2e/';       // app source TS files
-    var appAssets = '/base/app/'; // component assets fetched by Angular's compiler
-
-    var testBase = 'testing/';       // transpiled test JS and map files
-    var testSrcBase = 'testing/';       // test source TS files
+    var appAssets = '/base/e2e/'; // component assets fetched by Angular's compiler
 
     config.set({
         basePath: '',
@@ -58,7 +55,6 @@ module.exports = function (config) {
 
           // transpiled application & spec code paths loaded via module imports
           { pattern: appBase + '**/*.js', included: false, watched: true },
-          { pattern: testBase + '**/*.js', included: false, watched: true },
 
 
           // Asset (HTML & CSS) paths loaded via Angular's component compiler
@@ -68,15 +64,13 @@ module.exports = function (config) {
 
           // Paths for debugging with source maps in dev tools
           { pattern: appSrcBase + '**/*.ts', included: false, watched: false },
-          { pattern: appBase + '**/*.js.map', included: false, watched: false },
-          { pattern: testSrcBase + '**/*.ts', included: false, watched: false },
-          { pattern: testBase + '**/*.js.map', included: false, watched: false }
+          { pattern: appBase + '**/*.js.map', included: false, watched: false }
         ],
 
         // Proxied base paths for loading assets
         proxies: {
             // required for component assets fetched by Angular's compiler
-            "/app/": appAssets
+            "/e2e/": appAssets
         },
 
         exclude: [],
