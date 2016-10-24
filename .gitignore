@@ -258,3 +258,4 @@ paket-files/
 *.js.map
 /src/Unosquare.Tubular2.Web/wwwroot/build
 /src/Unosquare.Tubular2.Web/wwwroot/dist
+/src/Unosquare.Tubular2.Web/e2e/*.js
