@@ -5,5 +5,6 @@ sudo: false
 before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
+  - cd src/Unosquare.Tubular2.Web
 script:
-  - npm run test
+  - npm test
