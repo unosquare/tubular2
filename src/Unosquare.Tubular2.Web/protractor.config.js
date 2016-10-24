@@ -27,7 +27,7 @@ exports.config = {
   framework: 'jasmine',
 
   // Spec patterns are relative to this config file
-  specs: ['**/*e2e-spec.js'],
+  specs: ['**/*e2e-spec.js' ],
 
 
   // For angular tests
@@ -39,7 +39,7 @@ exports.config = {
   // doesn't seem to work.
   // resultJsonOutputFile: "foo.json",
 
-  onPrepare: function () {
+  onPrepare: function() {
     //// SpecReporter
     //var SpecReporter = require('jasmine-spec-reporter');
     //jasmine.getEnv().addReporter(new SpecReporter({displayStacktrace: 'none'}));
@@ -47,10 +47,10 @@ exports.config = {
 
     // debugging
     // console.log('browser.params:' + JSON.stringify(browser.params));
-    jasmine.getEnv().addReporter(new Reporter(browser.params));
+    jasmine.getEnv().addReporter(new Reporter( browser.params )) ;
 
     // Allow changing bootstrap mode to NG1 for upgrade tests
-    global.setProtractorToNg1Mode = function () {
+    global.setProtractorToNg1Mode = function() {
       browser.useAllAngular2AppRoots = false;
       browser.rootEl = 'body';
     };
@@ -60,7 +60,7 @@ exports.config = {
     // defaultTimeoutInterval: 60000,
     defaultTimeoutInterval: 10000,
     showTiming: true,
-    print: function () { }
+    print: function() {}
   }
 };
 
@@ -70,19 +70,19 @@ function Reporter(options) {
   options.outputFile = options.outputFile || _defaultOutputFile;
 
   initOutputFile(options.outputFile);
-  options.appDir = options.appDir || './';
+  options.appDir = options.appDir ||  './';
   var _root = { appDir: options.appDir, suites: [] };
   log('AppDir: ' + options.appDir, +1);
   var _currentSuite;
 
-  this.suiteStarted = function (suite) {
+  this.suiteStarted = function(suite) {
     _currentSuite = { description: suite.description, status: null, specs: [] };
     _root.suites.push(_currentSuite);
     log('Suite: ' + suite.description, +1);
   };
 
-  this.suiteDone = function (suite) {
-    var statuses = _currentSuite.specs.map(function (spec) {
+  this.suiteDone = function(suite) {
+    var statuses = _currentSuite.specs.map(function(spec) {
       return spec.status;
     });
     statuses = _.uniq(statuses);
@@ -91,11 +91,11 @@ function Reporter(options) {
     log('Suite ' + _currentSuite.status + ': ' + suite.description, -1);
   };
 
-  this.specStarted = function (spec) {
+  this.specStarted = function(spec) {
 
   };
 
-  this.specDone = function (spec) {
+  this.specDone = function(spec) {
     var currentSpec = {
       description: spec.description,
       status: spec.status
@@ -108,7 +108,7 @@ function Reporter(options) {
     log(spec.status + ' - ' + spec.description);
   };
 
-  this.jasmineDone = function () {
+  this.jasmineDone = function() {
     outputFile = options.outputFile;
     //// Alternate approach - just stringify the _root - not as pretty
     //// but might be more useful for automation.
@@ -147,17 +147,17 @@ function Reporter(options) {
     var pad = '  ';
     var results = [];
     results.push('AppDir:' + output.appDir);
-    output.suites.forEach(function (suite) {
+    output.suites.forEach(function(suite) {
       results.push(pad + 'Suite: ' + suite.description + ' -- ' + suite.status);
-      pad += indent;
-      suite.specs.forEach(function (spec) {
+      pad+=indent;
+      suite.specs.forEach(function(spec) {
         results.push(pad + spec.status + ' - ' + spec.description);
         if (spec.failedExpectations) {
-          pad += indent;
+          pad+=indent;
           spec.failedExpectations.forEach(function (fe) {
             results.push(pad + 'message: ' + fe.message);
           });
-          pad = pad.substr(2);
+          pad=pad.substr(2);
         }
       });
       pad = pad.substr(2);

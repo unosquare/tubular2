@@ -17,7 +17,6 @@
     "node_modules",
     "wwwroot/scripts/lib",
     "typings/main",
-    "typings/main.d.ts",
-    "e2e"
+    "typings/main.d.ts"
   ]
 }
