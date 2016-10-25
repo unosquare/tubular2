@@ -7,8 +7,10 @@
     "test": "karma start karma.conf.js",
     "test-once": "tsc && karma start karma.conf.js --single-run",
     "tsc:w": "tsc -w",
+    "preweb-server": "gulp build",
+    "web-server": "http-server .\\wwwroot",
     "pree2e": "npm run webdriver:update",
-    "e2e": "tsc && concurrently \"http-server -s\" \"protractor protractor.config.js\" --kill-others --success first",
+    "e2e": "tsc && concurrently \"npm run web-server\" \"protractor protractor.config.js\" --kill-others --success first",
     "webdriver:update": "webdriver-manager update"
   },
   "dependencies": {
@@ -32,8 +34,15 @@
     "filesaver.js": "0.2.0"
   },
   "devDependencies": {
+    "@types/core-js": "^0.9.34",
+    "@types/jasmine": "^2.5.35",
+    "@types/node": "^6.0.45",
+    "@types/selenium-webdriver": "^2.53.32",
+    "canonical-path": "0.0.2",
+    "concurrently": "3.1.0",
     "del": "2.2.0",
     "gulp": "3.9.0",
+    "http-server": "0.9.0",
     "jasmine-core": "2.5.0",
     "karma": "^1.3.0",
     "karma-chrome-launcher": "^2.0.0",
@@ -42,17 +51,10 @@
     "karma-jasmine": "^1.0.2",
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "^4.0.9",
+    "ts-loader": "^0.8.2",
     "typescript": "^2.0.3",
     "typings": "^1.4.0",
     "webpack": "^1.13.2",
-    "webpack-stream": "^3.2.0",
-    "ts-loader": "^0.8.2",
-    "http-server": "0.9.0",
-    "concurrently": "3.1.0",
-    "canonical-path": "0.0.2",
-    "@types/core-js": "^0.9.34",
-    "@types/node": "^6.0.45",
-    "@types/jasmine": "^2.5.35",
-    "@types/selenium-webdriver": "^2.53.32"
+    "webpack-stream": "^3.2.0"
   }
 }
