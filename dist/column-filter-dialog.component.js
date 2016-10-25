@@ -56,11 +56,11 @@ var ColumnFilterDialog = (function () {
     __decorate([
         core_1.Input(), 
         __metadata('design:type', column_1.ColumnModel)
-    ], ColumnFilterDialog.prototype, "column", void 0);
+    ], ColumnFilterDialog.prototype, "column");
     __decorate([
         core_1.Output(), 
         __metadata('design:type', Object)
-    ], ColumnFilterDialog.prototype, "onFilteringChange", void 0);
+    ], ColumnFilterDialog.prototype, "onFilteringChange");
     ColumnFilterDialog = __decorate([
         core_1.Component({
             selector: 'filter-dialog',

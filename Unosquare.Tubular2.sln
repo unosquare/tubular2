@@ -12,6 +12,26 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Unosquare.Tubular2.Web", "src\Unosquare.Tubular2.Web\Unosquare.Tubular2.Web.xproj", "{E57CD0C7-6812-46E4-B868-6C15B1AC2BD1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{EA879135-1343-4D2A-A6A5-660FACF29541}"
+	ProjectSection(SolutionItems) = preProject
+		src\lib\column-filter-dialog.component.ts = src\lib\column-filter-dialog.component.ts
+		src\lib\column-header.component.ts = src\lib\column-header.component.ts
+		src\lib\column.ts = src\lib\column.ts
+		src\lib\form-popup.ts = src\lib\form-popup.ts
+		src\lib\grid-export.component.ts = src\lib\grid-export.component.ts
+		src\lib\grid-pager-info.component.ts = src\lib\grid-pager-info.component.ts
+		src\lib\grid-pager.component.ts = src\lib\grid-pager.component.ts
+		src\lib\grid-print.component.ts = src\lib\grid-print.component.ts
+		src\lib\grid-search.component.ts = src\lib\grid-search.component.ts
+		src\lib\grid-table.ts = src\lib\grid-table.ts
+		src\lib\grid.component.ts = src\lib\grid.component.ts
+		src\lib\index.ts = src\lib\index.ts
+		src\lib\page-size-selector.component.ts = src\lib\page-size-selector.component.ts
+		src\lib\popup-details.directive.ts = src\lib\popup-details.directive.ts
+		src\lib\tubular-data.service.ts = src\lib\tubular-data.service.ts
+		src\lib\tubular.module.ts = src\lib\tubular.module.ts
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,5 +48,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E57CD0C7-6812-46E4-B868-6C15B1AC2BD1} = {C8315ADA-EC28-4A5B-92B9-6490BD9D6A6F}
+		{EA879135-1343-4D2A-A6A5-660FACF29541} = {C8315ADA-EC28-4A5B-92B9-6490BD9D6A6F}
 	EndGlobalSection
 EndGlobal

@@ -260,3 +260,4 @@ paket-files/
 /src/Unosquare.Tubular2.Web/wwwroot/dist
 /src/Unosquare.Tubular2.Web/e2e/*.js
 /src/Unosquare.Tubular2.Web/_test-output
+/src/lib/*.js

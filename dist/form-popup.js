@@ -30,11 +30,11 @@ var FormPopup = (function () {
     __decorate([
         core_1.Input('popupRef'), 
         __metadata('design:type', Object)
-    ], FormPopup.prototype, "popupRef", void 0);
+    ], FormPopup.prototype, "popupRef");
     __decorate([
         core_1.Input('row'), 
         __metadata('design:type', Object)
-    ], FormPopup.prototype, "row", void 0);
+    ], FormPopup.prototype, "row");
     return FormPopup;
 }());
 exports.FormPopup = FormPopup;

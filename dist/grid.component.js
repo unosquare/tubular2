@@ -140,27 +140,27 @@ var TubularGrid = (function (_super) {
     __decorate([
         core_1.Input('server-url'), 
         __metadata('design:type', String)
-    ], TubularGrid.prototype, "serverUrl", void 0);
+    ], TubularGrid.prototype, "serverUrl");
     __decorate([
         core_1.Input('require-authentication'), 
         __metadata('design:type', Boolean)
-    ], TubularGrid.prototype, "requireAuthentication", void 0);
+    ], TubularGrid.prototype, "requireAuthentication");
     __decorate([
         core_1.Input('request-timeout'), 
         __metadata('design:type', Number)
-    ], TubularGrid.prototype, "requestTimeout", void 0);
+    ], TubularGrid.prototype, "requestTimeout");
     __decorate([
         core_1.Input('server-save-url'), 
         __metadata('design:type', String)
-    ], TubularGrid.prototype, "serverSaveUrl", void 0);
+    ], TubularGrid.prototype, "serverSaveUrl");
     __decorate([
         core_1.Output(), 
         __metadata('design:type', Object)
-    ], TubularGrid.prototype, "onDataError", void 0);
+    ], TubularGrid.prototype, "onDataError");
     __decorate([
         core_1.Output(), 
         __metadata('design:type', Object)
-    ], TubularGrid.prototype, "onDataSaved", void 0);
+    ], TubularGrid.prototype, "onDataSaved");
     TubularGrid = __decorate([
         core_1.Component({
             selector: 'tubular-grid',

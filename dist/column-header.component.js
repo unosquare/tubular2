@@ -42,23 +42,23 @@ var ColumnHeader = (function () {
     __decorate([
         core_1.Input(), 
         __metadata('design:type', column_1.ColumnModel)
-    ], ColumnHeader.prototype, "column", void 0);
+    ], ColumnHeader.prototype, "column");
     __decorate([
         core_1.Output(), 
         __metadata('design:type', Object)
-    ], ColumnHeader.prototype, "onSort", void 0);
+    ], ColumnHeader.prototype, "onSort");
     __decorate([
         core_1.Output(), 
         __metadata('design:type', Object)
-    ], ColumnHeader.prototype, "onFilter", void 0);
+    ], ColumnHeader.prototype, "onFilter");
     __decorate([
         core_1.ContentChild('filterPopover'), 
         __metadata('design:type', core_1.TemplateRef)
-    ], ColumnHeader.prototype, "filterPopoverTemplate", void 0);
+    ], ColumnHeader.prototype, "filterPopoverTemplate");
     __decorate([
         core_1.ViewChild('popover'), 
         __metadata('design:type', Object)
-    ], ColumnHeader.prototype, "popover", void 0);
+    ], ColumnHeader.prototype, "popover");
     ColumnHeader = __decorate([
         core_1.Component({
             selector: 'column-header',
