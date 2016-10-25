@@ -1,6 +1,6 @@
 ﻿import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { FormPopup, TubularGrid } from '../tubular'
+import { FormPopup, TubularGrid } from '@tubular2/tubular2'
 
 @Component({
     selector: 'popup-details',

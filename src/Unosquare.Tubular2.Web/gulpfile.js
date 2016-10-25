@@ -21,18 +21,24 @@ var paths = {
         'momentjs': 'node_modules/momentjs/build/*',
         'bootstrap': 'node_modules/bootstrap/dist/**/*',
         'filesaver': 'node_modules/filesaver.js/*.js',
-        '@ng-bootstrap': 'node_modules/@ng-bootstrap/ng-bootstrap/**/*'
+        '@ng-bootstrap': 'node_modules/@ng-bootstrap/ng-bootstrap/**/*',
+        '@tubular2': '../lib/**/*'
     }
 };
 
-gulp.task('lib', function () {
+gulp.task('tubular2-module', function() {
+    return gulp.src(['../../package.json','../lib/**/*.ts'])
+        .pipe(gulp.dest('node_modules/@tubular2/tubular2'));
+});
+
+gulp.task('lib', ['tubular2-module'], function () {
     Object.keys(paths.libs).forEach(function (key) {
         gulp.src(paths.libs[key]).pipe(gulp.dest('wwwroot/scripts/lib/' + key));
     });
 });
 
 gulp.task('clean', function () {
-    return del(['wwwroot/scripts/**/*']);
+    return del(['node_modules/@tubular2','wwwroot/scripts/**/*']);
 });
 
 var standardBuild = function (watch) {

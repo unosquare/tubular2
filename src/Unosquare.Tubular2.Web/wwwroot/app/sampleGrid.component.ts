@@ -1,6 +1,6 @@
 ﻿import { Component, Input} from '@angular/core';
 
-import { TubularGrid, GridTable, ColumnModel, ColumnFilterMode } from '../tubular';
+import { TubularGrid, GridTable, ColumnModel, ColumnFilterMode } from '@tubular2/tubular2';
 
 @Component({
     selector: 'grid',

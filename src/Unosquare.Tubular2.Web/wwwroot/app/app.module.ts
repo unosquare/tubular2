@@ -2,7 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { TubularModule, TubularDataService } from '../tubular';
+import { TubularModule, TubularDataService } from '@tubular2/tubular2';
 
 import { AppComponent }  from './app.component';
 import { SampleGrid } from './sampleGrid.component';
