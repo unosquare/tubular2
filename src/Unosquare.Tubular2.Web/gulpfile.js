@@ -35,7 +35,7 @@ gulp.task('clean', function () {
     return del(['wwwroot/scripts/**/*']);
 });
 
-gulp.task('default', ['lib'], function () {
+var standardBuild = function (watch) {
     // TODO: Add task to build only tubular into a dist folder in root
     // TODO: Create a webpack config file
     gulp.src('wwwroot/app/main.ts')
@@ -55,7 +55,11 @@ gulp.task('default', ['lib'], function () {
                   { test: /\.ts$/, loader: 'ts-loader' }
                 ]
             },
-            watch: true
+            watch: watch
         }))
         .pipe(gulp.dest('wwwroot/dist/'));
-});
+}
+
+gulp.task('build', ['lib'], function(){ return standardBuild(false); });
+
+gulp.task('default', ['lib'], function(){ standardBuild(true); });
