@@ -17,6 +17,8 @@
     "node_modules",
     "wwwroot/scripts/lib",
     "typings/main",
-    "typings/main.d.ts"
+    "typings/main.d.ts",
+    "typings/globals",
+    "typings/index.d.ts"
   ]
 }
