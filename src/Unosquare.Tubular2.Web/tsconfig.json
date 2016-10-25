@@ -16,7 +16,8 @@
   "exclude": [
     "node_modules",
     "wwwroot/scripts/lib",
-    "typings/globals",
-    "typings/index.d.ts"
+    "typings/main",
+    "typings/main.d.ts"
+     
   ]
 }

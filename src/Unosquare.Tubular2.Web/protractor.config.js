@@ -34,7 +34,7 @@ exports.config = {
   useAllAngular2AppRoots: true,
 
   // Base URL for application server
-  baseUrl: 'http://localhost:8080/wwwroot/index.html',
+  baseUrl: 'http://localhost:8080',
 
   // doesn't seem to work.
   // resultJsonOutputFile: "foo.json",
@@ -57,8 +57,7 @@ exports.config = {
   },
 
   jasmineNodeOpts: {
-    // defaultTimeoutInterval: 60000,
-    defaultTimeoutInterval: 10000,
+    defaultTimeoutInterval: 60000,
     showTiming: true,
     print: function() {}
   }
