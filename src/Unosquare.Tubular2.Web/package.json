@@ -3,10 +3,8 @@
   "name": "tubular2-sample",
   "private": true,
   "scripts": {
-    "tsc": "tsc",
     "test": "karma start karma.conf.js",
     "test-once": "tsc && karma start karma.conf.js --single-run",
-    "tsc:w": "tsc -w",
     "preweb-server": "gulp build",
     "web-server": "http-server .\\wwwroot",
     "pree2e": "npm run webdriver:update",

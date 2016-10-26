@@ -17,7 +17,6 @@ exports.config = {
   // Spec patterns are relative to this config file
   specs: ['**/*e2e-spec.js' ],
 
-
   // For angular tests
   useAllAngular2AppRoots: true,
 
@@ -51,6 +50,12 @@ exports.config = {
     print: function() {}
   }
 };
+
+if (process.env.TRAVIS) { 
+  exports.config.capabilities = {
+    'browserName': 'firefox'
+  };
+}
 
 // Custom reporter
 function Reporter(options) {
