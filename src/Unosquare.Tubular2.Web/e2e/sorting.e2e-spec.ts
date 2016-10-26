@@ -19,6 +19,9 @@ describe('grid sorting', () => {
     it('should order data in ascending order when click-sorting an unsorted numeric column', () => {
         orderIdSorting.click();
         expect(firstDataRow.$$('td').get(1).getText()).toEqual(dataSetLowerId);
+        paginator.$$('li').last().$$('a').click();
+        let lastDataRow = element(by.tagName('tbody')).$$('tr').last();
+        expect(lastDataRow.$$('td').get(1).getText()).toEqual(dataSetHigherId);
     });
 
     //it('', () => {
