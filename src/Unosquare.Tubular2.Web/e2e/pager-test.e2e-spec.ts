@@ -2,8 +2,7 @@
 
 import { browser, element, by } from '../node_modules/protractor/built';
 
-describe('Pager e2e Tests', function () {
-
+describe('Pager e2e Tests', () => {
 let gridpager,
     firstNavBtn,
     prevNavBtn,
@@ -14,16 +13,18 @@ let gridpager,
     activeNavBtn;
 
     beforeAll( () => {
+        browser.get('/');
+        
          gridpager = element(by.tagName('grid-pager'));
-         firstNavBtn = element(by.xpath('a[@data-label="First"]'));
-         prevNavBtn = element(by.xpath('a[data-label="Previous"]'));
-         lastNavBtn = element(by.xpath('a[data-label="Last"]'));
-         nextNavBtn = element(by.xpath('a[data-label="Next"]'));
+         firstNavBtn = element(by.xpath('a[@aria-label="First"]'));
+         prevNavBtn = element(by.xpath('a[@aria-label="Previous"]'));
+         lastNavBtn = element(by.xpath('a[@aria-label="Last"]'));
+         nextNavBtn = element(by.xpath('a[@aria-label="Next"]'));
          firstRow = element(by.tagName('tbody')).$$('tr').first();
          lastRow = element(by.tagName('tbody')).$$('tr').first();
-         activeNavBtn = element(by.xpath('li[class="page-item active"]'));
+         activeNavBtn = element(by.xpath('li[@class="page-item active"]'));
         //Select '10' on page size selector
-        element(by.xpath('//select[class="form-control input-sm"]')).$('[vlaue="10"]');
+        element(by.xpath('//select[@class="form-control input-sm"]')).$('[vlaue="10"]');
         //Go to first pager if not there
         firstNavBtn.click();
     });
