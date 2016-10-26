@@ -10,4 +10,5 @@ before_script:
   - cd src/Unosquare.Tubular2.Web
   - npm install
 script:
+  - gulp build
   - npm run e2e
