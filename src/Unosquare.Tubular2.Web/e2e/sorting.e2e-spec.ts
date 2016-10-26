@@ -9,24 +9,31 @@ describe('grid sorting', () => {
         dataSetLowerDate = '2016-08-19',
         dataSetHigherDate = '2016-02-01';
 
-    let paginator = element(by.tagName('ngb-pagination')).$$('nav').$$('ul'),
-        orderIdSorting = element(by.className('column-header')).$$('span').first(),
-        firstDataRow = element(by.tagName('tbody')).$$('tr').first();
+    let paginator = element(by.tagName('ngb-pagination')).$$('nav').$$('ul').$$('li'),
+        orderIdSorting = element(by.className('column-header')).$$('span').first();
     
     beforeEach(() => {
+        browser.refresh();
     });
 
     it('should order data in ascending order when click-sorting an unsorted numeric column', () => {
         orderIdSorting.click();
+        let firstDataRow = element(by.tagName('tbody')).$$('tr').first();
         expect(firstDataRow.$$('td').get(1).getText()).toEqual(dataSetLowerId);
-        paginator.$$('li').last().$$('a').click();
+        paginator.last().$$('a').click();
         let lastDataRow = element(by.tagName('tbody')).$$('tr').last();
         expect(lastDataRow.$$('td').get(1).getText()).toEqual(dataSetHigherId);
     });
 
-    //it('', () => {
-
-    //});
+    it('should order data in descending order when click-sorting an ascending-sorted numeric column', () => {
+        orderIdSorting.click();
+        orderIdSorting.click();
+        let firstDataRow = element(by.tagName('tbody')).$$('tr').first();
+        expect(firstDataRow.$$('td').get(1).getText()).toEqual(dataSetHigherId);
+        paginator.last().$$('a').click();
+        let lastDataRow = element(by.tagName('tbody')).$$('tr').last();
+        expect(lastDataRow.$$('td').get(1).getText()).toEqual(dataSetLowerId);
+    });
 
     //it('', () => {
 
