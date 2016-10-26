@@ -1,16 +1,4 @@
-﻿// FIRST TIME ONLY- run:
-//   ./node_modules/.bin/webdriver-manager update
-//
-//   Try: `npm run webdriver:update`
-//
-// AND THEN EVERYTIME ...
-//   1. Compile with `tsc`
-//   2. Make sure the test server (e.g., http-server: localhost:8080) is running.
-//   3. ./node_modules/.bin/protractor protractor.config.js
-//
-//   To do all steps, try:  `npm run e2e`
-
-var fs = require('fs');
+﻿var fs = require('fs');
 var path = require('canonical-path');
 var _ = require('lodash');
 

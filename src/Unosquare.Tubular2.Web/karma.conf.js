@@ -5,7 +5,7 @@ module.exports = function (config) {
     var appSrcBase = 'e2e/';       // app source TS files
     var appAssets = '/base/e2e/'; // component assets fetched by Angular's compiler
 
-    config.set({
+    var configuration = {
         basePath: '',
         frameworks: ['jasmine'],
         plugins: [
@@ -95,5 +95,9 @@ module.exports = function (config) {
         autoWatch: true,
         browsers: ['Chrome'],
         singleRun: false
-    })
+    };
+    
+    if(process.env.TRAVIS) configuration.browsers = ['Chrome_travis_ci'];
+    
+    config.set(configuration);
 }
