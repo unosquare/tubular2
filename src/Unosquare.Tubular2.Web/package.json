@@ -6,9 +6,9 @@
     "test": "karma start karma.conf.js",
     "test-once": "tsc && karma start karma.conf.js --single-run",
     "preweb-server": "gulp build",
-    "web-server": "http-server .\\wwwroot",
+    "web-server": "http-server wwwroot",
     "pree2e": "npm run webdriver:update",
-    "e2e": "tsc && concurrently \"http-server .\\wwwroot -s\" \"protractor protractor.config.js\" --kill-others --success first",
+    "e2e": "tsc && concurrently \"http-server wwwroot -s\" \"protractor protractor.config.js\" --kill-others --success first",
     "webdriver:update": "webdriver-manager update"
   },
   "dependencies": {
