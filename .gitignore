@@ -261,3 +261,4 @@ paket-files/
 /src/Unosquare.Tubular2.Web/e2e/*.js
 /src/Unosquare.Tubular2.Web/_test-output
 /src/lib/*.js
+/src/Unosquare.Tubular2.Web/npm-debug.log.1608298165
