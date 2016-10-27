@@ -2,10 +2,13 @@ language: node_js
 node_js:
   - stable
 sudo: false
+addons:
+  firefox: "39.0"
 before_install:
   - export DISPLAY=:99.0
 before_script:
   - sh -e /etc/init.d/xvfb start
+  - nohup bash -c "webdriver-manager start 2>&1 &";
   - cd src/Unosquare.Tubular2.Web
   - npm install
 script:
