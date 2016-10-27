@@ -4,37 +4,57 @@ describe('grid sorting', () => {
 
     let dataSetLowerId = '1',
         dataSetHigherId = '53',
-        dataSetLowerCustomerName = 'Microsoft',
-        dataSetHigherCustomerName = 'Microsoft',
+        dataSetLowerCustomerName = 'Advanced Technology Systems',
+        dataSetHigherCustomerName = 'Vesta',
         dataSetLowerDate = '2016-08-19',
         dataSetHigherDate = '2016-02-01';
 
-    let paginator = element(by.tagName('ngb-pagination')).$$('nav').$$('ul'),
-        orderIdSorting = element(by.className('column-header')).$$('span').first(),
-        firstDataRow = element(by.tagName('tbody')).$$('tr').first();
-    
+    let paginator = element(by.tagName('ngb-pagination')).$$('nav').$$('ul').$$('li'),
+        columnHeaders = element(by.tagName('thead')).$$('tr').first().$$('th'),
+        orderIdSorting = columnHeaders.get(1).$('.column-header').$$('span'),
+        orderCustomerNameSorting = columnHeaders.get(2).$('.column-header').$$('span');
+
     beforeEach(() => {
+        browser.refresh();
     });
 
     it('should order data in ascending order when click-sorting an unsorted numeric column', () => {
         orderIdSorting.click();
+        let firstDataRow = element(by.tagName('tbody')).$$('tr').first();
         expect(firstDataRow.$$('td').get(1).getText()).toEqual(dataSetLowerId);
-        paginator.$$('li').last().$$('a').click();
+        paginator.last().$$('a').click();
         let lastDataRow = element(by.tagName('tbody')).$$('tr').last();
         expect(lastDataRow.$$('td').get(1).getText()).toEqual(dataSetHigherId);
     });
 
-    //it('', () => {
+    it('should order data in descending order when click-sorting an ascending-sorted numeric column', () => {
+        orderIdSorting.click();
+        orderIdSorting.click();
+        let firstDataRow = element(by.tagName('tbody')).$$('tr').first();
+        expect(firstDataRow.$$('td').get(1).getText()).toEqual(dataSetHigherId);
+        paginator.last().$$('a').click();
+        let lastDataRow = element(by.tagName('tbody')).$$('tr').last();
+        expect(lastDataRow.$$('td').get(1).getText()).toEqual(dataSetLowerId);
+    });
 
-    //});
+    it('should order data in ascending order when click-sorting an unsorted text column', () => {
+        orderCustomerNameSorting.click();
+        let firstDataRow = element(by.tagName('tbody')).$$('tr').first();
+        expect(firstDataRow.$$('td').get(2).getText()).toEqual(dataSetLowerCustomerName);
+        paginator.last().$$('a').click();
+        let lastDataRow = element(by.tagName('tbody')).$$('tr').last();
+        expect(lastDataRow.$$('td').get(2).getText()).toEqual(dataSetHigherCustomerName);
+    });
 
-    //it('', () => {
-
-    //});
-
-    //it('', () => {
-
-    //});
+    it('should order data in descending order when click-sorting an ascending-sorted text column', () => {
+        orderCustomerNameSorting.click();
+        orderCustomerNameSorting.click();
+        let firstDataRow = element(by.tagName('tbody')).$$('tr').first();
+        expect(firstDataRow.$$('td').get(2).getText()).toEqual(dataSetHigherCustomerName);
+        paginator.last().$$('a').click();
+        let lastDataRow = element(by.tagName('tbody')).$$('tr').last();
+        expect(lastDataRow.$$('td').get(2).getText()).toEqual(dataSetLowerCustomerName);
+    });
 
     //it('', () => {
 
