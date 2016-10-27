@@ -15,25 +15,31 @@ let gridpager,
     beforeAll( () => {
         browser.get('/');
         
-         gridpager = element(by.tagName('grid-pager'));
-         firstNavBtn = element(by.xpath('a[@aria-label="First"]'));
-         prevNavBtn = element(by.xpath('a[@aria-label="Previous"]'));
-         lastNavBtn = element(by.xpath('a[@aria-label="Last"]'));
-         nextNavBtn = element(by.xpath('a[@aria-label="Next"]'));
+         gridpager = element(by.tagName('grid-pager')).$('ngb-pagination').$('nav');
+         firstNavBtn = gridpager.$('ul').$$('li').get(0);
+         prevNavBtn = gridpager.$('ul').$$('li').get(1);
+         lastNavBtn = gridpager.$('ul').$$('li').get(8);
+         nextNavBtn = gridpager.$('ul').$$('li').get(7);
          firstRow = element(by.tagName('tbody')).$$('tr').first();
-         lastRow = element(by.tagName('tbody')).$$('tr').first();
-         activeNavBtn = element(by.xpath('li[@class="page-item active"]'));
-        //Select '10' on page size selector
-        element(by.xpath('//select[@class="form-control input-sm"]')).$('[vlaue="10"]');
-        //Go to first pager if not there
-        firstNavBtn.click();
+         lastRow = element(by.tagName('tbody')).$$('tr').last();
+         activeNavBtn = gridpager.$('ul').$$('.page-item active');
     });
 
     describe('navigation buttons', () => {
         it('should perform no action wehn clicking on the numbered navigation button corresponding to the current-showing results page', () => {
             activeNavBtn.click();
-            expect(firstRow.getText()).toMatch('/^1\s/');
-            expect(lastRow.getText()).toMatch('/^10\s/');
+            expect(firstRow.$$('td').get(1).getText()).toMatch('1');
+            expect(lastRow.$$('td').get(1).getText()).toMatch('10');
+        });
+
+        describe('first/non-last results page related functionallity', () => {
+            it('should enable first and previous button when is not in the first result', () =>{
+                //Go to next page
+                nextNavBtn.$('a').click();
+
+                expect(firstNavBtn.$('a').getAttribute('aria-label')).toMatch('First');
+                expect(lastNavBtn.$('a').getAttribute('aria-label')).toMatch('Last');
+            });
         });
     });
 });
