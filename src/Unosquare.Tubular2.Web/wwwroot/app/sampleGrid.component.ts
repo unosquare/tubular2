@@ -1,12 +1,11 @@
 ﻿import { Component, Input} from '@angular/core';
 
-import { TubularGrid, GridTable, ColumnModel, ColumnFilterMode } from '@tubular2/tubular2';
+import { TubularGrid, GridTable, ColumnModel, ColumnFilterMode, DataType } from '@tubular2/tubular2';
 
 @Component({
     selector: 'grid',
     templateUrl: '/app/sampleGrid.component.html'
 })
-
 export class SampleGrid extends GridTable {
 
     constructor(public tbGrid: TubularGrid) {
@@ -20,6 +19,7 @@ export class SampleGrid extends GridTable {
 
         let dateColumn = new ColumnModel("ShippedDate", false);
         dateColumn.filterMode = ColumnFilterMode.Date;
+        dateColumn.dataType = DataType.Date;
 
         let cityColumn = new ColumnModel("ShipperCity");
         cityColumn.filterMode = ColumnFilterMode.String;
