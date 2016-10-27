@@ -16,9 +16,9 @@ let gridpager,
         browser.get('/');
         
          gridpager = element(by.tagName('grid-pager')).$('ngb-pagination').$('nav');
-         firstNavBtn = gridpager.$('ul').$$('li').get(0);
+         firstNavBtn = gridpager.$('ul').$$('li').first();
          prevNavBtn = gridpager.$('ul').$$('li').get(1);
-         lastNavBtn = gridpager.$('ul').$$('li').get(8);
+         lastNavBtn = gridpager.$('ul').$$('li').last();
          nextNavBtn = gridpager.$('ul').$$('li').get(7);
          firstRow = element(by.tagName('tbody')).$$('tr').first();
          lastRow = element(by.tagName('tbody')).$$('tr').last();
@@ -32,14 +32,68 @@ let gridpager,
             expect(lastRow.$$('td').get(1).getText()).toMatch('10');
         });
 
-        describe('first/non-last results page related functionallity', () => {
-            it('should enable first and previous button when is not in the first result', () =>{
-                //Go to next page
-                nextNavBtn.$('a').click();
+        describe('first/non-last results page related allity', () => {
+            it('should disble first and previous navigation buttons when is not in the first result', () => {
+                expect(gridpager.$('ul').$$('li').first().getAttribute('class')).toMatch('page-item disabled');
+                expect(gridpager.$('ul').$$('li').get(1).getAttribute('class')).toMatch('page-item disabled');
+            });
 
-                expect(firstNavBtn.$('a').getAttribute('aria-label')).toMatch('First');
+            it('should enable last and next navigation buttons when result page is not the last one', ()=> {
                 expect(lastNavBtn.$('a').getAttribute('aria-label')).toMatch('Last');
+                expect(nextNavBtn.$('a').getAttribute('aria-label')).toMatch('Next');
             });
         });
+        describe('last/non-first results page related allity',  () => {
+
+            it('should disable "last" and "next" navigation buttons when in last results page',  () => {
+                lastNavBtn.$('a').click();
+                expect(gridpager.$('ul').$$('li').last().getAttribute('class')).toMatch('page-item disabled');
+                expect(gridpager.$('ul').$$('li').get(3).getAttribute('class')).toMatch('page-item disabled');
+            });
+
+            it('should enable "first" and "previous" navigation buttons when in a results page other than first',  () => {
+                expect(firstNavBtn.$('a').getAttribute('aria-label')).toMatch('First');
+                expect(prevNavBtn.$('a').getAttribute('aria-label')).toMatch('Previous');
+            });
+
+        });
+    });
+
+    describe('page navigation', () => {
+
+        beforeAll(() => {
+            firstNavBtn.$('a').click();
+        });
+
+        it('should go to next results page when clicking on next navigation button', () => {
+            nextNavBtn.$('a').click();
+            expect(firstRow.$$('td').get(1).getText()).toMatch('11');
+        });
+
+        it('should go to previous results page when clicking on previous navigation button',  () => {
+            nextNavBtn.$('a').click();
+            nextNavBtn.$('a').click();
+            prevNavBtn.$('a').click();
+            expect(firstRow.$$('td').get(1).getText()).toMatch('21');
+        });
+
+        it('should go to last results page when clicking on last navigation button',  () => {
+            lastNavBtn.$('a').click();
+            expect(lastRow.$$('td').get(1).getText()).toMatch('53');
+            firstNavBtn.$('a').click()
+        });
+
+        it('should go to first results page when clicking on first navigation button',  () => {
+            lastNavBtn.$('a').click();
+            firstNavBtn.$('a').click();
+            expect(firstRow.getText()).toMatch('1');
+        });
+
+        it('should go to corresponding results page when clicking on a numbered navigation button',  () => {
+            //Go to 4th page
+            gridpager.$$('li').get(5).$('a').click();
+            expect(firstRow.getText()).toMatch('31');
+        });
+
     });
 });
