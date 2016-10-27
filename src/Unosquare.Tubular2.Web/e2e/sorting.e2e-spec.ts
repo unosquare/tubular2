@@ -6,13 +6,14 @@ describe('grid sorting', () => {
         dataSetHigherId = '53',
         dataSetLowerCustomerName = 'Advanced Technology Systems',
         dataSetHigherCustomerName = 'Vesta',
-        dataSetLowerDate = '2016-08-19',
-        dataSetHigherDate = '2016-02-01';
+        dataSetLowerDate = 'Jan 27, 2016',
+        dataSetHigherDate = 'May 24, 2016';
 
     let paginator = element(by.tagName('ngb-pagination')).$$('nav').$$('ul').$$('li'),
         columnHeaders = element(by.tagName('thead')).$$('tr').first().$$('th'),
         orderIdSorting = columnHeaders.get(1).$('.column-header').$$('span'),
-        orderCustomerNameSorting = columnHeaders.get(2).$('.column-header').$$('span');
+        orderCustomerNameSorting = columnHeaders.get(2).$('.column-header').$$('span'),
+        aShippedDateSorting = columnHeaders.get(3).$('.column-header').$$('span');
 
     beforeEach(() => {
         browser.refresh();
@@ -56,13 +57,24 @@ describe('grid sorting', () => {
         expect(lastDataRow.$$('td').get(2).getText()).toEqual(dataSetLowerCustomerName);
     });
 
-    //it('', () => {
+    it('should order data in ascending order when click-sorting an unsorted date column', () => {
+        aShippedDateSorting.click();
+        let firstDataRow = element(by.tagName('tbody')).$$('tr').first();
+        expect(firstDataRow.$$('td').get(3).getText()).toEqual(dataSetLowerDate);
+        paginator.last().$$('a').click();
+        let lastDataRow = element(by.tagName('tbody')).$$('tr').last();
+        expect(lastDataRow.$$('td').get(3).getText()).toEqual(dataSetHigherDate);
+    });
 
-    //});
-
-    //it('', () => {
-
-    //});
+    it('should order data in descending order when click-sorting an ascending-sorted date column', () => {
+        aShippedDateSorting.click();
+        aShippedDateSorting.click();
+        let firstDataRow = element(by.tagName('tbody')).$$('tr').first();
+        expect(firstDataRow.$$('td').get(3).getText()).toEqual(dataSetHigherDate);
+        paginator.last().$$('a').click();
+        let lastDataRow = element(by.tagName('tbody')).$$('tr').last();
+        expect(lastDataRow.$$('td').get(3).getText()).toEqual(dataSetLowerDate);
+    });
 
 
 });
