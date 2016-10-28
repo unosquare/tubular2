@@ -86,7 +86,8 @@ module.exports = function (config) {
         singleRun: false
     };
     
-    if(process.env.TRAVIS) configuration.browsers = ['Firefox'];
+    if (process.env.TRAVIS) configuration.browsers = ['Firefox'];
+    if (process.env.APPVEYOR) config.browsers = ['IE'];
     
     config.set(configuration);
 }
