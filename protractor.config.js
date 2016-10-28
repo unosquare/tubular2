@@ -51,4 +51,5 @@ if (process.env.APPVEYOR) {
     exports.config.capabilities = {
         'browserName': 'internet explorer'
     };
+    exports.config.directConnect = false;
 }
