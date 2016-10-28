@@ -18,7 +18,7 @@ install:
   - npm install -g npm
   - ps: $env:path = $env:appdata + "\npm;" + $env:path
   - npm install -g gulp
-  - npm install && npm install karma-ie-launcher
+  - npm install && npm install karma-ie-launcher && npm install -g webdriver-manager 
   - cd src\Unosquare.Tubular2.Web
   - npm install
   - gulp build
@@ -32,12 +32,5 @@ test_script:
   - webdriver-manager update --ie
   - ps: "npm --version # PowerShell" # Pass comment to PS for easier debugging
   - npm run e2e
-
-notifications:
-  - provider: Webhook
-    url: https://webhooks.gitter.im/e/cfd8ce5ddee6f3a0b0c9
-    on_build_success: false
-    on_build_failure: true
-    on_build_status_changed: true
 
 cache: node_modules
