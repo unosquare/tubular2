@@ -1,8 +1,4 @@
-﻿var fs = require('fs');
-var path = require('canonical-path');
-var _ = require('lodash');
-
-exports.config = {
+﻿exports.config = {
     directConnect: true,
 
     // Capabilities to be passed to the webdriver instance.
