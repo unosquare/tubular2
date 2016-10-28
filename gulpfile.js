@@ -7,3 +7,20 @@ gulp.task('default', function(){
         .pipe(tsProject())
         .js.pipe(gulp.dest("dist")); 
 });
+
+gulp.task('e2e', function(){ 
+    return gulp.src('test/e2e/**/*.ts')
+        .pipe(ts({
+            noImplicitAny: false,
+            typeRoots: [
+                "./node_modules/@types"
+            ],
+            types : [
+                "core-js",
+                "jasmine"
+            ]
+        }))
+        .pipe(gulp.dest(function(file) {
+            return file.base;
+        }));
+});

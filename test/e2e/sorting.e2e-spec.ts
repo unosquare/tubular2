@@ -1,4 +1,4 @@
-﻿import { browser, element, by } from '../node_modules/protractor/built';
+﻿import { browser, element, by } from '../../node_modules/protractor/built';
 
 describe('grid sorting', () => {
 
@@ -6,7 +6,7 @@ describe('grid sorting', () => {
         dataSetHigherId = '53',
         dataSetLowerCustomerName = 'Advanced Technology Systems',
         dataSetHigherCustomerName = 'Vesta',
-        dataSetLowerDate = 'Jan 27, 2016',
+        dataSetLowerDate = 'Jan 28, 2016',
         dataSetHigherDate = 'May 24, 2016';
 
     let paginator = element(by.tagName('ngb-pagination')).$$('nav').$$('ul').$$('li'),
@@ -16,7 +16,7 @@ describe('grid sorting', () => {
         aShippedDateSorting = columnHeaders.get(3).$('.column-header').$$('span');
 
     beforeEach(() => {
-        browser.refresh();
+        browser.get('/');
     });
 
     it('should order data in ascending order when click-sorting an unsorted numeric column', () => {

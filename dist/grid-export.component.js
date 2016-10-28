@@ -36,7 +36,7 @@ var ExportButton = (function () {
     __decorate([
         core_1.Input(), 
         __metadata('design:type', String)
-    ], ExportButton.prototype, "fileName");
+    ], ExportButton.prototype, "fileName", void 0);
     ExportButton = __decorate([
         core_1.Component({
             selector: 'grid-export',
