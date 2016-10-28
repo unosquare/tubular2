@@ -9,8 +9,6 @@ before_install:
 before_script:
   - sh -e /etc/init.d/xvfb start
   - nohup bash -c "webdriver-manager start 2>&1 &";
-  - cd src/Unosquare.Tubular2.Web
-  - npm install
 script:
-  - gulp build
+  - gulp --gulpfile ./src/Unosquare.Tubular2.Web/gulpfile.js build
   - npm run e2e
