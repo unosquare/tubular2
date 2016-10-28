@@ -1,16 +1,14 @@
-﻿///<reference path="../node_modules/@types/jasmine/index.d.ts"/>
-
-import { browser, element, by } from '../node_modules/protractor/built';
+﻿import { browser, element, by } from '../../node_modules/protractor/built';
 
 describe('Pager e2e Tests', () => {
-let gridpager,
-    firstNavBtn,
-    prevNavBtn,
-    lastNavBtn,
-    nextNavBtn,
-    firstRow,
-    lastRow,
-    activeNavBtn;
+    let gridpager,
+        firstNavBtn,
+        prevNavBtn,
+        lastNavBtn,
+        nextNavBtn,
+        firstRow,
+        lastRow,
+        activeNavBtn;
 
     beforeAll( () => {
         browser.get('/');
@@ -43,8 +41,8 @@ let gridpager,
                 expect(nextNavBtn.$('a').getAttribute('aria-label')).toMatch('Next');
             });
         });
-        describe('last/non-first results page related allity',  () => {
 
+        describe('last/non-first results page related allity',  () => {
             it('should disable "last" and "next" navigation buttons when in last results page',  () => {
                 lastNavBtn.$('a').click();
                 expect(gridpager.$('ul').$$('li').last().getAttribute('class')).toMatch('page-item disabled');
@@ -61,9 +59,7 @@ let gridpager,
 
     describe('page navigation', () => {
 
-        beforeAll(() => {
-            firstNavBtn.$('a').click();
-        });
+        beforeAll(() => firstNavBtn.$('a').click());
 
         it('should go to next results page when clicking on next navigation button', () => {
             nextNavBtn.$('a').click();
@@ -94,6 +90,5 @@ let gridpager,
             gridpager.$$('li').get(5).$('a').click();
             expect(firstRow.getText()).toMatch('31');
         });
-
     });
 });

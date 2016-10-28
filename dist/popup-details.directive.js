@@ -22,16 +22,16 @@ var PopupDetails = (function () {
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Object)
-    ], PopupDetails.prototype, "popupDetails");
+    ], PopupDetails.prototype, "popupDetails", void 0);
     __decorate([
         core_1.Output(), 
         __metadata('design:type', Object)
-    ], PopupDetails.prototype, "popupUpdated");
+    ], PopupDetails.prototype, "popupUpdated", void 0);
     PopupDetails = __decorate([
         core_1.Directive({
             selector: '[popupDetails]',
             host: {
-                '(click)': 'onClick($event)'
+                '(click)': 'onClick($event)',
             }
         }), 
         __metadata('design:paramtypes', [ng_bootstrap_1.NgbModal])

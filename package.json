@@ -1,17 +1,19 @@
 {
   "version": "1.0.0",
   "name": "tubular2",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/unosquare/tubular2.git"
+  },
   "scripts": {
-    "tsc": "tsc",
     "test": "karma start karma.conf.js",
     "test-once": "tsc && karma start karma.conf.js --single-run",
-    "tsc:w": "tsc -w",
-    "preweb-server": "gulp build",
-    "web-server": "http-server .\\wwwroot",
+    "preweb-server": "gulp --gulpfile ./src/Unosquare.Tubular2.Web/gulpfile.js build",
+    "web-server": "http-server ./src/Unosquare.Tubular2.Web/wwwroot",
     "pree2e": "npm run webdriver:update",
-    "e2e": "tsc && concurrently \"npm run web-server\" \"protractor protractor.config.js\" --kill-others --success first",
-    "webdriver:update": "webdriver-manager update",
-    "build": "gulp build"
+    "e2e": "gulp e2e && concurrently \"http-server ./src/Unosquare.Tubular2.Web/wwwroot\" \"protractor protractor.config.js\" --kill-others --success first",
+    "webdriver:update": "webdriver-manager update"
   },
   "dependencies": {
     "@angular/common": "2.0.0",
@@ -37,6 +39,7 @@
     "@types/jasmine": "^2.5.35",
     "@types/node": "^6.0.45",
     "@types/selenium-webdriver": "^2.53.32",
+    "@types/protractor": "1.5.20",
     "canonical-path": "0.0.2",
     "concurrently": "3.1.0",
     "del": "2.2.0",

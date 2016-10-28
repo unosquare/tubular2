@@ -31,7 +31,7 @@ var PageSizeSelector = (function () {
         core_1.Input('options'), 
         __metadata('design:type', Array), 
         __metadata('design:paramtypes', [Array])
-    ], PageSizeSelector.prototype, "in");
+    ], PageSizeSelector.prototype, "in", null);
     PageSizeSelector = __decorate([
         core_1.Component({
             selector: 'page-size-selector',
