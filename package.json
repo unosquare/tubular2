@@ -12,7 +12,7 @@
     "preweb-server": "gulp --gulpfile ./src/Unosquare.Tubular2.Web/gulpfile.js build",
     "web-server": "http-server ./src/Unosquare.Tubular2.Web/wwwroot",
     "pree2e": "npm run webdriver:update",
-    "e2e": "gulp e2e && concurrently \"http-server ./src/Unosquare.Tubular2.Web/wwwroot\" \"protractor protractor.config.js\" --kill-others --success first",
+    "e2e": "gulp e2e && concurrently \"http-server -s ./src/Unosquare.Tubular2.Web/wwwroot\" \"protractor protractor.config.js\" --kill-others --success first",
     "webdriver:update": "webdriver-manager update"
   },
   "dependencies": {

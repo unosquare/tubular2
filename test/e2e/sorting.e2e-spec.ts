@@ -7,7 +7,7 @@ describe('grid sorting', () => {
         dataSetLowerCustomerName = 'Advanced Technology Systems',
         dataSetHigherCustomerName = 'Vesta',
         dataSetLowerDate = 'Jan 28, 2016',
-        dataSetHigherDate = 'May 24, 2016';
+        dataSetHigherDate = 'May 25, 2016';
 
     let paginator = element(by.tagName('ngb-pagination')).$$('nav').$$('ul').$$('li'),
         columnHeaders = element(by.tagName('thead')).$$('tr').first().$$('th'),
