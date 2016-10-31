@@ -1,5 +1,5 @@
 ﻿import { Injectable }     from '@angular/core';
-import { Http, Response, RequestMethod, Request } from '@angular/http';
+import { Http, Response, RequestMethod, Request, Headers } from '@angular/http';
 
 import { Observable }     from 'rxjs/Observable';
 
@@ -52,5 +52,15 @@ export class TubularDataService {
             error.status ? `${error.status} - ${error.statusText}` : 'Server error';
         
         return Observable.throw(errMsg);
+    }
+
+    private authenticate(url: string, username: string, password: string) {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        return this.http.post(url, 'grant_type=password&username=' + username + '&password=' + password, { headers })
+            .map((data: Response) => {
+                localStorage.setItem('auth_data', JSON.stringify(data));
+            })
+            .catch(this.handleError);
     }
 }
