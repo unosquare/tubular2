@@ -2,7 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { TubularModule, TubularDataService } from '@tubular2/tubular2';
+import { TubularModule, TubularDataService, TubularSettingsService } from '@tubular2/tubular2';
 
 import { AppComponent }  from './app.component';
 import { SampleGrid } from './sampleGrid.component';
@@ -11,7 +11,7 @@ import { Popup } from './popup.component';
 @NgModule({
     imports: [BrowserModule, FormsModule, ReactiveFormsModule, TubularModule ],
     declarations: [AppComponent, SampleGrid, Popup],
-    providers: [TubularDataService],
+    providers: [TubularDataService, TubularSettingsService],
     bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     entryComponents: [Popup]

@@ -4,6 +4,7 @@ import { Observable }       from 'rxjs/Observable';
 import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
 
 import { TubularDataService } from './tubular-data.service';
+import { TubularSettingsService } from './tubular-settings.service';
 import { ColumnModel, DataType } from './column';
 import { PopupContainer } from './grid-table';
 
@@ -33,17 +34,18 @@ export class GridPageInfo {
     ]
 })
 export class TubularGrid extends PopupContainer {
+
     // data is just observable and children can't push
     private data = new BehaviorSubject([]);
     dataStream = this.data.asObservable();
     private _pageInfo = new BehaviorSubject(new GridPageInfo());
     pageInfo = this._pageInfo.asObservable();
 
-    _pageSize = new BehaviorSubject(10);
+    _pageSize = new BehaviorSubject(this.getPageSizeSettingValue());
     pageSize = this._pageSize.asObservable();
     
     // values that to observe and allow to push from children
-    page = new BehaviorSubject(0);
+    page = new BehaviorSubject(this.getPageSettingValue());
     columns = new BehaviorSubject([]);
     freeTextSearch = new BehaviorSubject("");
     
@@ -62,7 +64,7 @@ export class TubularGrid extends PopupContainer {
     @Output() onDataError = new EventEmitter<any>();
     @Output() onDataSaved = new EventEmitter<any>();
 
-    constructor(private tbDataService: TubularDataService) {
+    constructor(private tbDataService: TubularDataService, private tbSettingsService: TubularSettingsService) {
         super();
     }
 
@@ -71,9 +73,15 @@ export class TubularGrid extends PopupContainer {
         this.dataStream.subscribe(p => console.log("New data", p));
 
         // subscriptions to events
-        this.pageSize.subscribe(c => this.refresh());
+        this.pageSize.subscribe(c => {
+            this.refresh();
+            this.changePageSizeData()
+        });
         this.columns.subscribe(c => this.refresh());
-        this.page.subscribe(c => this.refresh());
+        this.page.subscribe(c => {
+            this.refresh();
+            this.changePagesData()
+        });
         this.freeTextSearch
             .debounceTime(500)
             .subscribe(c => {
@@ -185,5 +193,23 @@ export class TubularGrid extends PopupContainer {
         
         // push page Info
         this._pageInfo.next(pageInfo);
+    }
+
+    changePagesData(){
+        this.tbSettingsService.put({ id: "gridPage", value: this.page.getValue() });
+    }
+
+    changePageSizeData() {
+        this.tbSettingsService.put({ id: "gridPageSize", value: this._pageSize.getValue() });
+    }
+
+    getPageSettingValue() {
+        let value = this.tbSettingsService.get("gridPage");
+        return value != false ? value : 0;
+    }
+
+    getPageSizeSettingValue() {
+        let value = this.tbSettingsService.get("gridPageSize");
+        return value != false ? value : 10;
     }
 }

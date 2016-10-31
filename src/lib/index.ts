@@ -3,6 +3,7 @@ export * from './tubular.module';
 
 // export services
 export * from './tubular-data.service';
+export * from './tubular-settings.service';
 
 // export components and directives
 export * from './grid.component';

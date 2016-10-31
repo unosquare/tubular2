@@ -1,29 +1,25 @@
-import {provide} from '@angular/core';
+import { Injectable } from '@angular/core';
 
-import { Observable }     from 'rxjs/Observable';
+export interface Settings {
+    id: any;
+    value: any;
+}
 
-export class TubularLocalData {
-    public tubularLocalData: any;
+@Injectable()
+export class TubularSettingsService {
 
-    constructor() { }
-
-    public set(key: string, value: string): void {
-        this.tubularLocalData[key] = value;
+    constructor() {
     }
 
-    public get(key: string): string {
-        return this.tubularLocalData[key] || false;
+    public put(setting: Settings) {
+        localStorage.setItem(setting.id, JSON.stringify(setting.value));
     }
 
-    public setObject(key: string, value: any): void {
-        this.tubularLocalData[key] = JSON.stringify(value);
+    public get(key: string): any {
+        return JSON.parse(localStorage.getItem(key)) || false;
     }
 
-    public getObject(key: string): any {
-        return JSON.parse(this.tubularLocalData[key] || '{}');
-    }
-
-    public remove(key: string): any {
-        this.tubularLocalData.removeItem(key);
+    public delete(key: string): any {
+        localStorage.removeItem(key);
     }
 }
