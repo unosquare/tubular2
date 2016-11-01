@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
 
+export interface ITubularSettingsProvider {
+    put(id: string, value: string): void;
+    get(key: string): any;
+    delete(key: string): void;
+}
+
 @Injectable()
 export class TubularSettingsService {
 
@@ -14,7 +20,7 @@ export class TubularSettingsService {
         return JSON.parse(localStorage.getItem(key)) || false;
     }
 
-    public delete(key: string): any {
+    public delete(key: string) {
         localStorage.removeItem(key);
     }
 }
