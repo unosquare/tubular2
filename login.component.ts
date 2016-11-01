@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { DataService } from './tubular-data.service.ts';
+import { DataService } from './tubular-data.service';
 import { FormBuilder, FormGroup, Validators } from '@aungular/forms';
 
 @Component({
-    selector: 'my-app',
+    selector: 'login',
     template: `<form [formGroup]="loginForm">
                 <div class="form-group">
                     <label>User:<label>
@@ -17,7 +17,7 @@ import { FormBuilder, FormGroup, Validators } from '@aungular/forms';
               <form>`
 })
 
-export class LoginComponent implements OnInit {
+export class Login implements OnInit {
     loginForm: FormGroup;
     constructor(private dataService: DataService, private formBuilder: FormBuilder) { }
 
