@@ -196,11 +196,11 @@ export class TubularGrid extends PopupContainer {
     }
 
     changePagesData(){
-        this.tbSettingsService.put({ id: "gridPage", value: this.page.getValue() });
+        this.tbSettingsService.put("gridPage", this.page.getValue());
     }
 
     changePageSizeData() {
-        this.tbSettingsService.put({ id: "gridPageSize", value: this._pageSize.getValue() });
+        this.tbSettingsService.put("gridPageSize", this._pageSize.getValue());
     }
 
     getPageSettingValue() {

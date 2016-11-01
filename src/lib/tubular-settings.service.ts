@@ -1,18 +1,13 @@
 import { Injectable } from '@angular/core';
 
-export interface Settings {
-    id: any;
-    value: any;
-}
-
 @Injectable()
 export class TubularSettingsService {
 
     constructor() {
     }
 
-    public put(setting: Settings) {
-        localStorage.setItem(setting.id, JSON.stringify(setting.value));
+    public put(id: string, value: string) {
+        localStorage.setItem(id, JSON.stringify(value));
     }
 
     public get(key: string): any {
