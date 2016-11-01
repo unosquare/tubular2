@@ -7,7 +7,7 @@ export interface ITubularSettingsProvider {
 }
 
 @Injectable()
-export class TubularSettingsService {
+export class TubularSettingsService implements ITubularSettingsProvider{
 
     constructor() {
     }
