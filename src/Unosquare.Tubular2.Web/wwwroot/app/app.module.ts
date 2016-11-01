@@ -2,7 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { TubularModule, TubularDataService, SETTINGS_PROVIDER, TUBULAR_LOCAL_STORAGE } from '@tubular2/tubular2';
+import { TubularModule, TubularDataService, SETTINGS_PROVIDER, TubularLocalStorageService } from '@tubular2/tubular2';
 
 import { AppComponent }  from './app.component';
 import { SampleGrid } from './sampleGrid.component';
@@ -13,7 +13,7 @@ import { Popup } from './popup.component';
     declarations: [AppComponent, SampleGrid, Popup],
     providers: [
         TubularDataService,
-        { provide: SETTINGS_PROVIDER, useClass: TUBULAR_LOCAL_STORAGE }
+        { provide: SETTINGS_PROVIDER, useClass: TubularLocalStorageService }
     ],
     bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],

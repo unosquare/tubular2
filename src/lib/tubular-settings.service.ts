@@ -8,7 +8,7 @@ export interface ITubularSettingsProvider {
     delete(key: string): void;
 }
 
-export class TUBULAR_LOCAL_STORAGE implements ITubularSettingsProvider {
+export class TubularLocalStorageService implements ITubularSettingsProvider {
     public put(id: string, value: string) {
         localStorage.setItem(id, JSON.stringify(value));
     }
