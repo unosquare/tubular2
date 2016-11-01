@@ -13,7 +13,7 @@ import { Popup } from './popup.component';
     declarations: [AppComponent, SampleGrid, Popup],
     providers: [
         TubularDataService,
-        { provide: SETTINGS_PROVIDER, useValue: TUBULAR_LOCAL_STORAGE }
+        { provide: SETTINGS_PROVIDER, useClass: TUBULAR_LOCAL_STORAGE }
     ],
     bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],

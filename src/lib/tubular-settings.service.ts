@@ -8,14 +8,16 @@ export interface ITubularSettingsProvider {
     delete(key: string): void;
 }
 
-export const TUBULAR_LOCAL_STORAGE: ITubularSettingsProvider = {
-    put(id: string, value: string) {
+export class TUBULAR_LOCAL_STORAGE implements ITubularSettingsProvider {
+    public put(id: string, value: string) {
         localStorage.setItem(id, JSON.stringify(value));
-    },
-    get(key: string): any {
+    }
+
+    public get(key: string): any {
         return JSON.parse(localStorage.getItem(key)) || false;
-    },
-    delete(key: string) {
+    }
+    
+    public delete(key: string) {
         localStorage.removeItem(key);
     }
-};
+}

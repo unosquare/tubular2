@@ -64,7 +64,7 @@ export class TubularGrid extends PopupContainer {
     @Output() onDataError = new EventEmitter<any>();
     @Output() onDataSaved = new EventEmitter<any>();
 
-    constructor( @Inject(SETTINGS_PROVIDER) tbLocalStorageService: ITubularSettingsProvider , private tbDataService: TubularDataService) {
+    constructor( @Inject(SETTINGS_PROVIDER) private tbLocalStorageService: ITubularSettingsProvider , private tbDataService: TubularDataService) {
         super();
     }
 
