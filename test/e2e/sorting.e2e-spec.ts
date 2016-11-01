@@ -2,21 +2,41 @@
 
 describe('grid sorting', () => {
 
-    let dataSetLowerId = '1',
+    let dataSetLowerId ,
+        dataSetHigherId,
+        dataSetLowerCustomerName,
+        dataSetHigherCustomerName,
+        dataSetLowerDate,
+        dataSetHigherDate,
+        paginator,
+        columnHeaders,
+        orderIdSorting,
+        orderCustomerNameSorting,
+        aShippedDateSorting;
+        
+    beforeAll(() => {
+        browser.get('/');
+        dataSetLowerId = '1',
         dataSetHigherId = '53',
         dataSetLowerCustomerName = 'Advanced Technology Systems',
         dataSetHigherCustomerName = 'Vesta',
         dataSetLowerDate = 'Jan 28, 2016',
-        dataSetHigherDate = 'May 25, 2016';
-
-    let paginator = element(by.tagName('ngb-pagination')).$$('nav').$$('ul').$$('li'),
+        dataSetHigherDate = 'Jun 17, 2016';
+        paginator = element(by.tagName('ngb-pagination')).$$('nav').$$('ul').$$('li'),
         columnHeaders = element(by.tagName('thead')).$$('tr').first().$$('th'),
         orderIdSorting = columnHeaders.get(1).$('.column-header').$$('span'),
         orderCustomerNameSorting = columnHeaders.get(2).$('.column-header').$$('span'),
         aShippedDateSorting = columnHeaders.get(3).$('.column-header').$$('span');
+        element(by.tagName('page-size-selector')).$('form').$('div').$('select').$('[value="10"]').click();
+    });
 
     beforeEach(() => {
-        browser.get('/');
+        //Go to first page if isn't there
+        if(paginator.first().getAttribute('class') != 'page-item disabled'){
+            paginator.first().$('a').click();
+        }
+        aShippedDateSorting.click();        
+        aShippedDateSorting.click();        
     });
 
     it('should order data in ascending order when click-sorting an unsorted numeric column', () => {
@@ -58,6 +78,7 @@ describe('grid sorting', () => {
     });
 
     it('should order data in ascending order when click-sorting an unsorted date column', () => {
+        aShippedDateSorting.click();
         aShippedDateSorting.click();
         let firstDataRow = element(by.tagName('tbody')).$$('tr').first();
         expect(firstDataRow.$$('td').get(3).getText()).toEqual(dataSetLowerDate);
