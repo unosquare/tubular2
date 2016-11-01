@@ -1,10 +1,10 @@
-﻿import { Component, Input, Output, EventEmitter } from '@angular/core';
+﻿import { Component, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { RequestMethod } from '@angular/http';
 import { Observable }       from 'rxjs/Observable';
 import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
 
 import { TubularDataService } from './tubular-data.service';
-import { TubularSettingsService } from './tubular-settings.service';
+import { SETTINGS_PROVIDER, ITubularSettingsProvider } from './tubular-settings.service';
 import { ColumnModel, DataType } from './column';
 import { PopupContainer } from './grid-table';
 
@@ -64,7 +64,7 @@ export class TubularGrid extends PopupContainer {
     @Output() onDataError = new EventEmitter<any>();
     @Output() onDataSaved = new EventEmitter<any>();
 
-    constructor(private tbDataService: TubularDataService, private tbSettingsService: TubularSettingsService) {
+    constructor( @Inject(SETTINGS_PROVIDER) tbLocalStorageService: ITubularSettingsProvider , private tbDataService: TubularDataService) {
         super();
     }
 
@@ -196,20 +196,20 @@ export class TubularGrid extends PopupContainer {
     }
 
     changePagesData(){
-        this.tbSettingsService.put("gridPage", this.page.getValue());
+        this.tbLocalStorageService.put("gridPage", this.page.getValue());
     }
 
     changePageSizeData() {
-        this.tbSettingsService.put("gridPageSize", this._pageSize.getValue());
+        this.tbLocalStorageService.put("gridPageSize", this._pageSize.getValue());
     }
 
     getPageSettingValue() {
-        let value = this.tbSettingsService.get("gridPage");
+        let value = this.tbLocalStorageService.get("gridPage");
         return value != false ? value : 0;
     }
 
     getPageSizeSettingValue() {
-        let value = this.tbSettingsService.get("gridPageSize");
+        let value = this.tbLocalStorageService.get("gridPageSize");
         return value != false ? value : 10;
     }
 }
