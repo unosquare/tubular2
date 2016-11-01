@@ -10,6 +10,14 @@ import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class TubularDataService {
+    userData = {
+        isAuthenticated: false,
+        username: '',
+        bearerToken: '',
+        expirationDate: null,
+        role: '',
+        refreshToken: ''
+    }
     constructor(private http: Http) { }
     
     retrieveData(url: string, req: any) : Observable<any> {
@@ -58,9 +66,21 @@ export class TubularDataService {
         let headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
         return this.http.post(url, 'grant_type=password&username=' + username + '&password=' + password, { headers })
-            .map((data: Response) => {
-                localStorage.setItem('auth_data', JSON.stringify(data));
+            .map(data => {
+                this.handleSuccesCallback(data);
             })
             .catch(this.handleError);
+    }
+
+    private handleSuccesCallback(data) {
+        this.userData.isAuthenticated = true;
+        this.userData.username = data.userName;
+        this.userData.bearerToken = data.acces_token;
+        this.userData.expirationDate = new Date();
+        this.userData.expirationDate = new Date(this.userData.expirationDate.getTime() + data.expires_in * 1000);
+        this.userData.role = data.role;
+        this.userData.refreshToken = data.refresh_token;
+
+        localStorage.setItem('auth_data', JSON.stringify(this.userData));
     }
 }
