@@ -3,10 +3,10 @@ import { FormBuilder } from '@angular/forms';
 import { FormPopup, TubularGrid } from '@tubular2/tubular2'
 
 @Component({
-    selector: 'sample-popup',
+    selector: 'order-popup',
     templateUrl: '/app/popup.component.html'
 })
-export class Popup extends FormPopup {
+export class OrderPopup extends FormPopup {
     constructor(tbGrid: TubularGrid, formBuilder: FormBuilder) {
         super(tbGrid, formBuilder);
     }

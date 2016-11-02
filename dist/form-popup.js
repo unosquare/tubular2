@@ -9,30 +9,42 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var moment = require('moment');
 var FormPopup = (function () {
     function FormPopup(tbGrid, formBuilder) {
         this.tbGrid = tbGrid;
         this.formBuilder = formBuilder;
     }
     FormPopup.prototype.ngOnInit = function () {
-        this.detailsForm = this.formBuilder.group(this.row || this.getEmptyRow());
+        var tempData = this.row || this.getEmptyRow();
+        this.data = {};
+        for (var field in tempData) {
+            if (moment.isMoment(tempData[field])) {
+                this.data[field] = [tempData[field].format('YYYY-MM-DDThh:mm')];
+            }
+            else {
+                this.data[field] = [tempData[field]];
+            }
+        }
+        this.detailsForm = this.formBuilder.group(this.data);
         this.$isNew = !this.row;
     };
     FormPopup.prototype.close = function () {
-        this.popupRef.dismiss();
+        this.modalRef.close();
     };
     FormPopup.prototype.save = function () {
-        this.popupRef.close({
-            values: this.detailsForm.value,
-            $isNew: this.$isNew
+        this.tbGrid.onUpdate({
+            'values': this.detailsForm.value,
+            '$isNew': this.$isNew
         });
+        this.modalRef.close();
     };
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Object)
-    ], FormPopup.prototype, "popupRef", void 0);
+    ], FormPopup.prototype, "modalRef", void 0);
     __decorate([
-        core_1.Input(), 
+        core_1.Input('row'), 
         __metadata('design:type', Object)
     ], FormPopup.prototype, "row", void 0);
     return FormPopup;

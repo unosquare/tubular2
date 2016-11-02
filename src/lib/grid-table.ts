@@ -4,30 +4,15 @@ import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
 import { TubularGrid }      from './grid.component';
 import { ColumnModel, ColumnSortDirection } from './column';
 
-export abstract class PopupContainer {
-    popupRef: any;
 
-    setPopup(ref) {
-        if (!ref) return;
 
-        this.popupRef = ref;
-        this.popupRef.result.then(data => this.onUpdate(data), this.onDismiss);
-    }
-
-    abstract onUpdate(row);
-
-    abstract onDismiss(reason);
-}
-
-export abstract class GridTable extends PopupContainer {
+export abstract class GridTable {
     private columnObservable: BehaviorSubject<ColumnModel[]> = new BehaviorSubject([]);
 
     columns = this.columnObservable.asObservable();
     rows: any[];
     
     constructor(public tbGrid: TubularGrid) {
-        super();
-
         this.tbGrid.dataStream.subscribe(payload => this.rows = payload);
         this.columnObservable.subscribe(payload => this.tbGrid.columns.next(payload));
     }

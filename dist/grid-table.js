@@ -1,29 +1,9 @@
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var BehaviorSubject_1 = require('rxjs/BehaviorSubject');
 var column_1 = require('./column');
-var PopupContainer = (function () {
-    function PopupContainer() {
-    }
-    PopupContainer.prototype.setPopup = function (ref) {
-        var _this = this;
-        if (!ref)
-            return;
-        this.popupRef = ref;
-        this.popupRef.result.then(function (data) { return _this.onUpdate(data); }, this.onDismiss);
-    };
-    return PopupContainer;
-}());
-exports.PopupContainer = PopupContainer;
-var GridTable = (function (_super) {
-    __extends(GridTable, _super);
+var GridTable = (function () {
     function GridTable(tbGrid) {
         var _this = this;
-        _super.call(this);
         this.tbGrid = tbGrid;
         this.columnObservable = new BehaviorSubject_1.BehaviorSubject([]);
         this.columns = this.columnObservable.asObservable();
@@ -63,5 +43,5 @@ var GridTable = (function (_super) {
         this.columnObservable.next(val);
     };
     return GridTable;
-}(PopupContainer));
+}());
 exports.GridTable = GridTable;

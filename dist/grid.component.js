@@ -1,9 +1,4 @@
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -23,7 +18,6 @@ var moment = require('moment');
 var tubular_data_service_1 = require('./tubular-data.service');
 var tubular_settings_service_1 = require('./tubular-settings.service');
 var column_1 = require('./column');
-var grid_table_1 = require('./grid-table');
 require('rxjs/add/operator/debounceTime');
 var GridPageInfo = (function () {
     function GridPageInfo() {
@@ -37,10 +31,8 @@ var GridPageInfo = (function () {
     return GridPageInfo;
 }());
 exports.GridPageInfo = GridPageInfo;
-var TubularGrid = (function (_super) {
-    __extends(TubularGrid, _super);
+var TubularGrid = (function () {
     function TubularGrid(settingsProvider, dataService) {
-        _super.call(this);
         this.settingsProvider = settingsProvider;
         this.dataService = dataService;
         // data is just observable and children can't push
@@ -122,8 +114,6 @@ var TubularGrid = (function (_super) {
         this.dataService
             .save(this.serverSaveUrl, row.values, row.$isNew ? http_1.RequestMethod.Post : http_1.RequestMethod.Put)
             .subscribe(function (data) { return _this.onDataSaved.emit(data); }, function (error) { return _this.onDataError.emit(error); }, function () { return _this.refresh(); });
-    };
-    TubularGrid.prototype.onDismiss = function (reason) {
     };
     TubularGrid.prototype.transformToObj = function (columns, data) {
         var obj = {};
@@ -207,5 +197,5 @@ var TubularGrid = (function (_super) {
         __metadata('design:paramtypes', [Object, tubular_data_service_1.TubularDataService])
     ], TubularGrid);
     return TubularGrid;
-}(grid_table_1.PopupContainer));
+}());
 exports.TubularGrid = TubularGrid;

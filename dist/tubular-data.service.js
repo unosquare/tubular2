@@ -68,17 +68,17 @@ var TubularDataService = (function () {
             error.status ? error.status + " - " + error.statusText : 'Server error';
         return Observable_1.Observable.throw(errMsg);
     };
-    TubularDataService.prototype.authenticate = function (url, username, password) {
+    TubularDataService.prototype.authenticate = function (url, username, password, succesCallback, errorCallback, userDataCallback) {
         var _this = this;
-        var headers = new http_1.Headers();
-        headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        return this.http.post(url, 'grant_type=password&username=' + username + '&password=' + password, { headers: headers })
+        this.removeAuthentication();
+        var headers = new http_1.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+        return this.http.post(url, 'grant_type=password&username=' + username + '&password=' + password, headers)
             .map(function (data) {
-            _this.handleSuccesCallback(data);
+            _this.handleSuccesCallback(data, succesCallback, errorCallback, userDataCallback);
         })
             .catch(this.handleError);
     };
-    TubularDataService.prototype.handleSuccesCallback = function (data) {
+    TubularDataService.prototype.handleSuccesCallback = function (data, succesCallback, errorCallback, userDataCallback) {
         this.userData.isAuthenticated = true;
         this.userData.username = data.userName;
         this.userData.bearerToken = data.acces_token;
@@ -86,6 +86,49 @@ var TubularDataService = (function () {
         this.userData.role = data.role;
         this.userData.refreshToken = data.refresh_token;
         this.settingsProvider.put('auth_data', JSON.stringify(this.userData));
+        if (typeof userDataCallback === 'function') {
+            userDataCallback(data);
+        }
+        if (typeof succesCallback === 'function') {
+            succesCallback();
+        }
+    };
+    TubularDataService.prototype.isAuthenticated = function () {
+        if (!this.userData.isAuthenticated || this.isAuthenticationExpired(this.userData.expirationDate)) {
+            try {
+                this.retriveSaveData();
+            }
+            catch (e) {
+                return false;
+            }
+        }
+        return true;
+    };
+    TubularDataService.prototype.retriveSaveData = function () {
+        var savedData = this.settingsProvider.get('auth_data');
+        if (typeof savedData === 'undefined' || savedData == null) {
+            throw 'No authentication exist';
+        }
+        else if (this.isAuthenticationExpired(savedData.expirationDate)) {
+            throw 'Authentication token has already expired';
+        }
+        else {
+            this.userData = savedData;
+        }
+    };
+    TubularDataService.prototype.isAuthenticationExpired = function (expirationDate) {
+        var now = new Date();
+        var expiration = new Date(expirationDate);
+        return expiration.valueOf() - now.valueOf() <= 0;
+    };
+    TubularDataService.prototype.removeAuthentication = function () {
+        this.settingsProvider.delete('auth_data');
+        this.userData.isAuthenticated = false;
+        this.userData.username = '';
+        this.userData.bearerToken = '';
+        this.userData.expirationDate = null;
+        this.userData.role = '';
+        this.userData.refreshToken = '';
     };
     TubularDataService = __decorate([
         core_1.Injectable(),

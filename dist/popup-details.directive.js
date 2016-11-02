@@ -15,14 +15,14 @@ var PopupDetails = (function () {
         this.modalService = modalService;
         this.popupUpdated = new core_1.EventEmitter();
     }
-    PopupDetails.prototype.onClick = function ($event) {
-        var winRef = this.modalService.open(this.popupDetails);
+    PopupDetails.prototype.onOpen = function ($event) {
+        var winRef = this.modalService.open(this.popupContent);
         this.popupUpdated.emit(winRef);
     };
     __decorate([
-        core_1.Input(), 
+        core_1.Input('popupDetails'), 
         __metadata('design:type', Object)
-    ], PopupDetails.prototype, "popupDetails", void 0);
+    ], PopupDetails.prototype, "popupContent", void 0);
     __decorate([
         core_1.Output(), 
         __metadata('design:type', Object)
@@ -31,7 +31,7 @@ var PopupDetails = (function () {
         core_1.Directive({
             selector: '[popupDetails]',
             host: {
-                '(click)': 'onClick($event)',
+                '(click)': 'onOpen($event)',
             }
         }), 
         __metadata('design:paramtypes', [ng_bootstrap_1.NgbModal])

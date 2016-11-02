@@ -15,11 +15,11 @@
     <tbody [hidden]="isFiltering">
         <tr *ngFor="let row of rows">
             <td>
-                <button class="btn btn-info btn-sm" [popupDetails]="content" (popupUpdated)="setPopup($event)">
+                <button class="btn btn-info btn-sm" (click)="editRow(content)">
                     Details 
                 </button>
                 <template ngbModalContainer #content>
-                    <sample-popup [row]="row" [popupRef]="popupRef"></sample-popup>
+                    <order-popup [row]="row" [modalRef]="editModalRef"></order-popup>
                 </template>
             </td>
             <td>{{row.OrderID}}</td>
