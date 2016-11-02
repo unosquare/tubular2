@@ -1,0 +1,45 @@
+﻿
+<h1 class="display-3">Tubular2</h1>
+<p class="lead">
+    Angular2 components
+</p>
+
+
+<tubular-grid #grid server-url="http://tubular.azurewebsites.net/api/orders/paged" server-save-url="/api/orders/" require-authentication="false" (onDataError)="errorHandler($event)">
+    <div class="row">
+        <div class="col-md-5">
+            <grid-pager></grid-pager>
+        </div>
+        <div class="col-md-4">
+            <div class="btn-group-sm">
+                <grid-print></grid-print>
+                <grid-export fileName="sampleCsv.csv"></grid-export>
+                <button class="btn btn-info" [popupDetails]="content" (popupUpdated)="grid.setPopup($event)">
+                    New Item
+                </button>
+                <template ngbModalContainer #content>
+                    <sample-popup [popupRef]="grid.popupRef"></sample-popup>
+                </template>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <grid-search></grid-search>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <grid></grid>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            <grid-pager></grid-pager>
+        </div>
+        <div class="col-md-3">
+            <page-size-selector></page-size-selector>
+        </div>
+        <div class="col-md-4">
+            <grid-pager-info></grid-pager-info>
+        </div>
+    </div>
+</tubular-grid>
