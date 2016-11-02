@@ -65,17 +65,17 @@ export class TubularDataService {
         return Observable.throw(errMsg);
     }
 
-    authenticate(url: string, username: string, password: string) {
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        return this.http.post(url, 'grant_type=password&username=' + username + '&password=' + password, { headers })
+    authenticate(url: string, username: string, password: string, succesCallback, errorCallback, persistData, userDataCallback) {
+        this.removeAuthentication();
+        let headers = new Headers({ 'Content-Type':'application/x-www-form-urlencoded'});
+        return this.http.post(url, 'grant_type=password&username=' + username + '&password=' + password, headers)
             .map(data => {
-                this.handleSuccesCallback(data);
+                this.handleSuccesCallback(data, succesCallback, errorCallback, persistData, userDataCallback);
             })
             .catch(this.handleError);
     }
 
-    private handleSuccesCallback(data) {
+    private handleSuccesCallback(data, succesCallback, errorCallback, persistData, userDataCallback) {
         this.userData.isAuthenticated = true;
         this.userData.username = data.userName;
         this.userData.bearerToken = data.acces_token;
@@ -83,6 +83,56 @@ export class TubularDataService {
         this.userData.role = data.role;
         this.userData.refreshToken = data.refresh_token;
 
-        this.settingsProvider.put('auth_data', JSON.stringify(this.userData));
+        if (typeof userDataCallback === 'function') {
+            userDataCallback(data);
+        }
+
+        if (persistData) {
+            this.settingsProvider.put('auth_data', JSON.stringify(this.userData));
+        }
+
+        if (typeof succesCallback === 'function') {
+            succesCallback();
+        }
+    }
+
+    private isAuthenticated() {
+        if (!this.userData.isAuthenticated || this.isAuthenticationExpired(this.userData.expirationDate)) {
+            try {
+                this.retriveSaveData();
+            } catch (e) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private retriveSaveData() {
+        let savedData = this.settingsProvider.get('auth_data');
+        if (typeof savedData === 'undefined' || savedData == null) {
+            throw 'No authentication exist';
+        } else if (this.isAuthenticationExpired(savedData.expirationDate)) {
+            throw 'Authentication token has already expired';
+        } else {
+            this.userData = savedData;
+            //setHttpAuthHeader();
+        }
+    }
+
+    private isAuthenticationExpired(expirationDate) {
+        let now = new Date();
+        expirationDate = new Date(expirationDate);
+        return expirationDate - now <= 0;
+    }
+
+    private removeAuthentication() {
+        this.settingsProvider.delete('auth_data');
+        this.userData.isAuthenticated = false;
+        this.userData.username = '';
+        this.userData.bearerToken = '';
+        this.userData.expirationDate = null;
+        this.userData.role = '';
+        this.userData.refreshToken = '';
     }
 }
