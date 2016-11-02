@@ -1,11 +1,12 @@
-﻿import { Input } from '@angular/core';
+﻿import { Input, Output, EventEmitter} from '@angular/core';
 
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 import { TubularGrid }      from './grid.component';
 
 export abstract class FormPopup {
-    @Input('popupRef') popupRef: any;
+
+    @Input() modalRef: any;
     @Input('row') row: any;
     $isNew: boolean;
     detailsForm: FormGroup;
@@ -17,16 +18,19 @@ export abstract class FormPopup {
         this.detailsForm = this.formBuilder.group(this.row || this.getEmptyRow());
         this.$isNew = !this.row;
     }
-    
-    close() {
-        this.popupRef.dismiss();
-    }
 
+    close() {
+        this.modalRef.close();
+    }
+    
     save() {
-        this.popupRef.close({
+
+        this.tbGrid.onUpdate({
             'values': this.detailsForm.value,
             '$isNew': this.$isNew
         });
+
+        this.modalRef.close();
     }
 
     abstract getEmptyRow(): any;
