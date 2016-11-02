@@ -7,9 +7,8 @@ import * as moment from 'moment';
 import { TubularGrid }      from './grid.component';
 
 export abstract class FormPopup {
-
     @Input() modalRef: any;
-    @Input('row') row: any;
+    @Input() row: any;
     $isNew: boolean;
     detailsForm: FormGroup;
     private data: any;
@@ -40,8 +39,8 @@ export abstract class FormPopup {
     save() {
 
         this.tbGrid.onUpdate({
-            'values': this.detailsForm.value,
-            '$isNew': this.$isNew
+            values: this.detailsForm.value,
+            $isNew: this.$isNew
         });
 
         this.modalRef.close();

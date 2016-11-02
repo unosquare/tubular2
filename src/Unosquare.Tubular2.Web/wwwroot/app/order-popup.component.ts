@@ -4,7 +4,7 @@ import { FormPopup, TubularGrid } from '@tubular2/tubular2'
 
 @Component({
     selector: 'order-popup',
-    templateUrl: '/app/popup.component.html'
+    templateUrl: '/app/order-popup.component.html'
 })
 export class OrderPopup extends FormPopup {
     constructor(tbGrid: TubularGrid, formBuilder: FormBuilder) {

@@ -1,4 +1,4 @@
-﻿import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+﻿import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -11,16 +11,16 @@ import { SampleGrid } from './sampleGrid.component';
 import { OrderPopup } from './order-popup.component';
 import { GridComponent }   from './grid.component';
 import { FormComponent }   from './form.component';
+import { LoginComponent }   from './login.component';
 
 @NgModule({
     imports: [BrowserModule, FormsModule, ReactiveFormsModule, TubularModule, AppRoutingModule ],
-    declarations: [AppComponent, SampleGrid, OrderPopup, GridComponent, FormComponent],
+    declarations: [AppComponent, SampleGrid, OrderPopup, GridComponent, FormComponent, LoginComponent],
     providers: [
         TubularDataService,
         { provide: SETTINGS_PROVIDER, useClass: TubularLocalStorageService }
     ],
     bootstrap: [AppComponent],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
     entryComponents: [OrderPopup]
 })
 export class AppModule { }
