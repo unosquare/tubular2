@@ -6,6 +6,7 @@ function __export(m) {
 __export(require('./tubular.module'));
 // export services
 __export(require('./tubular-data.service'));
+__export(require('./tubular-settings.service'));
 // export components and directives
 __export(require('./grid.component'));
 __export(require('./form-popup'));

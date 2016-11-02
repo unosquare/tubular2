@@ -15,11 +15,11 @@
             <div class="btn-group-sm">
                 <grid-print></grid-print>
                 <grid-export fileName="sampleCsv.csv"></grid-export>
-                <button class="btn btn-info" [popupDetails]="content" (popupUpdated)="grid.setPopup($event)">
+                <button class="btn btn-info" (click)="openDialog(content)">
                     New Item
                 </button>
                 <template ngbModalContainer #content>
-                    <popup-details [popupRef]="grid.popupRef"></popup-details>
+                    <order-popup [modalRef]="newOrderModalRef"></order-popup>
                 </template>
             </div>
         </div>

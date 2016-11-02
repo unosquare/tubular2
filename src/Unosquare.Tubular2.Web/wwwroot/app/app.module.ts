@@ -6,14 +6,14 @@ import { TubularModule, TubularDataService, TubularSettingsService } from '@tubu
 
 import { AppComponent }  from './app.component';
 import { SampleGrid } from './sampleGrid.component';
-import { Popup } from './popup.component';
+import { OrderPopup } from './order-popup.component';
 
 @NgModule({
     imports: [BrowserModule, FormsModule, ReactiveFormsModule, TubularModule ],
-    declarations: [AppComponent, SampleGrid, Popup],
+    declarations: [AppComponent, SampleGrid, OrderPopup],
     providers: [TubularDataService, TubularSettingsService],
     bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    entryComponents: [Popup]
+    entryComponents: [OrderPopup]
 })
 export class AppModule { }

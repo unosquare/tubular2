@@ -6,7 +6,6 @@ import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
 import { TubularDataService } from './tubular-data.service';
 import { TubularSettingsService } from './tubular-settings.service';
 import { ColumnModel, DataType } from './column';
-import { PopupContainer } from './grid-table';
 
 import 'rxjs/add/operator/debounceTime';
 
@@ -33,7 +32,10 @@ export class GridPageInfo {
         ':host /deep/ div.row:first { margin-top: 0; }'
     ]
 })
-export class TubularGrid extends PopupContainer {
+
+
+
+export class TubularGrid {
 
     // data is just observable and children can't push
     private data = new BehaviorSubject([]);
@@ -65,7 +67,6 @@ export class TubularGrid extends PopupContainer {
     @Output() onDataSaved = new EventEmitter<any>();
 
     constructor(private tbDataService: TubularDataService, private tbSettingsService: TubularSettingsService) {
-        super();
     }
 
     ngOnInit() {
@@ -140,10 +141,6 @@ export class TubularGrid extends PopupContainer {
             );
     }
 
-    onDismiss(reason) {
-        
-    }
-    
     private transformToObj(columns: ColumnModel[], data: any) {
         let obj = {};
 
