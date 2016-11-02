@@ -1,4 +1,4 @@
-﻿import { Injectable }     from '@angular/core';
+﻿import { Injectable, Inject }     from '@angular/core';
 import { Http, Response, RequestMethod, Request, Headers } from '@angular/http';
 
 import { Observable }     from 'rxjs/Observable';
@@ -8,9 +8,11 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 // TODO: Add debounceTime?
 
+import { SETTINGS_PROVIDER, ITubularSettingsProvider } from './tubular-settings.service';
+
 @Injectable()
 export class TubularDataService {
-    userData = {
+    private userData = {
         isAuthenticated: false,
         username: '',
         bearerToken: '',
@@ -18,7 +20,8 @@ export class TubularDataService {
         role: '',
         refreshToken: ''
     }
-    constructor(private http: Http) { }
+
+    constructor(@Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider, private http: Http) { }
     
     retrieveData(url: string, req: any) : Observable<any> {
         req.columns.forEach(this.transformSortDirection);
@@ -62,25 +65,73 @@ export class TubularDataService {
         return Observable.throw(errMsg);
     }
 
-    private authenticate(url: string, username: string, password: string) {
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        return this.http.post(url, 'grant_type=password&username=' + username + '&password=' + password, { headers })
+    authenticate(url: string, username: string, password: string, succesCallback?, errorCallback?, userDataCallback?) {
+        this.removeAuthentication();
+        let headers = new Headers({ 'Content-Type':'application/x-www-form-urlencoded'});
+        return this.http.post(url, 'grant_type=password&username=' + username + '&password=' + password, headers)
             .map(data => {
-                this.handleSuccesCallback(data);
+                this.handleSuccesCallback(data, succesCallback, errorCallback, userDataCallback);
             })
             .catch(this.handleError);
     }
 
-    private handleSuccesCallback(data) {
+    private handleSuccesCallback(data, succesCallback, errorCallback, userDataCallback) {
         this.userData.isAuthenticated = true;
         this.userData.username = data.userName;
         this.userData.bearerToken = data.acces_token;
-        this.userData.expirationDate = new Date();
-        this.userData.expirationDate = new Date(this.userData.expirationDate.getTime() + data.expires_in * 1000);
+        this.userData.expirationDate = new Date(new Date().getTime() + data.expires_in * 1000);
         this.userData.role = data.role;
         this.userData.refreshToken = data.refresh_token;
 
-        localStorage.setItem('auth_data', JSON.stringify(this.userData));
+        this.settingsProvider.put('auth_data', JSON.stringify(this.userData));
+        
+        if (typeof userDataCallback === 'function') {
+            userDataCallback(data);
+        }
+
+        if (typeof succesCallback === 'function') {
+            succesCallback();
+        }
+    }
+
+    private isAuthenticated() {
+        if (!this.userData.isAuthenticated || this.isAuthenticationExpired(this.userData.expirationDate)) {
+            try {
+                this.retriveSaveData();
+            } catch (e) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private retriveSaveData() {
+        let savedData = this.settingsProvider.get('auth_data');
+        if (typeof savedData === 'undefined' || savedData == null) {
+            throw 'No authentication exist';
+        } else if (this.isAuthenticationExpired(savedData.expirationDate)) {
+            throw 'Authentication token has already expired';
+        } else {
+            this.userData = savedData;
+            //setHttpAuthHeader();
+        }
+    }
+
+    private isAuthenticationExpired(expirationDate) {
+        let now = new Date();
+        let expiration = new Date(expirationDate);
+
+        return expiration.valueOf() - now.valueOf() <= 0;
+    }
+
+    private removeAuthentication() {
+        this.settingsProvider.delete('auth_data');
+        this.userData.isAuthenticated = false;
+        this.userData.username = '';
+        this.userData.bearerToken = '';
+        this.userData.expirationDate = null;
+        this.userData.role = '';
+        this.userData.refreshToken = '';
     }
 }

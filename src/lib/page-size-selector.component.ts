@@ -17,8 +17,9 @@ export class PageSizeInfo {
     <form class="form-inline">
         <div class="form-group">
             <label class="small">Page size</label>&nbsp;
-            <select (change)="onChange($event.target.value)" class="form-control input-sm" [(ngModel)]="selected" [ngModelOptions]="{standalone: true}">
-                <option *ngFor="let obj of _options" [value]="obj" >{{obj}}</option>
+            <select (change)="onChange($event.target.value)" class="form-control form-control-sm" 
+                [(ngModel)]="selected" [ngModelOptions]="{standalone: true}">
+                <option *ngFor="let obj of _options" [value]="obj">{{obj}}</option>
             </select>
         </div>
     </form>`

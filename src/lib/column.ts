@@ -22,16 +22,10 @@ export enum ColumnFilterMode {
     DateTime
 }
 
-export enum FilterOperator {
-    None = 0,
-    Equals
-    // TODO: Complete
-}
-
 export class ColumnFilter {
     text: string;
     argument: string | string[];
-    operator: FilterOperator;
+    operator: string;
 }
 
 

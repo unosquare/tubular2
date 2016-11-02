@@ -23,11 +23,6 @@ var ColumnSortDirection = exports.ColumnSortDirection;
     ColumnFilterMode[ColumnFilterMode["DateTime"] = 5] = "DateTime";
 })(exports.ColumnFilterMode || (exports.ColumnFilterMode = {}));
 var ColumnFilterMode = exports.ColumnFilterMode;
-(function (FilterOperator) {
-    FilterOperator[FilterOperator["None"] = 0] = "None";
-    FilterOperator[FilterOperator["Equals"] = 1] = "Equals";
-})(exports.FilterOperator || (exports.FilterOperator = {}));
-var FilterOperator = exports.FilterOperator;
 var ColumnFilter = (function () {
     function ColumnFilter() {
     }

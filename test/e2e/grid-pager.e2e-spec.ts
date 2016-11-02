@@ -8,11 +8,11 @@ describe('Pager e2e Tests', () => {
         nextNavBtn,
         firstRow,
         lastRow,
-        activeNavBtn;
+        activeNavBtn,
+        pageSizeSelector;
 
     beforeAll( () => {
         browser.get('/');
-        
          gridpager = element(by.tagName('grid-pager')).$('ngb-pagination').$('nav');
          firstNavBtn = gridpager.$('ul').$$('li').first();
          prevNavBtn = gridpager.$('ul').$$('li').get(1);
@@ -21,7 +21,14 @@ describe('Pager e2e Tests', () => {
          firstRow = element(by.tagName('tbody')).$$('tr').first();
          lastRow = element(by.tagName('tbody')).$$('tr').last();
          activeNavBtn = gridpager.$('ul').$$('.page-item active');
+         pageSizeSelector = element(by.tagName('page-size-selector')).$('form').$('div').$('select');
+         //Go to first page if isn't there
+        if(gridpager.$('ul').$$('li').first().getAttribute('class') != 'page-item disabled'){
+            firstNavBtn.$('a').click();
+        }
+        pageSizeSelector.$('[value="10"]').click();
     });
+
 
     describe('navigation buttons', () => {
         it('should perform no action wehn clicking on the numbered navigation button corresponding to the current-showing results page', () => {

@@ -1,6 +1,6 @@
 ﻿import { Component, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { ColumnModel, FilterOperator } from './column';
+import { ColumnModel } from './column';
 
 @Component({
     selector: 'filter-dialog',
@@ -41,9 +41,9 @@ export class ColumnFilterDialog implements AfterViewInit {
 
     constructor(fb: FormBuilder) {
         this.form = fb.group({
-            "text": ["", Validators.required],
-            "argument": [""],
-            "operator": ["None", Validators.required]
+            text: ["", Validators.required],
+            argument: [""],
+            operator: ["None", Validators.required]
         });
 
         this.form.valueChanges.subscribe(value => {
@@ -66,9 +66,9 @@ export class ColumnFilterDialog implements AfterViewInit {
 
             // set initial value in form with a timeout
             this.form.patchValue({
-                "text": this.column.filter.text,
-                "argument": this.column.filter.argument,
-                "operator": this.column.filter.operator || "None"
+                text: this.column.filter.text,
+                argument: this.column.filter.argument,
+                operator: this.column.filter.operator || "None"
             });
         });
     }
@@ -80,7 +80,7 @@ export class ColumnFilterDialog implements AfterViewInit {
     private reset() {
         this.form.reset();
         this.column.filter.argument = null;
-        this.column.filter.operator = FilterOperator.None;
+        this.column.filter.operator = "None";
 
         this.onFilteringChange.emit(false);
     }

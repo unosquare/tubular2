@@ -17,9 +17,9 @@ var ColumnFilterDialog = (function () {
         this.onFilteringChange = new core_1.EventEmitter();
         this.isBetween = false;
         this.form = fb.group({
-            "text": ["", forms_1.Validators.required],
-            "argument": [""],
-            "operator": ["None", forms_1.Validators.required]
+            text: ["", forms_1.Validators.required],
+            argument: [""],
+            operator: ["None", forms_1.Validators.required]
         });
         this.form.valueChanges.subscribe(function (value) {
             _this.column.filter.text = value.text;
@@ -38,9 +38,9 @@ var ColumnFilterDialog = (function () {
             _this.operators = _this.column.getOperators();
             // set initial value in form with a timeout
             _this.form.patchValue({
-                "text": _this.column.filter.text,
-                "argument": _this.column.filter.argument,
-                "operator": _this.column.filter.operator || "None"
+                text: _this.column.filter.text,
+                argument: _this.column.filter.argument,
+                operator: _this.column.filter.operator || "None"
             });
         });
     };
@@ -50,7 +50,7 @@ var ColumnFilterDialog = (function () {
     ColumnFilterDialog.prototype.reset = function () {
         this.form.reset();
         this.column.filter.argument = null;
-        this.column.filter.operator = column_1.FilterOperator.None;
+        this.column.filter.operator = "None";
         this.onFilteringChange.emit(false);
     };
     __decorate([

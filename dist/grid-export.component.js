@@ -24,11 +24,7 @@ var ExportButton = (function () {
     };
     ExportButton.prototype.processCsv = function (data) {
         var headers = this.tbGrid.columns.getValue().reduce(function (a, b) { return a + b.label + ','; }, '').slice(0, -1) + '\r\n';
-        var rows = data.map(function (row) {
-            if (typeof row === 'object') {
-                return row.reduce(function (a, b) { return a + '"' + b + '"' + ','; }, '').slice(0, -1) + '\r\n';
-            }
-        });
+        var rows = data.map(function (row) { return row.reduce(function (a, b) { return a + '"' + b + '"' + ','; }, '').slice(0, -1) + '\r\n'; });
         var csv = rows.reduce(function (a, b) { return a + b; }, headers);
         var blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
         saveAs(blob, this.fileName);

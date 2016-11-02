@@ -46,7 +46,7 @@ var PageSizeSelector = (function () {
     PageSizeSelector = __decorate([
         core_1.Component({
             selector: 'page-size-selector',
-            template: "\n    <form class=\"form-inline\">\n        <div class=\"form-group\">\n            <label class=\"small\">Page size</label>&nbsp;\n            <select (change)=\"onChange($event.target.value)\" class=\"form-control input-sm\" [(ngModel)]=\"selected\" [ngModelOptions]=\"{standalone: true}\">\n                <option *ngFor=\"let obj of _options\" [value]=\"obj\" >{{obj}}</option>\n            </select>\n        </div>\n    </form>"
+            template: "\n    <form class=\"form-inline\">\n        <div class=\"form-group\">\n            <label class=\"small\">Page size</label>&nbsp;\n            <select (change)=\"onChange($event.target.value)\" class=\"form-control form-control-sm\" \n                [(ngModel)]=\"selected\" [ngModelOptions]=\"{standalone: true}\">\n                <option *ngFor=\"let obj of _options\" [value]=\"obj\">{{obj}}</option>\n            </select>\n        </div>\n    </form>"
         }), 
         __metadata('design:paramtypes', [grid_component_1.TubularGrid])
     ], PageSizeSelector);

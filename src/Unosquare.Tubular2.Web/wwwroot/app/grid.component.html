@@ -1,15 +1,11 @@
-﻿<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <a routerLink="/grid" routerLinkActive="active">Grid Sample</a> |
-        <a routerLink="/form" routerLinkActive="active">Form Sample</a>
-    </div>
-</nav>
-<router-outlet></router-outlet>
+﻿
+<h1 class="display-3">Tubular2</h1>
+<p class="lead">
+    Angular2 components
+</p>
 
-<tubular-grid #grid server-url="http://tubular.azurewebsites.net/api/orders/paged" 
-              server-save-url="/api/orders/" 
-              require-authentication="false"
-              (onDataError)="errorHandler($event)">
+
+<tubular-grid #grid server-url="http://tubular.azurewebsites.net/api/orders/paged" server-save-url="/api/orders/" require-authentication="false" (onDataError)="errorHandler($event)">
     <div class="row">
         <div class="col-md-5">
             <grid-pager></grid-pager>
@@ -18,11 +14,11 @@
             <div class="btn-group-sm">
                 <grid-print></grid-print>
                 <grid-export fileName="sampleCsv.csv"></grid-export>
-                <button class="btn btn-info" (click)="openDialog(content)">
+                <button class="btn btn-info" [popupDetails]="content" (popupUpdated)="grid.setPopup($event)">
                     New Item
                 </button>
                 <template ngbModalContainer #content>
-                    <order-popup [modalRef]="newOrderModalRef"></order-popup>
+                    <sample-popup [popupRef]="grid.popupRef"></sample-popup>
                 </template>
             </div>
         </div>

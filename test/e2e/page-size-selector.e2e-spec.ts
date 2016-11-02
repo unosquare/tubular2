@@ -18,6 +18,10 @@ describe('page size selector', () =>{
         lastDataRow =  element(by.tagName('tbody')).$$('tr').last();
         firstPageBtn = gridPager.$$('li').first();
         nextPageBtn = gridPager.$$('li');
+        //Go to first page if isn't there
+        if(gridPager.$$('li').first().getAttribute('class') != 'page-item disabled'){
+            firstPageBtn.$('a').click();
+        }
     });
 
     it('should filter up to 10 data rows per page when selecting a page size of "10"', () => {

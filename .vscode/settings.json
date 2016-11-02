@@ -1,3 +1,8 @@
 {
-    "typescript.tsdk": "./node_modules/typescript/lib"
+    "typescript.tsdk": "./node_modules/typescript/lib",
+    "enable_typescript_language_service": false,
+    "files.exclude": {
+        "**/*.js.map": true,
+        "**/*.js": { "when": "$(basename).ts" }
+    }
 }

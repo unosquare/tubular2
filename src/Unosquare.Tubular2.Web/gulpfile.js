@@ -18,7 +18,7 @@ var paths = {
         'rxjs': 'node_modules/rxjs/**/*',
         'reflect': 'node_modules/reflect-metadata/*',
         'systemjs': 'node_modules/systemjs/**/*',
-        'momentjs': 'node_modules/momentjs/build/*',
+        'moment': 'node_modules/moment/*',
         'bootstrap': 'node_modules/bootstrap/dist/**/*',
         'filesaver': 'node_modules/filesaver.js/*.js',
         '@ng-bootstrap': 'node_modules/@ng-bootstrap/ng-bootstrap/**/*',
@@ -27,21 +27,21 @@ var paths = {
 };
 
 gulp.task('tubular2-module', function() {
-    return gulp.src(['../../package.json','../lib/**/*.ts'])
+    return gulp.src(['../../package.json', '../lib/**/*.ts'])
         .pipe(gulp.dest('node_modules/@tubular2/tubular2'));
 });
 
-gulp.task('lib', ['tubular2-module'], function () {
-    Object.keys(paths.libs).forEach(function (key) {
+gulp.task('lib', ['tubular2-module'], function() {
+    Object.keys(paths.libs).forEach(function(key) {
         gulp.src(paths.libs[key]).pipe(gulp.dest('wwwroot/scripts/lib/' + key));
     });
 });
 
-gulp.task('clean', function () {
-    return del(['node_modules/@tubular2','wwwroot/scripts/**/*']);
+gulp.task('clean', function() {
+    return del(['node_modules/@tubular2', 'wwwroot/scripts/**/*']);
 });
 
-var standardBuild = function (watch) {
+var standardBuild = function(watch) {
     // TODO: Add task to build only tubular into a dist folder in root
     // TODO: Create a webpack config file
     gulp.src('wwwroot/app/main.ts')
@@ -58,7 +58,7 @@ var standardBuild = function (watch) {
             //],
             module: {
                 loaders: [
-                  { test: /\.ts$/, loader: 'ts-loader' }
+                    { test: /\.ts$/, loader: 'ts-loader' }
                 ]
             },
             watch: watch
@@ -66,6 +66,6 @@ var standardBuild = function (watch) {
         .pipe(gulp.dest('wwwroot/dist/'));
 }
 
-gulp.task('build', ['lib'], function(){ return standardBuild(false); });
+gulp.task('build', ['lib'], function() { return standardBuild(false); });
 
-gulp.task('default', ['lib'], function(){ standardBuild(true); });
+gulp.task('default', ['lib'], function() { standardBuild(true); });

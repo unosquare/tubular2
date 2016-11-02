@@ -1,6 +1,7 @@
-﻿import { Component } from '@angular/core';
+﻿import { Component, Inject } from '@angular/core';
 
 import { TubularGrid }           from './grid.component';
+import { SETTINGS_PROVIDER, ITubularSettingsProvider } from './tubular-settings.service';
 
 @Component({
     selector: 'grid-search',
@@ -10,8 +11,7 @@ import { TubularGrid }           from './grid.component';
                         <input #toSearch type="text" class="form-control" 
                         [ngModel]="search"
                         (ngModelChange)="setSearch($event)"
-                        placeholder="search . . ."  
-                        />
+                        placeholder="search . . ." />
                         <span class="input-group-btn" [hidden]="!toSearch.value">
                             <button class="btn btn-default" (click)="clearInput()">
                             <i class="fa fa-times-circle"></i>
@@ -23,9 +23,11 @@ import { TubularGrid }           from './grid.component';
 export class GridSearch {
     search: string;
     
-    constructor(private tbGrid: TubularGrid) { }
+    constructor(@Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider, private tbGrid: TubularGrid) { }
 
-    // TODO: Restore value from localstorage?
+    ngOnInit() {
+        // TODO: Restore value from localstorage?
+    }
 
     clearInput() {
         this.tbGrid.freeTextSearch.next("");
