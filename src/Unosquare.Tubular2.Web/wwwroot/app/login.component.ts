@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { DataService } from './tubular-data.service';
-import { FormBuilder, FormGroup, Validators } from '@aungular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { TubularDataService } from '@tubular2/tubular2';
 
 @Component({
     selector: 'login',
@@ -17,9 +18,9 @@ import { FormBuilder, FormGroup, Validators } from '@aungular/forms';
               <form>`
 })
 
-export class Login implements OnInit {
+export class Login {
     loginForm: FormGroup;
-    constructor(private dataService: DataService, private formBuilder: FormBuilder) { }
+    constructor(private dataService: TubularDataService, private formBuilder: FormBuilder) { }
 
     ngOnInit() {
         this.loginForm = this.formBuilder.group({

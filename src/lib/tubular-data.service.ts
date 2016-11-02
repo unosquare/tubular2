@@ -62,7 +62,7 @@ export class TubularDataService {
         return Observable.throw(errMsg);
     }
 
-    private authenticate(url: string, username: string, password: string) {
+    authenticate(url: string, username: string, password: string) {
         let headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
         return this.http.post(url, 'grant_type=password&username=' + username + '&password=' + password, { headers })
