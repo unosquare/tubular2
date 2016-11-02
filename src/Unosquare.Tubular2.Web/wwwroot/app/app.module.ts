@@ -10,10 +10,11 @@ import { AppComponent }  from './app.component';
 import { SampleGrid } from './sampleGrid.component';
 import { Popup } from './popup.component';
 import { GridComponent }   from './grid.component';
+import { FormComponent }   from './form.component';
 
 @NgModule({
     imports: [BrowserModule, FormsModule, ReactiveFormsModule, TubularModule, AppRoutingModule ],
-    declarations: [AppComponent, SampleGrid, Popup, GridComponent],
+    declarations: [AppComponent, SampleGrid, Popup, GridComponent, FormComponent],
     providers: [
         TubularDataService,
         { provide: SETTINGS_PROVIDER, useClass: TubularLocalStorageService }
