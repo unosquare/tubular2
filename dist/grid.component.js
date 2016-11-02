@@ -193,6 +193,7 @@ var TubularGrid = (function () {
                 ':host /deep/ div.row:first { margin-top: 0; }'
             ]
         }),
+        __param(0, core_1.Optional()),
         __param(0, core_1.Inject(tubular_settings_service_1.SETTINGS_PROVIDER)), 
         __metadata('design:paramtypes', [Object, tubular_data_service_1.TubularDataService])
     ], TubularGrid);
