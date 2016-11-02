@@ -114,7 +114,7 @@ export class TubularDataService {
             throw 'Authentication token has already expired';
         } else {
             this.userData = savedData;
-            //setHttpAuthHeader();
+            this.setHttpAuthHeader();
         }
     }
 
@@ -133,5 +133,9 @@ export class TubularDataService {
         this.userData.expirationDate = null;
         this.userData.role = '';
         this.userData.refreshToken = '';
+    }
+
+    private setHttpAuthHeader() {
+        new Headers({ 'Authorization': 'Bearer ' + this.userData.bearerToken })
     }
 }

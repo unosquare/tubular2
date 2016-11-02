@@ -6,18 +6,18 @@ import { TubularDataService } from '@tubular2/tubular2';
 @Component({
     selector: 'login',
     template: `<form [formGroup]="loginForm">
-                
-              <form>`
-              /*<div class="form-group">
-                    <label>User:<label>
-                    <input type="text" formControlName="username">
-                    <label *ngIf="LoginForm.controls.username.errors">Required<label>
-                    <label>Password:<label>
-                    <input type="text" formControlName="password">
-                    <label *ngIf="LoginForm.controls.username.errors">Required<label>
+                <div class="form-group">
+                    <label>User:</label>
+                    <input type="text" formControlName="username"/>
+                    <label *ngIf="LoginForm.controls.username.errors">Required</label>
+                    <label>Password:</label>
+                    <input type="password" formControlName="password"/>
+                    <label *ngIf="LoginForm.controls.username.errors">Required</label>
                     <button type="submit">Login</button>
-                </div>*/
+                </div>
+              </form>`
 })
+
 export class LoginComponent {
     loginForm: FormGroup;
     constructor(private dataService: TubularDataService, private formBuilder: FormBuilder) { }
