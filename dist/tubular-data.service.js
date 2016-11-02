@@ -18,6 +18,14 @@ require('rxjs/add/observable/throw');
 var TubularDataService = (function () {
     function TubularDataService(http) {
         this.http = http;
+        this.userData = {
+            isAuthenticated: false,
+            username: '',
+            bearerToken: '',
+            expirationDate: null,
+            role: '',
+            refreshToken: ''
+        };
     }
     TubularDataService.prototype.retrieveData = function (url, req) {
         req.columns.forEach(this.transformSortDirection);
@@ -54,6 +62,26 @@ var TubularDataService = (function () {
         var errMsg = (error.message) ? error.message :
             error.status ? error.status + " - " + error.statusText : 'Server error';
         return Observable_1.Observable.throw(errMsg);
+    };
+    TubularDataService.prototype.authenticate = function (url, username, password) {
+        var _this = this;
+        var headers = new http_1.Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        return this.http.post(url, 'grant_type=password&username=' + username + '&password=' + password, { headers: headers })
+            .map(function (data) {
+            _this.handleSuccesCallback(data);
+        })
+            .catch(this.handleError);
+    };
+    TubularDataService.prototype.handleSuccesCallback = function (data) {
+        this.userData.isAuthenticated = true;
+        this.userData.username = data.userName;
+        this.userData.bearerToken = data.acces_token;
+        this.userData.expirationDate = new Date();
+        this.userData.expirationDate = new Date(this.userData.expirationDate.getTime() + data.expires_in * 1000);
+        this.userData.role = data.role;
+        this.userData.refreshToken = data.refresh_token;
+        localStorage.setItem('auth_data', JSON.stringify(this.userData));
     };
     TubularDataService = __decorate([
         core_1.Injectable(), 

@@ -5,8 +5,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { TubularGrid }      from './grid.component';
 
 export abstract class FormPopup {
-    @Input('popupRef') popupRef: any;
-    @Input('row') row: any;
+    @Input() popupRef: any;
+    @Input() row: any;
     $isNew: boolean;
     detailsForm: FormGroup;
 
@@ -24,8 +24,8 @@ export abstract class FormPopup {
 
     save() {
         this.popupRef.close({
-            'values': this.detailsForm.value,
-            '$isNew': this.$isNew
+            values: this.detailsForm.value,
+            $isNew: this.$isNew
         });
     }
 

@@ -50,7 +50,7 @@ var ColumnFilterDialog = (function () {
     ColumnFilterDialog.prototype.reset = function () {
         this.form.reset();
         this.column.filter.argument = null;
-        this.column.filter.operator = column_1.FilterOperator.None;
+        this.column.filter.operator = "None";
         this.onFilteringChange.emit(false);
     };
     __decorate([

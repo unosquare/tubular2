@@ -15,17 +15,8 @@ export class PrintButton {
         this.tbGrid.getFullDataSource(
             data => {
                 let headers = this.tbGrid.columns.getValue().reduce((a, b) => a + '<th>' + b.label + '</th>', '');
-                let rows = data.map(row => {
-                    if (typeof (row) === 'object') {
-                        return '<tr>' + row.reduce((a, b) => a + '<td>' + b + '</td>', '') + '</tr>';
-                    }
-                });
-
-                let tableHtml = '<table class="table table-bprdered table-striped"><thead><tr>'
-                    + headers
-                    + '</tr></thead><tbody>'
-                    + rows.join("")
-                    + '</tbody></table>'
+                let rows = data.reduce((prev, row) => prev + '<tr>' + row.reduce((a, b) => a + '<td>' + b + '</td>', '') + '</tr>', '');
+                let tableHtml = `<table class="table table-sm table-striped"><thead><tr>${headers}</tr></thead><tbody>${rows}</tbody></table>`;
 
                 let popup = window.open("", "", "menubar=0,location=0,height=500,width=800");
                 popup.document.write('<link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.min.css" />');

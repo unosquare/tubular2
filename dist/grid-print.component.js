@@ -18,16 +18,8 @@ var PrintButton = (function () {
         var _this = this;
         this.tbGrid.getFullDataSource(function (data) {
             var headers = _this.tbGrid.columns.getValue().reduce(function (a, b) { return a + '<th>' + b.label + '</th>'; }, '');
-            var rows = data.map(function (row) {
-                if (typeof (row) === 'object') {
-                    return '<tr>' + row.reduce(function (a, b) { return a + '<td>' + b + '</td>'; }, '') + '</tr>';
-                }
-            });
-            var tableHtml = '<table class="table table-bprdered table-striped"><thead><tr>'
-                + headers
-                + '</tr></thead><tbody>'
-                + rows.join("")
-                + '</tbody></table>';
+            var rows = data.reduce(function (prev, row) { return prev + '<tr>' + row.reduce(function (a, b) { return a + '<td>' + b + '</td>'; }, '') + '</tr>'; }, '');
+            var tableHtml = "<table class=\"table table-sm table-striped\"><thead><tr>" + headers + "</tr></thead><tbody>" + rows + "</tbody></table>";
             var popup = window.open("", "", "menubar=0,location=0,height=500,width=800");
             popup.document.write('<link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.min.css" />');
             popup.document.write('<body onload="window.print();">');

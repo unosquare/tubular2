@@ -64,7 +64,7 @@ export class TubularGrid extends PopupContainer {
     @Output() onDataError = new EventEmitter<any>();
     @Output() onDataSaved = new EventEmitter<any>();
 
-    constructor( @Inject(SETTINGS_PROVIDER) private tbLocalStorageService: ITubularSettingsProvider , private tbDataService: TubularDataService) {
+    constructor(@Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider, private dataService: TubularDataService) {
         super();
     }
 
@@ -106,7 +106,7 @@ export class TubularGrid extends PopupContainer {
             timezoneOffset: new Date().getTimezoneOffset()
         };
 
-        this.tbDataService.retrieveData(this.serverUrl, req).subscribe(
+        this.dataService.retrieveData(this.serverUrl, req).subscribe(
             data => callback(data, req),
             error => this.onDataError.emit(error)
         );
@@ -124,14 +124,14 @@ export class TubularGrid extends PopupContainer {
             }
         };
 
-        this.tbDataService.retrieveData(this.serverUrl, req).subscribe(
+        this.dataService.retrieveData(this.serverUrl, req).subscribe(
             data => callback(data.Payload || {}),
             error => this.onDataError.emit(error)
         );
     }
 
     onUpdate(row) {
-        this.tbDataService
+        this.dataService
             .save(this.serverSaveUrl, row.values, row.$isNew ? RequestMethod.Post : RequestMethod.Put)
             .subscribe(
                 data => this.onDataSaved.emit(data),
@@ -151,10 +151,9 @@ export class TubularGrid extends PopupContainer {
             obj[column.name] = data[key] || data[column.name];
             
             if (column.dataType == DataType.Date || column.dataType == DataType.DateTime  || column.dataType == DataType.DateTimeUtc) {
-                console.log(obj[column.name]);
                 let timezone = new Date(Date.parse(obj[column.name])).toString().match(/([-\+][0-9]+)\s/)[1];
                 timezone = timezone.substr(0, timezone.length - 2) + ':' + timezone.substr(timezone.length - 2, 2);
-                console.log(obj[column.name].replace('Z', '') + timezone);
+                
                 let tempDate = new Date(Date.parse(obj[column.name].replace('Z', '') + timezone));
 
                 if (column.dataType === DataType.Date) {
@@ -163,7 +162,6 @@ export class TubularGrid extends PopupContainer {
                     obj[column.name] = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(), 
                         tempDate.getHours(), tempDate.getMinutes(), tempDate.getSeconds(), 0);
                 }
-                console.log(obj[column.name]);
             }
         });
 
@@ -196,20 +194,18 @@ export class TubularGrid extends PopupContainer {
     }
 
     changePagesData(){
-        this.tbLocalStorageService.put("gridPage", this.page.getValue());
+        this.settingsProvider.put("gridPage", this.page.getValue());
     }
 
     changePageSizeData() {
-        this.tbLocalStorageService.put("gridPageSize", this._pageSize.getValue());
+        this.settingsProvider.put("gridPageSize", this._pageSize.getValue());
     }
 
     getPageSettingValue() {
-        let value = this.tbLocalStorageService.get("gridPage");
-        return value != false ? value : 0;
+        return this.settingsProvider.get("gridPage") || 0;
     }
 
     getPageSizeSettingValue() {
-        let value = this.tbLocalStorageService.get("gridPageSize");
-        return value != false ? value : 10;
+        return this.settingsProvider.get("gridPageSize") || 10;
     }
 }

@@ -23,16 +23,16 @@ var FormPopup = (function () {
     };
     FormPopup.prototype.save = function () {
         this.popupRef.close({
-            'values': this.detailsForm.value,
-            '$isNew': this.$isNew
+            values: this.detailsForm.value,
+            $isNew: this.$isNew
         });
     };
     __decorate([
-        core_1.Input('popupRef'), 
+        core_1.Input(), 
         __metadata('design:type', Object)
     ], FormPopup.prototype, "popupRef", void 0);
     __decorate([
-        core_1.Input('row'), 
+        core_1.Input(), 
         __metadata('design:type', Object)
     ], FormPopup.prototype, "row", void 0);
     return FormPopup;
