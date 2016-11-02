@@ -41,9 +41,9 @@ export class ColumnFilterDialog implements AfterViewInit {
 
     constructor(fb: FormBuilder) {
         this.form = fb.group({
-            "text": ["", Validators.required],
-            "argument": [""],
-            "operator": ["None", Validators.required]
+            text: ["", Validators.required],
+            argument: [""],
+            operator: ["None", Validators.required]
         });
 
         this.form.valueChanges.subscribe(value => {
@@ -66,9 +66,9 @@ export class ColumnFilterDialog implements AfterViewInit {
 
             // set initial value in form with a timeout
             this.form.patchValue({
-                "text": this.column.filter.text,
-                "argument": this.column.filter.argument,
-                "operator": this.column.filter.operator || "None"
+                text: this.column.filter.text,
+                argument: this.column.filter.argument,
+                operator: this.column.filter.operator || "None"
             });
         });
     }
