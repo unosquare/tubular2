@@ -2,6 +2,8 @@
 
 import { FormGroup, FormBuilder } from '@angular/forms';
 
+import * as moment from 'moment';
+
 import { TubularGrid }      from './grid.component';
 
 export abstract class FormPopup {
@@ -10,12 +12,24 @@ export abstract class FormPopup {
     @Input('row') row: any;
     $isNew: boolean;
     detailsForm: FormGroup;
+    private data: any;
 
     constructor(public tbGrid: TubularGrid, public formBuilder: FormBuilder) {
     }
 
     ngOnInit() {
-        this.detailsForm = this.formBuilder.group(this.row || this.getEmptyRow());
+        let tempData = this.row || this.getEmptyRow();
+        this.data = {};
+
+        for (let field in tempData) {
+            if (moment.isMoment(tempData[field])) {
+                this.data[field] = [tempData[field].format('YYYY-MM-DDThh:mm')];
+            } else {
+                this.data[field] = [tempData[field]];
+            }
+        }
+
+        this.detailsForm = this.formBuilder.group(this.data);
         this.$isNew = !this.row;
     }
 

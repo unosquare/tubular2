@@ -9,13 +9,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var moment = require('moment');
 var FormPopup = (function () {
     function FormPopup(tbGrid, formBuilder) {
         this.tbGrid = tbGrid;
         this.formBuilder = formBuilder;
     }
     FormPopup.prototype.ngOnInit = function () {
-        this.detailsForm = this.formBuilder.group(this.row || this.getEmptyRow());
+        var tempData = this.row || this.getEmptyRow();
+        this.data = {};
+        for (var field in tempData) {
+            if (moment.isMoment(tempData[field])) {
+                this.data[field] = [tempData[field].format('YYYY-MM-DDThh:mm')];
+            }
+            else {
+                this.data[field] = [tempData[field]];
+            }
+        }
+        this.detailsForm = this.formBuilder.group(this.data);
         this.$isNew = !this.row;
     };
     FormPopup.prototype.close = function () {
