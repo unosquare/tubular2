@@ -9,6 +9,8 @@ export interface ITubularSettingsProvider {
 }
 
 export class TubularLocalStorageService implements ITubularSettingsProvider {
+    // TODO: Add Check if localStorage exists at constructor
+    
     public put(id: string, value: string) {
         localStorage.setItem(id, JSON.stringify(value));
     }

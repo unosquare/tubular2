@@ -2,6 +2,7 @@
 import { RequestMethod } from '@angular/http';
 import { Observable }       from 'rxjs/Observable';
 import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
+import * as moment from 'moment';
 
 import { TubularDataService } from './tubular-data.service';
 import { SETTINGS_PROVIDER, ITubularSettingsProvider } from './tubular-settings.service';
@@ -150,18 +151,12 @@ export class TubularGrid extends PopupContainer {
         columns.forEach((column, key) => {
             obj[column.name] = data[key] || data[column.name];
             
-            if (column.dataType == DataType.Date || column.dataType == DataType.DateTime  || column.dataType == DataType.DateTimeUtc) {
-                let timezone = new Date(Date.parse(obj[column.name])).toString().match(/([-\+][0-9]+)\s/)[1];
-                timezone = timezone.substr(0, timezone.length - 2) + ':' + timezone.substr(timezone.length - 2, 2);
-                
-                let tempDate = new Date(Date.parse(obj[column.name].replace('Z', '') + timezone));
+            if (column.dataType == DataType.DateTimeUtc) {
+                obj[column.name] = moment.utc(obj[column.name]);
+            }
 
-                if (column.dataType === DataType.Date) {
-                    obj[column.name] = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate());
-                } else {
-                    obj[column.name] = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(), 
-                        tempDate.getHours(), tempDate.getMinutes(), tempDate.getSeconds(), 0);
-                }
+            if (column.dataType == DataType.Date || column.dataType == DataType.DateTime) {
+                obj[column.name] = moment(obj[column.name]);
             }
         });
 

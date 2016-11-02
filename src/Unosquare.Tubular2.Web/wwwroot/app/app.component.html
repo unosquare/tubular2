@@ -3,10 +3,7 @@
     Angular2 components
 </p>
 
-<tubular-grid #grid server-url="http://tubular.azurewebsites.net/api/orders/paged" 
-              server-save-url="/api/orders/" 
-              require-authentication="false"
-              (onDataError)="errorHandler($event)">
+<tubular-grid #grid server-url="http://tubular.azurewebsites.net/api/orders/paged" server-save-url="/api/orders/" require-authentication="false" (onDataError)="errorHandler($event)">
     <div class="row">
         <div class="col-md-5">
             <grid-pager></grid-pager>
@@ -19,7 +16,7 @@
                     New Item
                 </button>
                 <template ngbModalContainer #content>
-                    <popup-details [popupRef]="grid.popupRef"></popup-details>
+                    <sample-popup [popupRef]="grid.popupRef"></sample-popup>
                 </template>
             </div>
         </div>

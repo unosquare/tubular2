@@ -19,6 +19,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 var BehaviorSubject_1 = require('rxjs/BehaviorSubject');
+var moment = require('moment');
 var tubular_data_service_1 = require('./tubular-data.service');
 var tubular_settings_service_1 = require('./tubular-settings.service');
 var column_1 = require('./column');
@@ -128,16 +129,11 @@ var TubularGrid = (function (_super) {
         var obj = {};
         columns.forEach(function (column, key) {
             obj[column.name] = data[key] || data[column.name];
-            if (column.dataType == column_1.DataType.Date || column.dataType == column_1.DataType.DateTime || column.dataType == column_1.DataType.DateTimeUtc) {
-                var timezone = new Date(Date.parse(obj[column.name])).toString().match(/([-\+][0-9]+)\s/)[1];
-                timezone = timezone.substr(0, timezone.length - 2) + ':' + timezone.substr(timezone.length - 2, 2);
-                var tempDate = new Date(Date.parse(obj[column.name].replace('Z', '') + timezone));
-                if (column.dataType === column_1.DataType.Date) {
-                    obj[column.name] = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate());
-                }
-                else {
-                    obj[column.name] = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(), tempDate.getHours(), tempDate.getMinutes(), tempDate.getSeconds(), 0);
-                }
+            if (column.dataType == column_1.DataType.DateTimeUtc) {
+                obj[column.name] = moment.utc(obj[column.name]);
+            }
+            if (column.dataType == column_1.DataType.Date || column.dataType == column_1.DataType.DateTime) {
+                obj[column.name] = moment(obj[column.name]);
             }
         });
         return obj;

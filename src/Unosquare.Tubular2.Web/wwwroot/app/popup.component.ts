@@ -3,7 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { FormPopup, TubularGrid } from '@tubular2/tubular2'
 
 @Component({
-    selector: 'popup-details',
+    selector: 'sample-popup',
     templateUrl: '/app/popup.component.html'
 })
 export class Popup extends FormPopup {

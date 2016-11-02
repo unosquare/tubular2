@@ -8,6 +8,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 var Observable_1 = require('rxjs/Observable');
@@ -15,8 +18,10 @@ require('rxjs/add/operator/map');
 require('rxjs/add/operator/catch');
 require('rxjs/add/observable/throw');
 // TODO: Add debounceTime?
+var tubular_settings_service_1 = require('./tubular-settings.service');
 var TubularDataService = (function () {
-    function TubularDataService(http) {
+    function TubularDataService(settingsProvider, http) {
+        this.settingsProvider = settingsProvider;
         this.http = http;
         this.userData = {
             isAuthenticated: false,
@@ -77,15 +82,15 @@ var TubularDataService = (function () {
         this.userData.isAuthenticated = true;
         this.userData.username = data.userName;
         this.userData.bearerToken = data.acces_token;
-        this.userData.expirationDate = new Date();
-        this.userData.expirationDate = new Date(this.userData.expirationDate.getTime() + data.expires_in * 1000);
+        this.userData.expirationDate = new Date(new Date().getTime() + data.expires_in * 1000);
         this.userData.role = data.role;
         this.userData.refreshToken = data.refresh_token;
-        localStorage.setItem('auth_data', JSON.stringify(this.userData));
+        this.settingsProvider.put('auth_data', JSON.stringify(this.userData));
     };
     TubularDataService = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http])
+        core_1.Injectable(),
+        __param(0, core_1.Inject(tubular_settings_service_1.SETTINGS_PROVIDER)), 
+        __metadata('design:paramtypes', [Object, http_1.Http])
     ], TubularDataService);
     return TubularDataService;
 }());
