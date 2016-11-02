@@ -19,20 +19,21 @@ var FormPopup = (function () {
         this.$isNew = !this.row;
     };
     FormPopup.prototype.close = function () {
-        this.popupRef.dismiss();
+        this.modalRef.close();
     };
     FormPopup.prototype.save = function () {
-        this.popupRef.close({
-            values: this.detailsForm.value,
-            $isNew: this.$isNew
+        this.tbGrid.onUpdate({
+            'values': this.detailsForm.value,
+            '$isNew': this.$isNew
         });
+        this.modalRef.close();
     };
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Object)
-    ], FormPopup.prototype, "popupRef", void 0);
+    ], FormPopup.prototype, "modalRef", void 0);
     __decorate([
-        core_1.Input(), 
+        core_1.Input('row'), 
         __metadata('design:type', Object)
     ], FormPopup.prototype, "row", void 0);
     return FormPopup;
