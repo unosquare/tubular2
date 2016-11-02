@@ -20,8 +20,8 @@ describe('grid sorting', () => {
         dataSetHigherId = '53',
         dataSetLowerCustomerName = 'Advanced Technology Systems',
         dataSetHigherCustomerName = 'Vesta',
-        dataSetLowerDate = 'Jan 28, 2016',
-        dataSetHigherDate = 'Jun 17, 2016';
+        dataSetLowerDate = 'Thu Jan 28 2016 08:17:35 GMT+0000',
+        dataSetHigherDate = 'Wed May 25 2016 00:00:00 GMT+0000';
         paginator = element(by.tagName('ngb-pagination')).$$('nav').$$('ul').$$('li'),
         columnHeaders = element(by.tagName('thead')).$$('tr').first().$$('th'),
         orderIdSorting = columnHeaders.get(1).$('.column-header').$$('span'),
@@ -96,6 +96,4 @@ describe('grid sorting', () => {
         let lastDataRow = element(by.tagName('tbody')).$$('tr').last();
         expect(lastDataRow.$$('td').get(3).getText()).toEqual(dataSetLowerDate);
     });
-
-
 });
