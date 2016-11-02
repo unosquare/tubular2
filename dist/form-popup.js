@@ -34,8 +34,8 @@ var FormPopup = (function () {
     };
     FormPopup.prototype.save = function () {
         this.tbGrid.onUpdate({
-            'values': this.detailsForm.value,
-            '$isNew': this.$isNew
+            values: this.detailsForm.value,
+            $isNew: this.$isNew
         });
         this.modalRef.close();
     };
@@ -44,7 +44,7 @@ var FormPopup = (function () {
         __metadata('design:type', Object)
     ], FormPopup.prototype, "modalRef", void 0);
     __decorate([
-        core_1.Input('row'), 
+        core_1.Input(), 
         __metadata('design:type', Object)
     ], FormPopup.prototype, "row", void 0);
     return FormPopup;

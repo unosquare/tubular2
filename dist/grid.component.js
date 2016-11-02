@@ -149,16 +149,24 @@ var TubularGrid = (function () {
         this._pageInfo.next(pageInfo);
     };
     TubularGrid.prototype.changePagesData = function () {
-        this.settingsProvider.put("gridPage", this.page.getValue());
+        if (this.settingsProvider != null)
+            this.settingsProvider.put("gridPage", this.page.getValue());
     };
     TubularGrid.prototype.changePageSizeData = function () {
-        this.settingsProvider.put("gridPageSize", this._pageSize.getValue());
+        if (this.settingsProvider != null)
+            this.settingsProvider.put("gridPageSize", this._pageSize.getValue());
     };
     TubularGrid.prototype.getPageSettingValue = function () {
-        return this.settingsProvider.get("gridPage") || 0;
+        if (this.settingsProvider != null)
+            return this.settingsProvider.get("gridPage") || 0;
+        else
+            return 0;
     };
     TubularGrid.prototype.getPageSizeSettingValue = function () {
-        return this.settingsProvider.get("gridPageSize") || 10;
+        if (this.settingsProvider != null)
+            return this.settingsProvider.get("gridPageSize") || 10;
+        else
+            return 10;
     };
     __decorate([
         core_1.Input('server-url'), 
