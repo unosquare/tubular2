@@ -1,4 +1,4 @@
-﻿import { Injectable }     from '@angular/core';
+﻿import { Injectable, Inject }     from '@angular/core';
 import { Http, Response, RequestMethod, Request, Headers } from '@angular/http';
 
 import { Observable }     from 'rxjs/Observable';
@@ -8,9 +8,11 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 // TODO: Add debounceTime?
 
+import { SETTINGS_PROVIDER, ITubularSettingsProvider } from './tubular-settings.service';
+
 @Injectable()
 export class TubularDataService {
-    userData = {
+    private userData = {
         isAuthenticated: false,
         username: '',
         bearerToken: '',
@@ -18,7 +20,8 @@ export class TubularDataService {
         role: '',
         refreshToken: ''
     }
-    constructor(private http: Http) { }
+
+    constructor(@Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider, private http: Http) { }
     
     retrieveData(url: string, req: any) : Observable<any> {
         req.columns.forEach(this.transformSortDirection);
@@ -76,11 +79,10 @@ export class TubularDataService {
         this.userData.isAuthenticated = true;
         this.userData.username = data.userName;
         this.userData.bearerToken = data.acces_token;
-        this.userData.expirationDate = new Date();
-        this.userData.expirationDate = new Date(this.userData.expirationDate.getTime() + data.expires_in * 1000);
+        this.userData.expirationDate = new Date(new Date().getTime() + data.expires_in * 1000);
         this.userData.role = data.role;
         this.userData.refreshToken = data.refresh_token;
 
-        localStorage.setItem('auth_data', JSON.stringify(this.userData));
+        this.settingsProvider.put('auth_data', JSON.stringify(this.userData));
     }
 }
