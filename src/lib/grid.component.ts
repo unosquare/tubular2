@@ -1,4 +1,4 @@
-﻿import { Component, Input, Output, EventEmitter, Inject } from '@angular/core';
+﻿import { Component, Input, Output, EventEmitter, Inject, Optional } from '@angular/core';
 import { RequestMethod } from '@angular/http';
 import { Observable }       from 'rxjs/Observable';
 import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
@@ -67,7 +67,7 @@ export class TubularGrid {
     @Output() onDataError = new EventEmitter<any>();
     @Output() onDataSaved = new EventEmitter<any>();
 
-    constructor(@Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider, private dataService: TubularDataService) {
+    constructor( @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider, private dataService: TubularDataService) {
     }
 
     ngOnInit() {
