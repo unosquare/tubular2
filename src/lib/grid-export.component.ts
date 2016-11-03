@@ -33,7 +33,7 @@ declare var saveAs: FileSaver;
 @Component({
     selector: 'grid-export',
     template: `<div ngbDropdown class="d-inline-block">
-                <button ngbDropdownToggle class="btn btn-outline-primary btn-sm">
+                <button ngbDropdownToggle class="btn btn-info btn-sm">
                 <span class="fa fa-download"></span>&nbsp;Export CSV&nbsp;<span class="caret"></span>
                </button>
                <div class="dropdown-menu">
