@@ -1,4 +1,4 @@
-﻿import { Component, Inject } from '@angular/core';
+﻿import { Component, Inject, Optional } from '@angular/core';
 
 import { TubularGrid }           from './grid.component';
 import { SETTINGS_PROVIDER, ITubularSettingsProvider } from './tubular-settings.service';
@@ -23,7 +23,7 @@ import { SETTINGS_PROVIDER, ITubularSettingsProvider } from './tubular-settings.
 export class GridSearch {
     search: string;
     
-    constructor(@Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider, private tbGrid: TubularGrid) { }
+    constructor(@Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider, private tbGrid: TubularGrid) { }
 
     ngOnInit() {
         // TODO: Restore value from localstorage?
