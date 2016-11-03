@@ -34,6 +34,7 @@ var GridSearch = (function () {
             selector: 'grid-search',
             template: "<div>\n                    <div class=\"input-group input-group-sm\">\n                    <span class=\"input-group-addon\"><i class=\"fa fa-search\"></i></span>\n                        <input #toSearch type=\"text\" class=\"form-control\" \n                        [ngModel]=\"search\"\n                        (ngModelChange)=\"setSearch($event)\"\n                        placeholder=\"search . . .\" />\n                        <span class=\"input-group-btn\" [hidden]=\"!toSearch.value\">\n                            <button class=\"btn btn-default\" (click)=\"clearInput()\">\n                            <i class=\"fa fa-times-circle\"></i>\n                            </button>\n                        </span>\n                    </div>\n                </div>"
         }),
+        __param(0, core_1.Optional()),
         __param(0, core_1.Inject(tubular_settings_service_1.SETTINGS_PROVIDER)), 
         __metadata('design:paramtypes', [Object, grid_component_1.TubularGrid])
     ], GridSearch);

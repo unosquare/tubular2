@@ -198,7 +198,11 @@ var TubularGrid = (function () {
             template: "\n    <div>\n        <div class=\"tubular-overlay\" [hidden]=\"!showLoading\">\n            <div><div class=\"fa fa-refresh fa-2x fa-spin\"></div>\n        </div></div>\n        <ng-content></ng-content>\n    </div>",
             styles: [
                 ':host /deep/ div.row { margin-top: 4px; margin-bottom: 4px; }',
-                ':host /deep/ div.row:first { margin-top: 0; }'
+                ':host /deep/ div.row:first { margin-top: 0; }',
+                ':host /deep/ .sortable { text-decoration: underline; cursor: pointer; }',
+                ':host /deep/ .sortable:hover { text-decoration: none; color: yellow; }',
+                ':host /deep/ .sortAsc::after { font-family: FontAwesome; content: "\f176"; }',
+                ':host /deep/ .sortDesc::after { font-family: FontAwesome; content: "\f175"; }'
             ]
         }),
         __param(0, core_1.Optional()),

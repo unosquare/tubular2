@@ -1,8 +1,11 @@
 ﻿var gulp = require('gulp');
 var ts = require("gulp-typescript");
 var connect = require('gulp-connect');
-var istanbul = require('gulp-istanbul'); // This is not working
+var istanbul = require('gulp-istanbul');
 var protractor = require("gulp-protractor").protractor;
+var del = require('del');
+var webpack = require('webpack');
+var webpackStream = require('webpack-stream');
 
 var tsProject = ts.createProject("tsconfig.json");
 
@@ -37,4 +40,28 @@ gulp.task('protractor', function() {
         .on('end', connect.serverClose);
 });
 
-gulp.task('e2e', ['connect', 'protractor']);
+gulp.task('instrument', ['default'], function() {
+    // clean TS
+    del('src/Unosquare.Tubular2.Web/node_modules/@tubular2/tubular2/*.ts');
+    // move files
+    gulp.src("dist/*.js")
+        .pipe(istanbul())
+        .pipe(gulp.dest('src/Unosquare.Tubular2.Web/node_modules/@tubular2/tubular2'));
+/*
+    return gulp.src('src/Unosquare.Tubular2.Web/wwwroot/app/main.ts')
+        .pipe(webpackStream({
+            devtool: 'source-map',
+            output: { filename: '[name].js', },
+            resolve: {
+                extensions: ['', '.webpack.js', '.web.js', '.ts', '.js']
+            },
+            module: {
+                loaders: [
+                    { test: /\.ts$/, loader: 'ts-loader' }
+                ]
+            }
+        }))
+        .pipe(gulp.dest('src/Unosquare.Tubular2.Web/wwwroot/dist/'))*/
+});
+
+gulp.task('e2e', ['connect', 'instrument', 'protractor']);

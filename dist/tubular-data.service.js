@@ -72,7 +72,8 @@ var TubularDataService = (function () {
         var _this = this;
         this.removeAuthentication();
         var headers = new http_1.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
-        return this.http.post(url, 'grant_type=password&username=' + username + '&password=' + password, headers)
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.post(url, 'grant_type=password&username=' + username + '&password=' + password, options)
             .map(function (data) {
             _this.handleSuccesCallback(data, succesCallback, errorCallback, userDataCallback);
         })
@@ -114,6 +115,7 @@ var TubularDataService = (function () {
         }
         else {
             this.userData = savedData;
+            this.setHttpAuthHeader();
         }
     };
     TubularDataService.prototype.isAuthenticationExpired = function (expirationDate) {
@@ -129,6 +131,9 @@ var TubularDataService = (function () {
         this.userData.expirationDate = null;
         this.userData.role = '';
         this.userData.refreshToken = '';
+    };
+    TubularDataService.prototype.setHttpAuthHeader = function () {
+        new http_1.Headers({ 'Authorization': 'Bearer ' + this.userData.bearerToken });
     };
     TubularDataService = __decorate([
         core_1.Injectable(),
