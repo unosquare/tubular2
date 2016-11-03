@@ -65,21 +65,21 @@ export class TubularDataService {
         return Observable.throw(errMsg);
     }
 
-    authenticate(url: string, username: string, password: string, succesCallback?, errorCallback?, userDataCallback?) : Observable<any> {
+    authenticate(url: string, username: string, password: string, succesCallback?, errorCallback?, userDataCallback?) {
         this.removeAuthentication();
         let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
         let options = new RequestOptions({ headers: headers })
         return this.http.post(url, 'grant_type=password&username=' + username + '&password=' + password, options)
-            .map(data => {
+            .subscribe(data => {
                 this.handleSuccesCallback(data, succesCallback, errorCallback, userDataCallback);
-            })
-            .catch(this.handleError);
+            });
     }
 
     private handleSuccesCallback(data, succesCallback, errorCallback, userDataCallback) {
+        data = JSON.parse(data._body);
         this.userData.isAuthenticated = true;
         this.userData.username = data.userName;
-        this.userData.bearerToken = data.acces_token;
+        this.userData.bearerToken = data.access_token;
         this.userData.expirationDate = new Date(new Date().getTime() + data.expires_in * 1000);
         this.userData.role = data.role;
         this.userData.refreshToken = data.refresh_token;
