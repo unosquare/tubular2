@@ -11,19 +11,19 @@ describe('Pager e2e Tests', () => {
         activeNavBtn,
         pageSizeSelector;
 
-    beforeAll( () => {
+    beforeAll(() => {
         browser.get('/');
-         gridpager = element(by.tagName('grid-pager')).$('ngb-pagination').$('nav');
-         firstNavBtn = gridpager.$('ul').$$('li').first();
-         prevNavBtn = gridpager.$('ul').$$('li').get(1);
-         lastNavBtn = gridpager.$('ul').$$('li').last();
-         nextNavBtn = gridpager.$('ul').$$('li').get(7);
-         firstRow = element(by.tagName('tbody')).$$('tr').first();
-         lastRow = element(by.tagName('tbody')).$$('tr').last();
-         activeNavBtn = gridpager.$('ul').$$('.page-item active');
-         pageSizeSelector = element(by.tagName('page-size-selector')).$('form').$('div').$('select');
-         //Go to first page if isn't there
-        if(gridpager.$('ul').$$('li').first().getAttribute('class') != 'page-item disabled'){
+        gridpager = element(by.tagName('grid-pager')).$('ngb-pagination').$('nav');
+        firstNavBtn = gridpager.$('ul').$$('li').first();
+        prevNavBtn = gridpager.$('ul').$$('li').get(1);
+        lastNavBtn = gridpager.$('ul').$$('li').last();
+        nextNavBtn = gridpager.$('ul').$$('li').get(7);
+        firstRow = element(by.tagName('tbody')).$$('tr').first();
+        lastRow = element(by.tagName('tbody')).$$('tr').last();
+        activeNavBtn = gridpager.$('ul').$$('.page-item active');
+        pageSizeSelector = element(by.tagName('page-size-selector')).$('form').$('div').$('select');
+        //Go to first page if isn't there
+        if (gridpager.$('ul').$$('li').first().getAttribute('class') != 'page-item disabled') {
             firstNavBtn.$('a').click();
         }
         pageSizeSelector.$('[value="10"]').click();
@@ -43,20 +43,20 @@ describe('Pager e2e Tests', () => {
                 expect(gridpager.$('ul').$$('li').get(1).getAttribute('class')).toMatch('page-item disabled');
             });
 
-            it('should enable last and next navigation buttons when result page is not the last one', ()=> {
+            it('should enable last and next navigation buttons when result page is not the last one', () => {
                 expect(lastNavBtn.$('a').getAttribute('aria-label')).toMatch('Last');
                 expect(nextNavBtn.$('a').getAttribute('aria-label')).toMatch('Next');
             });
         });
 
-        describe('last/non-first results page related allity',  () => {
-            it('should disable "last" and "next" navigation buttons when in last results page',  () => {
+        describe('last/non-first results page related allity', () => {
+            it('should disable "last" and "next" navigation buttons when in last results page', () => {
                 lastNavBtn.$('a').click();
                 expect(gridpager.$('ul').$$('li').last().getAttribute('class')).toMatch('page-item disabled');
                 expect(gridpager.$('ul').$$('li').get(3).getAttribute('class')).toMatch('page-item disabled');
             });
 
-            it('should enable "first" and "previous" navigation buttons when in a results page other than first',  () => {
+            it('should enable "first" and "previous" navigation buttons when in a results page other than first', () => {
                 expect(firstNavBtn.$('a').getAttribute('aria-label')).toMatch('First');
                 expect(prevNavBtn.$('a').getAttribute('aria-label')).toMatch('Previous');
             });
@@ -73,26 +73,26 @@ describe('Pager e2e Tests', () => {
             expect(firstRow.$$('td').get(1).getText()).toMatch('11');
         });
 
-        it('should go to previous results page when clicking on previous navigation button',  () => {
+        it('should go to previous results page when clicking on previous navigation button', () => {
             nextNavBtn.$('a').click();
             nextNavBtn.$('a').click();
             prevNavBtn.$('a').click();
             expect(firstRow.$$('td').get(1).getText()).toMatch('21');
         });
 
-        it('should go to last results page when clicking on last navigation button',  () => {
+        it('should go to last results page when clicking on last navigation button', () => {
             lastNavBtn.$('a').click();
             expect(lastRow.$$('td').get(1).getText()).toMatch('53');
             firstNavBtn.$('a').click()
         });
 
-        it('should go to first results page when clicking on first navigation button',  () => {
+        it('should go to first results page when clicking on first navigation button', () => {
             lastNavBtn.$('a').click();
             firstNavBtn.$('a').click();
             expect(firstRow.getText()).toMatch('1');
         });
 
-        it('should go to corresponding results page when clicking on a numbered navigation button',  () => {
+        it('should go to corresponding results page when clicking on a numbered navigation button', () => {
             //Go to 4th page
             gridpager.$$('li').get(5).$('a').click();
             expect(firstRow.getText()).toMatch('31');

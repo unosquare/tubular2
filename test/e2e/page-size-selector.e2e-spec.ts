@@ -12,12 +12,13 @@ describe('page size selector', () =>{
     beforeAll(()=>{
         browser.get('/');
         gridPager = element(by.tagName('grid-pager')).$('ngb-pagination').$('nav ul');
-        pageSizeSelector = element(by.tagName('page-size-selector')).$('form').$('div').$('select');
+        pageSizeSelector = element(by.tagName('page-size-selector')).$('select');
         dataRowsCollection = element(by.tagName('tbody')).$$('tr');
         firstDataRow =  element(by.tagName('tbody')).$$('tr').first();
         lastDataRow =  element(by.tagName('tbody')).$$('tr').last();
         firstPageBtn = gridPager.$$('li').first();
         nextPageBtn = gridPager.$$('li');
+        
         //Go to first page if isn't there
         if(gridPager.$$('li').first().getAttribute('class') != 'page-item disabled'){
             firstPageBtn.$('a').click();

@@ -1,4 +1,7 @@
-﻿exports.config = {
+﻿var istanbul = require('istanbul');
+var collector = new istanbul.Collector();
+
+exports.config = {
     directConnect: true,
 
     // Capabilities to be passed to the webdriver instance.
@@ -27,13 +30,27 @@
             browser.useAllAngular2AppRoots = false;
             browser.rootEl = 'body';
         };
-    },
 
+        var jasmineEnv = jasmine.getEnv();
+
+        jasmineEnv.addReporter(new function() {
+            this.specDone = function(spec) {
+                //if (spec.status !== 'failed') {
+                //browser.driver.executeScript('return __coverage__;').then(function(coverageResults) {
+                //                    collector.add(coverageResults);
+                //});
+                //}
+            };
+        });
+    },
+    //  onComplete: function() {
+    //          istanbul.Report.create('lcov', { dir: 'results/' })
+    //              .writeReport(collector, true);
+    //      },
     jasmineNodeOpts: {
-        // defaultTimeoutInterval: 60000,
         defaultTimeoutInterval: 10000,
         showTiming: true,
-        print: function() {}
+        showColors: true
     }
 };
 
