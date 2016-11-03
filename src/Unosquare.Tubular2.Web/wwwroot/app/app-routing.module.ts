@@ -10,6 +10,7 @@ const routes: Routes = [
     { path: '', redirectTo: '/grid', pathMatch: 'full' },
     { path: 'grid', component: GridComponent },
     { path: 'form', component: FormComponent },
+    { path: 'form/:id', component: FormComponent },
     { path: 'login', component: LoginComponent }
 ];
 

@@ -1,4 +1,6 @@
 ﻿import { Component, Input} from '@angular/core';
+import { Router } from '@angular/router';
+
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { TubularGrid, GridTable, ColumnModel, ColumnFilterMode, DataType } from '@tubular2/tubular2';
 
@@ -9,7 +11,7 @@ import { TubularGrid, GridTable, ColumnModel, ColumnFilterMode, DataType } from 
 export class SampleGrid extends GridTable {
     public editModalRef;
 
-    constructor(public tbGrid: TubularGrid, private modalService: NgbModal) {
+    constructor(public tbGrid: TubularGrid, private modalService: NgbModal, private router: Router) {
         super(tbGrid);
 
         let orderIdColumn = new ColumnModel("OrderID", false);
@@ -35,5 +37,9 @@ export class SampleGrid extends GridTable {
 
     editRow(content) {
         this.editModalRef = this.modalService.open(content);
+    }
+
+    details(row) {
+        this.router.navigate(['/form', row.OrderID ]);
     }
 }
