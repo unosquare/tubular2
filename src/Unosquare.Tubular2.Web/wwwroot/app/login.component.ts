@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { TubularDataService } from '@tubular2/tubular2';
@@ -6,14 +7,18 @@ import { TubularDataService } from '@tubular2/tubular2';
 @Component({
     selector: 'login',
     template: `<form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)">
-                    <div class="form-group">
-                        <label>User:</label>
-                        <input class="form-control" type="text" formControlName="username"/>
-                        <label *ngIf="loginForm.controls.username.errors">Required</label>
-                        <label>Password:</label>
-                        <input class="form-control" type="password" formControlName="password"/>
-                        <label *ngIf="loginForm.controls.password.errors">Required</label>
-                        <button type="submit" class="" [disabled]="loginForm.invalid">Login</button>
+                    <div class="row">
+                        <div class="col-md-4 col-md-push-4">
+                            <div class="form-group">
+                                <label>User:</label>
+                                <input class="form-control" type="text" formControlName="username"/>
+                                <label>Password:</label>
+                                <input class="form-control" type="password" formControlName="password"/>
+                             </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-sm btn-success btn-block" [disabled]="loginForm.invalid">Login</button>
+                            </div>
+                        </div>
                     </div>
               </form>`
 })
@@ -21,7 +26,7 @@ import { TubularDataService } from '@tubular2/tubular2';
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;
 
-    constructor(private fb: FormBuilder, private dataService: TubularDataService) { }
+    constructor(private fb: FormBuilder, private dataService: TubularDataService, private router: Router) { }
 
     ngOnInit() {
         this.loginForm = this.fb.group({
@@ -34,5 +39,6 @@ export class LoginComponent implements OnInit {
         let username = data.value.username;
         let password = data.value.password;
         this.dataService.authenticate('http://tubular.azurewebsites.net/token', username, password);
+        this.router.navigate(['/grid']);
     }
 }
