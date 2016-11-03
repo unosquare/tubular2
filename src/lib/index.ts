@@ -15,3 +15,4 @@ export * from './grid-pager-info.component';
 export * from './column-header.component';
 export * from './column';
 export * from './grid-export.component';
+export * from './mdate.pipe';

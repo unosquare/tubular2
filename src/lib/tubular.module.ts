@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { TubularGrid }  from './grid.component';
 import { ColumnHeader } from './column-header.component';
@@ -14,11 +14,17 @@ import { GridPagerInfo } from './grid-pager-info.component';
 import { PageSizeSelector } from './page-size-selector.component';
 import { ExportButton } from './grid-export.component';
 import { PrintButton } from './grid-print.component';
+import { MDatePipe } from './mdate.pipe';
 
 @NgModule({
     imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule, NgbModule],
-    declarations: [TubularGrid, ColumnHeader, GridSearch, GridPager, GridPagerInfo, ColumnFilterDialog, PageSizeSelector, ExportButton, PrintButton],
-    exports: [TubularGrid, ColumnHeader, GridSearch, GridPager, GridPagerInfo, ColumnFilterDialog, PageSizeSelector, ExportButton, PrintButton, 
-        NgbModule]
+    declarations: [
+        TubularGrid, ColumnHeader, GridSearch, GridPager, GridPagerInfo, ColumnFilterDialog, 
+        PageSizeSelector, ExportButton, PrintButton, MDatePipe
+    ],
+    exports: [
+        TubularGrid, ColumnHeader, GridSearch, GridPager, GridPagerInfo, ColumnFilterDialog, 
+        PageSizeSelector, ExportButton, PrintButton, MDatePipe, NgbModule
+    ]
 })
 export class TubularModule { }

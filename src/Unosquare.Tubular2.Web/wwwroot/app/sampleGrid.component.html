@@ -24,7 +24,7 @@
             </td>
             <td>{{row.OrderID}}</td>
             <td>{{row.CustomerName}}</td>
-            <td>{{row.ShippedDate}}</td>
+            <td>{{row.ShippedDate | mdate:"dddd, MMMM Do YYYY, h:mm:ss a"}}</td>
             <td>{{row.ShipperCity}}</td>
         </tr>
     </tbody>
