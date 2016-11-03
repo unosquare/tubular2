@@ -1,5 +1,5 @@
 ﻿import { Injectable, Inject }     from '@angular/core';
-import { Http, Response, RequestMethod, Request, Headers } from '@angular/http';
+import { Http, Response, RequestMethod, Request, Headers, RequestOptions } from '@angular/http';
 
 import { Observable }     from 'rxjs/Observable';
 
@@ -65,10 +65,11 @@ export class TubularDataService {
         return Observable.throw(errMsg);
     }
 
-    authenticate(url: string, username: string, password: string, succesCallback?, errorCallback?, userDataCallback?) {
+    authenticate(url: string, username: string, password: string, succesCallback?, errorCallback?, userDataCallback?) : Observable<any> {
         this.removeAuthentication();
-        let headers = new Headers({ 'Content-Type':'application/x-www-form-urlencoded'});
-        return this.http.post(url, 'grant_type=password&username=' + username + '&password=' + password, headers)
+        let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+        let options = new RequestOptions({ headers: headers })
+        return this.http.post(url, 'grant_type=password&username=' + username + '&password=' + password, options)
             .map(data => {
                 this.handleSuccesCallback(data, succesCallback, errorCallback, userDataCallback);
             })

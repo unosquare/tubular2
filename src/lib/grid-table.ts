@@ -4,8 +4,6 @@ import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
 import { TubularGrid }      from './grid.component';
 import { ColumnModel, ColumnSortDirection } from './column';
 
-
-
 export abstract class GridTable {
     private columnObservable: BehaviorSubject<ColumnModel[]> = new BehaviorSubject([]);
 
