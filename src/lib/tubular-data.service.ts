@@ -73,8 +73,13 @@ export class TubularDataService {
             .subscribe(data => {
                 this.handleSuccesCallback(data, succesCallback, userDataCallback);
             }, err => {
+                let error = {
+                    statusText: err.statusText,
+                    description: JSON.parse(err._body).error_description,
+                    status: err.status
+                };
                 if (typeof errorCallback === 'function') {
-                    errorCallback(err);
+                    errorCallback(error);
                 }
             });
     }

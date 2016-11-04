@@ -42,8 +42,7 @@ export class LoginComponent implements OnInit {
             () => {
                 this.router.navigate(['/grid']);
             }, (error) => {
-                let err = JSON.parse(error._body);
-                alert(error.statusText + '! , ' + err.error_description);
+                alert('Filed Login' + '\n' + error.statusText + '!\n' + error.description);
                 this.router.navigate(['/login']);
         }, true);      
     }
