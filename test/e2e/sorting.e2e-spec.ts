@@ -16,16 +16,16 @@ describe('grid sorting', () => {
         
     beforeAll(() => {
         browser.get('/');
-        dataSetLowerId = '1',
-        dataSetHigherId = '53',
-        dataSetLowerCustomerName = 'Advanced Technology Systems',
-        dataSetHigherCustomerName = 'Vesta',
-        dataSetLowerDate = 'Thursday, January 28th 2016',
-        dataSetHigherDate = 'Wednesday, May 25th 2016';
-        paginator = element(by.tagName('ngb-pagination')).$$('nav').$$('ul').$$('li'),
-        columnHeaders = element(by.tagName('thead')).$$('tr').first().$$('th'),
-        orderIdSorting = columnHeaders.get(1).$('.column-header').$$('span'),
-        orderCustomerNameSorting = columnHeaders.get(2).$('.column-header').$$('span'),
+        dataSetLowerId = '1';
+        dataSetHigherId = '53';
+        dataSetLowerCustomerName = 'Advanced Technology Systems';
+        dataSetHigherCustomerName = 'Vesta';
+        dataSetLowerDate = 'Thursday, January 28th 2016';
+        dataSetHigherDate = 'Sunday, May 29th 2016';
+        paginator = element(by.tagName('ngb-pagination')).$$('nav').$$('ul').$$('li');
+        columnHeaders = element(by.tagName('thead')).$$('tr').first().$$('th');
+        orderIdSorting = columnHeaders.get(1).$('.column-header').$$('span');
+        orderCustomerNameSorting = columnHeaders.get(2).$('.column-header').$$('span');
         aShippedDateSorting = columnHeaders.get(3).$('.column-header').$$('span');
         element(by.tagName('page-size-selector')).$('form').$('div').$('select').$('[value="10"]').click();
     });

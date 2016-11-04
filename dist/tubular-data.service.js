@@ -72,16 +72,21 @@ var TubularDataService = (function () {
         var _this = this;
         this.removeAuthentication();
         var headers = new http_1.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
-        return this.http.post(url, 'grant_type=password&username=' + username + '&password=' + password, headers)
-            .map(function (data) {
-            _this.handleSuccesCallback(data, succesCallback, errorCallback, userDataCallback);
-        })
-            .catch(this.handleError);
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.post(url, 'grant_type=password&username=' + username + '&password=' + password, options)
+            .subscribe(function (data) {
+            _this.handleSuccesCallback(data, succesCallback, userDataCallback);
+        }, function (err) {
+            if (typeof errorCallback === 'function') {
+                errorCallback(err);
+            }
+        });
     };
-    TubularDataService.prototype.handleSuccesCallback = function (data, succesCallback, errorCallback, userDataCallback) {
+    TubularDataService.prototype.handleSuccesCallback = function (data, succesCallback, userDataCallback) {
+        data = JSON.parse(data._body);
         this.userData.isAuthenticated = true;
         this.userData.username = data.userName;
-        this.userData.bearerToken = data.acces_token;
+        this.userData.bearerToken = data.access_token;
         this.userData.expirationDate = new Date(new Date().getTime() + data.expires_in * 1000);
         this.userData.role = data.role;
         this.userData.refreshToken = data.refresh_token;
@@ -114,6 +119,7 @@ var TubularDataService = (function () {
         }
         else {
             this.userData = savedData;
+            this.setHttpAuthHeader();
         }
     };
     TubularDataService.prototype.isAuthenticationExpired = function (expirationDate) {
@@ -129,6 +135,9 @@ var TubularDataService = (function () {
         this.userData.expirationDate = null;
         this.userData.role = '';
         this.userData.refreshToken = '';
+    };
+    TubularDataService.prototype.setHttpAuthHeader = function () {
+        new http_1.Headers({ 'Authorization': 'Bearer ' + this.userData.bearerToken });
     };
     TubularDataService = __decorate([
         core_1.Injectable(),

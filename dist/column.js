@@ -79,16 +79,10 @@ var ColumnModel = (function () {
                     { name: "None", value: "None" },
                     { name: "Equals", value: "Equals" },
                     { name: "Between", value: "Between" },
-                    { name: ">=", value: ">=" },
-                    { name: ">", value: ">" },
-                    { name: "<=", value: "<=" },
-                    { name: "<", value: "<" },
-                ];
-            case ColumnFilterMode.Boolean:
-                return [
-                    { name: "None", value: "None" },
-                    { name: "Equals", value: "Equals" },
-                    { name: "Not Equals", value: "NotEquals" }
+                    { name: ">=", value: "Gte" },
+                    { name: ">", value: "Gt" },
+                    { name: "<=", value: "Lte" },
+                    { name: "<", value: "Lt" }
                 ];
             case ColumnFilterMode.Date:
             case ColumnFilterMode.DateTime:
@@ -97,13 +91,18 @@ var ColumnModel = (function () {
                     { name: "Equals", value: "Equals" },
                     { name: "Not Equals", value: "NotEquals" },
                     { name: "Between", value: "Between" },
-                    { name: ">=", value: ">=" },
-                    { name: ">", value: ">" },
-                    { name: "<=", value: "<=" },
-                    { name: "<", value: "<" },
+                    { name: ">=", value: "Gte" },
+                    { name: ">", value: "Gt" },
+                    { name: "<=", value: "Lte" },
+                    { name: "<", value: "Lt" }
                 ];
+            case ColumnFilterMode.Boolean:
             default:
-                return [];
+                return [
+                    { name: "None", value: "None" },
+                    { name: "Equals", value: "Equals" },
+                    { name: "Not Equals", value: "NotEquals" }
+                ];
         }
     };
     return ColumnModel;

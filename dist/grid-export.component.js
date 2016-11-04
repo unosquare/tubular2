@@ -36,7 +36,7 @@ var ExportButton = (function () {
     ExportButton = __decorate([
         core_1.Component({
             selector: 'grid-export',
-            template: "<div ngbDropdown class=\"d-inline-block\">\n                <button ngbDropdownToggle class=\"btn btn-outline-primary btn-sm\">\n                <span class=\"fa fa-download\"></span>&nbsp;Export CSV&nbsp;<span class=\"caret\"></span>\n               </button>\n               <div class=\"dropdown-menu\">\n                <button class=\"dropdown-item\" (click)=\"downloadCsv()\">Current rows</button>\n                <button class=\"dropdown-item\" (click)=\"downloadAllCsv()\">All rows</button>\n               </div>\n               </div>"
+            template: "<div ngbDropdown class=\"d-inline-block\">\n                <button ngbDropdownToggle class=\"btn btn-info btn-sm\">\n                <span class=\"fa fa-download\"></span>&nbsp;Export CSV&nbsp;<span class=\"caret\"></span>\n               </button>\n               <div class=\"dropdown-menu\">\n                <button class=\"dropdown-item\" (click)=\"downloadCsv()\">Current rows</button>\n                <button class=\"dropdown-item\" (click)=\"downloadAllCsv()\">All rows</button>\n               </div>\n               </div>"
         }), 
         __metadata('design:paramtypes', [grid_component_1.TubularGrid])
     ], ExportButton);

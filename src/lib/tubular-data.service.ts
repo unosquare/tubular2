@@ -65,21 +65,29 @@ export class TubularDataService {
         return Observable.throw(errMsg);
     }
 
-    authenticate(url: string, username: string, password: string, succesCallback?, errorCallback?, userDataCallback?) : Observable<any> {
+    authenticate(url: string, username: string, password: string, succesCallback?, errorCallback?, userDataCallback?) {
         this.removeAuthentication();
         let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
         let options = new RequestOptions({ headers: headers })
         return this.http.post(url, 'grant_type=password&username=' + username + '&password=' + password, options)
-            .map(data => {
-                this.handleSuccesCallback(data, succesCallback, errorCallback, userDataCallback);
-            })
-            .catch(this.handleError);
+            .subscribe(data => {
+                this.handleSuccesCallback(data, succesCallback, userDataCallback);
+            }, err => {
+                let error = {
+                    errorBody: JSON.parse(err._body),
+                    status: err.status
+                };
+                if (typeof errorCallback === 'function') {
+                    errorCallback(error);
+                }
+            });
     }
 
-    private handleSuccesCallback(data, succesCallback, errorCallback, userDataCallback) {
+    private handleSuccesCallback(data, succesCallback, userDataCallback) {
+        data = JSON.parse(data._body);
         this.userData.isAuthenticated = true;
         this.userData.username = data.userName;
-        this.userData.bearerToken = data.acces_token;
+        this.userData.bearerToken = data.access_token;
         this.userData.expirationDate = new Date(new Date().getTime() + data.expires_in * 1000);
         this.userData.role = data.role;
         this.userData.refreshToken = data.refresh_token;
@@ -95,7 +103,7 @@ export class TubularDataService {
         }
     }
 
-    private isAuthenticated() {
+     isAuthenticated() {
         if (!this.userData.isAuthenticated || this.isAuthenticationExpired(this.userData.expirationDate)) {
             try {
                 this.retriveSaveData();

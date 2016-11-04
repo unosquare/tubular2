@@ -22,15 +22,21 @@ var grid_pager_info_component_1 = require('./grid-pager-info.component');
 var page_size_selector_component_1 = require('./page-size-selector.component');
 var grid_export_component_1 = require('./grid-export.component');
 var grid_print_component_1 = require('./grid-print.component');
+var mdate_pipe_1 = require('./mdate.pipe');
 var TubularModule = (function () {
     function TubularModule() {
     }
     TubularModule = __decorate([
         core_1.NgModule({
             imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, forms_1.ReactiveFormsModule, http_1.HttpModule, ng_bootstrap_1.NgbModule],
-            declarations: [grid_component_1.TubularGrid, column_header_component_1.ColumnHeader, grid_search_component_1.GridSearch, grid_pager_component_1.GridPager, grid_pager_info_component_1.GridPagerInfo, column_filter_dialog_component_1.ColumnFilterDialog, page_size_selector_component_1.PageSizeSelector, grid_export_component_1.ExportButton, grid_print_component_1.PrintButton],
-            exports: [grid_component_1.TubularGrid, column_header_component_1.ColumnHeader, grid_search_component_1.GridSearch, grid_pager_component_1.GridPager, grid_pager_info_component_1.GridPagerInfo, column_filter_dialog_component_1.ColumnFilterDialog, page_size_selector_component_1.PageSizeSelector, grid_export_component_1.ExportButton, grid_print_component_1.PrintButton,
-                ng_bootstrap_1.NgbModule]
+            declarations: [
+                grid_component_1.TubularGrid, column_header_component_1.ColumnHeader, grid_search_component_1.GridSearch, grid_pager_component_1.GridPager, grid_pager_info_component_1.GridPagerInfo, column_filter_dialog_component_1.ColumnFilterDialog,
+                page_size_selector_component_1.PageSizeSelector, grid_export_component_1.ExportButton, grid_print_component_1.PrintButton, mdate_pipe_1.MDatePipe
+            ],
+            exports: [
+                grid_component_1.TubularGrid, column_header_component_1.ColumnHeader, grid_search_component_1.GridSearch, grid_pager_component_1.GridPager, grid_pager_info_component_1.GridPagerInfo, column_filter_dialog_component_1.ColumnFilterDialog,
+                page_size_selector_component_1.PageSizeSelector, grid_export_component_1.ExportButton, grid_print_component_1.PrintButton, mdate_pipe_1.MDatePipe, ng_bootstrap_1.NgbModule
+            ]
         }), 
         __metadata('design:paramtypes', [])
     ], TubularModule);

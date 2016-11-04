@@ -42,20 +42,13 @@ gulp.task('clean', function() {
 });
 
 var standardBuild = function(watch) {
-    // TODO: Add task to build only tubular into a dist folder in root
-    // TODO: Create a webpack config file
     gulp.src('wwwroot/app/main.ts')
         .pipe(webpackStream({
             devtool: 'source-map',
-            output: {
-                filename: '[name].js',
-            },
+            output: { filename: '[name].js', },
             resolve: {
                 extensions: ['', '.webpack.js', '.web.js', '.ts', '.js']
             },
-            //plugins: [
-            //  new webpack.optimize.UglifyJsPlugin()
-            //],
             module: {
                 loaders: [
                     { test: /\.ts$/, loader: 'ts-loader' }
