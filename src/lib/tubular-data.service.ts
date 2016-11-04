@@ -71,11 +71,15 @@ export class TubularDataService {
         let options = new RequestOptions({ headers: headers })
         return this.http.post(url, 'grant_type=password&username=' + username + '&password=' + password, options)
             .subscribe(data => {
-                this.handleSuccesCallback(data, succesCallback, errorCallback, userDataCallback);
+                this.handleSuccesCallback(data, succesCallback, userDataCallback);
+            }, err => {
+                if (typeof errorCallback === 'function') {
+                    errorCallback(err);
+                }
             });
     }
 
-    private handleSuccesCallback(data, succesCallback, errorCallback, userDataCallback) {
+    private handleSuccesCallback(data, succesCallback, userDataCallback) {
         data = JSON.parse(data._body);
         this.userData.isAuthenticated = true;
         this.userData.username = data.userName;
@@ -95,7 +99,7 @@ export class TubularDataService {
         }
     }
 
-    private isAuthenticated() {
+     isAuthenticated() {
         if (!this.userData.isAuthenticated || this.isAuthenticationExpired(this.userData.expirationDate)) {
             try {
                 this.retriveSaveData();
