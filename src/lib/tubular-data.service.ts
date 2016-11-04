@@ -139,4 +139,10 @@ export class TubularDataService {
     private setHttpAuthHeader() {
         new Headers({ 'Authorization': 'Bearer ' + this.userData.bearerToken })
     }
+
+    getData(url: string): Observable<any> {
+        return this.http.get(url)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
 }
