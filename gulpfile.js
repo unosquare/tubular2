@@ -22,7 +22,7 @@ gulp.task('connect', function() {
     });
 });
 
-gulp.task('protractor', function() {
+gulp.task('protractor', ['connect'], function() {
     return gulp.src('test/e2e/**/*.ts')
         .pipe(ts({
             noImplicitAny: false,
@@ -36,13 +36,12 @@ gulp.task('protractor', function() {
         }))
         .pipe(gulp.dest(function(file) { return file.base; }))
         .pipe(protractor({ configFile: "protractor.config.js" }))
-        .pipe(istanbul.writeReports()) // TODO: this is not working Lines        : 100% ( 0/0 )
+        .pipe(istanbul.writeReports())
         .on('error', function() { connect.serverClose() })
         .on('end', connect.serverClose);
 });
 
 gulp.task('restore-ts', function() {
-    // TODO: Restore all libs
     return gulp.src("src/lib/*.ts")
         .pipe(gulp.dest('src/Unosquare.Tubular2.Web/node_modules/@tubular2/tubular2'));
 });
@@ -58,7 +57,7 @@ gulp.task('build-wwwroot', ['restore-ts'], function() {
 
 gulp.task('restore-js', function() {
     return gulp.src("dist/*.js")
-        .pipe(istanbul())
+        .pipe(istanbul({ includeUntested: true }))
         .pipe(gulp.dest('src/Unosquare.Tubular2.Web/node_modules/@tubular2/tubular2'))
 });
 
@@ -74,6 +73,6 @@ gulp.task('instrument', ['default', 'build-wwwroot', 'restore-js'], function() {
         .pipe(gulp.dest('src/Unosquare.Tubular2.Web/wwwroot/dist/'));
 });
 
-gulp.task('e2e', ['connect', 'instrument', 'protractor']);
+gulp.task('e2e', ['instrument', 'protractor']);
 
 gulp.task('travis', ['e2e']);

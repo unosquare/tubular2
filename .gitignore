@@ -263,3 +263,4 @@ paket-files/
 /src/lib/*.js
 /src/Unosquare.Tubular2.Web/npm-debug.*
 coverage/
+temp/
