@@ -74,15 +74,19 @@ var TubularDataService = (function () {
         var headers = new http_1.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
         var options = new http_1.RequestOptions({ headers: headers });
         return this.http.post(url, 'grant_type=password&username=' + username + '&password=' + password, options)
-            .map(function (data) {
-            _this.handleSuccesCallback(data, succesCallback, errorCallback, userDataCallback);
-        })
-            .catch(this.handleError);
+            .subscribe(function (data) {
+            _this.handleSuccesCallback(data, succesCallback, userDataCallback);
+        }, function (err) {
+            if (typeof errorCallback === 'function') {
+                errorCallback(err);
+            }
+        });
     };
-    TubularDataService.prototype.handleSuccesCallback = function (data, succesCallback, errorCallback, userDataCallback) {
+    TubularDataService.prototype.handleSuccesCallback = function (data, succesCallback, userDataCallback) {
+        data = JSON.parse(data._body);
         this.userData.isAuthenticated = true;
         this.userData.username = data.userName;
-        this.userData.bearerToken = data.acces_token;
+        this.userData.bearerToken = data.access_token;
         this.userData.expirationDate = new Date(new Date().getTime() + data.expires_in * 1000);
         this.userData.role = data.role;
         this.userData.refreshToken = data.refresh_token;
