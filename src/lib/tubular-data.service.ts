@@ -74,8 +74,7 @@ export class TubularDataService {
                 this.handleSuccesCallback(data, succesCallback, userDataCallback);
             }, err => {
                 let error = {
-                    statusText: err.statusText,
-                    description: JSON.parse(err._body).error_description,
+                    errorBody: JSON.parse(err._body),
                     status: err.status
                 };
                 if (typeof errorCallback === 'function') {
