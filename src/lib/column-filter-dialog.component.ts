@@ -7,16 +7,16 @@ import { ColumnModel } from './column';
     template: `
    <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="form-group">
+            <label for="operator">Operator</label>
+            <select id="operator" class="form-control" formControlName="operator" (change)="selectChange($event.target.value)">
+                <option *ngFor="let operator of operators" [value]="operator.value">{{operator.name}}</option>
+            </select>
+        </div>
+        <div class="form-group">
             <label>Value</label>
             <input type="{{inputType}}" class="form-control" formControlName="text" />
             <label *ngIf="isBetween">Argument</label>
-            <input *ngIf="isBetween" type="{{inputType}}" class="form-control" formControlName="argument" />
-        </div>
-        <div class="form-group">
-            <label for="operator">Operator</label>
-            <select id="operator" class="form-control" formControlName="operator">
-                <option *ngFor="let operator of operators" [value]="operator.value">{{operator.name}}</option>
-            </select>
+            <input *ngIf="isBetween" type="{{inputType}}" class="form-control" formControlName="argument"/>
         </div>
         <div class="row">
             <div class="col-xs-6">
@@ -70,6 +70,8 @@ export class ColumnFilterDialog implements AfterViewInit {
                 argument: this.column.filter.argument,
                 operator: this.column.filter.operator || "None"
             });
+
+            if (this.column.filter.operator == "None") this.form.controls['text'].disable();
         });
     }
 
@@ -83,5 +85,13 @@ export class ColumnFilterDialog implements AfterViewInit {
         this.column.filter.operator = "None";
 
         this.onFilteringChange.emit(false);
+    }
+
+    private selectChange(newVal: any) {
+        if (newVal == 'None') {
+            this.form.controls['text'].disable();
+        } else {
+            this.form.controls['text'].enable();
+        }
     }
 }
