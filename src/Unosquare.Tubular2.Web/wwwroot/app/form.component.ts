@@ -25,6 +25,7 @@ export class FormComponent {
             this.formBuild();
         });
 
+        //TODO: investigar eliminar foreach
         this.route.params.forEach((params: Params) => {
             id = params['id'];
         });
