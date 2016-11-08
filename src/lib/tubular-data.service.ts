@@ -1,4 +1,4 @@
-﻿import { Injectable, Inject }     from '@angular/core';
+﻿import { Injectable, Inject, Optional }     from '@angular/core';
 import { Http, Response, RequestMethod, Request, Headers, RequestOptions } from '@angular/http';
 
 import { Observable }     from 'rxjs/Observable';
@@ -21,7 +21,9 @@ export class TubularDataService {
         refreshToken: ''
     }
 
-    constructor(@Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider, private http: Http) { }
+    private authHeader = null;
+
+    constructor(@Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider, private http: Http) { }
     
     retrieveData(url: string, req: any) : Observable<any> {
         req.columns.forEach(this.transformSortDirection);
@@ -77,7 +79,7 @@ export class TubularDataService {
                     errorBody: JSON.parse(err._body),
                     status: err.status
                 };
-                if (typeof errorCallback === 'function') {
+                if (typeof errorCallback != null ) {
                     errorCallback(error);
                 }
             });
@@ -92,7 +94,10 @@ export class TubularDataService {
         this.userData.role = data.role;
         this.userData.refreshToken = data.refresh_token;
 
-        this.settingsProvider.put('auth_data', JSON.stringify(this.userData));
+        if (this.settingsProvider)
+            this.settingsProvider.put('auth_data', JSON.stringify(this.userData));
+
+        this.setHttpAuthHeader();
         
         if (typeof userDataCallback === 'function') {
             userDataCallback(data);
@@ -103,7 +108,7 @@ export class TubularDataService {
         }
     }
 
-     isAuthenticated() {
+    private isAuthenticated() {
         if (!this.userData.isAuthenticated || this.isAuthenticationExpired(this.userData.expirationDate)) {
             try {
                 this.retriveSaveData();
@@ -116,7 +121,7 @@ export class TubularDataService {
     }
 
     private retriveSaveData() {
-        let savedData = this.settingsProvider.get('auth_data');
+        let savedData = this.settingsProvider ? this.settingsProvider.get('auth_data') : null;
         if (typeof savedData === 'undefined' || savedData == null) {
             throw 'No authentication exist';
         } else if (this.isAuthenticationExpired(savedData.expirationDate)) {
@@ -135,22 +140,30 @@ export class TubularDataService {
     }
 
     private removeAuthentication() {
-        this.settingsProvider.delete('auth_data');
+        if (this.settingsProvider)
+            this.settingsProvider.delete('auth_data');
+
         this.userData.isAuthenticated = false;
         this.userData.username = '';
         this.userData.bearerToken = '';
         this.userData.expirationDate = null;
         this.userData.role = '';
         this.userData.refreshToken = '';
+        this.settingsProvider.delete('auth_Header');
     }
 
     private setHttpAuthHeader() {
-        new Headers({ 'Authorization': 'Bearer ' + this.userData.bearerToken })
+        this.authHeader = 'Bearer ' + this.userData.bearerToken;
+        this.settingsProvider.put('auth_Header', this.authHeader);
     }
 
     getData(url: string): Observable<any> {
         return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
+    }
+
+    getToken() {
+        return this.authHeader;
     }
 }

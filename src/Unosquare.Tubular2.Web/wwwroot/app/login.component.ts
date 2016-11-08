@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TubularDataService } from '@tubular2/tubular2';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
     selector: 'login',
@@ -26,7 +27,7 @@ import { TubularDataService } from '@tubular2/tubular2';
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;
 
-    constructor(private fb: FormBuilder, private dataService: TubularDataService, private router: Router) { }
+    constructor(private fb: FormBuilder, private dataService: TubularDataService, private router: Router, private toastr: ToastsManager) { }
 
     ngOnInit() {
         this.loginForm = this.fb.group({
@@ -42,7 +43,7 @@ export class LoginComponent implements OnInit {
             () => {
                 this.router.navigate(['/']);
             }, (error) => {
-                alert('Filed Login' + '\n' + error.status + '!\n' + error.errorBody.error_description);
+                this.toastr.error(error.status + ' - ' + error.errorBody.error_description, 'Filed Login');
                 this.router.navigate(['/login']);
         }, true);      
     }
