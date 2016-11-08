@@ -139,7 +139,7 @@ export class TubularDataService {
         return expiration.valueOf() - now.valueOf() <= 0;
     }
 
-    private removeAuthentication() {
+     removeAuthentication() {
         if (this.settingsProvider)
             this.settingsProvider.delete('auth_data');
 
@@ -149,7 +149,9 @@ export class TubularDataService {
         this.userData.expirationDate = null;
         this.userData.role = '';
         this.userData.refreshToken = '';
-        this.settingsProvider.delete('auth_Header');
+        
+        if(this.settingsProvider)
+            this.settingsProvider.delete('auth_Header');
     }
 
     private setHttpAuthHeader() {
