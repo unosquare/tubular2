@@ -22,13 +22,11 @@ gulp.task('connect', function() {
     });
 });
 
-gulp.task('protractor', ['connect'], function() {
+gulp.task('protractor', ['connect', 'instrument'], function() {
     return gulp.src('test/e2e/**/*.ts')
         .pipe(ts({
             noImplicitAny: false,
-            typeRoots: [
-                "./node_modules/@types"
-            ],
+            typeRoots: ['./node_modules/@types'],
             types: [
                 "core-js",
                 "jasmine"
@@ -46,7 +44,7 @@ gulp.task('restore-ts', function() {
         .pipe(gulp.dest('src/Unosquare.Tubular2.Web/node_modules/@tubular2/tubular2'));
 });
 
-gulp.task('build-wwwroot', ['restore-ts'], function() {
+gulp.task('build-wwwroot', ['restore-js', 'restore-ts'], function() {
     var tsProj = ts.createProject("src/Unosquare.Tubular2.Web/tsconfig.json");
 
     return gulp.src('src/Unosquare.Tubular2.Web/wwwroot/app/*.ts')
@@ -55,13 +53,13 @@ gulp.task('build-wwwroot', ['restore-ts'], function() {
         .pipe(gulp.dest(function(file) { return file.base; }));
 });
 
-gulp.task('restore-js', function() {
+gulp.task('restore-js', ['default'], function() {
     return gulp.src("dist/*.js")
         .pipe(istanbul({ includeUntested: true }))
         .pipe(gulp.dest('src/Unosquare.Tubular2.Web/node_modules/@tubular2/tubular2'))
 });
 
-gulp.task('instrument', ['default', 'build-wwwroot', 'restore-js'], function() {
+gulp.task('instrument', ['build-wwwroot'], function() {
     return gulp.src('src/Unosquare.Tubular2.Web/wwwroot/app/main.js')
         .pipe(webpackStream({
             devtool: 'source-map',
@@ -73,6 +71,6 @@ gulp.task('instrument', ['default', 'build-wwwroot', 'restore-js'], function() {
         .pipe(gulp.dest('src/Unosquare.Tubular2.Web/wwwroot/dist/'));
 });
 
-gulp.task('e2e', ['instrument', 'protractor']);
+gulp.task('e2e', ['protractor']);
 
 gulp.task('travis', ['e2e']);
