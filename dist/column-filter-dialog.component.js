@@ -42,6 +42,8 @@ var ColumnFilterDialog = (function () {
                 argument: _this.column.filter.argument,
                 operator: _this.column.filter.operator || "None"
             });
+            if (_this.column.filter.operator == "None")
+                _this.form.controls['text'].disable();
         });
     };
     ColumnFilterDialog.prototype.onSubmit = function () {
@@ -52,6 +54,14 @@ var ColumnFilterDialog = (function () {
         this.column.filter.argument = null;
         this.column.filter.operator = "None";
         this.onFilteringChange.emit(false);
+    };
+    ColumnFilterDialog.prototype.selectChange = function (newVal) {
+        if (newVal == 'None') {
+            this.form.controls['text'].disable();
+        }
+        else {
+            this.form.controls['text'].enable();
+        }
     };
     __decorate([
         core_1.Input(), 
@@ -64,7 +74,7 @@ var ColumnFilterDialog = (function () {
     ColumnFilterDialog = __decorate([
         core_1.Component({
             selector: 'filter-dialog',
-            template: "\n   <form [formGroup]=\"form\" (ngSubmit)=\"onSubmit()\">\n        <div class=\"form-group\">\n            <label>Value</label>\n            <input type=\"{{inputType}}\" class=\"form-control\" formControlName=\"text\" />\n            <label *ngIf=\"isBetween\">Argument</label>\n            <input *ngIf=\"isBetween\" type=\"{{inputType}}\" class=\"form-control\" formControlName=\"argument\" />\n        </div>\n        <div class=\"form-group\">\n            <label for=\"operator\">Operator</label>\n            <select id=\"operator\" class=\"form-control\" formControlName=\"operator\">\n                <option *ngFor=\"let operator of operators\" [value]=\"operator.value\">{{operator.name}}</option>\n            </select>\n        </div>\n        <div class=\"row\">\n            <div class=\"col-xs-6\">\n                <button type=\"submit\" class=\"btn btn-sm btn-success btn-block\" \n                        [disabled]=\"!form.valid\">Filter</button>\n            </div>\n            <div class=\"col-xs-6\">\n                <button type=\"button\" class=\"btn btn-sm btn-danger btn-block\" \n                        (click)=\"reset()\">Clear</button>\n            </div>\n        </div>\n    </form>",
+            template: "\n   <form [formGroup]=\"form\" (ngSubmit)=\"onSubmit()\">\n        <div class=\"form-group\">\n            <label for=\"operator\">Operator</label>\n            <select id=\"operator\" class=\"form-control\" formControlName=\"operator\" (change)=\"selectChange($event.target.value)\">\n                <option *ngFor=\"let operator of operators\" [value]=\"operator.value\">{{operator.name}}</option>\n            </select>\n        </div>\n        <div class=\"form-group\">\n            <label>Value</label>\n            <input type=\"{{inputType}}\" class=\"form-control\" formControlName=\"text\" />\n            <label *ngIf=\"isBetween\">Argument</label>\n            <input *ngIf=\"isBetween\" type=\"{{inputType}}\" class=\"form-control\" formControlName=\"argument\"/>\n        </div>\n        <div class=\"row\">\n            <div class=\"col-xs-6\">\n                <button type=\"submit\" class=\"btn btn-sm btn-success btn-block\" \n                        [disabled]=\"!form.valid\">Filter</button>\n            </div>\n            <div class=\"col-xs-6\">\n                <button type=\"button\" class=\"btn btn-sm btn-danger btn-block\" \n                        (click)=\"reset()\">Clear</button>\n            </div>\n        </div>\n    </form>",
             styles: ['form { min-width: 200px; }']
         }), 
         __metadata('design:paramtypes', [forms_1.FormBuilder])

@@ -31,6 +31,7 @@ var TubularDataService = (function () {
             role: '',
             refreshToken: ''
         };
+        this.authHeader = null;
     }
     TubularDataService.prototype.retrieveData = function (url, req) {
         req.columns.forEach(this.transformSortDirection);
@@ -77,8 +78,12 @@ var TubularDataService = (function () {
             .subscribe(function (data) {
             _this.handleSuccesCallback(data, succesCallback, userDataCallback);
         }, function (err) {
-            if (typeof errorCallback === 'function') {
-                errorCallback(err);
+            var error = {
+                errorBody: JSON.parse(err._body),
+                status: err.status
+            };
+            if (typeof errorCallback != null) {
+                errorCallback(error);
             }
         });
     };
@@ -90,7 +95,9 @@ var TubularDataService = (function () {
         this.userData.expirationDate = new Date(new Date().getTime() + data.expires_in * 1000);
         this.userData.role = data.role;
         this.userData.refreshToken = data.refresh_token;
-        this.settingsProvider.put('auth_data', JSON.stringify(this.userData));
+        if (this.settingsProvider)
+            this.settingsProvider.put('auth_data', JSON.stringify(this.userData));
+        this.setHttpAuthHeader();
         if (typeof userDataCallback === 'function') {
             userDataCallback(data);
         }
@@ -110,7 +117,7 @@ var TubularDataService = (function () {
         return true;
     };
     TubularDataService.prototype.retriveSaveData = function () {
-        var savedData = this.settingsProvider.get('auth_data');
+        var savedData = this.settingsProvider ? this.settingsProvider.get('auth_data') : null;
         if (typeof savedData === 'undefined' || savedData == null) {
             throw 'No authentication exist';
         }
@@ -128,19 +135,32 @@ var TubularDataService = (function () {
         return expiration.valueOf() - now.valueOf() <= 0;
     };
     TubularDataService.prototype.removeAuthentication = function () {
-        this.settingsProvider.delete('auth_data');
+        if (this.settingsProvider)
+            this.settingsProvider.delete('auth_data');
         this.userData.isAuthenticated = false;
         this.userData.username = '';
         this.userData.bearerToken = '';
         this.userData.expirationDate = null;
         this.userData.role = '';
         this.userData.refreshToken = '';
+        if (this.settingsProvider)
+            this.settingsProvider.delete('auth_Header');
     };
     TubularDataService.prototype.setHttpAuthHeader = function () {
-        new http_1.Headers({ 'Authorization': 'Bearer ' + this.userData.bearerToken });
+        this.authHeader = 'Bearer ' + this.userData.bearerToken;
+        this.settingsProvider.put('auth_Header', this.authHeader);
+    };
+    TubularDataService.prototype.getData = function (url) {
+        return this.http.get(url)
+            .map(this.extractData)
+            .catch(this.handleError);
+    };
+    TubularDataService.prototype.getToken = function () {
+        return this.authHeader;
     };
     TubularDataService = __decorate([
         core_1.Injectable(),
+        __param(0, core_1.Optional()),
         __param(0, core_1.Inject(tubular_settings_service_1.SETTINGS_PROVIDER)), 
         __metadata('design:paramtypes', [Object, http_1.Http])
     ], TubularDataService);
