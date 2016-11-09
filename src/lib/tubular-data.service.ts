@@ -21,7 +21,10 @@ export class TubularDataService {
         refreshToken: ''
     }
 
+    private tokenUrl = null;
     private authHeader = null;
+    private requireAuthentication=true;
+    private refreshTokenUrl = this.tokenUrl ? null : '/api/token';
 
     constructor(@Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider, private http: Http) { }
     
@@ -67,11 +70,11 @@ export class TubularDataService {
         return Observable.throw(errMsg);
     }
 
-    authenticate(url: string, username: string, password: string, succesCallback?, errorCallback?, userDataCallback?) {
+    authenticate(username: string, password: string, succesCallback?, errorCallback?, userDataCallback?) {
         this.removeAuthentication();
         let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
         let options = new RequestOptions({ headers: headers })
-        return this.http.post(url, 'grant_type=password&username=' + username + '&password=' + password, options)
+        return this.http.post(this.tokenUrl, 'grant_type=password&username=' + username + '&password=' + password, options)
             .subscribe(data => {
                 this.handleSuccesCallback(data, succesCallback, userDataCallback);
             }, err => {
@@ -167,5 +170,13 @@ export class TubularDataService {
 
     getToken() {
         return this.authHeader;
+    }
+
+    setTokenUrl(val){
+        this.tokenUrl = val;
+    }
+
+    setRequireAuthentication(val){
+        this.requireAuthentication = val;
     }
 }

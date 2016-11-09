@@ -39,7 +39,8 @@ export class LoginComponent implements OnInit {
     onSubmit(data) {
         let username = data.value.username;
         let password = data.value.password;
-        this.dataService.authenticate('http://tubular.azurewebsites.net/token', username, password,
+        this.dataService.setTokenUrl('http://tubular.azurewebsites.net/token')
+        this.dataService.authenticate(username, password,
             () => {
                 this.router.navigate(['']);
             }, (error) => {
