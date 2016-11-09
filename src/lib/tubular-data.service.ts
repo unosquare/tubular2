@@ -82,9 +82,8 @@ export class TubularDataService {
                     errorBody: JSON.parse(err._body),
                     status: err.status
                 };
-                if (typeof errorCallback != null ) {
+                if (typeof errorCallback != null )
                     errorCallback(error);
-                }
             });
     }
 
@@ -180,7 +179,7 @@ export class TubularDataService {
         this.requireAuthentication = val;
     }
 
-    refreshSession(errorCallback){
+    refreshSession(errorCallback?){
         let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
         let options = new RequestOptions({ headers: headers })
         this.http.post(this.tokenUrl, 'grant_type=refresh_token&refresh_token=' + this.userData.refreshToken, options)
@@ -189,7 +188,20 @@ export class TubularDataService {
                     this.handleSuccesCallback(data, null, null);
                 },
                 err => {
-                    this.handleError(err);
+                    if(typeof errorCallback != null)
+                        errorCallback(err);
                 });
     }
+
+    getExpirationDate(){
+        let date = new Date();
+        let minutes = 5;
+        return new Date(date.getTime() + minutes * 60000);
+    }
+
+    addTimeZoneToUrl(url){
+        let separator = url.indexOf('?') === -1 ? '?' : '&';
+        return url + separator + 'timezoneOffset=' + new Date().getTimezoneOffset();
+    }
 }
+
