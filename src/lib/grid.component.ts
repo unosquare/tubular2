@@ -33,8 +33,8 @@ export class GridPageInfo {
         ':host /deep/ div.row:first { margin-top: 0; }',
         ':host /deep/ .sortable { text-decoration: underline; cursor: pointer; }',
         ':host /deep/ .sortable:hover { text-decoration: none; color: yellow; }',
-        ':host /deep/ .sortAsc::after { font-family: FontAwesome; content: "\f176"; }',
-        ':host /deep/ .sortDesc::after { font-family: FontAwesome; content: "\f175"; }'
+        ':host /deep/ .sortAsc::after { font-family: FontAwesome; content: "\\f176"; }',
+        ':host /deep/ .sortDesc::after { font-family: FontAwesome; content: "\\f175"; }'
     ]
 })
 export class TubularGrid {
