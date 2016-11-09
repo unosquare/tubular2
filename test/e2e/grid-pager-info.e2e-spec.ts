@@ -4,7 +4,7 @@ describe('grid pager info', () => {
 
     let paginator = element(by.tagName('ngb-pagination')).$$('nav').$$('ul').$$('li'),
         gridPagerInfo = element(by.tagName('grid-pager-info')).$$('div'),
-        pageSizeSelector = element(by.tagName('page-size-selector')).$('form').$('div').$('select');
+        pageSizeSelector = element(by.tagName('page-size-selector')).$('form').$('div').$('select'),
         gridSearchInput = element(by.tagName('grid-search')).$('div').$('div').$('input');
 
     beforeEach(() => {
