@@ -21,6 +21,7 @@ var paths = {
         'moment': 'node_modules/moment/*',
         'bootstrap': 'node_modules/bootstrap/dist/**/*',
         'filesaver': 'node_modules/filesaver.js/*.js',
+        'ng2-toastr': 'node_modules/ng2-toastr/ng2-toastr.*',
         '@ng-bootstrap': 'node_modules/@ng-bootstrap/ng-bootstrap/**/*',
         '@tubular2': '../lib/**/*'
     }

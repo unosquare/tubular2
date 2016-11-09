@@ -32,6 +32,8 @@ var TubularDataService = (function () {
             refreshToken: ''
         };
         this.authHeader = null;
+        this.requireAuthentication = true;
+        this.refreshTokenUrl = this.tokenUrl = '/api/token';
     }
     TubularDataService.prototype.retrieveData = function (url, req) {
         req.columns.forEach(this.transformSortDirection);
@@ -69,12 +71,12 @@ var TubularDataService = (function () {
             error.status ? error.status + " - " + error.statusText : 'Server error';
         return Observable_1.Observable.throw(errMsg);
     };
-    TubularDataService.prototype.authenticate = function (url, username, password, succesCallback, errorCallback, userDataCallback) {
+    TubularDataService.prototype.authenticate = function (username, password, succesCallback, errorCallback, userDataCallback) {
         var _this = this;
         this.removeAuthentication();
         var headers = new http_1.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
         var options = new http_1.RequestOptions({ headers: headers });
-        return this.http.post(url, 'grant_type=password&username=' + username + '&password=' + password, options)
+        return this.http.post(this.tokenUrl, 'grant_type=password&username=' + username + '&password=' + password, options)
             .subscribe(function (data) {
             _this.handleSuccesCallback(data, succesCallback, userDataCallback);
         }, function (err) {
@@ -82,9 +84,8 @@ var TubularDataService = (function () {
                 errorBody: JSON.parse(err._body),
                 status: err.status
             };
-            if (typeof errorCallback != null) {
+            if (typeof errorCallback != null)
                 errorCallback(error);
-            }
         });
     };
     TubularDataService.prototype.handleSuccesCallback = function (data, succesCallback, userDataCallback) {
@@ -157,6 +158,33 @@ var TubularDataService = (function () {
     };
     TubularDataService.prototype.getToken = function () {
         return this.authHeader;
+    };
+    TubularDataService.prototype.setTokenUrl = function (val) {
+        this.tokenUrl = val;
+    };
+    TubularDataService.prototype.setRequireAuthentication = function (val) {
+        this.requireAuthentication = val;
+    };
+    TubularDataService.prototype.refreshSession = function (errorCallback) {
+        var _this = this;
+        var headers = new http_1.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        this.http.post(this.tokenUrl, 'grant_type=refresh_token&refresh_token=' + this.userData.refreshToken, options)
+            .subscribe(function (data) {
+            _this.handleSuccesCallback(data, null, null);
+        }, function (err) {
+            if (typeof errorCallback != null)
+                errorCallback(err);
+        });
+    };
+    TubularDataService.prototype.getExpirationDate = function () {
+        var date = new Date();
+        var minutes = 5;
+        return new Date(date.getTime() + minutes * 60000);
+    };
+    TubularDataService.prototype.addTimeZoneToUrl = function (url) {
+        var separator = url.indexOf('?') === -1 ? '?' : '&';
+        return url + separator + 'timezoneOffset=' + new Date().getTimezoneOffset();
     };
     TubularDataService = __decorate([
         core_1.Injectable(),
