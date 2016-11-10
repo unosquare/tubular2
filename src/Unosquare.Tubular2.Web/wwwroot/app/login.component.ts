@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
         this.dataService.setTokenUrl('http://tubular.azurewebsites.net/token');
         
         this.dataService.authenticate(username, password,
-            () => this.router.navigate(['']), 
+            () => this.router.navigate(['/exp']), 
             (error) => {
                 this.toastr.error(error.status + ' - ' + error.errorBody.error_description, 'Filed Login');
                 this.router.navigate(['/login']);
