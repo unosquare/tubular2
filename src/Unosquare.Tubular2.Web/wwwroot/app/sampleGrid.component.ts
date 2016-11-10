@@ -24,13 +24,18 @@ export class SampleGrid extends GridTable {
         dateColumn.filterMode = ColumnFilterMode.Date;
         dateColumn.dataType = DataType.Date;
 
+        let creationDate = new ColumnModel("CreationDate", false);
+        creationDate.filterMode = ColumnFilterMode.DateTime;
+        creationDate.dataType = DataType.Date;
+
         let cityColumn = new ColumnModel("ShipperCity");
         cityColumn.filterMode = ColumnFilterMode.String;
-        
+
         this.addColumns([
             orderIdColumn,
             customerColumn,
             dateColumn,
+            creationDate,
             cityColumn
         ]);
     }
