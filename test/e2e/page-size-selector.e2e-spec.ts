@@ -44,25 +44,16 @@ describe('page size selector', () =>{
         // Select '50' on tbPageSizeSelector
         pageSizeSelector.$('[value="50"]').click();
         
-        // Verifying results on results-page 1
-        firstPageBtn.$('a').click();
         expect(firstDataRow.$$('td').get(1).getText()).toBe('1');
-        expect(lastDataRow.$$('td').get(1).getText()).toBe('50');
-        expect(dataRowsCollection.count()).toBe(50);
-        
-        // Go to next page of results (page 2)
-        nextPageBtn.get(4).$('a').click();
-        // Verifying results on results-page 2
-        expect(firstDataRow.$$('td').get(1).getText()).toBe('51');
-        expect(lastDataRow.$$('td').get(1).getText()).toBe('53');
-        expect(dataRowsCollection.count()).toBe(3);
+        expect(lastDataRow.$$('td').get(1).getText()).toBe('49');
+        expect(dataRowsCollection.count()).toBe(49);
     });
 
     it('should filter up to 100 data rows per page when selecting a page size of "100"', () => {
         pageSizeSelector.$('[value="100"]').click();
 
         expect(firstDataRow.$$('td').get(1).getText()).toBe('1');
-        expect(lastDataRow.$$('td').get(1).getText()).toBe('53');
-        expect(dataRowsCollection.count()).toBe(53);
+        expect(lastDataRow.$$('td').get(1).getText()).toBe('49');
+        expect(dataRowsCollection.count()).toBe(49);
     });
 });
