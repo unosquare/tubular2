@@ -21,11 +21,11 @@ export class SampleGrid extends GridTable {
         customerColumn.filterMode = ColumnFilterMode.String;
 
         let dateColumn = new ColumnModel("ShippedDate", false);
-        dateColumn.filterMode = ColumnFilterMode.Date;
-        dateColumn.dataType = DataType.Date;
+        dateColumn.filterMode = ColumnFilterMode.DateTime;
+        dateColumn.dataType = DataType.DateTime;
 
         let creationDate = new ColumnModel("CreationDate", false);
-        creationDate.filterMode = ColumnFilterMode.DateTime;
+        creationDate.filterMode = ColumnFilterMode.Date;
         creationDate.dataType = DataType.Date;
 
         let cityColumn = new ColumnModel("ShipperCity");
