@@ -17,10 +17,10 @@ describe('grid sorting', () => {
     beforeAll(() => {
         browser.get('/');
         dataSetLowerId = '1';
-        dataSetHigherId = '53';
+        dataSetHigherId = '49';
         dataSetLowerCustomerName = 'Advanced Technology Systems';
         dataSetHigherCustomerName = 'Vesta';
-        dataSetLowerDate = 'Thursday, January 28th 2016';
+        dataSetLowerDate = 'Monday, February 1st 2016';
         dataSetHigherDate = 'Sunday, May 29th 2016';
         paginator = element(by.tagName('ngb-pagination')).$$('nav').$$('ul').$$('li');
         columnHeaders = element(by.tagName('thead')).$$('tr').first().$$('th');

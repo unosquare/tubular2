@@ -53,7 +53,7 @@ describe('Pager e2e Tests', () => {
             it('should disable "last" and "next" navigation buttons when in last results page', () => {
                 lastNavBtn.$('a').click();
                 expect(gridpager.$('ul').$$('li').last().getAttribute('class')).toMatch('page-item disabled');
-                expect(gridpager.$('ul').$$('li').get(3).getAttribute('class')).toMatch('page-item disabled');
+                expect(gridpager.$('ul').$$('li').get(7).getAttribute('class')).toMatch('page-item disabled');
             });
 
             it('should enable "first" and "previous" navigation buttons when in a results page other than first', () => {
@@ -82,7 +82,7 @@ describe('Pager e2e Tests', () => {
 
         it('should go to last results page when clicking on last navigation button', () => {
             lastNavBtn.$('a').click();
-            expect(lastRow.$$('td').get(1).getText()).toMatch('53');
+            expect(lastRow.$$('td').get(1).getText()).toMatch('49');
             firstNavBtn.$('a').click()
         });
 

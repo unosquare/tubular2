@@ -4,6 +4,8 @@ node_js:
 sudo: false
 addons:
   firefox: "39.0"
+notifications:
+  slack: unolabs:cbusXPH6pBwZ35rVDzi4k4ve
 before_install:
   - export DISPLAY=:99.0
 before_script:
