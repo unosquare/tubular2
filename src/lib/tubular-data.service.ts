@@ -118,18 +118,18 @@ export class TubularDataService {
                 return false;
             }
         }
-
+        
         return true;
     }
 
     private retriveSaveData() {
-        let savedData = this.settingsProvider ? this.settingsProvider.get('auth_data') : null;
+        let savedData = this.settingsProvider.get('auth_data') ? this.settingsProvider.get('auth_data') : null;
         if (typeof savedData === 'undefined' || savedData == null) {
             throw 'No authentication exist';
         } else if (this.isAuthenticationExpired(savedData.expirationDate)) {
             throw 'Authentication token has already expired';
         } else {
-            this.userData = savedData;
+            this.userData = JSON.parse(savedData);
             this.setHttpAuthHeader();
         }
     }

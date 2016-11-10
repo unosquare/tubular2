@@ -3,13 +3,15 @@ import { browser, element, by } from '../../node_modules/protractor/built';
 describe('tubular data service', () =>{
     let userNameInput,
         passwordInput,
-        loginBtn
+        loginBtn,
+        labels
 
     beforeAll(()=>{
         browser.get('/');
         userNameInput = element(by.tagName('login')).$('div').$$('.form-group').first().$('input');
         passwordInput = element(by.tagName('login')).$('div').$$('.form-group').get(1).$('input');
         loginBtn = element(by.tagName('login')).$('div').$$('.form-group').last().$('button');
+        labels = element(by.tagName('exp')).$('div').$$('label');
     });
 
     describe('authenticate services test', () => {
@@ -21,15 +23,33 @@ describe('tubular data service', () =>{
         it('should authenticate', () => {
             userNameInput.sendKeys('admin');
             passwordInput.sendKeys('pass.word');
-            element(by.tagName('login')).$('div').$$('.form-group').last().$('button').click();
-            expect(element(by.tagName('my-tbgrid')).$('h1').getText()).toMatch('Tubular2');
+            loginBtn.click();
+            element(by.id('btnAuth')).click();
+            expect(labels.first().getText()).toMatch('auth');
         });
 
         it('should not authenticate aith bad credentials', () => {
             userNameInput.sendKeys('admin');
             passwordInput.sendKeys('pass.');
-            element(by.tagName('login')).$('div').$$('.form-group').last().$('button').click();
-            expect(element(by.tagName('my-tbgrid')).$('h1').isPresent()).toBe(false);
+            loginBtn.click();
+            expect(element(by.tagName('exp')).isPresent()).toBe(false);
+        });
+
+        it('should expired', () => {
+            userNameInput.sendKeys('admin');
+            passwordInput.sendKeys('pass.word');
+            loginBtn.click();
+            element(by.id('btnExp')).click();
+            element(by.id('btnAuth')).click();
+            expect(labels.first().getText()).toMatch('no auth');
+        });
+
+        it('should retrieve data',() => {
+            userNameInput.sendKeys('admin');
+            passwordInput.sendKeys('pass.word');
+            loginBtn.click();
+            element(by.id('btnRetData')).click();
+            expect(labels.last().getText()).toMatch('admin')
         });
     });
     
