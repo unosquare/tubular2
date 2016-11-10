@@ -110,7 +110,7 @@ export class TubularDataService {
         }
     }
 
-    private isAuthenticated() {
+    isAuthenticated() {
         if (!this.userData.isAuthenticated || this.isAuthenticationExpired(this.userData.expirationDate)) {
             try {
                 this.retriveSaveData();
