@@ -12,7 +12,7 @@ describe('grid sorting', () => {
         columnHeaders,
         orderIdSorting,
         orderCustomerNameSorting,
-        aShippedDateSorting;
+        aCreationDateSorting;
         
     beforeAll(() => {
         browser.get('/');
@@ -20,13 +20,13 @@ describe('grid sorting', () => {
         dataSetHigherId = '49';
         dataSetLowerCustomerName = 'Advanced Technology Systems';
         dataSetHigherCustomerName = 'Vesta';
-        dataSetLowerDate = 'Monday, February 1st 2016';
-        dataSetHigherDate = 'Sunday, May 29th 2016';
+        dataSetLowerDate = 'Tuesday, December 29th 2015';
+        dataSetHigherDate = 'Thursday, December 31st 2015';
         paginator = element(by.tagName('ngb-pagination')).$$('nav').$$('ul').$$('li');
         columnHeaders = element(by.tagName('thead')).$$('tr').first().$$('th');
         orderIdSorting = columnHeaders.get(1).$('.column-header').$$('span');
         orderCustomerNameSorting = columnHeaders.get(2).$('.column-header').$$('span');
-        aShippedDateSorting = columnHeaders.get(3).$('.column-header').$$('span');
+        aCreationDateSorting = columnHeaders.get(4).$('.column-header').$$('span');
         element(by.tagName('page-size-selector')).$('form').$('div').$('select').$('[value="10"]').click();
     });
 
@@ -35,8 +35,8 @@ describe('grid sorting', () => {
         if(paginator.first().getAttribute('class') != 'page-item disabled'){
             paginator.first().$('a').click();
         }
-        aShippedDateSorting.click();        
-        aShippedDateSorting.click();        
+        aCreationDateSorting.click();        
+        aCreationDateSorting.click();        
     });
 
     it('should order data in ascending order when click-sorting an unsorted numeric column', () => {
@@ -78,22 +78,22 @@ describe('grid sorting', () => {
     });
 
     it('should order data in ascending order when click-sorting an unsorted date column', () => {
-        aShippedDateSorting.click();
-        aShippedDateSorting.click();
+        aCreationDateSorting.click();
+        aCreationDateSorting.click();
         let firstDataRow = element(by.tagName('tbody')).$$('tr').first();
-        expect(firstDataRow.$$('td').get(3).getText()).toEqual(dataSetLowerDate);
+        expect(firstDataRow.$$('td').get(4).getText()).toEqual(dataSetLowerDate);
         paginator.last().$$('a').click();
         let lastDataRow = element(by.tagName('tbody')).$$('tr').last();
-        //expect(lastDataRow.$$('td').get(3).getText()).toEqual(dataSetHigherDate);
+        expect(lastDataRow.$$('td').get(4).getText()).toEqual(dataSetHigherDate);
     });
 
     it('should order data in descending order when click-sorting an ascending-sorted date column', () => {
-        aShippedDateSorting.click();
-        aShippedDateSorting.click();
+        aCreationDateSorting.click();
+        aCreationDateSorting.click();
         let firstDataRow = element(by.tagName('tbody')).$$('tr').first();
-        //expect(firstDataRow.$$('td').get(3).getText()).toEqual(dataSetHigherDate);
+        expect(firstDataRow.$$('td').get(4).getText()).toEqual(dataSetHigherDate);
         paginator.last().$$('a').click();
         let lastDataRow = element(by.tagName('tbody')).$$('tr').last();
-        expect(lastDataRow.$$('td').get(3).getText()).toEqual(dataSetLowerDate);
+        expect(lastDataRow.$$('td').get(4).getText()).toEqual(dataSetLowerDate);
     });
 });
