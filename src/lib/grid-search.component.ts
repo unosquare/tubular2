@@ -9,7 +9,7 @@ import { SETTINGS_PROVIDER, ITubularSettingsProvider } from './tubular-settings.
                     <div class="input-group input-group-sm">
                     <span class="input-group-addon"><i class="fa fa-search"></i></span>
                         <input #toSearch type="text" class="form-control" 
-                        [ngModel]="search"
+                        [(ngModel)]="search"
                         (ngModelChange)="setSearch($event)"
                         placeholder="search . . ." />
                         <span class="input-group-btn" [hidden]="!toSearch.value">
