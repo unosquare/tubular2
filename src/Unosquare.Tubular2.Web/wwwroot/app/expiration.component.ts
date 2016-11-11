@@ -8,7 +8,6 @@ import { Router } from '@angular/router'
 })
 
 export class ExpirationComponent{
-    redirected:string;
     isAuth:string;
     retSavData:string;
 
@@ -16,23 +15,17 @@ export class ExpirationComponent{
 
     changeExpirationDate(){
         this.tds.removeAuthentication();
-        this.tds.setRequireAuthentication(true);
-        this.rt.navigate(['/exp']);
-        if(!this.tds.isAuthenticated())
-            this.redirected = 'not auth';
-        else
-            this.redirected = 'auth';
     }
 
     isAuthenticated(){
-        if(!this.tds.isAuthenticated())
+        if(this.tds.isAuthenticated())
             this.isAuth = 'auth';
         else
             this.isAuth = 'no auth';
     }
-
-    retrireveSaveData(){
-        this.retSavData = this.tlss.get('auth_data');
+    
+    retrieveData(){
+        this.retSavData = this.tlss.get('auth_data') ? JSON.parse(this.tlss.get('auth_data')).username : 'no data!';
     }
 
 }
