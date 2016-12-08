@@ -10,6 +10,8 @@ __export(require('./tubular-settings.service'));
 // export components and directives
 __export(require('./grid.component'));
 __export(require('./form-popup'));
+__export(require('./tb-form'));
+__export(require('./tb-input-error.component'));
 __export(require('./grid-table'));
 __export(require('./grid-search.component'));
 __export(require('./grid-pager.component'));

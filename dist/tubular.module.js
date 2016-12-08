@@ -14,6 +14,7 @@ var forms_1 = require('@angular/forms');
 var http_1 = require('@angular/http');
 var ng_bootstrap_1 = require('@ng-bootstrap/ng-bootstrap');
 var grid_component_1 = require('./grid.component');
+var tb_input_error_component_1 = require('./tb-input-error.component');
 var column_header_component_1 = require('./column-header.component');
 var grid_search_component_1 = require('./grid-search.component');
 var grid_pager_component_1 = require('./grid-pager.component');
@@ -31,11 +32,11 @@ var TubularModule = (function () {
             imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, forms_1.ReactiveFormsModule, http_1.HttpModule, ng_bootstrap_1.NgbModule],
             declarations: [
                 grid_component_1.TubularGrid, column_header_component_1.ColumnHeader, grid_search_component_1.GridSearch, grid_pager_component_1.GridPager, grid_pager_info_component_1.GridPagerInfo, column_filter_dialog_component_1.ColumnFilterDialog,
-                page_size_selector_component_1.PageSizeSelector, grid_export_component_1.ExportButton, grid_print_component_1.PrintButton, mdate_pipe_1.MDatePipe
+                page_size_selector_component_1.PageSizeSelector, grid_export_component_1.ExportButton, grid_print_component_1.PrintButton, mdate_pipe_1.MDatePipe, tb_input_error_component_1.TbInputError
             ],
             exports: [
                 grid_component_1.TubularGrid, column_header_component_1.ColumnHeader, grid_search_component_1.GridSearch, grid_pager_component_1.GridPager, grid_pager_info_component_1.GridPagerInfo, column_filter_dialog_component_1.ColumnFilterDialog,
-                page_size_selector_component_1.PageSizeSelector, grid_export_component_1.ExportButton, grid_print_component_1.PrintButton, mdate_pipe_1.MDatePipe, ng_bootstrap_1.NgbModule
+                page_size_selector_component_1.PageSizeSelector, grid_export_component_1.ExportButton, grid_print_component_1.PrintButton, mdate_pipe_1.MDatePipe, ng_bootstrap_1.NgbModule, tb_input_error_component_1.TbInputError
             ]
         }), 
         __metadata('design:paramtypes', [])

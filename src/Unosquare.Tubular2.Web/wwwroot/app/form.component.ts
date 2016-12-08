@@ -1,29 +1,28 @@
-﻿import { Component } from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   
 import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
 
-import { TubularDataService } from '@tubular2/tubular2';
+import { TbForm, TubularGrid, TubularDataService } from '@tubular2/tubular2';
 
 @Component({
     selector: 'sample-form',
     templateUrl: '/app/form.component.html'
 })
-export class FormComponent {
+export class FormComponent extends TbForm implements OnInit{
 
     request: any;
     detailsForm: FormGroup;
     private _row = new BehaviorSubject(this.emptyRow());
     row = this._row.asObservable();
 
-    constructor(private route: ActivatedRoute, public formBuilder: FormBuilder, private dataService: TubularDataService) { }
+    constructor(private route: ActivatedRoute, public formBuilder: FormBuilder, private dataService: TubularDataService) {
+        super(formBuilder);
+     }
 
     ngOnInit() {
         let id: number;
-        this.row.subscribe(() => {
-            this.formBuild();
-        });
 
         //TODO: investigar eliminar foreach
         this.route.params.forEach((params: Params) => {
@@ -33,6 +32,8 @@ export class FormComponent {
         if (id != undefined) {
             this.getRow(id);
         }
+
+        this.tbFormInit();
     }
 
     getRow(id: number): void {
@@ -41,16 +42,34 @@ export class FormComponent {
             );
     }
 
-    formBuild(): void {
-        this.detailsForm = this.formBuilder.group(this._row.value);
-    }
-
-
     emptyRow(): any {
         return {
-            CustomerName: "",
+            CustomerName: ["", [
+                Validators.required,
+                Validators.minLength(4),
+                Validators.maxLength(24)]
+            ],
             ShippedDate: Date,
-            ShipperCity: ""
+            ShipperCity: ["", [
+                    Validators.required
+                ]
+            ],
         };
     }
+
+    buildForm(): FormGroup {
+        return this.detailsForm = this.formBuilder.group(this._row.value);
+    }
+
+    validationMessages = {
+        'CustomerName': {
+            'required': 'Customer Name is required.',
+            'minlength': 'Customer Name must be at least 4 characters long.',
+            'maxlength': 'Customer Name cannot be more than 24 characters long.'
+        },
+        'ShipperCity': {
+            'required': 'City is required.'
+        }
+    };
+
 }

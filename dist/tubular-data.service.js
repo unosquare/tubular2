@@ -118,7 +118,7 @@ var TubularDataService = (function () {
         return true;
     };
     TubularDataService.prototype.retriveSaveData = function () {
-        var savedData = this.settingsProvider ? this.settingsProvider.get('auth_data') : null;
+        var savedData = this.settingsProvider.get('auth_data') ? this.settingsProvider.get('auth_data') : null;
         if (typeof savedData === 'undefined' || savedData == null) {
             throw 'No authentication exist';
         }
@@ -126,7 +126,7 @@ var TubularDataService = (function () {
             throw 'Authentication token has already expired';
         }
         else {
-            this.userData = savedData;
+            this.userData = JSON.parse(savedData);
             this.setHttpAuthHeader();
         }
     };
