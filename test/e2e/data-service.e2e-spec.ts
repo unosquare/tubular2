@@ -8,16 +8,16 @@ describe('tubular data service', () =>{
 
     beforeAll(()=>{
         browser.get('/');
-        userNameInput = element(by.tagName('login')).$('div').$$('.form-group').first().$('input');
-        passwordInput = element(by.tagName('login')).$('div').$$('.form-group').get(1).$('input');
-        loginBtn = element(by.tagName('login')).$('div').$$('.form-group').last().$('button');
+        userNameInput = element(by.tagName('login')).$$('input').first();
+        passwordInput = element(by.tagName('login')).$$('input').last();
+        loginBtn = element(by.tagName('login')).$$('button').first();
         labels = element(by.tagName('exp')).$('div').$$('label');
     });
 
     describe('authenticate services test', () => {
         beforeEach(()=>{
             browser.get('/');
-            element(by.tagName('nav')).$('ul').$$('li').get(2).click();
+            element(by.tagName('nav')).$$('li').get(2).click();
         });
 
         it('should authenticate', () => {
