@@ -14,7 +14,7 @@ export class FormComponent extends TbForm implements OnInit{
 
     request: any;
     detailsForm: FormGroup;
-    private _row = new BehaviorSubject(this.emptyRow());
+    private _row = new BehaviorSubject(this.getRow());
     row = this._row.asObservable();
 
     constructor(private route: ActivatedRoute, public formBuilder: FormBuilder, private dataService: TubularDataService) {
@@ -30,35 +30,36 @@ export class FormComponent extends TbForm implements OnInit{
         });
         
         if (id != undefined) {
-            this.getRow(id);
+            this.getRowFromService(id);
         }
 
-        this.tbFormInit();
+        this.detailsForm = this.tbFormInit();
     }
 
-    getRow(id: number): void {
+    getRowFromService(id: number): void {
         this.dataService.getData("http://tubular.azurewebsites.net/api/orders/" + id).subscribe(
             data => { this._row.next(data); }
             );
     }
 
-    emptyRow(): any {
-        return {
-            CustomerName: ["", [
-                Validators.required,
-                Validators.minLength(4),
-                Validators.maxLength(24)]
-            ],
-            ShippedDate: Date,
-            ShipperCity: ["", [
-                    Validators.required
-                ]
-            ],
-        };
+    emptyRow(): any {}
+
+    getRow(): any{
+        return {};
     }
 
-    buildForm(): FormGroup {
-        return this.detailsForm = this.formBuilder.group(this._row.value);
+    getModelDefinition(): any {
+        return  {
+            CustomerName: [
+                Validators.required,
+                Validators.minLength(4),
+                Validators.maxLength(24)
+            ],
+            ShippedDate: [],
+            ShipperCity: [
+                Validators.required
+            ]
+        }
     }
 
     validationMessages = {

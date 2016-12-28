@@ -1,5 +1,5 @@
-﻿import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+﻿import { Component, Input, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { FormPopup, TubularGrid } from '@tubular2/tubular2'
 
 @Component({
@@ -11,11 +11,17 @@ export class OrderPopup extends FormPopup {
         super(tbGrid, formBuilder);
     }
 
-    getEmptyRow(): any {
-        return {
-            CustomerName: "",
-            ShippedDate: Date,
-            ShipperCity: ""
-        };
+    getModelDefinition(): any {
+        return  {
+            CustomerName: [
+                Validators.required,
+                Validators.minLength(4),
+                Validators.maxLength(24)
+            ],
+            ShippedDate: [],
+            ShipperCity: [
+                Validators.required
+            ]
+        }
     }
 }

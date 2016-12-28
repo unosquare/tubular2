@@ -11,20 +11,23 @@
                 <div class="form-group">
                     <label>Customer Name:</label>
                     <input type="text" formControlName="CustomerName" class="form-control" required>
+                    <tb-input-error controlName="CustomerName" [tbForm]="this"></tb-input-error>
                 </div>
                 <div class="form-group">
                     <label>Shipped Date:</label>
                     <input type="datetime-local" formControlName="ShippedDate" class="form-control" required>
+                    <tb-input-error controlName="ShippedDate" [tbForm]="this"></tb-input-error>
                 </div>
                 <div class="form-group">
                     <label>Shipper City:</label>
                     <input type="text" formControlName="ShipperCity" class="form-control" required>
+                    <tb-input-error controlName="ShipperCity" [tbForm]="this"></tb-input-error>
                 </div>
             </div>
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="save()">Save</button>
+        <button type="button" class="btn btn-primary" (click)="save()" [disabled]="!detailsForm.valid">Save</button>
         <button type="button" class="btn btn-danger" (click)="close()">Cancel</button>
     </div>
 </form>

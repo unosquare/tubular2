@@ -1,4 +1,9 @@
 "use strict";
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9,25 +14,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var moment = require('moment');
-var FormPopup = (function () {
+var tb_form_1 = require('./tb-form');
+var FormPopup = (function (_super) {
+    __extends(FormPopup, _super);
     function FormPopup(tbGrid, formBuilder) {
+        _super.call(this, formBuilder);
         this.tbGrid = tbGrid;
         this.formBuilder = formBuilder;
     }
     FormPopup.prototype.ngOnInit = function () {
-        var tempData = this.row || this.getEmptyRow();
-        this.data = {};
-        for (var field in tempData) {
-            if (moment.isMoment(tempData[field])) {
-                this.data[field] = [tempData[field].format('YYYY-MM-DDThh:mm')];
-            }
-            else {
-                this.data[field] = [tempData[field]];
-            }
-        }
-        this.detailsForm = this.formBuilder.group(this.data);
-        this.$isNew = !this.row;
+        this.detailsForm = this.tbFormInit();
     };
     FormPopup.prototype.close = function () {
         this.modalRef.close();
@@ -39,6 +35,10 @@ var FormPopup = (function () {
         });
         this.modalRef.close();
     };
+    FormPopup.prototype.getRow = function () {
+        return this.row;
+    };
+    ;
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Object)
@@ -48,5 +48,5 @@ var FormPopup = (function () {
         __metadata('design:type', Object)
     ], FormPopup.prototype, "row", void 0);
     return FormPopup;
-}());
+}(tb_form_1.TbForm));
 exports.FormPopup = FormPopup;

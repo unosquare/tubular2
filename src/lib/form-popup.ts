@@ -1,12 +1,14 @@
-﻿import { Input, Output, EventEmitter} from '@angular/core';
+﻿import { Input, Output, EventEmitter } from '@angular/core';
 
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 import * as moment from 'moment';
 
-import { TubularGrid }      from './grid.component';
+import { TubularGrid } from './grid.component';
 
-export abstract class FormPopup {
+import { TbForm } from './tb-form';
+
+export abstract class FormPopup extends TbForm {
     @Input() modalRef: any;
     @Input() row: any;
     $isNew: boolean;
@@ -14,28 +16,18 @@ export abstract class FormPopup {
     private data: any;
 
     constructor(public tbGrid: TubularGrid, public formBuilder: FormBuilder) {
+        super(formBuilder);
     }
 
     ngOnInit() {
-        let tempData = this.row || this.getEmptyRow();
-        this.data = {};
 
-        for (let field in tempData) {
-            if (moment.isMoment(tempData[field])) {
-                this.data[field] = [tempData[field].format('YYYY-MM-DDThh:mm')];
-            } else {
-                this.data[field] = [tempData[field]];
-            }
-        }
-
-        this.detailsForm = this.formBuilder.group(this.data);
-        this.$isNew = !this.row;
+        this.detailsForm = this.tbFormInit();
     }
 
     close() {
         this.modalRef.close();
     }
-    
+
     save() {
 
         this.tbGrid.onUpdate({
@@ -46,5 +38,9 @@ export abstract class FormPopup {
         this.modalRef.close();
     }
 
-    abstract getEmptyRow(): any;
+    getRow(): any {
+        return this.row;
+    };
+
+    abstract getModelDefinition(): any;
 }
