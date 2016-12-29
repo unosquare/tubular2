@@ -1,6 +1,6 @@
-// import { Input, Output, EventEmitter} from '@angular/core';
 "use strict";
 var moment = require('moment');
+var http_1 = require('@angular/http');
 var TbForm = (function () {
     function TbForm(formBuilder, dataService) {
         if (dataService === void 0) { dataService = null; }
@@ -11,14 +11,20 @@ var TbForm = (function () {
     TbForm.prototype.tbFormInit = function (options) {
         var _this = this;
         if (options === void 0) { options = {}; }
-        console.log(options);
         this.hasModelKey = options.modelKey !== undefined && options.modelKey != '';
         this.modelKey = options.modelKey || '';
         this.serverUrl = options.serverUrl || '';
+        this.saveUrl = options.saveUrl || '';
         this.localForm = this.buildForm();
         if (this.hasModelKey &&
             this.serverUrl) {
-            this.dataService.getData(this.serverUrl + this.localForm.controls[this.modelKey]).subscribe(function (data) { console.log(data); });
+            this.dataService.getData(this.serverUrl + this.localForm.controls[this.modelKey].value).subscribe(function (data) {
+                for (var key in data) {
+                    if (_this.localForm.controls[key]) {
+                        _this.localForm.controls[key].setValue(data[key]);
+                    }
+                }
+            });
         }
         this.localForm.valueChanges
             .subscribe(function (data) { return _this.onValueChanged(data); });
@@ -39,6 +45,21 @@ var TbForm = (function () {
                 }
             }
         }
+    };
+    TbForm.prototype.onSave = function (row, success, error, complete) {
+        var _this = this;
+        this.dataService
+            .save(this.saveUrl, row.values, row.$isNew ? http_1.RequestMethod.Post : http_1.RequestMethod.Put)
+            .subscribe(function (data) { return success ? success(data) : _this.defaultSaveSuccess(data); }, function (error) { return error ? error(error) : _this.defaultSaveError(error); }, function () { return complete ? complete() : _this.defaultSaveComplete(); });
+    };
+    TbForm.prototype.defaultSaveSuccess = function (data) {
+        console.log("Success");
+    };
+    TbForm.prototype.defaultSaveError = function (error) {
+        console.log("Error");
+    };
+    TbForm.prototype.defaultSaveComplete = function () {
+        console.log("Complete");
     };
     TbForm.prototype.getVal = function (data, field) {
         if (data === undefined)
@@ -82,8 +103,6 @@ var TbForm = (function () {
             data[field] = [this.getVal(rowData, field), modelDefinition[field]];
         }
         return this.formBuilder.group(data);
-    };
-    TbForm.prototype.save = function () {
     };
     return TbForm;
 }());

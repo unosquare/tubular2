@@ -3,6 +3,7 @@
 import * as moment from 'moment';
 
 import { TubularGrid } from './grid.component';
+import { RequestMethod } from '@angular/http';
 
 import { TubularDataService } from './tubular-data.service';
 
@@ -14,6 +15,7 @@ export abstract class TbForm {
 
     modelKey: string;
     serverUrl: string;
+    saveUrl: string;
     hasModelKey: boolean;
 
     constructor(public formBuilder: FormBuilder, dataService: TubularDataService = null) {
@@ -23,13 +25,15 @@ export abstract class TbForm {
 
     tbFormInit(options: {
         modelKey?: string,
-        serverUrl?: string
+        serverUrl?: string,
+        saveUrl?: string
     } = {}): FormGroup {
 
 
         this.hasModelKey = options.modelKey !== undefined && options.modelKey != '';
         this.modelKey = options.modelKey || '';
         this.serverUrl = options.serverUrl || '';
+        this.saveUrl = options.saveUrl || '';
 
 
         this.localForm = this.buildForm();
@@ -73,6 +77,28 @@ export abstract class TbForm {
                 }
             }
         }
+    }
+
+    onSave(row, success?: (success: any) => void, error?: (error: any) => void, complete?: () => void) {
+        this.dataService
+            .save(this.saveUrl, row.values, row.$isNew ? RequestMethod.Post : RequestMethod.Put)
+            .subscribe(
+            data => success ? success(data) : this.defaultSaveSuccess(data),
+            errorMessage => error ? error(errorMessage) : this.defaultSaveError(errorMessage),
+            () => complete ? complete() : this.defaultSaveComplete()
+            );
+    }
+
+    private defaultSaveSuccess(data) {
+        console.log("Success");
+    }
+
+    private defaultSaveError(error) {
+        console.log("Error");
+    }
+
+    private defaultSaveComplete() {
+        console.log("Complete");
     }
 
     private getVal(data, field): any {

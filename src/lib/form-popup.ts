@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import * as moment from 'moment';
 
 import { TubularGrid } from './grid.component';
+import { TubularDataService } from './tubular-data.service';
 
 import { TbForm } from './tb-form';
 
@@ -15,13 +16,15 @@ export abstract class FormPopup extends TbForm {
     detailsForm: FormGroup;
     private data: any;
 
-    constructor(public tbGrid: TubularGrid, public formBuilder: FormBuilder) {
-        super(formBuilder);
+    constructor(public tbGrid: TubularGrid, public formBuilder: FormBuilder, public dataService: TubularDataService) {
+        super(formBuilder, dataService);
     }
 
     ngOnInit() {
 
-        this.detailsForm = this.tbFormInit();
+        this.detailsForm = this.tbFormInit({
+            saveUrl: this.tbGrid.serverSaveUrl
+        });
     }
 
     close() {
@@ -29,13 +32,16 @@ export abstract class FormPopup extends TbForm {
     }
 
     save() {
-
-        this.tbGrid.onUpdate({
+        this.onSave({
             values: this.detailsForm.value,
             $isNew: this.$isNew
-        });
-
-        this.modalRef.close();
+        },
+            data => console.log("Saved"),
+            error => {
+                console.log('Save error');
+                this.close();
+            },
+            () => console.log("Completed"));
     }
 
     getRow(): any {

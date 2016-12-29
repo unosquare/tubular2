@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-  
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
 
 import { TbForm, TubularGrid, TubularDataService } from '@tubular2/tubular2';
@@ -12,32 +12,41 @@ import { TbForm, TubularGrid, TubularDataService } from '@tubular2/tubular2';
 })
 export class FormComponent extends TbForm implements OnInit{
 
-    request: any;
     detailsForm: FormGroup;
-    private _row = new BehaviorSubject(this.getRow());
-    row = this._row.asObservable();
 
-    constructor(private route: ActivatedRoute, public formBuilder: FormBuilder, public dataService: TubularDataService) {
+    constructor(private route: ActivatedRoute, private router: Router, public formBuilder: FormBuilder, public dataService: TubularDataService, private toastr: ToastsManager) {
         super(formBuilder, dataService);
      }
 
     ngOnInit() {
-        let id: number;
-
-        //TODO: investigar eliminar foreach
-        this.route.params.forEach((params: Params) => {
-            id = params['id'];
-        });
-
         this.detailsForm = this.tbFormInit({
             modelKey : "OrderID",
-            serverUrl : "http://tubular.azurewebsites.net/api/orders/"
+            serverUrl : "http://tubular.azurewebsites.net/api/orders/",
+            saveUrl : "http://tubular.azurewebsites.net/api/orders/"
         });
+    }
+    
+    save(){
+        this.onSave({
+            values: this.detailsForm.value,
+            $isNew: this.$isNew
+        }, 
+        data => this.toastr.success("The record has been saved.", 'Success!'),
+        error => {
+            this.toastr.error(error, 'Save error');
+            this.close();
+        },
+        () => this.close()
+        );
+    }
+
+    close(){
+        this.router.navigate(['/']);
     }
 
     getRow(): any{
         return {
-            OrderID : 3,
+            OrderID : this.route.snapshot.params['id'],
             CustomerName: "",
             ShippedDate: Date,
             ShipperCity : ""
