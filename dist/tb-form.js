@@ -2,13 +2,24 @@
 "use strict";
 var moment = require('moment');
 var TbForm = (function () {
-    function TbForm(formBuilder) {
+    function TbForm(formBuilder, dataService) {
+        if (dataService === void 0) { dataService = null; }
         this.formBuilder = formBuilder;
         this.formErrors = {};
+        this.dataService = dataService;
     }
-    TbForm.prototype.tbFormInit = function () {
+    TbForm.prototype.tbFormInit = function (options) {
         var _this = this;
+        if (options === void 0) { options = {}; }
+        console.log(options);
+        this.hasModelKey = options.modelKey !== undefined && options.modelKey != '';
+        this.modelKey = options.modelKey || '';
+        this.serverUrl = options.serverUrl || '';
         this.localForm = this.buildForm();
+        if (this.hasModelKey &&
+            this.serverUrl) {
+            this.dataService.getData(this.serverUrl + this.localForm.controls[this.modelKey]).subscribe(function (data) { console.log(data); });
+        }
         this.localForm.valueChanges
             .subscribe(function (data) { return _this.onValueChanged(data); });
         this.onValueChanged(); // (re)set validation messages now
@@ -23,11 +34,8 @@ var TbForm = (function () {
             this.formErrors[field] = [];
             var control = this.localForm.get(field);
             if (control && control.dirty && !control.valid) {
-                if (this.validationMessages[field] === undefined) {
-                    this.formErrors[field].push("yeah");
-                    continue;
-                }
                 for (var key in control.errors) {
+                    this.formErrors[field].push(this.getErrorMessage(field, key));
                 }
             }
         }
@@ -43,19 +51,21 @@ var TbForm = (function () {
         }
     };
     TbForm.prototype.getErrorMessage = function (fieldName, validator) {
-        if (this.validationMessages[fieldName]) {
-            return this.validationMessages[fieldName][validator];
+        if (this.validationMessages === undefined || this.validationMessages[fieldName] === undefined) {
+            var friendlyFieldName = this.getFriendlyFieldName(fieldName);
+            switch (validator) {
+                case "required":
+                    return friendlyFieldName + " is required.";
+                case "minlength":
+                    return friendlyFieldName + " must be at least 4 characters long.";
+                case "maxlength":
+                    return friendlyFieldName + " cannot be more than 24 characters long.";
+                default:
+                    return "Invalid field.";
+            }
         }
-        var friendlyFieldName = this.getFriendlyFieldName(fieldName);
-        switch (validator) {
-            case "required":
-                return friendlyFieldName + " is required.";
-            case "minlength":
-                return friendlyFieldName + " must be at least 4 characters long.";
-            case "minlength":
-                return friendlyFieldName + " cannot be more than 24 characters long.";
-            default:
-                return "This field is invalid";
+        else {
+            return this.validationMessages[fieldName][validator];
         }
     };
     TbForm.prototype.getFriendlyFieldName = function (fieldName) {
@@ -72,6 +82,8 @@ var TbForm = (function () {
             data[field] = [this.getVal(rowData, field), modelDefinition[field]];
         }
         return this.formBuilder.group(data);
+    };
+    TbForm.prototype.save = function () {
     };
     return TbForm;
 }());

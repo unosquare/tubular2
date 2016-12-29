@@ -17,8 +17,8 @@ export class FormComponent extends TbForm implements OnInit{
     private _row = new BehaviorSubject(this.getRow());
     row = this._row.asObservable();
 
-    constructor(private route: ActivatedRoute, public formBuilder: FormBuilder, private dataService: TubularDataService) {
-        super(formBuilder);
+    constructor(private route: ActivatedRoute, public formBuilder: FormBuilder, public dataService: TubularDataService) {
+        super(formBuilder, dataService);
      }
 
     ngOnInit() {
@@ -28,28 +28,25 @@ export class FormComponent extends TbForm implements OnInit{
         this.route.params.forEach((params: Params) => {
             id = params['id'];
         });
-        
-        if (id != undefined) {
-            this.getRowFromService(id);
-        }
 
-        this.detailsForm = this.tbFormInit();
+        this.detailsForm = this.tbFormInit({
+            modelKey : "OrderID",
+            serverUrl : "http://tubular.azurewebsites.net/api/orders/"
+        });
     }
-
-    getRowFromService(id: number): void {
-        this.dataService.getData("http://tubular.azurewebsites.net/api/orders/" + id).subscribe(
-            data => { this._row.next(data); }
-            );
-    }
-
-    emptyRow(): any {}
 
     getRow(): any{
-        return {};
+        return {
+            OrderID : 3,
+            CustomerName: "",
+            ShippedDate: Date,
+            ShipperCity : ""
+        };
     }
 
     getModelDefinition(): any {
         return  {
+            OrderID: [],
             CustomerName: [
                 Validators.required,
                 Validators.minLength(4),

@@ -1,22 +1,53 @@
-﻿// import { Input, Output, EventEmitter} from '@angular/core';
-
-import { FormGroup, FormBuilder } from '@angular/forms';
+﻿import { FormGroup, FormBuilder } from '@angular/forms';
 
 import * as moment from 'moment';
 
 import { TubularGrid } from './grid.component';
 
+import { TubularDataService } from './tubular-data.service';
+
 export abstract class TbForm {
     $isNew: boolean;
     localForm: FormGroup;
     formErrors: Object;
+    dataService: TubularDataService;
 
-    constructor(public formBuilder: FormBuilder) {
+    modelKey: string;
+    serverUrl: string;
+    hasModelKey: boolean;
+
+    constructor(public formBuilder: FormBuilder, dataService: TubularDataService = null) {
         this.formErrors = {};
+        this.dataService = dataService;
     }
 
-    tbFormInit(): FormGroup {
+    tbFormInit(options: {
+        modelKey?: string,
+        serverUrl?: string
+    } = {}): FormGroup {
+
+
+        this.hasModelKey = options.modelKey !== undefined && options.modelKey != '';
+        this.modelKey = options.modelKey || '';
+        this.serverUrl = options.serverUrl || '';
+
+
         this.localForm = this.buildForm();
+
+        if (this.hasModelKey &&
+            this.serverUrl) {
+
+            this.dataService.getData(this.serverUrl + this.localForm.controls[this.modelKey].value).subscribe(
+                data => {
+                    for (var key in data) {
+
+                        if (this.localForm.controls[key]) {
+                            this.localForm.controls[key].setValue(data[key]);
+                        }
+                    }
+                }
+            );
+        }
 
         this.localForm.valueChanges
             .subscribe(data => this.onValueChanged(data));
@@ -73,8 +104,6 @@ export abstract class TbForm {
         else {
             return this.validationMessages[fieldName][validator];
         }
-
-
     }
 
     private getFriendlyFieldName(fieldName: string): string {
