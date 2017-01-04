@@ -7,7 +7,9 @@ import { TubularGrid, TubularDataService } from '@tubular2/tubular2';
     templateUrl: '/app/app.component.html'
 })
 export class AppComponent {
-    constructor(private ds:TubularDataService, private router: Router){}
+    constructor(private ds:TubularDataService, private router: Router){
+        this.ds.setTokenUrl('http://tubular.azurewebsites.net/token');
+    }
     logout(){
         this.ds.removeAuthentication();
         this.router.navigate(['']);

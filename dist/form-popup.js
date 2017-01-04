@@ -17,11 +17,12 @@ var core_1 = require('@angular/core');
 var tb_form_1 = require('./tb-form');
 var FormPopup = (function (_super) {
     __extends(FormPopup, _super);
-    function FormPopup(tbGrid, formBuilder, dataService) {
-        _super.call(this, formBuilder, dataService);
+    function FormPopup(tbGrid, formBuilder, dataService, toastr) {
+        _super.call(this, formBuilder, dataService, toastr);
         this.tbGrid = tbGrid;
         this.formBuilder = formBuilder;
         this.dataService = dataService;
+        this.toastr = toastr;
     }
     FormPopup.prototype.ngOnInit = function () {
         this.detailsForm = this.tbFormInit({
@@ -32,16 +33,14 @@ var FormPopup = (function (_super) {
         this.modalRef.close();
     };
     FormPopup.prototype.save = function () {
+        var _this = this;
         this.onSave({
             values: this.detailsForm.value,
             $isNew: this.$isNew
-        });
-    };
-    FormPopup.prototype.onSaveError = function (error) {
-        this.close();
-    };
-    FormPopup.prototype.onSaveSuccess = function (data) {
-        this.modalRef.close();
+        }, function (data) { return console.log("Saved"); }, function (error) {
+            console.log('Save error');
+            _this.close();
+        }, function () { return console.log("Completed"); });
     };
     FormPopup.prototype.getRow = function () {
         return this.row;

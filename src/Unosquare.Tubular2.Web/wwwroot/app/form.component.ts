@@ -2,7 +2,7 @@
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { TbForm, TubularGrid, TubularDataService } from '@tubular2/tubular2';
 
@@ -10,51 +10,52 @@ import { TbForm, TubularGrid, TubularDataService } from '@tubular2/tubular2';
     selector: 'sample-form',
     templateUrl: '/app/form.component.html'
 })
-export class FormComponent extends TbForm implements OnInit{
+export class FormComponent extends TbForm implements OnInit {
 
     detailsForm: FormGroup;
 
-    constructor(private route: ActivatedRoute, private router: Router, public formBuilder: FormBuilder, public dataService: TubularDataService, private toastr: ToastsManager) {
-        super(formBuilder, dataService);
-     }
+    constructor(private route: ActivatedRoute, private router: Router, public formBuilder: FormBuilder, public dataService: TubularDataService, public toastr: ToastsManager) {
+        super(formBuilder, dataService, toastr);
+    }
 
     ngOnInit() {
         this.detailsForm = this.tbFormInit({
-            modelKey : "OrderID",
-            serverUrl : "http://tubular.azurewebsites.net/api/orders/",
-            saveUrl : "http://tubular.azurewebsites.net/api/orders/"
+            modelKey: "OrderID",
+            serverUrl: "http://tubular.azurewebsites.net/api/orders/",
+            saveUrl: "http://tubular.azurewebsites.net/api/orders/",
+            requireAuthentication: true
         });
     }
-    
-    save(){
+
+    save() {
         this.onSave({
             values: this.detailsForm.value,
             $isNew: this.$isNew
-        }, 
-        data => this.toastr.success("The record has been saved.", 'Success!'),
-        error => {
-            this.toastr.error(error, 'Save error');
-            this.close();
         },
-        () => this.close()
+            data => this.toastr.success("The record has been saved.", 'Success!'),
+            error => {
+                this.toastr.error(error, 'Save error');
+                this.close();
+            },
+            () => this.close()
         );
     }
 
-    close(){
+    close() {
         this.router.navigate(['/']);
     }
 
-    getRow(): any{
+    getRow(): any {
         return {
-            OrderID : this.route.snapshot.params['id'],
+            OrderID: this.route.snapshot.params['id'],
             CustomerName: "",
             ShippedDate: Date,
-            ShipperCity : ""
+            ShipperCity: ""
         };
     }
 
     getModelDefinition(): any {
-        return  {
+        return {
             OrderID: [],
             CustomerName: [
                 Validators.required,

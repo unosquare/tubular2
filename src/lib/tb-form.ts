@@ -1,5 +1,5 @@
 ﻿import { FormGroup, FormBuilder } from '@angular/forms';
-
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import * as moment from 'moment';
 
 import { TubularGrid } from './grid.component';
@@ -12,21 +12,27 @@ export abstract class TbForm {
     localForm: FormGroup;
     formErrors: Object;
     dataService: TubularDataService;
+    toastr: ToastsManager;
 
     modelKey: string;
     serverUrl: string;
     saveUrl: string;
     hasModelKey: boolean;
+    serverSaveMethod: RequestMethod;
+    requireAuthentication: boolean;
 
-    constructor(public formBuilder: FormBuilder, dataService: TubularDataService = null) {
+    constructor(public formBuilder: FormBuilder, dataService: TubularDataService = null, toastr: ToastsManager) {
         this.formErrors = {};
         this.dataService = dataService;
+        this.toastr = toastr;
     }
 
     tbFormInit(options: {
         modelKey?: string,
         serverUrl?: string,
-        saveUrl?: string
+        saveUrl?: string,
+        serverSaveMethod?: RequestMethod,
+        requireAuthentication?: boolean
     } = {}): FormGroup {
 
 
@@ -34,10 +40,14 @@ export abstract class TbForm {
         this.modelKey = options.modelKey || '';
         this.serverUrl = options.serverUrl || '';
         this.saveUrl = options.saveUrl || '';
+        this.serverSaveMethod = options.serverSaveMethod || RequestMethod.Post;
+        this.requireAuthentication = options.requireAuthentication !== undefined ? options.requireAuthentication : false;
 
+        this.dataService.setRequireAuthentication(this.requireAuthentication);
 
         this.localForm = this.buildForm();
 
+        // Try to load values if we have model key and server url
         if (this.hasModelKey &&
             this.serverUrl) {
 
@@ -49,10 +59,12 @@ export abstract class TbForm {
                             this.localForm.controls[key].setValue(data[key]);
                         }
                     }
-                }
+                },
+                errorMessage => this.toastr.error(errorMessage, "Application Error")
             );
         }
 
+        // Watch for changes on form in order to trigger proper validations.
         this.localForm.valueChanges
             .subscribe(data => this.onValueChanged(data));
 
@@ -81,7 +93,7 @@ export abstract class TbForm {
 
     onSave(row, success?: (success: any) => void, error?: (error: any) => void, complete?: () => void) {
         this.dataService
-            .save(this.saveUrl, row.values, row.$isNew ? RequestMethod.Post : RequestMethod.Put)
+            .save(this.saveUrl, row.values, row.$isNew ? this.serverSaveMethod : RequestMethod.Put)
             .subscribe(
             data => success ? success(data) : this.defaultSaveSuccess(data),
             errorMessage => error ? error(errorMessage) : this.defaultSaveError(errorMessage),

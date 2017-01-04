@@ -1,8 +1,9 @@
-﻿import { Injectable, Inject, Optional }     from '@angular/core';
+﻿import { Injectable, Inject, Optional } from '@angular/core';
 import { Http, Response, RequestMethod, Request, Headers, RequestOptions } from '@angular/http';
 
-import { Observable }     from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
 
+import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
@@ -23,12 +24,12 @@ export class TubularDataService {
 
     private tokenUrl;
     private authHeader = null;
-    private requireAuthentication=true;
+    private requireAuthentication = true;
     private refreshTokenUrl = this.tokenUrl = '/api/token';
 
-    constructor(@Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider, private http: Http) { }
-    
-    retrieveData(url: string, req: any) : Observable<any> {
+    constructor( @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider, private http: Http) { }
+
+    retrieveData(url: string, req: any): Observable<any> {
         req.columns.forEach(this.transformSortDirection);
 
         return this.http.post(url, req)
@@ -40,10 +41,10 @@ export class TubularDataService {
         return this.http.request(new Request({
             method: method,
             url: url,
-            body : row
+            body: row
         }))
             .map(this.extractData)
-            .catch(this.handleError); 
+            .catch(this.handleError);
     }
 
     private transformSortDirection(column) {
@@ -63,10 +64,27 @@ export class TubularDataService {
         return res.json() || {};
     }
 
-    private handleError(error: any) {
+    private handleError(error: any, request) {
         let errMsg = (error.message) ? error.message :
             error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-        
+
+        if (error && error.status === 401 && this.userData.refreshToken && request) {
+            return this.refreshSession()
+                .flatMap(() => {
+                    if (this.userData.isAuthenticated == true) {
+                        // retry with new token
+                        this.setHttpAuthHeader();
+                        return this.http.request(request)
+                            .map(this.extractData)
+                            .catch(this.handleError);
+                    }
+                    else {
+                        return Observable.throw(error);
+                    }
+                })
+                .catch(this.handleError);
+        }
+
         return Observable.throw(errMsg);
     }
 
@@ -82,7 +100,7 @@ export class TubularDataService {
                     errorBody: JSON.parse(err._body),
                     status: err.status
                 };
-                if (typeof errorCallback != null )
+                if (typeof errorCallback != null)
                     errorCallback(error);
             });
     }
@@ -100,7 +118,7 @@ export class TubularDataService {
             this.settingsProvider.put('auth_data', JSON.stringify(this.userData));
 
         this.setHttpAuthHeader();
-        
+
         if (typeof userDataCallback === 'function') {
             userDataCallback(data);
         }
@@ -118,12 +136,12 @@ export class TubularDataService {
                 return false;
             }
         }
-        
+
         return true;
     }
 
     private retriveSaveData() {
-        let savedData = this.settingsProvider.get('auth_data') ? this.settingsProvider.get('auth_data') : null;
+        let savedData = this.settingsProvider.get('auth_data') ? JSON.parse(this.settingsProvider.get('auth_data')) : null;
         if (typeof savedData === 'undefined' || savedData == null) {
             throw 'No authentication exist';
         } else if (this.isAuthenticationExpired(savedData.expirationDate)) {
@@ -141,7 +159,7 @@ export class TubularDataService {
         return expiration.valueOf() - now.valueOf() <= 0;
     }
 
-     removeAuthentication() {
+    removeAuthentication() {
         if (this.settingsProvider)
             this.settingsProvider.delete('auth_data');
 
@@ -151,8 +169,8 @@ export class TubularDataService {
         this.userData.expirationDate = null;
         this.userData.role = '';
         this.userData.refreshToken = '';
-        
-        if(this.settingsProvider)
+
+        if (this.settingsProvider)
             this.settingsProvider.delete('auth_Header');
     }
 
@@ -162,44 +180,77 @@ export class TubularDataService {
     }
 
     getData(url: string): Observable<any> {
-        return this.http.get(url)
+
+        let request = new Request({
+            method: RequestMethod.Get,
+            url: url
+        });
+
+        if (this.requireAuthentication && !this.isAuthenticated()) {
+            return this.refreshSession()
+                .flatMap((response) => {
+                    this.handleSuccesCallback(response, null, null);
+                    if (this.userData.isAuthenticated == true) {
+                        console.log("New Access Token was generated using Refresh token");
+                        // retry with new token
+                        this.setHttpAuthHeader();
+                        return this.http.request(request)
+                            .map(this.extractData)
+                            .catch(this.handleError);
+                    }
+                    else {
+                        return Observable.throw(new Error('Cant get a valid token. Invalid access.'));
+                    }
+                });
+        }
+
+        return this.http.request(request)
             .map(this.extractData)
-            .catch(this.handleError);
+            .catch((error: Error) => this.handleError(error, request));
     }
 
     getToken() {
         return this.authHeader;
     }
 
-    setTokenUrl(val){
+    setTokenUrl(val) {
         this.tokenUrl = val;
+        this.refreshTokenUrl = val;
     }
 
-    setRequireAuthentication(val){
+    setRequireAuthentication(val) {
         this.requireAuthentication = val;
     }
 
-    refreshSession(errorCallback?){
+    refreshSession(): Observable<Response> {
+        this.userData.isAuthenticated = false;
+
+        let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+        let options = new RequestOptions({ headers: headers })
+        return this.http.post(this.tokenUrl, 'grant_type=refresh_token&refresh_token=' + this.userData.refreshToken, options);
+    }
+
+    stupidRrefreshSession(errorCallback?) {
         let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
         let options = new RequestOptions({ headers: headers })
         this.http.post(this.tokenUrl, 'grant_type=refresh_token&refresh_token=' + this.userData.refreshToken, options)
             .subscribe(
-                data => {
-                    this.handleSuccesCallback(data, null, null);
-                },
-                err => {
-                    if(typeof errorCallback != null)
-                        errorCallback(err);
-                });
+            data => {
+                this.handleSuccesCallback(data, null, null);
+            },
+            err => {
+                if (typeof errorCallback != null)
+                    errorCallback(err);
+            });
     }
 
-    getExpirationDate(){
+    getExpirationDate() {
         let date = new Date();
         let minutes = 5;
         return new Date(date.getTime() + minutes * 60000);
     }
 
-    addTimeZoneToUrl(url){
+    addTimeZoneToUrl(url) {
         let separator = url.indexOf('?') === -1 ? '?' : '&';
         return url + separator + 'timezoneOffset=' + new Date().getTimezoneOffset();
     }

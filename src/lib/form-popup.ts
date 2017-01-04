@@ -1,5 +1,5 @@
 ﻿import { Input, Output, EventEmitter } from '@angular/core';
-
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 import * as moment from 'moment';
@@ -16,8 +16,8 @@ export abstract class FormPopup extends TbForm {
     detailsForm: FormGroup;
     private data: any;
 
-    constructor(public tbGrid: TubularGrid, public formBuilder: FormBuilder, public dataService: TubularDataService) {
-        super(formBuilder, dataService);
+    constructor(public tbGrid: TubularGrid, public formBuilder: FormBuilder, public dataService: TubularDataService, public toastr: ToastsManager) {
+        super(formBuilder, dataService, toastr);
     }
 
     ngOnInit() {

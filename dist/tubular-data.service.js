@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 var Observable_1 = require('rxjs/Observable');
+require('rxjs/add/operator/mergeMap');
 require('rxjs/add/operator/map');
 require('rxjs/add/operator/catch');
 require('rxjs/add/observable/throw');
@@ -66,9 +67,26 @@ var TubularDataService = (function () {
     TubularDataService.prototype.extractData = function (res) {
         return res.json() || {};
     };
-    TubularDataService.prototype.handleError = function (error) {
+    TubularDataService.prototype.handleError = function (error, request) {
+        var _this = this;
         var errMsg = (error.message) ? error.message :
             error.status ? error.status + " - " + error.statusText : 'Server error';
+        if (error && error.status === 401 && this.userData.refreshToken && request) {
+            return this.refreshSession()
+                .flatMap(function () {
+                if (_this.userData.isAuthenticated == true) {
+                    // retry with new token
+                    _this.setHttpAuthHeader();
+                    return _this.http.request(request)
+                        .map(_this.extractData)
+                        .catch(_this.handleError);
+                }
+                else {
+                    return Observable_1.Observable.throw(error);
+                }
+            })
+                .catch(this.handleError);
+        }
         return Observable_1.Observable.throw(errMsg);
     };
     TubularDataService.prototype.authenticate = function (username, password, succesCallback, errorCallback, userDataCallback) {
@@ -118,7 +136,7 @@ var TubularDataService = (function () {
         return true;
     };
     TubularDataService.prototype.retriveSaveData = function () {
-        var savedData = this.settingsProvider.get('auth_data') ? this.settingsProvider.get('auth_data') : null;
+        var savedData = this.settingsProvider.get('auth_data') ? JSON.parse(this.settingsProvider.get('auth_data')) : null;
         if (typeof savedData === 'undefined' || savedData == null) {
             throw 'No authentication exist';
         }
@@ -152,20 +170,48 @@ var TubularDataService = (function () {
         this.settingsProvider.put('auth_Header', this.authHeader);
     };
     TubularDataService.prototype.getData = function (url) {
-        return this.http.get(url)
+        var _this = this;
+        var request = new http_1.Request({
+            method: http_1.RequestMethod.Get,
+            url: url
+        });
+        if (this.requireAuthentication && !this.isAuthenticated()) {
+            return this.refreshSession()
+                .flatMap(function (response) {
+                console.log(response);
+                if (_this.userData.isAuthenticated == true) {
+                    // retry with new token
+                    _this.setHttpAuthHeader();
+                    return _this.http.request(request)
+                        .map(_this.extractData)
+                        .catch(_this.handleError);
+                }
+                else {
+                    return Observable_1.Observable.throw(new Error('Cant get a valid token. Invalid access.'));
+                }
+            });
+        }
+        return this.http.request(request)
             .map(this.extractData)
-            .catch(this.handleError);
+            .catch(function (error) { return _this.handleError(error, request); });
     };
     TubularDataService.prototype.getToken = function () {
         return this.authHeader;
     };
     TubularDataService.prototype.setTokenUrl = function (val) {
         this.tokenUrl = val;
+        this.refreshTokenUrl = val;
     };
     TubularDataService.prototype.setRequireAuthentication = function (val) {
         this.requireAuthentication = val;
     };
-    TubularDataService.prototype.refreshSession = function (errorCallback) {
+    TubularDataService.prototype.refreshSession = function () {
+        this.userData.isAuthenticated = false;
+        var headers = new http_1.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.post(this.tokenUrl, 'grant_type=refresh_token&refresh_token=' + this.userData.refreshToken, options);
+    };
+    TubularDataService.prototype.stupidRrefreshSession = function (errorCallback) {
         var _this = this;
         var headers = new http_1.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
         var options = new http_1.RequestOptions({ headers: headers });

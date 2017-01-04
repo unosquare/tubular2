@@ -2,11 +2,12 @@
 var moment = require('moment');
 var http_1 = require('@angular/http');
 var TbForm = (function () {
-    function TbForm(formBuilder, dataService) {
+    function TbForm(formBuilder, dataService, toastr) {
         if (dataService === void 0) { dataService = null; }
         this.formBuilder = formBuilder;
         this.formErrors = {};
         this.dataService = dataService;
+        this.toastr = toastr;
     }
     TbForm.prototype.tbFormInit = function (options) {
         var _this = this;
@@ -15,7 +16,11 @@ var TbForm = (function () {
         this.modelKey = options.modelKey || '';
         this.serverUrl = options.serverUrl || '';
         this.saveUrl = options.saveUrl || '';
+        this.serverSaveMethod = options.serverSaveMethod || http_1.RequestMethod.Post;
+        this.requireAuthentication = options.requireAuthentication !== undefined ? options.requireAuthentication : false;
+        this.dataService.setRequireAuthentication(this.requireAuthentication);
         this.localForm = this.buildForm();
+        // Try to load values if we have model key and server url
         if (this.hasModelKey &&
             this.serverUrl) {
             this.dataService.getData(this.serverUrl + this.localForm.controls[this.modelKey].value).subscribe(function (data) {
@@ -24,8 +29,9 @@ var TbForm = (function () {
                         _this.localForm.controls[key].setValue(data[key]);
                     }
                 }
-            });
+            }, function (errorMessage) { return _this.toastr.error(errorMessage, "Application Error"); });
         }
+        // Watch for changes on form in order to trigger proper validations.
         this.localForm.valueChanges
             .subscribe(function (data) { return _this.onValueChanged(data); });
         this.onValueChanged(); // (re)set validation messages now
@@ -49,8 +55,8 @@ var TbForm = (function () {
     TbForm.prototype.onSave = function (row, success, error, complete) {
         var _this = this;
         this.dataService
-            .save(this.saveUrl, row.values, row.$isNew ? http_1.RequestMethod.Post : http_1.RequestMethod.Put)
-            .subscribe(function (data) { return success ? success(data) : _this.defaultSaveSuccess(data); }, function (error) { return error ? error(error) : _this.defaultSaveError(error); }, function () { return complete ? complete() : _this.defaultSaveComplete(); });
+            .save(this.saveUrl, row.values, row.$isNew ? this.serverSaveMethod : http_1.RequestMethod.Put)
+            .subscribe(function (data) { return success ? success(data) : _this.defaultSaveSuccess(data); }, function (errorMessage) { return error ? error(errorMessage) : _this.defaultSaveError(errorMessage); }, function () { return complete ? complete() : _this.defaultSaveComplete(); });
     };
     TbForm.prototype.defaultSaveSuccess = function (data) {
         console.log("Success");
