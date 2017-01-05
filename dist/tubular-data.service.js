@@ -178,8 +178,9 @@ var TubularDataService = (function () {
         if (this.requireAuthentication && !this.isAuthenticated()) {
             return this.refreshSession()
                 .flatMap(function (response) {
-                console.log(response);
+                _this.handleSuccesCallback(response, null, null);
                 if (_this.userData.isAuthenticated == true) {
+                    console.log("New Access Token was generated using Refresh token");
                     // retry with new token
                     _this.setHttpAuthHeader();
                     return _this.http.request(request)
@@ -210,18 +211,6 @@ var TubularDataService = (function () {
         var headers = new http_1.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
         var options = new http_1.RequestOptions({ headers: headers });
         return this.http.post(this.tokenUrl, 'grant_type=refresh_token&refresh_token=' + this.userData.refreshToken, options);
-    };
-    TubularDataService.prototype.stupidRrefreshSession = function (errorCallback) {
-        var _this = this;
-        var headers = new http_1.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
-        var options = new http_1.RequestOptions({ headers: headers });
-        this.http.post(this.tokenUrl, 'grant_type=refresh_token&refresh_token=' + this.userData.refreshToken, options)
-            .subscribe(function (data) {
-            _this.handleSuccesCallback(data, null, null);
-        }, function (err) {
-            if (typeof errorCallback != null)
-                errorCallback(err);
-        });
     };
     TubularDataService.prototype.getExpirationDate = function () {
         var date = new Date();

@@ -230,20 +230,6 @@ export class TubularDataService {
         return this.http.post(this.tokenUrl, 'grant_type=refresh_token&refresh_token=' + this.userData.refreshToken, options);
     }
 
-    stupidRrefreshSession(errorCallback?) {
-        let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
-        let options = new RequestOptions({ headers: headers })
-        this.http.post(this.tokenUrl, 'grant_type=refresh_token&refresh_token=' + this.userData.refreshToken, options)
-            .subscribe(
-            data => {
-                this.handleSuccesCallback(data, null, null);
-            },
-            err => {
-                if (typeof errorCallback != null)
-                    errorCallback(err);
-            });
-    }
-
     getExpirationDate() {
         let date = new Date();
         let minutes = 5;

@@ -264,3 +264,5 @@ paket-files/
 /src/Unosquare.Tubular2.Web/npm-debug.*
 coverage/
 temp/
+/.vscode/launch.json
+/.vscode/tasks.json
