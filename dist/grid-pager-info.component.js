@@ -8,8 +8,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var grid_component_1 = require('./grid.component');
+var core_1 = require("@angular/core");
+var grid_component_1 = require("./grid.component");
 var GridPagerInfo = (function () {
     function GridPagerInfo(tbGrid) {
         this.tbGrid = tbGrid;
@@ -26,13 +26,13 @@ var GridPagerInfo = (function () {
             _this.filtered = _this.pageInfo.totalRecordCount != _this.pageInfo.filteredRecordCount;
         });
     };
-    GridPagerInfo = __decorate([
-        core_1.Component({
-            selector: 'grid-pager-info',
-            template: "<div class=\"small\">\n        Showing {{this.pageInfo.currentInitial}} to {{this.pageInfo.currentTop}} of {{pageInfo.filteredRecordCount}} records \n        <span [hidden]=\"!filtered\">(Filtered from {{pageInfo.totalRecordCount}} total records)</span>\n    </div>"
-        }), 
-        __metadata('design:paramtypes', [grid_component_1.TubularGrid])
-    ], GridPagerInfo);
     return GridPagerInfo;
 }());
+GridPagerInfo = __decorate([
+    core_1.Component({
+        selector: 'grid-pager-info',
+        template: "<div class=\"small\">\n        Showing {{this.pageInfo.currentInitial}} to {{this.pageInfo.currentTop}} of {{pageInfo.filteredRecordCount}} records \n        <span [hidden]=\"!filtered\">(Filtered from {{pageInfo.totalRecordCount}} total records)</span>\n    </div>"
+    }),
+    __metadata("design:paramtypes", [grid_component_1.TubularGrid])
+], GridPagerInfo);
 exports.GridPagerInfo = GridPagerInfo;

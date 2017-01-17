@@ -3,6 +3,8 @@ export * from './tubular.module';
 
 // export services
 export * from './tubular-data.service';
+export * from './tubular-auth.service';
+export * from './tubular-http.service';
 export * from './tubular-settings.service';
 
 // export components and directives

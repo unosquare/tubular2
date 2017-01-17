@@ -1,6 +1,6 @@
 "use strict";
-var BehaviorSubject_1 = require('rxjs/BehaviorSubject');
-var column_1 = require('./column');
+var BehaviorSubject_1 = require("rxjs/BehaviorSubject");
+var column_1 = require("./column");
 var GridTable = (function () {
     function GridTable(tbGrid) {
         var _this = this;

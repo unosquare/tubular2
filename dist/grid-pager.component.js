@@ -8,8 +8,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var grid_component_1 = require('./grid.component');
+var core_1 = require("@angular/core");
+var grid_component_1 = require("./grid.component");
 var GridPager = (function () {
     function GridPager(tbGrid) {
         this.tbGrid = tbGrid;
@@ -23,13 +23,13 @@ var GridPager = (function () {
         this.info.currentPage = page;
         this.tbGrid.page.next(page - 1);
     };
-    GridPager = __decorate([
-        core_1.Component({
-            selector: 'grid-pager',
-            template: "<ngb-pagination \n            [collectionSize]=\"info.filteredRecordCount\"\n            [pageSize]=\"tbGrid._pageSize.value\"\n            [(page)]=\"info.currentPage\"\n            [boundaryLinks]=\"true\"\n            [maxSize]=\"5\"\n            (pageChange)=\"goTo($event)\"\n            [ellipses]=\"false\"\n            size=\"sm\">\n    </ngb-pagination>"
-        }), 
-        __metadata('design:paramtypes', [grid_component_1.TubularGrid])
-    ], GridPager);
     return GridPager;
 }());
+GridPager = __decorate([
+    core_1.Component({
+        selector: 'grid-pager',
+        template: "<ngb-pagination \n            [collectionSize]=\"info.filteredRecordCount\"\n            [pageSize]=\"tbGrid._pageSize.value\"\n            [(page)]=\"info.currentPage\"\n            [boundaryLinks]=\"true\"\n            [maxSize]=\"5\"\n            (pageChange)=\"goTo($event)\"\n            [ellipses]=\"false\"\n            size=\"sm\">\n    </ngb-pagination>"
+    }),
+    __metadata("design:paramtypes", [grid_component_1.TubularGrid])
+], GridPager);
 exports.GridPager = GridPager;

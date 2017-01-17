@@ -1,5 +1,5 @@
 "use strict";
-var core_1 = require('@angular/core');
+var core_1 = require("@angular/core");
 exports.SETTINGS_PROVIDER = new core_1.OpaqueToken('tubular-settings.service');
 var TubularLocalStorageService = (function () {
     function TubularLocalStorageService() {

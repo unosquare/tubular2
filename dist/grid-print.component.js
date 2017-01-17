@@ -8,8 +8,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var grid_component_1 = require('./grid.component');
+var core_1 = require("@angular/core");
+var grid_component_1 = require("./grid.component");
 var PrintButton = (function () {
     function PrintButton(tbGrid) {
         this.tbGrid = tbGrid;
@@ -28,13 +28,13 @@ var PrintButton = (function () {
             popup.document.close();
         });
     };
-    PrintButton = __decorate([
-        core_1.Component({
-            selector: 'grid-print',
-            template: "<button class=\"btn btn-info btn-sm\" (click)=\"print()\">\n        <span class=\"fa fa-print\"></span>&nbsp;Print\n    </button>"
-        }), 
-        __metadata('design:paramtypes', [grid_component_1.TubularGrid])
-    ], PrintButton);
     return PrintButton;
 }());
+PrintButton = __decorate([
+    core_1.Component({
+        selector: 'grid-print',
+        template: "<button class=\"btn btn-info btn-sm\" (click)=\"print()\">\n        <span class=\"fa fa-print\"></span>&nbsp;Print\n    </button>"
+    }),
+    __metadata("design:paramtypes", [grid_component_1.TubularGrid])
+], PrintButton);
 exports.PrintButton = PrintButton;

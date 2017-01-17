@@ -8,8 +8,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var grid_component_1 = require('./grid.component');
+var core_1 = require("@angular/core");
+var grid_component_1 = require("./grid.component");
 var ExportButton = (function () {
     function ExportButton(tbGrid) {
         this.tbGrid = tbGrid;
@@ -29,17 +29,17 @@ var ExportButton = (function () {
         var blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
         saveAs(blob, this.fileName);
     };
-    __decorate([
-        core_1.Input(), 
-        __metadata('design:type', String)
-    ], ExportButton.prototype, "fileName", void 0);
-    ExportButton = __decorate([
-        core_1.Component({
-            selector: 'grid-export',
-            template: "<div ngbDropdown class=\"d-inline-block\">\n                <button ngbDropdownToggle class=\"btn btn-info btn-sm\">\n                <span class=\"fa fa-download\"></span>&nbsp;Export CSV&nbsp;<span class=\"caret\"></span>\n               </button>\n               <div class=\"dropdown-menu\">\n                <button class=\"dropdown-item\" (click)=\"downloadCsv()\">Current rows</button>\n                <button class=\"dropdown-item\" (click)=\"downloadAllCsv()\">All rows</button>\n               </div>\n               </div>"
-        }), 
-        __metadata('design:paramtypes', [grid_component_1.TubularGrid])
-    ], ExportButton);
     return ExportButton;
 }());
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", String)
+], ExportButton.prototype, "fileName", void 0);
+ExportButton = __decorate([
+    core_1.Component({
+        selector: 'grid-export',
+        template: "<div ngbDropdown class=\"d-inline-block\">\n                <button ngbDropdownToggle class=\"btn btn-info btn-sm\">\n                <span class=\"fa fa-download\"></span>&nbsp;Export CSV&nbsp;<span class=\"caret\"></span>\n               </button>\n               <div class=\"dropdown-menu\">\n                <button class=\"dropdown-item\" (click)=\"downloadCsv()\">Current rows</button>\n                <button class=\"dropdown-item\" (click)=\"downloadAllCsv()\">All rows</button>\n               </div>\n               </div>"
+    }),
+    __metadata("design:paramtypes", [grid_component_1.TubularGrid])
+], ExportButton);
 exports.ExportButton = ExportButton;

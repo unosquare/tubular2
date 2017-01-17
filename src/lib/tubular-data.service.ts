@@ -70,7 +70,7 @@ export class TubularDataService {
 
         if (error && error.status === 401 && this.userData.refreshToken && request) {
             return this.refreshSession()
-                .flatMap(() => {
+                .mergeMap(() => {
                     if (this.userData.isAuthenticated == true) {
                         // retry with new token
                         this.setHttpAuthHeader();
@@ -188,7 +188,7 @@ export class TubularDataService {
 
         if (this.requireAuthentication && !this.isAuthenticated()) {
             return this.refreshSession()
-                .flatMap((response) => {
+                .mergeMap((response) => {
                     this.handleSuccesCallback(response, null, null);
                     if (this.userData.isAuthenticated == true) {
                         console.log("New Access Token was generated using Refresh token");

@@ -11,15 +11,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var core_1 = require('@angular/core');
-var http_1 = require('@angular/http');
-var Observable_1 = require('rxjs/Observable');
-require('rxjs/add/operator/mergeMap');
-require('rxjs/add/operator/map');
-require('rxjs/add/operator/catch');
-require('rxjs/add/observable/throw');
+var core_1 = require("@angular/core");
+var http_1 = require("@angular/http");
+var Observable_1 = require("rxjs/Observable");
+require("rxjs/add/operator/mergeMap");
+require("rxjs/add/operator/map");
+require("rxjs/add/operator/catch");
+require("rxjs/add/observable/throw");
 // TODO: Add debounceTime?
-var tubular_settings_service_1 = require('./tubular-settings.service');
+var tubular_settings_service_1 = require("./tubular-settings.service");
 var TubularDataService = (function () {
     function TubularDataService(settingsProvider, http) {
         this.settingsProvider = settingsProvider;
@@ -73,7 +73,7 @@ var TubularDataService = (function () {
             error.status ? error.status + " - " + error.statusText : 'Server error';
         if (error && error.status === 401 && this.userData.refreshToken && request) {
             return this.refreshSession()
-                .flatMap(function () {
+                .mergeMap(function () {
                 if (_this.userData.isAuthenticated == true) {
                     // retry with new token
                     _this.setHttpAuthHeader();
@@ -177,7 +177,7 @@ var TubularDataService = (function () {
         });
         if (this.requireAuthentication && !this.isAuthenticated()) {
             return this.refreshSession()
-                .flatMap(function (response) {
+                .mergeMap(function (response) {
                 _this.handleSuccesCallback(response, null, null);
                 if (_this.userData.isAuthenticated == true) {
                     console.log("New Access Token was generated using Refresh token");
@@ -221,12 +221,11 @@ var TubularDataService = (function () {
         var separator = url.indexOf('?') === -1 ? '?' : '&';
         return url + separator + 'timezoneOffset=' + new Date().getTimezoneOffset();
     };
-    TubularDataService = __decorate([
-        core_1.Injectable(),
-        __param(0, core_1.Optional()),
-        __param(0, core_1.Inject(tubular_settings_service_1.SETTINGS_PROVIDER)), 
-        __metadata('design:paramtypes', [Object, http_1.Http])
-    ], TubularDataService);
     return TubularDataService;
 }());
+TubularDataService = __decorate([
+    core_1.Injectable(),
+    __param(0, core_1.Optional()), __param(0, core_1.Inject(tubular_settings_service_1.SETTINGS_PROVIDER)),
+    __metadata("design:paramtypes", [Object, http_1.Http])
+], TubularDataService);
 exports.TubularDataService = TubularDataService;

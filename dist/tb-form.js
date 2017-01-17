@@ -1,6 +1,6 @@
 "use strict";
-var moment = require('moment');
-var http_1 = require('@angular/http');
+var moment = require("moment");
+var http_1 = require("@angular/http");
 var TbForm = (function () {
     function TbForm(formBuilder, dataService, toastr) {
         if (dataService === void 0) { dataService = null; }

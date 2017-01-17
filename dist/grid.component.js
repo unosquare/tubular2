@@ -11,14 +11,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var core_1 = require('@angular/core');
-var http_1 = require('@angular/http');
-var BehaviorSubject_1 = require('rxjs/BehaviorSubject');
-var moment = require('moment');
-var tubular_data_service_1 = require('./tubular-data.service');
-var tubular_settings_service_1 = require('./tubular-settings.service');
-var column_1 = require('./column');
-require('rxjs/add/operator/debounceTime');
+var core_1 = require("@angular/core");
+var http_1 = require("@angular/http");
+var BehaviorSubject_1 = require("rxjs/BehaviorSubject");
+var moment = require("moment");
+var tubular_data_service_1 = require("./tubular-data.service");
+var tubular_settings_service_1 = require("./tubular-settings.service");
+var column_1 = require("./column");
+require("rxjs/add/operator/debounceTime");
 var GridPageInfo = (function () {
     function GridPageInfo() {
         this.currentInitial = 0;
@@ -168,47 +168,46 @@ var TubularGrid = (function () {
         else
             return 10;
     };
-    __decorate([
-        core_1.Input('server-url'), 
-        __metadata('design:type', String)
-    ], TubularGrid.prototype, "serverUrl", void 0);
-    __decorate([
-        core_1.Input('require-authentication'), 
-        __metadata('design:type', Boolean)
-    ], TubularGrid.prototype, "requireAuthentication", void 0);
-    __decorate([
-        core_1.Input('request-timeout'), 
-        __metadata('design:type', Number)
-    ], TubularGrid.prototype, "requestTimeout", void 0);
-    __decorate([
-        core_1.Input('server-save-url'), 
-        __metadata('design:type', String)
-    ], TubularGrid.prototype, "serverSaveUrl", void 0);
-    __decorate([
-        core_1.Output(), 
-        __metadata('design:type', Object)
-    ], TubularGrid.prototype, "onDataError", void 0);
-    __decorate([
-        core_1.Output(), 
-        __metadata('design:type', Object)
-    ], TubularGrid.prototype, "onDataSaved", void 0);
-    TubularGrid = __decorate([
-        core_1.Component({
-            selector: 'tubular-grid',
-            template: "\n    <div>\n        <div class=\"tubular-overlay\" [hidden]=\"!showLoading\">\n            <div><div class=\"fa fa-refresh fa-2x fa-spin\"></div>\n        </div></div>\n        <ng-content></ng-content>\n    </div>",
-            styles: [
-                ':host /deep/ div.row { margin-top: 4px; margin-bottom: 4px; }',
-                ':host /deep/ div.row:first { margin-top: 0; }',
-                ':host /deep/ .sortable { text-decoration: underline; cursor: pointer; }',
-                ':host /deep/ .sortable:hover { text-decoration: none; color: yellow; }',
-                ':host /deep/ .sortAsc::after { font-family: FontAwesome; content: "\\f176"; }',
-                ':host /deep/ .sortDesc::after { font-family: FontAwesome; content: "\\f175"; }'
-            ]
-        }),
-        __param(0, core_1.Optional()),
-        __param(0, core_1.Inject(tubular_settings_service_1.SETTINGS_PROVIDER)), 
-        __metadata('design:paramtypes', [Object, tubular_data_service_1.TubularDataService])
-    ], TubularGrid);
     return TubularGrid;
 }());
+__decorate([
+    core_1.Input('server-url'),
+    __metadata("design:type", String)
+], TubularGrid.prototype, "serverUrl", void 0);
+__decorate([
+    core_1.Input('require-authentication'),
+    __metadata("design:type", Boolean)
+], TubularGrid.prototype, "requireAuthentication", void 0);
+__decorate([
+    core_1.Input('request-timeout'),
+    __metadata("design:type", Number)
+], TubularGrid.prototype, "requestTimeout", void 0);
+__decorate([
+    core_1.Input('server-save-url'),
+    __metadata("design:type", String)
+], TubularGrid.prototype, "serverSaveUrl", void 0);
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", Object)
+], TubularGrid.prototype, "onDataError", void 0);
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", Object)
+], TubularGrid.prototype, "onDataSaved", void 0);
+TubularGrid = __decorate([
+    core_1.Component({
+        selector: 'tubular-grid',
+        template: "\n    <div>\n        <div class=\"tubular-overlay\" [hidden]=\"!showLoading\">\n            <div><div class=\"fa fa-refresh fa-2x fa-spin\"></div>\n        </div></div>\n        <ng-content></ng-content>\n    </div>",
+        styles: [
+            ':host /deep/ div.row { margin-top: 4px; margin-bottom: 4px; }',
+            ':host /deep/ div.row:first { margin-top: 0; }',
+            ':host /deep/ .sortable { text-decoration: underline; cursor: pointer; }',
+            ':host /deep/ .sortable:hover { text-decoration: none; color: yellow; }',
+            ':host /deep/ .sortAsc::after { font-family: FontAwesome; content: "\\f176"; }',
+            ':host /deep/ .sortDesc::after { font-family: FontAwesome; content: "\\f175"; }'
+        ]
+    }),
+    __param(0, core_1.Optional()), __param(0, core_1.Inject(tubular_settings_service_1.SETTINGS_PROVIDER)),
+    __metadata("design:paramtypes", [Object, tubular_data_service_1.TubularDataService])
+], TubularGrid);
 exports.TubularGrid = TubularGrid;

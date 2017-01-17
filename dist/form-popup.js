@@ -13,16 +13,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var tb_form_1 = require('./tb-form');
+var core_1 = require("@angular/core");
+var tb_form_1 = require("./tb-form");
 var FormPopup = (function (_super) {
     __extends(FormPopup, _super);
     function FormPopup(tbGrid, formBuilder, dataService, toastr) {
-        _super.call(this, formBuilder, dataService, toastr);
-        this.tbGrid = tbGrid;
-        this.formBuilder = formBuilder;
-        this.dataService = dataService;
-        this.toastr = toastr;
+        var _this = _super.call(this, formBuilder, dataService, toastr) || this;
+        _this.tbGrid = tbGrid;
+        _this.formBuilder = formBuilder;
+        _this.dataService = dataService;
+        _this.toastr = toastr;
+        return _this;
     }
     FormPopup.prototype.ngOnInit = function () {
         this.detailsForm = this.tbFormInit({
@@ -46,14 +47,14 @@ var FormPopup = (function (_super) {
         return this.row;
     };
     ;
-    __decorate([
-        core_1.Input(), 
-        __metadata('design:type', Object)
-    ], FormPopup.prototype, "modalRef", void 0);
-    __decorate([
-        core_1.Input(), 
-        __metadata('design:type', Object)
-    ], FormPopup.prototype, "row", void 0);
     return FormPopup;
 }(tb_form_1.TbForm));
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Object)
+], FormPopup.prototype, "modalRef", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Object)
+], FormPopup.prototype, "row", void 0);
 exports.FormPopup = FormPopup;

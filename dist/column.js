@@ -1,4 +1,5 @@
 "use strict";
+var DataType;
 (function (DataType) {
     DataType[DataType["String"] = 1] = "String";
     DataType[DataType["Number"] = 2] = "Number";
@@ -6,14 +7,14 @@
     DataType[DataType["Date"] = 4] = "Date";
     DataType[DataType["DateTime"] = 5] = "DateTime";
     DataType[DataType["DateTimeUtc"] = 6] = "DateTimeUtc";
-})(exports.DataType || (exports.DataType = {}));
-var DataType = exports.DataType;
+})(DataType = exports.DataType || (exports.DataType = {}));
+var ColumnSortDirection;
 (function (ColumnSortDirection) {
     ColumnSortDirection[ColumnSortDirection["None"] = 0] = "None";
     ColumnSortDirection[ColumnSortDirection["Asc"] = 1] = "Asc";
     ColumnSortDirection[ColumnSortDirection["Desc"] = 2] = "Desc";
-})(exports.ColumnSortDirection || (exports.ColumnSortDirection = {}));
-var ColumnSortDirection = exports.ColumnSortDirection;
+})(ColumnSortDirection = exports.ColumnSortDirection || (exports.ColumnSortDirection = {}));
+var ColumnFilterMode;
 (function (ColumnFilterMode) {
     ColumnFilterMode[ColumnFilterMode["None"] = 0] = "None";
     ColumnFilterMode[ColumnFilterMode["String"] = 1] = "String";
@@ -21,8 +22,7 @@ var ColumnSortDirection = exports.ColumnSortDirection;
     ColumnFilterMode[ColumnFilterMode["Boolean"] = 3] = "Boolean";
     ColumnFilterMode[ColumnFilterMode["Date"] = 4] = "Date";
     ColumnFilterMode[ColumnFilterMode["DateTime"] = 5] = "DateTime";
-})(exports.ColumnFilterMode || (exports.ColumnFilterMode = {}));
-var ColumnFilterMode = exports.ColumnFilterMode;
+})(ColumnFilterMode = exports.ColumnFilterMode || (exports.ColumnFilterMode = {}));
 var ColumnFilter = (function () {
     function ColumnFilter() {
     }
