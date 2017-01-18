@@ -15,7 +15,7 @@ var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var BehaviorSubject_1 = require("rxjs/BehaviorSubject");
 var moment = require("moment");
-var tubular_data_service_1 = require("./tubular-data.service");
+var tubular_http_service_1 = require("./tubular-http.service");
 var tubular_settings_service_1 = require("./tubular-settings.service");
 var column_1 = require("./column");
 require("rxjs/add/operator/debounceTime");
@@ -32,9 +32,9 @@ var GridPageInfo = (function () {
 }());
 exports.GridPageInfo = GridPageInfo;
 var TubularGrid = (function () {
-    function TubularGrid(settingsProvider, dataService) {
+    function TubularGrid(settingsProvider, httpService) {
         this.settingsProvider = settingsProvider;
-        this.dataService = dataService;
+        this.httpService = httpService;
         // data is just observable and children can't push
         this.data = new BehaviorSubject_1.BehaviorSubject([]);
         this.dataStream = this.data.asObservable();
@@ -46,6 +46,7 @@ var TubularGrid = (function () {
         this.page = new BehaviorSubject_1.BehaviorSubject(this.getPageSettingValue());
         this.columns = new BehaviorSubject_1.BehaviorSubject([]);
         this.freeTextSearch = new BehaviorSubject_1.BehaviorSubject("");
+        this.pageSet = false;
         this.showLoading = false;
         this.requestCount = 0;
         this.search = {
@@ -64,7 +65,9 @@ var TubularGrid = (function () {
             _this.refresh();
             _this.changePageSizeData();
         });
-        this.columns.subscribe(function (c) { return _this.refresh(); });
+        this.columns.subscribe(function (c) {
+            _this.refresh();
+        });
         this.page.subscribe(function (c) {
             _this.refresh();
             _this.changePagesData();
@@ -79,9 +82,15 @@ var TubularGrid = (function () {
             _this.refresh();
         });
     };
+    TubularGrid.prototype.goToPage = function (page) {
+        this.pageSet = true;
+        this.page.next(page);
+    };
     TubularGrid.prototype.refresh = function () {
         var _this = this;
-        this.getCurrentPage(function (data, req) { return _this.transformDataset(data, req); });
+        if (this.pageSet && this.columns.getValue().length > 0 && this._pageSize.getValue() > 0) {
+            this.getCurrentPage(function (data, req) { return _this.transformDataset(data, req); });
+        }
     };
     TubularGrid.prototype.getCurrentPage = function (callback) {
         var _this = this;
@@ -93,7 +102,7 @@ var TubularGrid = (function () {
             search: this.search,
             timezoneOffset: new Date().getTimezoneOffset()
         };
-        this.dataService.retrieveData(this.serverUrl, req).subscribe(function (data) { return callback(data, req); }, function (error) { return _this.onDataError.emit(error); });
+        this.httpService.post(this.serverUrl, req).subscribe(function (data) { return callback(data, req); }, function (error) { return _this.onDataError.emit(error); });
     };
     TubularGrid.prototype.getFullDataSource = function (callback) {
         var _this = this;
@@ -107,11 +116,11 @@ var TubularGrid = (function () {
                 operator: 'None'
             }
         };
-        this.dataService.retrieveData(this.serverUrl, req).subscribe(function (data) { return callback(data.Payload || {}); }, function (error) { return _this.onDataError.emit(error); });
+        this.httpService.post(this.serverUrl, req).subscribe(function (data) { return callback(data.Payload || {}); }, function (error) { return _this.onDataError.emit(error); });
     };
     TubularGrid.prototype.onUpdate = function (row) {
         var _this = this;
-        this.dataService
+        this.httpService
             .save(this.serverSaveUrl, row.values, row.$isNew ? http_1.RequestMethod.Post : http_1.RequestMethod.Put)
             .subscribe(function (data) { return _this.onDataSaved.emit(data); }, function (error) { return _this.onDataError.emit(error); }, function () { return _this.refresh(); });
     };
@@ -208,6 +217,6 @@ TubularGrid = __decorate([
         ]
     }),
     __param(0, core_1.Optional()), __param(0, core_1.Inject(tubular_settings_service_1.SETTINGS_PROVIDER)),
-    __metadata("design:paramtypes", [Object, tubular_data_service_1.TubularDataService])
+    __metadata("design:paramtypes", [Object, tubular_http_service_1.TubularHttpService])
 ], TubularGrid);
 exports.TubularGrid = TubularGrid;

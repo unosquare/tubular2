@@ -21,7 +21,7 @@ var GridPager = (function () {
     };
     GridPager.prototype.goTo = function (page) {
         this.info.currentPage = page;
-        this.tbGrid.page.next(page - 1);
+        this.tbGrid.goToPage(page - 1);
     };
     return GridPager;
 }());

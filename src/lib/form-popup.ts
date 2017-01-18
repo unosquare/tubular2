@@ -5,7 +5,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import * as moment from 'moment';
 
 import { TubularGrid } from './grid.component';
-import { TubularDataService } from './tubular-data.service';
+import { TubularHttpService } from './tubular-http.service';
 
 import { TbForm } from './tb-form';
 
@@ -16,8 +16,8 @@ export abstract class FormPopup extends TbForm {
     detailsForm: FormGroup;
     private data: any;
 
-    constructor(public tbGrid: TubularGrid, public formBuilder: FormBuilder, public dataService: TubularDataService, public toastr: ToastsManager) {
-        super(formBuilder, dataService, toastr);
+    constructor(public tbGrid: TubularGrid, public formBuilder: FormBuilder, public httpService: TubularHttpService, public toastr: ToastsManager) {
+        super(formBuilder, httpService, toastr);
     }
 
     ngOnInit() {

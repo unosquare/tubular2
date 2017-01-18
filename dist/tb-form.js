@@ -2,11 +2,11 @@
 var moment = require("moment");
 var http_1 = require("@angular/http");
 var TbForm = (function () {
-    function TbForm(formBuilder, dataService, toastr) {
-        if (dataService === void 0) { dataService = null; }
+    function TbForm(formBuilder, httpService, toastr) {
+        if (httpService === void 0) { httpService = null; }
         this.formBuilder = formBuilder;
         this.formErrors = {};
-        this.dataService = dataService;
+        this.httpService = httpService;
         this.toastr = toastr;
     }
     TbForm.prototype.tbFormInit = function (options) {
@@ -18,12 +18,11 @@ var TbForm = (function () {
         this.saveUrl = options.saveUrl || '';
         this.serverSaveMethod = options.serverSaveMethod || http_1.RequestMethod.Post;
         this.requireAuthentication = options.requireAuthentication !== undefined ? options.requireAuthentication : false;
-        this.dataService.setRequireAuthentication(this.requireAuthentication);
         this.localForm = this.buildForm();
         // Try to load values if we have model key and server url
         if (this.hasModelKey &&
             this.serverUrl) {
-            this.dataService.getData(this.serverUrl + this.localForm.controls[this.modelKey].value).subscribe(function (data) {
+            this.httpService.get(this.serverUrl + this.localForm.controls[this.modelKey].value, this.requireAuthentication).subscribe(function (data) {
                 for (var key in data) {
                     if (_this.localForm.controls[key]) {
                         _this.localForm.controls[key].setValue(data[key]);
@@ -54,8 +53,8 @@ var TbForm = (function () {
     };
     TbForm.prototype.onSave = function (row, success, error, complete) {
         var _this = this;
-        this.dataService
-            .save(this.saveUrl, row.values, row.$isNew ? this.serverSaveMethod : http_1.RequestMethod.Put)
+        this.httpService
+            .save(this.saveUrl, row.values, row.$isNew ? this.serverSaveMethod : http_1.RequestMethod.Put, this.requireAuthentication)
             .subscribe(function (data) { return success ? success(data) : _this.defaultSaveSuccess(data); }, function (errorMessage) { return error ? error(errorMessage) : _this.defaultSaveError(errorMessage); }, function () { return complete ? complete() : _this.defaultSaveComplete(); });
     };
     TbForm.prototype.defaultSaveSuccess = function (data) {

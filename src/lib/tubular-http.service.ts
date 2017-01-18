@@ -22,6 +22,7 @@ export interface TbRequestArgs extends RequestOptionsArgs {
 @Injectable()
 export class TubularHttpService {
 
+    requireAuthentication: boolean;
 
     constructor( @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider, private http: Http, private tbAuthService: TubularAuthService) { }
 
@@ -71,6 +72,7 @@ export class TubularHttpService {
     retrieveGridData(url: string, req: any): Observable<any> {
         req.columns.forEach(this.transformSortDirection);
 
+        console.log("retrieveGridData");
         return this.post(url, req)
             .map(this.extractData)
             .catch(this.handleRequestError);
@@ -87,6 +89,7 @@ export class TubularHttpService {
             responseType: request.responseType || ResponseContentType.Json
         });
 
+        console.log("HttpService => ", ngRequest);
         if (request.requireAuthentication) {
             if (this.tbAuthService.isValidSession()) {
                 this.tbAuthService.addAuthHeaderToRequest(ngRequest);
@@ -132,6 +135,17 @@ export class TubularHttpService {
         return this.post(url, req)
             .map(this.extractData)
             .catch(this.handleRequestError);
+    }
+
+    save(url: string, row: any, method: RequestMethod = RequestMethod.Post, requireAuthentication: boolean = true): Observable<any> {
+        let requestArgs = <TbRequestArgs>{
+            method: method,
+            url: url,
+            body: row,
+            requireAuthentication: requireAuthentication
+        };
+
+        return this.request(requestArgs);
     }
 
     private transformSortDirection(column) {

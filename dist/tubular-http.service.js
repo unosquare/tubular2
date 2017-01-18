@@ -68,6 +68,7 @@ var TubularHttpService = (function () {
     };
     TubularHttpService.prototype.retrieveGridData = function (url, req) {
         req.columns.forEach(this.transformSortDirection);
+        console.log("retrieveGridData");
         return this.post(url, req)
             .map(this.extractData)
             .catch(this.handleRequestError);
@@ -83,6 +84,7 @@ var TubularHttpService = (function () {
             withCredentials: request.withCredentials || false,
             responseType: request.responseType || http_1.ResponseContentType.Json
         });
+        console.log("HttpService => ", ngRequest);
         if (request.requireAuthentication) {
             if (this.tbAuthService.isValidSession()) {
                 this.tbAuthService.addAuthHeaderToRequest(ngRequest);
@@ -122,6 +124,17 @@ var TubularHttpService = (function () {
         return this.post(url, req)
             .map(this.extractData)
             .catch(this.handleRequestError);
+    };
+    TubularHttpService.prototype.save = function (url, row, method, requireAuthentication) {
+        if (method === void 0) { method = http_1.RequestMethod.Post; }
+        if (requireAuthentication === void 0) { requireAuthentication = true; }
+        var requestArgs = {
+            method: method,
+            url: url,
+            body: row,
+            requireAuthentication: requireAuthentication
+        };
+        return this.request(requestArgs);
     };
     TubularHttpService.prototype.transformSortDirection = function (column) {
         switch (column.direction) {

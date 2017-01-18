@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { TbForm, TubularGrid, TubularDataService } from '@tubular2/tubular2';
+import { TbForm, TubularGrid, TubularHttpService } from '@tubular2/tubular2';
 
 @Component({
     selector: 'sample-form',
@@ -14,8 +14,8 @@ export class FormComponent extends TbForm implements OnInit {
 
     detailsForm: FormGroup;
 
-    constructor(private route: ActivatedRoute, private router: Router, public formBuilder: FormBuilder, public dataService: TubularDataService, public toastr: ToastsManager) {
-        super(formBuilder, dataService, toastr);
+    constructor(private route: ActivatedRoute, private router: Router, public formBuilder: FormBuilder, public httpService: TubularHttpService, public toastr: ToastsManager) {
+        super(formBuilder, httpService, toastr);
     }
 
     ngOnInit() {

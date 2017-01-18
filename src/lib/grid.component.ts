@@ -1,10 +1,10 @@
 ﻿import { Component, Input, Output, EventEmitter, Inject, Optional } from '@angular/core';
 import { RequestMethod } from '@angular/http';
-import { Observable }       from 'rxjs/Observable';
-import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import * as moment from 'moment';
 
-import { TubularDataService } from './tubular-data.service';
+import { TubularHttpService } from './tubular-http.service';
 import { SETTINGS_PROVIDER, ITubularSettingsProvider } from './tubular-settings.service';
 import { ColumnModel, DataType } from './column';
 
@@ -47,12 +47,14 @@ export class TubularGrid {
 
     _pageSize = new BehaviorSubject(this.getPageSizeSettingValue());
     pageSize = this._pageSize.asObservable();
-    
+
     // values that to observe and allow to push from children
     page = new BehaviorSubject(this.getPageSettingValue());
     columns = new BehaviorSubject([]);
     freeTextSearch = new BehaviorSubject("");
-    
+
+    pageSet = false;
+
     showLoading = false;
     private requestCount = 0;
     search = {
@@ -68,7 +70,7 @@ export class TubularGrid {
     @Output() onDataError = new EventEmitter<any>();
     @Output() onDataSaved = new EventEmitter<any>();
 
-    constructor( @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider, private dataService: TubularDataService) {
+    constructor( @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider, private httpService: TubularHttpService) {
     }
 
     ngOnInit() {
@@ -80,7 +82,9 @@ export class TubularGrid {
             this.refresh();
             this.changePageSizeData()
         });
-        this.columns.subscribe(c => this.refresh());
+        this.columns.subscribe(c => {
+            this.refresh();
+        });
         this.page.subscribe(c => {
             this.refresh();
             this.changePagesData()
@@ -95,8 +99,15 @@ export class TubularGrid {
             });
     }
 
+    goToPage(page){
+        this.pageSet = true;
+        this.page.next(page);
+    }
+
     refresh() {
-        this.getCurrentPage((data, req) => this.transformDataset(data, req));
+        if (this.pageSet && this.columns.getValue().length > 0 && this._pageSize.getValue() > 0) {
+            this.getCurrentPage((data, req) => this.transformDataset(data, req));
+        }
     }
 
     getCurrentPage(callback) {
@@ -109,7 +120,7 @@ export class TubularGrid {
             timezoneOffset: new Date().getTimezoneOffset()
         };
 
-        this.dataService.retrieveData(this.serverUrl, req).subscribe(
+        this.httpService.post(this.serverUrl, req).subscribe(
             data => callback(data, req),
             error => this.onDataError.emit(error)
         );
@@ -127,19 +138,19 @@ export class TubularGrid {
             }
         };
 
-        this.dataService.retrieveData(this.serverUrl, req).subscribe(
+        this.httpService.post(this.serverUrl, req).subscribe(
             data => callback(data.Payload || {}),
             error => this.onDataError.emit(error)
         );
     }
 
     onUpdate(row) {
-        this.dataService
+        this.httpService
             .save(this.serverSaveUrl, row.values, row.$isNew ? RequestMethod.Post : RequestMethod.Put)
             .subscribe(
-                data => this.onDataSaved.emit(data),
-                error => this.onDataError.emit(error),
-                () => this.refresh()
+            data => this.onDataSaved.emit(data),
+            error => this.onDataError.emit(error),
+            () => this.refresh()
             );
     }
 
@@ -148,7 +159,7 @@ export class TubularGrid {
 
         columns.forEach((column, key) => {
             obj[column.name] = data[key] || data[column.name];
-            
+
             if (column.dataType == DataType.DateTimeUtc) {
                 obj[column.name] = moment.utc(obj[column.name]);
             }
@@ -181,13 +192,13 @@ export class TubularGrid {
         pageInfo.currentTop = this._pageSize.getValue() * pageInfo.currentPage;
         if (pageInfo.currentTop <= 0 || pageInfo.currentTop > data.filteredRecordCount)
             pageInfo.currentTop = data.filteredRecordCount;
-        
+
         // push page Info
         this._pageInfo.next(pageInfo);
     }
 
-    changePagesData(){
-        if(this.settingsProvider!=null) this.settingsProvider.put("gridPage", this.page.getValue());
+    changePagesData() {
+        if (this.settingsProvider != null) this.settingsProvider.put("gridPage", this.page.getValue());
     }
 
     changePageSizeData() {

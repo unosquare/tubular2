@@ -17,11 +17,11 @@ var core_1 = require("@angular/core");
 var tb_form_1 = require("./tb-form");
 var FormPopup = (function (_super) {
     __extends(FormPopup, _super);
-    function FormPopup(tbGrid, formBuilder, dataService, toastr) {
-        var _this = _super.call(this, formBuilder, dataService, toastr) || this;
+    function FormPopup(tbGrid, formBuilder, httpService, toastr) {
+        var _this = _super.call(this, formBuilder, httpService, toastr) || this;
         _this.tbGrid = tbGrid;
         _this.formBuilder = formBuilder;
-        _this.dataService = dataService;
+        _this.httpService = httpService;
         _this.toastr = toastr;
         return _this;
     }

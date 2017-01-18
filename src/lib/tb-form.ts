@@ -5,13 +5,13 @@ import * as moment from 'moment';
 import { TubularGrid } from './grid.component';
 import { RequestMethod } from '@angular/http';
 
-import { TubularDataService } from './tubular-data.service';
+import { TubularHttpService } from './tubular-http.service';
 
 export abstract class TbForm {
     $isNew: boolean;
     localForm: FormGroup;
     formErrors: Object;
-    dataService: TubularDataService;
+    httpService: TubularHttpService;
     toastr: ToastsManager;
 
     modelKey: string;
@@ -21,9 +21,9 @@ export abstract class TbForm {
     serverSaveMethod: RequestMethod;
     requireAuthentication: boolean;
 
-    constructor(public formBuilder: FormBuilder, dataService: TubularDataService = null, toastr: ToastsManager) {
+    constructor(public formBuilder: FormBuilder, httpService: TubularHttpService = null, toastr: ToastsManager) {
         this.formErrors = {};
-        this.dataService = dataService;
+        this.httpService = httpService;
         this.toastr = toastr;
     }
 
@@ -43,15 +43,13 @@ export abstract class TbForm {
         this.serverSaveMethod = options.serverSaveMethod || RequestMethod.Post;
         this.requireAuthentication = options.requireAuthentication !== undefined ? options.requireAuthentication : false;
 
-        this.dataService.setRequireAuthentication(this.requireAuthentication);
-
         this.localForm = this.buildForm();
 
         // Try to load values if we have model key and server url
         if (this.hasModelKey &&
             this.serverUrl) {
 
-            this.dataService.getData(this.serverUrl + this.localForm.controls[this.modelKey].value).subscribe(
+            this.httpService.get(this.serverUrl + this.localForm.controls[this.modelKey].value, this.requireAuthentication).subscribe(
                 data => {
                     for (var key in data) {
 
@@ -92,8 +90,8 @@ export abstract class TbForm {
     }
 
     onSave(row, success?: (success: any) => void, error?: (error: any) => void, complete?: () => void) {
-        this.dataService
-            .save(this.saveUrl, row.values, row.$isNew ? this.serverSaveMethod : RequestMethod.Put)
+        this.httpService
+            .save(this.saveUrl, row.values, row.$isNew ? this.serverSaveMethod : RequestMethod.Put, this.requireAuthentication)
             .subscribe(
             data => success ? success(data) : this.defaultSaveSuccess(data),
             errorMessage => error ? error(errorMessage) : this.defaultSaveError(errorMessage),
