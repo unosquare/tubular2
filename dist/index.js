@@ -5,7 +5,6 @@ function __export(m) {
 // export module
 __export(require("./tubular.module"));
 // export services
-__export(require("./tubular-data.service"));
 __export(require("./tubular-auth.service"));
 __export(require("./tubular-http.service"));
 __export(require("./tubular-settings.service"));

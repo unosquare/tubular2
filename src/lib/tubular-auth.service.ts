@@ -29,6 +29,14 @@ export class TubularAuthService {
 
     constructor( @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider, private http: Http) { }
 
+    setTokenUrl(url: string): void {
+        this.tokenUrl = url;
+    }
+
+    setRefreshTokenUrl(url: string): void {
+        this.refreshTokenUrl = url;
+    }
+
     enableRefreshTokens(): void {
         this.useRefreshTokens = true;
     }
@@ -57,22 +65,26 @@ export class TubularAuthService {
             this.settingsProvider.put('auth_data', JSON.stringify(this.userData));
     }
 
-    authenticate(username: string, password: string, succesCallback?, errorCallback?) {
+    authenticate(username: string, password: string, successCallback?, errorCallback?) {
         this.removeAuthentication();
         let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
         let options = new RequestOptions({ headers: headers });
 
         return this.http.post(this.tokenUrl, 'grant_type=password&username=' + username + '&password=' + password, options)
-            .subscribe(data => {
-                this.handleSuccesCallback(data);
-            }, err => {
-                let error = {
-                    errorBody: JSON.parse(err._body),
-                    status: err.status
-                };
-                if (typeof errorCallback != null)
-                    errorCallback(error);
-            });
+            .map(data => this.handleSuccessCallback(data))
+            .catch((err: Error) => this.handleAuthError(err, errorCallback));
+    }
+
+    handleAuthError(err: any, errorCallback) {
+        let error = {
+            errorBody: JSON.parse(err._body),
+            status: err.status
+        };
+
+        if (typeof errorCallback != null)
+            errorCallback(error);
+
+        return Observable.throw(error);
     }
 
     removeAuthentication() {
@@ -90,7 +102,7 @@ export class TubularAuthService {
             this.settingsProvider.delete('auth_Header');
     }
 
-    private handleSuccesCallback(data) {
+    private handleSuccessCallback(data) {
         data = JSON.parse(data._body);
         this.userData.isAuthenticated = true;
         this.userData.username = data.userName;
@@ -156,7 +168,7 @@ export class TubularAuthService {
         let options = new RequestOptions({ headers: headers });
         return this.http.post(this.getRefreshTokenUrl(), 'grant_type=refresh_token&refresh_token=' + refreshToken, options)
             .mergeMap((response) => {
-                this.handleSuccesCallback(response);
+                this.handleSuccessCallback(response);
                 if (this.isValidSession()) {
                     return Observable.create(true);
                 }

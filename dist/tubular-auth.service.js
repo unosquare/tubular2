@@ -36,6 +36,12 @@ var TubularAuthService = (function () {
         this.requireAuthentication = true;
         this.refreshTokenUrl = this.tokenUrl = '/api/token';
     }
+    TubularAuthService.prototype.setTokenUrl = function (url) {
+        this.tokenUrl = url;
+    };
+    TubularAuthService.prototype.setRefreshTokenUrl = function (url) {
+        this.refreshTokenUrl = url;
+    };
     TubularAuthService.prototype.enableRefreshTokens = function () {
         this.useRefreshTokens = true;
     };
@@ -57,22 +63,23 @@ var TubularAuthService = (function () {
         if (this.settingsProvider)
             this.settingsProvider.put('auth_data', JSON.stringify(this.userData));
     };
-    TubularAuthService.prototype.authenticate = function (username, password, succesCallback, errorCallback) {
+    TubularAuthService.prototype.authenticate = function (username, password, successCallback, errorCallback) {
         var _this = this;
         this.removeAuthentication();
         var headers = new http_1.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
         var options = new http_1.RequestOptions({ headers: headers });
         return this.http.post(this.tokenUrl, 'grant_type=password&username=' + username + '&password=' + password, options)
-            .subscribe(function (data) {
-            _this.handleSuccesCallback(data);
-        }, function (err) {
-            var error = {
-                errorBody: JSON.parse(err._body),
-                status: err.status
-            };
-            if (typeof errorCallback != null)
-                errorCallback(error);
-        });
+            .map(function (data) { return _this.handleSuccessCallback(data); })
+            .catch(function (err) { return _this.handleAuthError(err, errorCallback); });
+    };
+    TubularAuthService.prototype.handleAuthError = function (err, errorCallback) {
+        var error = {
+            errorBody: JSON.parse(err._body),
+            status: err.status
+        };
+        if (typeof errorCallback != null)
+            errorCallback(error);
+        return Rx_1.Observable.throw(error);
     };
     TubularAuthService.prototype.removeAuthentication = function () {
         if (this.settingsProvider)
@@ -86,7 +93,7 @@ var TubularAuthService = (function () {
         if (this.settingsProvider)
             this.settingsProvider.delete('auth_Header');
     };
-    TubularAuthService.prototype.handleSuccesCallback = function (data) {
+    TubularAuthService.prototype.handleSuccessCallback = function (data) {
         data = JSON.parse(data._body);
         this.userData.isAuthenticated = true;
         this.userData.username = data.userName;
@@ -142,7 +149,7 @@ var TubularAuthService = (function () {
         var options = new http_1.RequestOptions({ headers: headers });
         return this.http.post(this.getRefreshTokenUrl(), 'grant_type=refresh_token&refresh_token=' + refreshToken, options)
             .mergeMap(function (response) {
-            _this.handleSuccesCallback(response);
+            _this.handleSuccessCallback(response);
             if (_this.isValidSession()) {
                 return Rx_1.Observable.create(true);
             }

@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RequestOptions } from '@angular/http';
 
-import { TubularModule, TubularDataService, SETTINGS_PROVIDER, TubularLocalStorageService, HttpOptions, TubularAuthService, TubularHttpService } from '@tubular2/tubular2';
+import { TubularModule, SETTINGS_PROVIDER, TubularLocalStorageService, HttpOptions, TubularAuthService, TubularHttpService } from '@tubular2/tubular2';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -20,7 +20,6 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr';
     imports: [BrowserModule, FormsModule, ReactiveFormsModule, TubularModule, AppRoutingModule, ToastModule],
     declarations: [AppComponent, SampleGrid, OrderPopup, GridComponent, FormComponent, LoginComponent, ExpirationComponent],
     providers: [
-        TubularDataService,
         TubularAuthService,
         TubularHttpService,
         { provide: SETTINGS_PROVIDER, useClass: TubularLocalStorageService },

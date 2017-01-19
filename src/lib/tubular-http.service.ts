@@ -89,7 +89,6 @@ export class TubularHttpService {
             responseType: request.responseType || ResponseContentType.Json
         });
 
-        console.log("HttpService => ", ngRequest);
         if (request.requireAuthentication) {
             if (this.tbAuthService.isValidSession()) {
                 this.tbAuthService.addAuthHeaderToRequest(ngRequest);
