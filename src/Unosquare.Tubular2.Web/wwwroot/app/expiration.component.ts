@@ -1,5 +1,5 @@
-import {Component, Inject} from '@angular/core';
-import {TubularDataService, TubularLocalStorageService, SETTINGS_PROVIDER} from '@tubular2/tubular2';
+import { Component, Inject } from '@angular/core';
+import { TubularAuthService, TubularLocalStorageService, SETTINGS_PROVIDER } from '@tubular2/tubular2';
 import { Router } from '@angular/router'
 
 @Component({
@@ -7,25 +7,20 @@ import { Router } from '@angular/router'
     templateUrl: '/app/expiration.component.html'
 })
 
-export class ExpirationComponent{
-    isAuth:string;
-    retSavData:string;
+export class ExpirationComponent {
+    isAuth: string;
+    retSavData: string;
 
-    constructor(private tds:TubularDataService, private rt:Router, @Inject(SETTINGS_PROVIDER) private tlss:TubularLocalStorageService){}
+    constructor(private tbAuthService: TubularAuthService) { }
 
-    changeExpirationDate(){
-        this.tds.removeAuthentication();
+    forceAuthTokenToExpire() {
+        this.tbAuthService.setAccessTokenAsExpired();
     }
 
-    isAuthenticated(){
-        if(this.tds.isAuthenticated())
-            this.isAuth = 'auth';
+    isAuthenticated() {
+        if (this.tbAuthService.isValidSession())
+            this.isAuth = 'valid session';
         else
-            this.isAuth = 'no auth';
+            this.isAuth = 'invalid session';
     }
-    
-    retrieveData(){
-        this.retSavData = this.tlss.get('auth_data') ? JSON.parse(this.tlss.get('auth_data')).username : 'no data!';
-    }
-
 }

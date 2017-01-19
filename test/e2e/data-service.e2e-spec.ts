@@ -1,12 +1,12 @@
 import { browser, element, by } from '../../node_modules/protractor/built';
 
-describe('tubular data service', () =>{
+describe('tubular data service', () => {
     let userNameInput,
         passwordInput,
         loginBtn,
         labels
 
-    beforeAll(()=>{
+    beforeAll(() => {
         browser.get('/');
         userNameInput = element(by.tagName('login')).$$('input').first();
         passwordInput = element(by.tagName('login')).$$('input').last();
@@ -15,7 +15,7 @@ describe('tubular data service', () =>{
     });
 
     describe('authenticate services test', () => {
-        beforeEach(()=>{
+        beforeEach(() => {
             browser.get('/');
             element(by.tagName('nav')).$$('li').get(2).click();
         });
@@ -25,7 +25,7 @@ describe('tubular data service', () =>{
             passwordInput.sendKeys('pass.word');
             loginBtn.click();
             element(by.id('btnAuth')).click();
-            expect(labels.first().getText()).toMatch('auth');
+            expect(labels.first().getText()).toMatch('valid session');
         });
 
         it('should not authenticate aith bad credentials', () => {
@@ -41,16 +41,16 @@ describe('tubular data service', () =>{
             loginBtn.click();
             element(by.id('btnExp')).click();
             element(by.id('btnAuth')).click();
-            expect(labels.first().getText()).toMatch('no auth');
+            expect(labels.first().getText()).toMatch('invalid session');
         });
 
-        it('should retrieve data',() => {
-            userNameInput.sendKeys('admin');
-            passwordInput.sendKeys('pass.word');
-            loginBtn.click();
-            element(by.id('btnRetData')).click();
-            expect(labels.last().getText()).toMatch('admin')
-        });
+        // it('should retrieve data',() => {
+        //     userNameInput.sendKeys('admin');
+        //     passwordInput.sendKeys('pass.word');
+        //     loginBtn.click();
+        //     element(by.id('btnRetData')).click();
+        //     expect(labels.last().getText()).toMatch('admin')
+        // });
     });
-    
+
 });

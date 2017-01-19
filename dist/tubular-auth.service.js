@@ -45,6 +45,18 @@ var TubularAuthService = (function () {
     TubularAuthService.prototype.getRefreshTokenUrl = function () {
         return this.refreshTokenUrl;
     };
+    TubularAuthService.prototype.setAccessTokenAsExpired = function () {
+        this.userData.expirationDate = new Date(new Date().getTime() - 10 * 1000);
+        this.saveAuthData();
+    };
+    TubularAuthService.prototype.removeAuthData = function () {
+        this.settingsProvider.delete('auth_data');
+    };
+    TubularAuthService.prototype.saveAuthData = function () {
+        this.removeAuthData();
+        if (this.settingsProvider)
+            this.settingsProvider.put('auth_data', JSON.stringify(this.userData));
+    };
     TubularAuthService.prototype.authenticate = function (username, password, succesCallback, errorCallback) {
         var _this = this;
         this.removeAuthentication();

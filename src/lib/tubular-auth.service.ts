@@ -41,6 +41,22 @@ export class TubularAuthService {
         return this.refreshTokenUrl;
     }
 
+    setAccessTokenAsExpired(): void {
+        this.userData.expirationDate = new Date(new Date().getTime() - 10 * 1000);
+        this.saveAuthData();
+    }
+
+    removeAuthData(): void {
+        this.settingsProvider.delete('auth_data');
+    }
+
+    saveAuthData(): void {
+        this.removeAuthData();
+
+        if (this.settingsProvider)
+            this.settingsProvider.put('auth_data', JSON.stringify(this.userData));
+    }
+
     authenticate(username: string, password: string, succesCallback?, errorCallback?) {
         this.removeAuthentication();
         let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
