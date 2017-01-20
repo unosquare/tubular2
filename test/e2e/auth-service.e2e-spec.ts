@@ -44,13 +44,25 @@ describe('tubular data service', () => {
             expect(labels.first().getText()).toMatch('invalid session');
         });
 
-        // it('should retrieve data',() => {
-        //     userNameInput.sendKeys('admin');
-        //     passwordInput.sendKeys('pass.word');
-        //     loginBtn.click();
-        //     element(by.id('btnRetData')).click();
-        //     expect(labels.last().getText()).toMatch('admin')
-        // });
+        it('should re-generate access token based on refresh token', () => {
+            userNameInput.sendKeys('admin');
+            passwordInput.sendKeys('pass.word');
+            loginBtn.click().then(function () {
+                element(by.id('btnAuth')).click();
+                expect(labels.first().getText()).toMatch('valid session');
+
+                element(by.id('btnExp')).click();
+                element(by.id('btnAuth')).click();
+                expect(labels.first().getText()).toMatch('invalid session');
+
+                element(by.id('btnDoGet')).click().then(function () {
+                    element(by.id('btnAuth')).click();
+                    expect(labels.first().getText()).toMatch('valid session');
+                });
+            });
+
+        });
+
     });
 
 });
