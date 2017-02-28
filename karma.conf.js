@@ -1,8 +1,8 @@
 ﻿// #docregion
 module.exports = function(config) {
 
-    var appBase = 'e2e/'; // transpiled app JS and map files
-    var appSrcBase = 'e2e/'; // app source TS files
+    var appBase = 'test/e2e/'; // transpiled app JS and map files
+    var appSrcBase = 'test/e2e/'; // app source TS files
     var appAssets = '/base/e2e/'; // component assets fetched by Angular's compiler
 
     var configuration = {
@@ -79,7 +79,8 @@ module.exports = function(config) {
         logLevel: config.LOG_INFO,
         autoWatch: true,
         browsers: ['Chrome'],
-        singleRun: false
+        singleRun: false,
+        failOnEmptyTestSuite: false
     };
 
     if (process.env.TRAVIS) configuration.browsers = ['Firefox'];

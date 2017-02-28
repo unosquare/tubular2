@@ -18,6 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		protractor.config.js = protractor.config.js
 		README.md = README.md
 		tsconfig.json = tsconfig.json
+		typings.json = typings.json
 	EndProjectSection
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Unosquare.Tubular2.Web", "src\Unosquare.Tubular2.Web\Unosquare.Tubular2.Web.xproj", "{E57CD0C7-6812-46E4-B868-6C15B1AC2BD1}"

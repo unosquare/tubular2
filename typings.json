@@ -1,0 +1,7 @@
+{
+  "name": "tubular2",
+  "dependencies": {},
+  "globalDependencies": {
+    "jasmine": "registry:dt/jasmine#2.5.0+20170207112528"
+  }
+}

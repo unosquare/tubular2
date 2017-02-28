@@ -16,7 +16,9 @@
       "core-js"
     ]
   },
+  "files": [ "typings/index.d.ts" ],
   "include": [
-    "src/lib/*.ts"
+    "src/lib/*.ts",
+    "test/**/*.ts"
   ]
 }
