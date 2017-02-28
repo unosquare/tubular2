@@ -32,7 +32,6 @@
     "ng2-toastr": "^1.3.3",
     "reflect-metadata": "^0.1.9",
     "rxjs": "~5.0.2",
-    "systemjs": "0.19.27",
     "zone.js": "^0.7.4"
   },
   "devDependencies": {
