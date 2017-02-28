@@ -7,7 +7,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C8315ADA-EC2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{94B6C0BD-6359-4B43-B556-E14F0ED3B1DA}"
 	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		.travis.yml = .travis.yml
+		appveyor.yml = appveyor.yml
 		global.json = global.json
+		gulpfile.js = gulpfile.js
+		karma-test-shim.js = karma-test-shim.js
+		karma.conf.js = karma.conf.js
+		package.json = package.json
+		protractor.config.js = protractor.config.js
+		README.md = README.md
+		tsconfig.json = tsconfig.json
 	EndProjectSection
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Unosquare.Tubular2.Web", "src\Unosquare.Tubular2.Web\Unosquare.Tubular2.Web.xproj", "{E57CD0C7-6812-46E4-B868-6C15B1AC2BD1}"
