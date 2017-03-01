@@ -12,6 +12,7 @@ clone_depth: 10
 # Fix line endings on Windows
 init:
   - git config --global core.autocrlf true
+  - npm config set loglevel warn
 
 install:
   - ps: Install-Product node $env:nodejs_version
@@ -25,12 +26,8 @@ install:
   - cd ..\..
 
 test_script:
-  # Output useful info for debugging.
-  - node --version && npm --version
-  # We test multiple Windows shells because of prior stdout buffering issues
-  # filed against Grunt. https://github.com/joyent/node/issues/3584
   - webdriver-manager update --ie
-  - ps: "npm --version # PowerShell" # Pass comment to PS for easier debugging
+  - ps: "npm --version # PowerShell"
   - npm run e2e
 
 cache: node_modules
