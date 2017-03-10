@@ -4,6 +4,9 @@ node_js:
 sudo: required
 addons:
   firefox: "51.0"
+  apt:
+    packages:
+      - google-chrome-stable
 notifications:
   slack: unolabs:cbusXPH6pBwZ35rVDzi4k4ve
 before_install:

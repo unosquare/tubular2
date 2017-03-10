@@ -7,7 +7,7 @@ exports.config = {
 
     // Capabilities to be passed to the webdriver instance.
     capabilities: {
-        'browserName': 'firefox'
+        'browserName': 'chrome'
     },
 
 
@@ -71,7 +71,7 @@ exports.config = {
 
 if (process.env.TRAVIS) {
     exports.config.capabilities = {
-        'browserName': 'firefox'
+        'browserName': 'chrome'
     };
 }
 
