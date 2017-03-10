@@ -6,6 +6,7 @@ TARGET_BRANCH="gh-pages"
 # Save some useful information
 REPO=`git config remote.origin.url`
 SSH_REPO=${REPO/https:\/\/github.com\//git@github.com:}
+echo "${SSH_REPO}"
 SHA=`git rev-parse --verify HEAD`
 
 # Clone the existing gh-pages for this repo into out/
@@ -23,7 +24,7 @@ cd ..
 
 # Now let's go have some fun with the cloned repo
 cd out
-echo "${GITHUBKEY}"
+
 git config credential.helper "store --file=.git/credentials"; echo "https://${GITHUBKEY}:@github.com" > .git/credentials 2>/dev/null
 git config user.name "Travis CI"
 git config user.email "geovanni.perez@gmail.com"
