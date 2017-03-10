@@ -8,6 +8,7 @@ exports.config = {
     capabilities: {
         'browserName': 'chrome'
     },
+    directConnect: true,
 
     // Framework to use. Jasmine is recommended.
     framework: 'jasmine',
