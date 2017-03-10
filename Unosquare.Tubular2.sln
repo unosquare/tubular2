@@ -19,7 +19,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		protractor.config.js = protractor.config.js
 		README.md = README.md
 		tsconfig.json = tsconfig.json
-		typings.json = typings.json
 	EndProjectSection
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Unosquare.Tubular2.Web", "src\Unosquare.Tubular2.Web\Unosquare.Tubular2.Web.xproj", "{E57CD0C7-6812-46E4-B868-6C15B1AC2BD1}"
@@ -52,6 +51,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "webpack", "webpack", "{31D1
 		webpack\webpack.test.js = webpack\webpack.test.js
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "e2e", "e2e", "{3091EE6B-5150-491D-8018-7B4EE54D8AC3}"
+	ProjectSection(SolutionItems) = preProject
+		test\e2e\auth-service.e2e-spec.ts = test\e2e\auth-service.e2e-spec.ts
+		test\e2e\filtering.e2e-spec.ts = test\e2e\filtering.e2e-spec.ts
+		test\e2e\grid-pager-info.e2e-spec.ts = test\e2e\grid-pager-info.e2e-spec.ts
+		test\e2e\grid-pager.e2e-spec.ts = test\e2e\grid-pager.e2e-spec.ts
+		test\e2e\page-size-selector.e2e-spec.ts = test\e2e\page-size-selector.e2e-spec.ts
+		test\e2e\sorting.e2e-spec.ts = test\e2e\sorting.e2e-spec.ts
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,5 +79,6 @@ Global
 		{E57CD0C7-6812-46E4-B868-6C15B1AC2BD1} = {C8315ADA-EC28-4A5B-92B9-6490BD9D6A6F}
 		{EA879135-1343-4D2A-A6A5-660FACF29541} = {C8315ADA-EC28-4A5B-92B9-6490BD9D6A6F}
 		{31D1FDE2-5D27-48B1-8080-49CD9B9F4D78} = {94B6C0BD-6359-4B43-B556-E14F0ED3B1DA}
+		{3091EE6B-5150-491D-8018-7B4EE54D8AC3} = {AD7EE4EF-6926-48C8-98B2-3318143EACCD}
 	EndGlobalSection
 EndGlobal

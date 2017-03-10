@@ -13,10 +13,11 @@
       "./node_modules/@types"
     ],
     "types": [
-      "core-js"
+      "core-js",
+      "jasmine"
     ]
   },
-  "files": [ "typings/index.d.ts" ],
+ 
   "include": [
     "src/lib/*.ts",
     "test/**/*.ts"
