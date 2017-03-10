@@ -1,5 +1,5 @@
 ﻿import { FormGroup, FormBuilder } from '@angular/forms';
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+//import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import * as moment from 'moment';
 
 import { TubularGrid } from './grid.component';
@@ -12,7 +12,7 @@ export abstract class TbForm {
     localForm: FormGroup;
     formErrors: Object;
     httpService: TubularHttpService;
-    toastr: ToastsManager;
+    //toastr: ToastsManager;
 
     modelKey: string;
     serverUrl: string;
@@ -21,10 +21,10 @@ export abstract class TbForm {
     serverSaveMethod: RequestMethod;
     requireAuthentication: boolean;
 
-    constructor(public formBuilder: FormBuilder, httpService: TubularHttpService = null, toastr: ToastsManager) {
+    constructor(public formBuilder: FormBuilder, httpService: TubularHttpService = null) { //, toastr: ToastsManager) {
         this.formErrors = {};
         this.httpService = httpService;
-        this.toastr = toastr;
+        //this.toastr = toastr;
     }
 
     tbFormInit(options: {
@@ -58,7 +58,7 @@ export abstract class TbForm {
                         }
                     }
                 },
-                errorMessage => this.toastr.error(errorMessage, "Application Error")
+                errorMessage => console.error(errorMessage, "Application Error")
             );
         }
 

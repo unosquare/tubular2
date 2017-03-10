@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+//import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { TbForm, TubularGrid, TubularHttpService } from '@tubular2/tubular2';
@@ -14,8 +14,8 @@ export class FormComponent extends TbForm implements OnInit {
 
     detailsForm: FormGroup;
 
-    constructor(private route: ActivatedRoute, private router: Router, public formBuilder: FormBuilder, public httpService: TubularHttpService, public toastr: ToastsManager) {
-        super(formBuilder, httpService, toastr);
+    constructor(private route: ActivatedRoute, private router: Router, public formBuilder: FormBuilder, public httpService: TubularHttpService) { //, public toastr: ToastsManager) {
+        super(formBuilder, httpService); //, toastr);
     }
 
     ngOnInit() {
@@ -32,9 +32,9 @@ export class FormComponent extends TbForm implements OnInit {
             values: this.detailsForm.value,
             $isNew: this.$isNew
         },
-            data => this.toastr.success("The record has been saved.", 'Success!'),
+            data => console.log("The record has been saved.", 'Success!'),
             error => {
-                this.toastr.error(error, 'Save error');
+                console.error(error, 'Save error');
                 this.close();
             },
             () => this.close()
