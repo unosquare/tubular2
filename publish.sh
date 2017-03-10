@@ -4,17 +4,11 @@ set -e # Exit with nonzero exit code if anything fails
 TARGET_BRANCH="gh-pages"
 
 # Save some useful information
-REPO=`git config remote.origin.url`
-SSH_REPO=${REPO/https:\/\/github.com\//git@github.com:}
-echo "${SSH_REPO}"
 SHA=`git rev-parse --verify HEAD`
 
 # Clone the existing gh-pages for this repo into out/
 # Create a new empty branch if gh-pages doesn't exist yet (should only happen on first deply)
-git clone $REPO out
-cd out
-git checkout $TARGET_BRANCH || git checkout --orphan $TARGET_BRANCH
-cd ..
+git clone https://github.com/unosquare/tubular2.git -b gh-pages origin_site -q
 
 # Move content
 mkdir out/reports/$TRAVIS_BUILD_NUMBER
@@ -35,4 +29,4 @@ git add reports/*
 git commit -m "Deploy to GitHub Pages: ${SHA}"
 
 # Now that we're all set up, we can push.
-git push $SSH_REPO $TARGET_BRANCH
+git push origin $TARGET_BRANCH -q
