@@ -1,9 +1,9 @@
 language: node_js
 node_js:
-  - stable
-sudo: false
+  - "node"
+sudo: required
 addons:
-  firefox: "39.0"
+  firefox: "51.0"
 notifications:
   slack: unolabs:cbusXPH6pBwZ35rVDzi4k4ve
 before_install:

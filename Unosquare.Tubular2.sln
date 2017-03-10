@@ -14,6 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		gulpfile.js = gulpfile.js
 		karma-test-shim.js = karma-test-shim.js
 		karma.conf.js = karma.conf.js
+		karma.entry.js = karma.entry.js
 		package.json = package.json
 		protractor.config.js = protractor.config.js
 		README.md = README.md
@@ -45,6 +46,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{EA879135-134
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{AD7EE4EF-6926-48C8-98B2-3318143EACCD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "webpack", "webpack", "{31D1FDE2-5D27-48B1-8080-49CD9B9F4D78}"
+	ProjectSection(SolutionItems) = preProject
+		webpack\webpack.dev.js = webpack\webpack.dev.js
+		webpack\webpack.test.js = webpack\webpack.test.js
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,5 +69,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{E57CD0C7-6812-46E4-B868-6C15B1AC2BD1} = {C8315ADA-EC28-4A5B-92B9-6490BD9D6A6F}
 		{EA879135-1343-4D2A-A6A5-660FACF29541} = {C8315ADA-EC28-4A5B-92B9-6490BD9D6A6F}
+		{31D1FDE2-5D27-48B1-8080-49CD9B9F4D78} = {94B6C0BD-6359-4B43-B556-E14F0ED3B1DA}
 	EndGlobalSection
 EndGlobal
