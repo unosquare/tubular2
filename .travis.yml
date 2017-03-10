@@ -7,6 +7,8 @@ addons:
 notifications:
   slack: unolabs:cbusXPH6pBwZ35rVDzi4k4ve
 before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y libfontconfig1 libstdc++6 fonts-liberation libappindicator1 lsb-base
   - export DISPLAY=:99.0
   - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   - sudo dpkg -i google-chrome*.deb
