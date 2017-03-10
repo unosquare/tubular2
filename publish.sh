@@ -23,7 +23,7 @@ cd ..
 
 # Now let's go have some fun with the cloned repo
 cd out
-
+echo "${GITHUBKEY}"
 git config credential.helper "store --file=.git/credentials"; echo "https://${GITHUBKEY}:@github.com" > .git/credentials 2>/dev/null
 git config user.name "Travis CI"
 git config user.email "geovanni.perez@gmail.com"
