@@ -14,7 +14,7 @@
     "pree2e": "npm run webdriver:update",
     "start": "webpack-dev-server --config ./webpack/webpack.dev.js",
     "e2e": "gulp e2e",
-    "webdriver:update": "webdriver-manager update"
+    "webdriver:update": "webdriver-manager update --versions.gecko v0.14.0"
   },
   "dependencies": {
     "@angular/common": "~2.4.3",
