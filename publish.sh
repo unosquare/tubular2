@@ -8,7 +8,7 @@ SHA=`git rev-parse --verify HEAD`
 
 # Clone the existing gh-pages for this repo into out/
 # Create a new empty branch if gh-pages doesn't exist yet (should only happen on first deply)
-git clone https://github.com/unosquare/tubular2.git -b gh-pages origin_site -q
+git clone https://github.com/unosquare/tubular2.git -b gh-pages out -q
 
 # Move content
 mkdir out/reports/$TRAVIS_BUILD_NUMBER
