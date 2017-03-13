@@ -1,5 +1,6 @@
 ﻿/// <binding Clean='clean' ProjectOpened='default' />
 var gulp = require('gulp');
+var merge2 = require('merge2');
 var del = require('del');
 var webpack = require('webpack');
 var webpackStream = require('webpack-stream');
@@ -24,16 +25,16 @@ var libs = {
     '@tubular2': '../lib/**/*'
 };
 
-gulp.task('tubular2-module', () => {
-    return gulp.src(['../package.json', '../lib/**/*.ts'])
-        .pipe(gulp.dest('node_modules/@tubular2/tubular2'));
-});
+gulp.task('tubular2-module', 
+    () => gulp.src(['../package.json', '../lib/**/*.ts'])
+        .pipe(gulp.dest('node_modules/@tubular2/tubular2')));
 
-gulp.task('lib', ['tubular2-module'], () => {
-    Object.keys(libs).forEach(key => gulp.src(libs[key]).pipe(gulp.dest('scripts/lib/' + key)));
-})
+gulp.task('lib', ['tubular2-module'], 
+    () => merge2(Object.keys(libs)
+            .map(key => gulp.src(libs[key]).pipe(gulp.dest('scripts/lib/' + key)))))
 
-gulp.task('clean', () => del(['node_modules/@tubular2', 'scripts/**/*']));
+gulp.task('clean',
+     () => del(['node_modules/@tubular2', 'scripts/**/*']));
 
 var standardBuild = watch => {
     gulp.src('app/main.ts')
