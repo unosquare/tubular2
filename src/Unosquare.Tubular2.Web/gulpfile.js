@@ -37,9 +37,7 @@ gulp.task('lib', ['tubular2-module'], function() {
     });
 });
 
-gulp.task('clean', function() {
-    return del(['node_modules/@tubular2', 'wwwroot/scripts/**/*']);
-});
+gulp.task('clean', () => del(['node_modules/@tubular2', 'wwwroot/scripts/**/*']));
 
 var standardBuild = function(watch) {
     gulp.src('wwwroot/app/main.ts')
@@ -59,6 +57,6 @@ var standardBuild = function(watch) {
         .pipe(gulp.dest('wwwroot/dist/'));
 }
 
-gulp.task('build', ['lib'], function() { return standardBuild(false); });
+gulp.task('build', ['lib'], () => standardBuild(false));
 
-gulp.task('default', ['lib'], function() { standardBuild(true); });
+gulp.task('default', ['lib'], () => standardBuild(true));
