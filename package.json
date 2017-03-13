@@ -36,9 +36,8 @@
   },
   "devDependencies": {
     "@types/core-js": "^0.9.37",
-    "@types/jasmine": "^2.5.41",
+    "@types/jasmine": "2.5.41",
     "@types/node": "^7.0.8",
-    "@types/protractor": "4.0.0",
     "@types/selenium-webdriver": "^3.0.0",
     "del": "2.2.2",
     "es6-shim": "0.35.3",
