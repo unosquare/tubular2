@@ -20,13 +20,13 @@ var libs = {
     'systemjs': 'node_modules/systemjs/**/*',
     'moment': 'node_modules/moment/*',
     'filesaver': 'node_modules/filesaver.js/*.js',
-    'ng2-toastr': 'node_modules/ng2-toastr/ng2-toastr.*',
+    'ng2-toastr': 'node_modules/ng2-toastr/**/*',
     '@ng-bootstrap': 'node_modules/@ng-bootstrap/ng-bootstrap/**/*',
-    '@tubular2': '../lib/**/*'
+    '@tubular2': 'node_modules/@tubular2/tubular2'
 };
 
 gulp.task('tubular2-module', 
-    () => gulp.src(['../package.json', '../lib/**/*.ts'])
+    () => gulp.src(['../package.json', '../lib/**/*.ts', '!../lib/**/*.spec.ts'])
         .pipe(gulp.dest('node_modules/@tubular2/tubular2')));
 
 gulp.task('lib', ['tubular2-module'], 
@@ -34,7 +34,7 @@ gulp.task('lib', ['tubular2-module'],
             .map(key => gulp.src(libs[key]).pipe(gulp.dest('scripts/lib/' + key)))))
 
 gulp.task('clean',
-     () => del(['node_modules/@tubular2', 'scripts/**/*']));
+     () => del(['node_modules/@tubular2', 'scripts/lib/**/*']));
 
 var standardBuild = watch => {
     gulp.src('app/main.ts')
