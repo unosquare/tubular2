@@ -10,7 +10,7 @@ require('zone.js/dist/jasmine-patch');
 
 var browserTesting = require('@angular/platform-browser-dynamic/testing');
 var coreTesting = require('@angular/core/testing');
-var context = require.context('./src/', true, /\.spec\.js$/);
+var context = require.context('./lib/', true, /\.spec\.js$/);
 
 Error.stackTraceLimit = Infinity;
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 2000;
@@ -22,4 +22,3 @@ coreTesting.TestBed.initTestEnvironment(
 );
 
 context.keys().forEach(context);
-

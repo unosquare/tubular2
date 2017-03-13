@@ -1,11 +1,6 @@
 ﻿var webpack = require("webpack");
 // #docregion
-module.exports = function(config) {
-
-    var appBase = 'test/e2e/'; // transpiled app JS and map files
-    var appSrcBase = 'test/e2e/'; // app source TS files
-    var appAssets = '/base/e2e/'; // component assets fetched by Angular's compiler
-
+module.exports = config => {
     var configuration = {
         basePath: '',
         frameworks: ['jasmine', 'source-map-support'],
