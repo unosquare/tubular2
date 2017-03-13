@@ -255,12 +255,12 @@ paket-files/
 *.sln.iml
 
 # Typescript
-/src/Unosquare.Tubular2.Web/wwwroot/scripts/lib
-/src/Unosquare.Tubular2.Web/wwwroot/app/*.js
-/src/Unosquare.Tubular2.Web/wwwroot/tubular/*.js
+/sample/scripts/lib
+/sample/app/*.js
+/sample/tubular/*.js
 *.js.map
-/src/Unosquare.Tubular2.Web/wwwroot/build
-/src/Unosquare.Tubular2.Web/wwwroot/dist
+/sample/build
+/sample/dist
 /test/e2e/*.js
 /src/Unosquare.Tubular2.Web/_test-output
 /src/lib/*.js
