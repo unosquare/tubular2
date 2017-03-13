@@ -1,7 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "module": "commonjs",
     "moduleResolution": "node",
     "sourceMap": true,
@@ -10,14 +10,13 @@
     "removeComments": false,
     "noImplicitAny": false,
     "typeRoots": [
-      "./node_modules/@types"
+      "node_modules/@types"
     ],
     "types": [
       "core-js",
       "jasmine"
     ]
   },
- 
   "include": [
     "src/lib/*.ts",
     "test/**/*.ts"

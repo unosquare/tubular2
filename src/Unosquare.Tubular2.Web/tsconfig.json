@@ -10,15 +10,12 @@
     "removeComments": false,
     "noImplicitAny": false,
     "typeRoots": [
-      "../node_modules/@types"
+      "node_modules/@types"
     ],
     "types": [
       "core-js"
     ]
   },
-  "definitions": [
-    "node_modules/reflect-metadata/reflect-metadata.d.ts"
-  ],
   "exclude": [
     "node_modules",
     "wwwroot/scripts/lib",
