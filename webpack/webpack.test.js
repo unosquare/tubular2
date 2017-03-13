@@ -26,7 +26,7 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['.js'],
+        extensions: ['.ts', '.js'],
         //modulesDirectories: ['node_modules'],
         //root: path.resolve('.')
     }
