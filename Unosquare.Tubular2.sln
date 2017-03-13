@@ -40,6 +40,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{EA879135-134
 		src\lib\page-size-selector.component.ts = src\lib\page-size-selector.component.ts
 		src\lib\tubular-data.service.ts = src\lib\tubular-data.service.ts
 		src\lib\tubular-settings.service.ts = src\lib\tubular-settings.service.ts
+		src\lib\tubular.module.spec.ts = src\lib\tubular.module.spec.ts
 		src\lib\tubular.module.ts = src\lib\tubular.module.ts
 	EndProjectSection
 EndProject
