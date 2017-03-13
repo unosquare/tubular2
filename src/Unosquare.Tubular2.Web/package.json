@@ -27,9 +27,10 @@
     "@types/core-js": "^0.9.34",
     "del": "2.2.0",
     "gulp": "3.9.0",
+    "gulp-typescript": "^3.1.1",
     "ts-loader": "^0.8.2",
     "typescript": "~2.1.5",
-    "webpack": "2.2.0-rc.4",
+    "webpack": "2.2.1",
     "webpack-stream": "^3.2.0"
   }
 }
