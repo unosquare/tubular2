@@ -16,7 +16,7 @@ module.exports = function(config) {
             require('karma-source-map-support'),
             require('karma-sourcemap-loader'),
             require('karma-coverage'),
-            require('karma-mocha-reporter'),
+            //require('karma-mocha-reporter'),
             require('karma-htmlfile-reporter')
         ],
 
