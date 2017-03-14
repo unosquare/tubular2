@@ -12,7 +12,7 @@ import { TbForm } from './tb-form';
 export abstract class FormPopup extends TbForm {
     @Input() modalRef: any;
     @Input() row: any;
-    private $isNew: boolean;
+    public $isNew: boolean;
     private detailsForm: FormGroup;
     private data: any;
 

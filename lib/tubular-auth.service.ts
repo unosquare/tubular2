@@ -120,7 +120,8 @@ export class TubularAuthService {
     }
 
     private retriveSaveData() {
-        let savedData = this.settingsProvider.get('auth_data') ? JSON.parse(this.settingsProvider.get('auth_data')) : null;
+        const savedData = this.settingsProvider.get('auth_data') ? JSON.parse(this.settingsProvider.get('auth_data')) : null;
+
         if (typeof savedData === 'undefined' || savedData == null) {
             throw 'No authentication exist';
         } else if (this.isDateExpired(savedData.expirationDate)) {
@@ -129,7 +130,7 @@ export class TubularAuthService {
     }
 
     private isDateExpired(expirationDate) {
-        let now = new Date();
+        const now = new Date();
         let expiration = new Date(expirationDate);
 
         return expiration.valueOf() - now.valueOf() <= 0;
@@ -139,7 +140,7 @@ export class TubularAuthService {
         return this.isDateExpired(this.userData.expirationDate);
     }
 
-    private addAuthHeaderToRequest(request: Request) {
+    addAuthHeaderToRequest(request: Request) {
         if (request.headers == null) {
             request.headers = new Headers();
         }
