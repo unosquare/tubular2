@@ -17,7 +17,7 @@ export abstract class GridTable {
 
     addColumns(columns: ColumnModel[]) {
         columns.forEach(c => {
-            var val = this.columnObservable.getValue();
+            let val = this.columnObservable.getValue();
             val.push(c);
             this.columnObservable.next(val);
         });
@@ -26,20 +26,25 @@ export abstract class GridTable {
     sort(column: ColumnModel) {
         let value = this.columnObservable.getValue();
 
-        if (!column.sortable) return;
+        if (!column.sortable) {
+            return;
+        }
 
-        if (column.direction === ColumnSortDirection.None)
+        if (column.direction === ColumnSortDirection.None) {
             column.direction = ColumnSortDirection.Asc;
-        else if (column.direction === ColumnSortDirection.Asc)
+        }
+        else if (column.direction === ColumnSortDirection.Asc) {
             column.direction = ColumnSortDirection.Desc;
-        else if (column.direction === ColumnSortDirection.Desc)
+        }
+        else if (column.direction === ColumnSortDirection.Desc) {
             column.direction = ColumnSortDirection.None;
+        }
 
         column.sortOrder = column.direction === ColumnSortDirection.None ? 0 : Number.MAX_VALUE;
 
         if (!column.isMultiSort) {
-            value.forEach(v => v.sortOrder = v.name == column.name ? v.sortOrder : 0);
-            value.forEach(v => v.direction = v.name == column.name ? column.direction : ColumnSortDirection.None);
+            value.forEach(v => v.sortOrder = v.name === column.name ? v.sortOrder : 0);
+            value.forEach(v => v.direction = v.name === column.name ? column.direction : ColumnSortDirection.None);
         }
 
         let currentlySortedColumns = value.filter(col => col.sortOrder > 0);

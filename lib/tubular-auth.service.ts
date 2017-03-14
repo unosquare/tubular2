@@ -19,7 +19,7 @@ export class TubularAuthService {
         expirationDate: null,
         role: '',
         refreshToken: ''
-    }
+    };
 
     private useRefreshTokens = false;
     private tokenUrl;
@@ -173,7 +173,7 @@ export class TubularAuthService {
                     return Observable.create(true);
                 }
                 else {
-                    return Observable.throw("error");
+                    return Observable.throw('error');
                 }
             })
             .map(() => { return true; });

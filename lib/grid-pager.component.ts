@@ -17,15 +17,15 @@ import { TubularGrid, GridPageInfo }      from './grid.component';
     </ngb-pagination>`
 })
 export class GridPager {
-    info = new GridPageInfo();
+    private info = new GridPageInfo();
 
     constructor(private tbGrid: TubularGrid) { }
 
-    ngOnInit() {
+    private ngOnInit() {
         this.tbGrid.pageInfo.subscribe((x: GridPageInfo) => this.info = x);
     }
 
-    goTo(page: number) {
+    private goTo(page: number) {
         this.info.currentPage = page;
         this.tbGrid.goToPage(page - 1);
     }

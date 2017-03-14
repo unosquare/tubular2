@@ -11,15 +11,15 @@ import { TubularGrid, GridPageInfo }      from './grid.component';
     </div>`
 })
 export class GridPagerInfo {
-    pageInfo = new GridPageInfo();
-    currentTop = 0;
-    currentInitial = 0;
-    filteredRecordCount = 0;
-    filtered: boolean;
+    private pageInfo = new GridPageInfo();
+    private currentTop = 0;
+    private currentInitial = 0;
+    private filteredRecordCount = 0;
+    private filtered: boolean;
     
     constructor(private tbGrid: TubularGrid) { }
 
-    ngOnInit() {
+    private ngOnInit() {
         // live update properties
         this.tbGrid.pageInfo.subscribe((x : GridPageInfo) => {
             this.pageInfo = x;

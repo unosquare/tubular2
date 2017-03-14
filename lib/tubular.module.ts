@@ -20,11 +20,11 @@ import { MDatePipe } from './mdate.pipe';
 @NgModule({
     imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule, NgbModule.forRoot()],
     declarations: [
-        TubularGrid, ColumnHeader, GridSearch, GridPager, GridPagerInfo, ColumnFilterDialog, 
+        TubularGrid, ColumnHeader, GridSearch, GridPager, GridPagerInfo, ColumnFilterDialog,
         PageSizeSelector, ExportButton, PrintButton, MDatePipe, TbInputError
     ],
     exports: [
-        TubularGrid, ColumnHeader, GridSearch, GridPager, GridPagerInfo, ColumnFilterDialog, 
+        TubularGrid, ColumnHeader, GridSearch, GridPager, GridPagerInfo, ColumnFilterDialog,
         PageSizeSelector, ExportButton, PrintButton, MDatePipe, NgbModule, TbInputError
     ]
 })

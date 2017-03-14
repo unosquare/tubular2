@@ -57,7 +57,7 @@ export class ExportButton {
 
     private processCsv(data) {
         let headers = this.tbGrid.columns.getValue().reduce((a, b) => a + b.label + ',', '').slice(0, -1) + '\r\n';
-        let rows = data.map(row => row.reduce((a, b) => a + '"' + b + '"' + ',', '').slice(0, -1) + '\r\n');
+        let rows = data.map((row) => row.reduce((a, b) => a + '"' + b + '"' + ',', '').slice(0, -1) + '\r\n');
         let csv = rows.reduce((a, b) => a + b, headers);
 
         let blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });

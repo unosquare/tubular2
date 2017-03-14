@@ -25,6 +25,7 @@ before_script:
 script:
 - gulp build
 - cd ..
+- gulp tslint
 - npm run test-once
 - npm run e2e
 - chmod +x ./publish.sh

@@ -50,7 +50,7 @@ export abstract class TbForm {
             this.serverUrl) {
 
             this.httpService.get(this.serverUrl + this.localForm.controls[this.modelKey].value, this.requireAuthentication).subscribe(
-                data => {
+                (data) => {
                     for (var key in data) {
 
                         if (this.localForm.controls[key]) {
@@ -58,13 +58,13 @@ export abstract class TbForm {
                         }
                     }
                 },
-                errorMessage => console.error(errorMessage, "Application Error")
+                (errorMessage) => console.error(errorMessage, "Application Error")
             );
         }
 
         // Watch for changes on form in order to trigger proper validations.
         this.localForm.valueChanges
-            .subscribe(data => this.onValueChanged(data));
+            .subscribe((data) => this.onValueChanged(data));
 
         this.onValueChanged(); // (re)set validation messages now
 
@@ -72,7 +72,6 @@ export abstract class TbForm {
     }
 
     onValueChanged(data?: any) {
-
         if (!this.localForm) { return; }
 
         for (const field in this.localForm.controls) {
@@ -93,8 +92,8 @@ export abstract class TbForm {
         this.httpService
             .save(this.saveUrl, row.values, row.$isNew ? this.serverSaveMethod : RequestMethod.Put, this.requireAuthentication)
             .subscribe(
-            data => success ? success(data) : this.defaultSaveSuccess(data),
-            errorMessage => error ? error(errorMessage) : this.defaultSaveError(errorMessage),
+            (data) => success ? success(data) : this.defaultSaveSuccess(data),
+            (errorMessage) => error ? error(errorMessage) : this.defaultSaveError(errorMessage),
             () => complete ? complete() : this.defaultSaveComplete()
             );
     }

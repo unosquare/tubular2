@@ -21,20 +21,22 @@ import { SETTINGS_PROVIDER, ITubularSettingsProvider } from './tubular-settings.
                 </div>`
 })
 export class GridSearch {
-    search: string;
+    private search: string;
     
-    constructor(@Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider, private tbGrid: TubularGrid) { }
+    constructor(
+        @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider, 
+        private tbGrid: TubularGrid) { }
 
-    ngOnInit() {
+    private ngOnInit() {
         // TODO: Restore value from localstorage?
     }
 
-    clearInput() {
-        this.tbGrid.freeTextSearch.next("");
-        this.search = "";
+    private clearInput() {
+        this.tbGrid.freeTextSearch.next('');
+        this.search = '';
     }
 
-    setSearch(event: any) {
+    private setSearch(event: any) {
         this.tbGrid.freeTextSearch.next(event);
     }
 }

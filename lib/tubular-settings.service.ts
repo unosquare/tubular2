@@ -10,28 +10,37 @@ export interface ITubularSettingsProvider {
 
 export class TubularLocalStorageService implements ITubularSettingsProvider {
 
-    existLocalStorage: boolean = true;
-    _data: {};
+    private existLocalStorage: boolean = true;
+    private _data: {};
 
     constructor() {
         if (!window.localStorage) {
             this.existLocalStorage = false;
-            console.log("Browser does not support localStorage");
+            console.log('Browser does not support localStorage');
         }
     }
-    
+
     public put(id: string, value: string) {
-        if (this.existLocalStorage) localStorage.setItem(id, JSON.stringify(value));
-        else this._data[id] = String(value);
+        if (this.existLocalStorage) {
+            localStorage.setItem(id, JSON.stringify(value));
+        } else {
+            this._data[id] = String(value);
+        }
     }
 
     public get(key: string): any {
-        if (this.existLocalStorage) return JSON.parse(localStorage.getItem(key)) || false;
-        else return this._data.hasOwnProperty(key) ? this._data[key] : false;
+        if (this.existLocalStorage) {
+            return JSON.parse(localStorage.getItem(key)) || false;
+        }
+
+        return this._data.hasOwnProperty(key) ? this._data[key] : false;
     }
-    
+
     public delete(key: string) {
-        if (this.existLocalStorage) localStorage.removeItem(key);
-        else return delete this._data[key];
+        if (this.existLocalStorage) {
+            localStorage.removeItem(key);
+        } else {
+            delete this._data[key];
+        }
     }
 }
