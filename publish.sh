@@ -18,6 +18,8 @@ cd ..
 
 # Now let's go have some fun with the cloned repo
 cd out
+npm install
+gulp reports
 
 git config credential.helper "store --file=.git/credentials"; echo "https://${GITHUBKEY}:@github.com" > .git/credentials 2>/dev/null
 git config user.name "Travis CI"
