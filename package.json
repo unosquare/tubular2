@@ -47,7 +47,6 @@
     "gulp-protractor": "4.0.0",
     "gulp-replace": "0.5.4",
     "gulp-tslint": "^7.1.0",
-    "gulp-tslint-stylish": "^1.1.1",
     "gulp-typescript": "^3.1.5",
     "html-webpack-plugin": "2.28.0",
     "jasmine-core": "2.5.2",
