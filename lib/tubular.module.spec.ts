@@ -1,5 +1,5 @@
-//import {it, describe, expect, beforeEachProviders, inject} from "@angular/core/testing";
 
+import {TubularModule} from "./tubular.module";
 describe('module: tubular', () => {
     it('should pass', () => { });
 }); 
