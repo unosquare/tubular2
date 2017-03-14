@@ -6,11 +6,23 @@ var del = require('del');
 var webpack = require('webpack');
 var webpackStream = require('webpack-stream');
 var tsProject = ts.createProject('tsconfig.json');
+var tslint = require("gulp-tslint");
+var stylish = require('gulp-tslint-stylish');
 
 gulp.task('default', 
     () => tsProject.src()
         .pipe(tsProject())
         .js.pipe(gulp.dest('dist')));
+
+gulp.task("tslint", 
+    () => gulp.src("lib/**/*.ts")
+        .pipe(tslint())
+        .pipe(tslint.report(stylish, {
+        emitError: false,
+        sort: true,
+        bell: true,
+        fullPath: true
+      })));
 
 gulp.task('connect', 
     () => connect.server({
