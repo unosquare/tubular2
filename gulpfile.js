@@ -8,7 +8,7 @@ var webpackStream = require('webpack-stream');
 var tsProject = ts.createProject('tsconfig.json');
 var tslint = require('gulp-tslint');
 
-gulp.task('default', ['tslint'],
+gulp.task('default', 
     () => tsProject.src()
         .pipe(tsProject())
         .js.pipe(gulp.dest('dist')));
