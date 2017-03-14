@@ -51,50 +51,52 @@ export class TubularGrid {
     // values that to observe and allow to push from children
     page = new BehaviorSubject(this.getPageSettingValue());
     columns = new BehaviorSubject([]);
-    freeTextSearch = new BehaviorSubject("");
+    freeTextSearch = new BehaviorSubject('');
 
     pageSet = false;
 
     showLoading = false;
     private requestCount = 0;
     search = {
-        text: "",
-        operator: "None"
+        text: '',
+        operator: 'None'
     };
 
-    @Input('server-url') serverUrl: string;
-    @Input('require-authentication') requireAuthentication: boolean;
-    @Input('request-timeout') requestTimeout: number;
-    @Input('server-save-url') serverSaveUrl: string;
+    @Input() serverUrl: string;
+    @Input() requireAuthentication: boolean;
+    @Input() requestTimeout: number;
+    @Input() serverSaveUrl: string;
 
     @Output() onDataError = new EventEmitter<any>();
     @Output() onDataSaved = new EventEmitter<any>();
 
-    constructor( @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider, private httpService: TubularHttpService) {
-    }
+    constructor(
+        @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider, 
+        private httpService: TubularHttpService) { }
 
-    ngOnInit() {
+    private ngOnInit() {
         // just a logging
-        this.dataStream.subscribe(p => console.log("New data", p));
+        this.dataStream.subscribe((p) => console.log('New data', p));
 
         // subscriptions to events
         this.pageSize.subscribe(c => {
             this.refresh();
             this.changePageSizeData()
         });
-        this.columns.subscribe(c => {
+        this.columns.subscribe((c) => this.refresh());
+        this.page.subscribe((c) => {
             this.refresh();
-        });
-        this.page.subscribe(c => {
-            this.refresh();
-            this.changePagesData()
+            this.changePagesData();
         });
         this.freeTextSearch
             .debounceTime(500)
-            .subscribe(c => {
-                if (c === this.search.text) return;
+            .subscribe((c) => {
+                if (c === this.search.text) {
+                    return;
+                }
+
                 this.search.text = c;
-                this.search.operator = !c ? "None" : "Auto";
+                this.search.operator = !c ? 'None' : 'Auto';
                 this.refresh();
             });
     }
@@ -139,8 +141,8 @@ export class TubularGrid {
         };
 
         this.httpService.post(this.serverUrl, req).subscribe(
-            data => callback(data.Payload || {}),
-            error => this.onDataError.emit(error)
+            (data) => callback(data.Payload || {}),
+            (error) => this.onDataError.emit(error)
         );
     }
 
@@ -150,8 +152,7 @@ export class TubularGrid {
             .subscribe(
             data => this.onDataSaved.emit(data),
             error => this.onDataError.emit(error),
-            () => this.refresh()
-            );
+            () => this.refresh());
     }
 
     private transformToObj(columns: ColumnModel[], data: any) {
@@ -198,20 +199,30 @@ export class TubularGrid {
     }
 
     changePagesData() {
-        if (this.settingsProvider != null) this.settingsProvider.put("gridPage", this.page.getValue());
+        if (this.settingsProvider != null) {
+            this.settingsProvider.put("gridPage", this.page.getValue());
+        }
     }
 
     changePageSizeData() {
-        if (this.settingsProvider != null) this.settingsProvider.put("gridPageSize", this._pageSize.getValue());
+        if (this.settingsProvider != null) {
+            this.settingsProvider.put("gridPageSize", this._pageSize.getValue());
+        }
     }
 
     getPageSettingValue() {
-        if (this.settingsProvider != null) return this.settingsProvider.get("gridPage") || 0;
-        else return 0;
+        if (this.settingsProvider != null) {
+            return this.settingsProvider.get("gridPage") || 0;
+        }
+        
+        return 0;
     }
 
     getPageSizeSettingValue() {
-        if (this.settingsProvider != null) return this.settingsProvider.get("gridPageSize") || 10;
-        else return 10;
+        if (this.settingsProvider != null) { 
+            return this.settingsProvider.get("gridPageSize") || 10;
+        }
+        
+        return 10;
     }
 }

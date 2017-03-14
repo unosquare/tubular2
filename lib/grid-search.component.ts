@@ -20,11 +20,11 @@ import { SETTINGS_PROVIDER, ITubularSettingsProvider } from './tubular-settings.
                     </div>
                 </div>`
 })
-export class GridSearch {
+export class GridSearchComponent {
     private search: string;
-    
+
     constructor(
-        @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider, 
+        @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider,
         private tbGrid: TubularGrid) { }
 
     private ngOnInit() {

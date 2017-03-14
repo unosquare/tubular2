@@ -27,7 +27,9 @@ export class TubularAuthService {
     private requireAuthentication = true;
     private refreshTokenUrl = this.tokenUrl = '/api/token';
 
-    constructor( @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider, private http: Http) { }
+    constructor(
+        @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider,
+        private http: Http) { }
 
     setTokenUrl(url: string): void {
         this.tokenUrl = url;
@@ -65,31 +67,19 @@ export class TubularAuthService {
             this.settingsProvider.put('auth_data', JSON.stringify(this.userData));
     }
 
-    authenticate(username: string, password: string, successCallback?, errorCallback?) {
+    authenticate(username: string, password: string) {
         this.removeAuthentication();
         let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
-        let options = new RequestOptions({ headers: headers });
+        let options = new RequestOptions({ headers });
 
-        return this.http.post(this.tokenUrl, 'grant_type=password&username=' + username + '&password=' + password, options)
-            .map(data => this.handleSuccessCallback(data))
-            .catch((err: Error) => this.handleAuthError(err, errorCallback));
-    }
-
-    handleAuthError(err: any, errorCallback) {
-        let error = {
-            errorBody: JSON.parse(err._body),
-            status: err.status
-        };
-
-        if (typeof errorCallback != null)
-            errorCallback(error);
-
-        return Observable.throw(error);
+        return this.http.post(this.tokenUrl, `grant_type=password&username=${username}&password=${password}`, options)
+            .map(data => this.handleSuccessCallback(data));
     }
 
     removeAuthentication() {
-        if (this.settingsProvider)
+        if (this.settingsProvider) {
             this.settingsProvider.delete('auth_data');
+        }
 
         this.userData.isAuthenticated = false;
         this.userData.username = '';
@@ -98,8 +88,9 @@ export class TubularAuthService {
         this.userData.role = '';
         this.userData.refreshToken = '';
 
-        if (this.settingsProvider)
+        if (this.settingsProvider) {
             this.settingsProvider.delete('auth_Header');
+        }
     }
 
     private handleSuccessCallback(data) {
@@ -111,11 +102,12 @@ export class TubularAuthService {
         this.userData.role = data.role;
         this.userData.refreshToken = data.refresh_token;
 
-        if (this.settingsProvider)
+        if (this.settingsProvider) {
             this.settingsProvider.put('auth_data', JSON.stringify(this.userData));
+        }
     }
 
-    isValidSession() {
+    public isValidSession() {
         if (!this.userData.isAuthenticated || this.isDateExpired(this.userData.expirationDate)) {
             try {
                 this.retriveSaveData();
@@ -147,8 +139,8 @@ export class TubularAuthService {
         return this.isDateExpired(this.userData.expirationDate);
     }
 
-    addAuthHeaderToRequest(request: Request) {
-        if (request.headers = null) {
+    private addAuthHeaderToRequest(request: Request) {
+        if (request.headers == null) {
             request.headers = new Headers();
         }
 
@@ -156,26 +148,26 @@ export class TubularAuthService {
             request.headers.delete('Authorization');
         }
 
-        request.headers.append('Authorization', 'Bearer ' + this.userData.bearerToken);
+        request.headers.append('Authorization', `Bearer ${this.userData.bearerToken}`);
     }
 
-
-    refreshSession(): Observable<any> {
+    public refreshSession(): Observable<any> {
         let refreshToken = this.userData.refreshToken;
         this.removeAuthentication();
 
         let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
-        let options = new RequestOptions({ headers: headers });
-        return this.http.post(this.getRefreshTokenUrl(), 'grant_type=refresh_token&refresh_token=' + refreshToken, options)
+        let options = new RequestOptions({ headers });
+
+        return this.http.post(this.getRefreshTokenUrl(), `grant_type=refresh_token&refresh_token=${refreshToken}`, options)
             .mergeMap((response) => {
                 this.handleSuccessCallback(response);
+
                 if (this.isValidSession()) {
                     return Observable.create(true);
-                }
-                else {
+                } else {
                     return Observable.throw('error');
                 }
             })
-            .map(() => { return true; });
+            .map(() => true);
     }
 }

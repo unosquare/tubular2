@@ -35,8 +35,7 @@ export abstract class TbForm {
         requireAuthentication?: boolean
     } = {}): FormGroup {
 
-
-        this.hasModelKey = options.modelKey !== undefined && options.modelKey != '';
+        this.hasModelKey = options.modelKey !== undefined && options.modelKey !== '';
         this.modelKey = options.modelKey || '';
         this.serverUrl = options.serverUrl || '';
         this.saveUrl = options.saveUrl || '';
@@ -51,14 +50,14 @@ export abstract class TbForm {
 
             this.httpService.get(this.serverUrl + this.localForm.controls[this.modelKey].value, this.requireAuthentication).subscribe(
                 (data) => {
-                    for (var key in data) {
+                    for (let key in data) {
 
                         if (this.localForm.controls[key]) {
                             this.localForm.controls[key].setValue(data[key]);
                         }
                     }
                 },
-                (errorMessage) => console.error(errorMessage, "Application Error")
+                (errorMessage) => console.error(errorMessage, 'Application Error')
             );
         }
 
@@ -99,20 +98,20 @@ export abstract class TbForm {
     }
 
     private defaultSaveSuccess(data) {
-        console.log("Success");
+        console.log('Success');
     }
 
     private defaultSaveError(error) {
-        console.log("Error");
+        console.log('Error');
     }
 
     private defaultSaveComplete() {
-        console.log("Complete");
+        console.log('Complete');
     }
 
     private getVal(data, field): any {
         if (data === undefined)
-            return "";
+            return '';
 
         if (moment.isMoment(data[field])) {
             return data[field].format('YYYY-MM-DDThh:mm');
@@ -126,17 +125,16 @@ export abstract class TbForm {
             let friendlyFieldName = this.getFriendlyFieldName(fieldName);
 
             switch (validator) {
-                case "required":
+                case 'required':
                     return `${friendlyFieldName} is required.`;
-                case "minlength":
+                case 'minlength':
                     return `${friendlyFieldName} must be at least 4 characters long.`;
-                case "maxlength":
+                case 'maxlength':
                     return `${friendlyFieldName} cannot be more than 24 characters long.`;
                 default:
                     return `Invalid field.`;
             }
-        }
-        else {
+        } else {
             return this.validationMessages[fieldName][validator];
         }
     }
@@ -144,7 +142,7 @@ export abstract class TbForm {
     private getFriendlyFieldName(fieldName: string): string {
         return fieldName
             .replace(/([A-Z])/g, ' $1')
-            .replace(/^./, function (str) { return str.toUpperCase(); });
+            .replace(/^./, (str) => str.toUpperCase());
     }
 
     buildForm(): FormGroup {

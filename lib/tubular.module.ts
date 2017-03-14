@@ -8,7 +8,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TubularGrid }  from './grid.component';
 import { TbInputError }  from './tb-input-error.component';
 import { ColumnHeader } from './column-header.component';
-import { GridSearch } from './grid-search.component';
+import { GridSearchComponent } from './grid-search.component';
 import { GridPager } from './grid-pager.component';
 import { ColumnFilterDialog }  from './column-filter-dialog.component';
 import { GridPagerInfo } from './grid-pager-info.component';
@@ -20,11 +20,13 @@ import { MDatePipe } from './mdate.pipe';
 @NgModule({
     imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule, NgbModule.forRoot()],
     declarations: [
-        TubularGrid, ColumnHeader, GridSearch, GridPager, GridPagerInfo, ColumnFilterDialog,
+        TubularGrid, ColumnHeader, GridSearchComponent,
+        GridPager, GridPagerInfo, ColumnFilterDialog,
         PageSizeSelector, ExportButton, PrintButton, MDatePipe, TbInputError
     ],
     exports: [
-        TubularGrid, ColumnHeader, GridSearch, GridPager, GridPagerInfo, ColumnFilterDialog,
+        TubularGrid, ColumnHeader, GridSearchComponent,
+        GridPager, GridPagerInfo, ColumnFilterDialog,
         PageSizeSelector, ExportButton, PrintButton, MDatePipe, NgbModule, TbInputError
     ]
 })

@@ -32,10 +32,12 @@ export class PageSizeSelector {
 
     @Input('options')
     set in(options: any[]) {
-        if (options != undefined) this._options = options;
+        if (options != undefined) {
+            this._options = options;
+        }
     }
 
-    ngOnInit() {
+    private ngOnInit() {
         this.selected = this.tbGrid._pageSize.getValue();
     }
 

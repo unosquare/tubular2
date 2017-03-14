@@ -1,4 +1,7 @@
-﻿import { Component, Input, Output, EventEmitter, ContentChild, TemplateRef, ViewChild, AfterViewInit } from '@angular/core';
+﻿import {
+    Component, Input, Output, EventEmitter,
+    ContentChild, TemplateRef, ViewChild, AfterViewInit 
+} from '@angular/core';
 
 import { ColumnModel } from './column';
 
@@ -25,9 +28,9 @@ import { ColumnModel } from './column';
     ]
 })
 export class ColumnHeader {
-    @Input() column: ColumnModel;
-    @Output() onSort = new EventEmitter<ColumnModel>();
-    @Output() onFilter = new EventEmitter<ColumnModel>();
+    @Input() public column: ColumnModel;
+    @Output() public onSort = new EventEmitter<ColumnModel>();
+    @Output() public onFilter = new EventEmitter<ColumnModel>();
     @ContentChild('filterPopover') private filterPopoverTemplate: TemplateRef<Object>;
     @ViewChild('popover') popover: any;
 

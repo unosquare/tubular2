@@ -1,7 +1,7 @@
 import { Injectable, Inject, Optional } from '@angular/core';
-import { 
-    Http, Response, RequestMethod, Request, Headers, 
-    RequestOptions, RequestOptionsArgs, ResponseContentType 
+import {
+    Http, Response, RequestMethod, Request, Headers,
+    RequestOptions, RequestOptionsArgs, ResponseContentType
 } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
@@ -28,15 +28,15 @@ export class TubularHttpService {
     private requireAuthentication: boolean;
 
     constructor(
-        @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider, 
-        private http: Http, 
+        @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider,
+        private http: Http,
         private tbAuthService: TubularAuthService) { }
 
     public get(url: string, requireAuthentication: boolean = false): Observable<any> {
         let requestArgs = <TbRequestArgs>{
             method: RequestMethod.Get,
-            url: url,
-            requireAuthentication: requireAuthentication
+            url,
+            requireAuthentication
         };
 
         return this.request(requestArgs);
@@ -45,9 +45,9 @@ export class TubularHttpService {
     public post(url: string, data: any, requireAuthentication: boolean = false): Observable<any> {
         let requestArgs = <TbRequestArgs>{
             method: RequestMethod.Post,
-            url: url,
             body: data,
-            requireAuthentication: requireAuthentication
+            url,
+            requireAuthentication
         };
 
         return this.request(requestArgs);
@@ -56,9 +56,9 @@ export class TubularHttpService {
     public put(url: string, data: any, requireAuthentication: boolean = false): Observable<any> {
         let requestArgs = <TbRequestArgs> {
             method: RequestMethod.Put,
-            url: url,
             body: data,
-            requireAuthentication: requireAuthentication
+            url,
+            requireAuthentication
         };
 
         return this.request(requestArgs);
@@ -67,9 +67,9 @@ export class TubularHttpService {
     public delete(url: string, data: any, requireAuthentication: boolean = false): Observable<any> {
         let requestArgs = <TbRequestArgs> {
             method: RequestMethod.Delete,
-            url: url,
             body: data,
-            requireAuthentication: requireAuthentication
+            url,
+            requireAuthentication
         };
 
         return this.request(requestArgs);
@@ -102,7 +102,7 @@ export class TubularHttpService {
             } else {
                 if (this.tbAuthService.isAuthTokenExpired() && this.tbAuthService.isUsingRefreshTokens()) {
                     return this.handleRequestError(
-                        { 
+                        {
                             message: 'Token expired',
                             status: '401', 
                             statusText: 'Token expired' 
@@ -126,11 +126,11 @@ export class TubularHttpService {
     }
 
     public save(url: string, row: any, method: RequestMethod = RequestMethod.Post, requireAuthentication: boolean = true): Observable<any> {
-        let requestArgs = <TbRequestArgs>{
-            method: method,
-            url: url,
+        let requestArgs = <TbRequestArgs> {
             body: row,
-            requireAuthentication: requireAuthentication
+            method,
+            url,
+            requireAuthentication
         };
 
         return this.request(requestArgs);

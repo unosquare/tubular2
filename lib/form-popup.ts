@@ -12,39 +12,38 @@ import { TbForm } from './tb-form';
 export abstract class FormPopup extends TbForm {
     @Input() modalRef: any;
     @Input() row: any;
-    $isNew: boolean;
-    detailsForm: FormGroup;
+    private $isNew: boolean;
+    private detailsForm: FormGroup;
     private data: any;
 
     constructor(public tbGrid: TubularGrid, public formBuilder: FormBuilder, public httpService: TubularHttpService) {// , public toastr: ToastsManager) {
-        super(formBuilder, httpService) //, toastr);
+        super(formBuilder, httpService); //, toastr);
     }
 
-    ngOnInit() {
-
+    private ngOnInit() {
         this.detailsForm = this.tbFormInit({
             saveUrl: this.tbGrid.serverSaveUrl
         });
     }
 
-    close() {
+    public close() {
         this.modalRef.close();
     }
 
-    save() {
+    public save() {
         this.onSave({
             values: this.detailsForm.value,
             $isNew: this.$isNew
         },
-            data => console.log("Saved"),
-            error => {
+            (data) => console.log('Saved'),
+            (error) => {
                 console.log('Save error');
                 this.close();
             },
-            () => console.log("Completed"));
+            () => console.log('Completed'));
     }
 
-    getRow(): any {
+    public getRow(): any {
         return this.row;
     };
 
