@@ -257,21 +257,18 @@ describe('Filtering e2e Tests', () => {
 
        it('should correctly filter data for the "Between" filtering option', () => {
            let filterOk = true;
-           let minDate = new Date('12/29/2015 00:00 AM');
-           let maxDate = new Date('12/31/2015 00:00 AM');
            let argumentInput = popOverForm.$$('.form-group').get(1).$$('input').last();
            filterSelect.$('[value="Between"]').click();
-           valueInput.sendKeys(minDate);
-           argumentInput.sendKeys(maxDate);
+           valueInput.sendKeys('12/29/2015');
+           argumentInput.sendKeys('12/31/2015');
            applyBtn.click();
            let dataRows = element(by.tagName('tbody')).$$('tr');
+
            dataRows.each((row) => {
                 row.$$('td').get(4).getText().then((filter) => {
-                   filterOk = filterOk && ((minDate <= new Date(filter)) && (new Date(filter) <= maxDate));
+                   filterOk = filterOk && ((new Date('12/29/2015') <= new Date(filter)) && (new Date(filter) <= new Date('12/31/2015')));
                 })
-            }).then(() => {
-                expect(filterOk).toBe(true);  
-            });
+            }).then(() => expect(filterOk).toBe(true));
        });
 
 
@@ -326,19 +323,18 @@ describe('Filtering e2e Tests', () => {
                 row.$$('td').get(2).getText().then((customerName) => {
                    filterOk = filterOk && (customerName == filteredCustomer);
                 })
-            }).then(() => {
-                expect(filterOk).toBe(false);  
-            }).then(() => {
+            })
+            .then(() => expect(filterOk).toBe(false))
+            .then(() => {
                 filterOk = true;
                 searchInput.sendKeys('r');
                 let dataRows = element(by.tagName('tbody')).$$('tr');
+
                 dataRows.each((row) => {
                     row.$$('td').get(2).getText().then((customerName) => {
                         filterOk = filterOk && (customerName == filteredCustomer);
                     })
-                }).then(() => {
-                    expect(filterOk).toBe(true);
-                })
+                }).then(() => expect(filterOk).toBe(true))
             });
         });
 
@@ -352,9 +348,9 @@ describe('Filtering e2e Tests', () => {
                 row.$$('td').get(2).getText().then((cityName) => {
                    filterOk = filterOk && (cityName == filteredCity);
                 })
-            }).then(() => {
-                expect(filterOk).toBe(false);  
-            }).then(() => {
+            })
+            .then(() => expect(filterOk).toBe(false))
+            .then(() => {
                 filterOk = true;
                 searchInput.sendKeys('r');
                 let dataRows = element(by.tagName('tbody')).$$('tr');
@@ -362,21 +358,15 @@ describe('Filtering e2e Tests', () => {
                     row.$$('td').get(2).getText().then((cityName) => {
                         filterOk = filterOk && (cityName == filteredCity);
                     })
-                }).then(() => {
-                    expect(filterOk).toBe(true);
-                })
+                }).then(() => expect(filterOk).toBe(true))
             });
         });
 
         it('should show clear button when there is inputted text only', () => {
             expect(clearBtn.isDisplayed()).toBe(false);
-            searchInput.sendKeys('1').then(() => {
-                expect(clearBtn.isDisplayed()).toBe(true);
-            });
+            searchInput.sendKeys('1').then(() => expect(clearBtn.isDisplayed()).toBe(true));
         });
 
-
-        
         it('should clear text search when clicking clear button', () => {
             searchInput.sendKeys('uno');
             clearBtn.click();
