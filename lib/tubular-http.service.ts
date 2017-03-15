@@ -75,16 +75,6 @@ export class TubularHttpService {
         return this.request(requestArgs);
     }
 
-    public retrieveGridData(url: string, req: any): Observable<any> {
-        req.columns.forEach(this.transformSortDirection);
-
-        console.log('retrieveGridData');
-
-        return this.post(url, req)
-            .map(this.extractData)
-            .catch(this.handleRequestError);
-    }
-
     public request(request: TbRequestArgs): Observable<any> {
         let ngRequest = new Request({
             url: request.url,
@@ -116,14 +106,6 @@ export class TubularHttpService {
         return this.http.request(ngRequest)
             .map(this.extractData)
             .catch((error: Error) => this.handleRequestError(error, request));
-    }
-
-    public retrieveData(url: string, req: any): Observable<any> {
-        req.columns.forEach(this.transformSortDirection);
-
-        return this.post(url, req)
-            .map(this.extractData)
-            .catch(this.handleRequestError);
     }
 
     public save(
@@ -161,19 +143,6 @@ export class TubularHttpService {
         }
 
         return Observable.throw(errMsg);
-    }
-
-    private transformSortDirection(column) {
-        switch (column.direction) {
-            case 1:
-                column.sortDirection = 'Ascending';
-                break;
-            case 2:
-                column.sortDirection = 'Descending';
-                break;
-            default:
-                column.sortDirection = 'None';
-        }
     }
 
     private extractData(res: Response) {

@@ -6,7 +6,7 @@ import * as moment from 'moment';
 
 import { TubularHttpService } from './tubular-http.service';
 import { SETTINGS_PROVIDER, ITubularSettingsProvider } from './tubular-settings.service';
-import { ColumnModel, DataType } from './column';
+import { ColumnModel, DataType, ColumnSortDirection } from './column';
 
 import 'rxjs/add/operator/debounceTime';
 
@@ -56,16 +56,17 @@ export class TubularGrid {
     pageSet = false;
 
     showLoading = false;
-    private requestCount = 0;
     search = {
         text: '',
         operator: 'None'
     };
 
-    @Input() serverUrl: string;
+    private requestCount = 0;
+
+    @Input() public dataUrl: string;
     @Input() requireAuthentication: boolean;
     @Input() requestTimeout: number;
-    @Input() serverSaveUrl: string;
+    @Input() saveUrl: string;
 
     @Output() onDataError = new EventEmitter<any>();
     @Output() onDataSaved = new EventEmitter<any>();
@@ -121,8 +122,11 @@ export class TubularGrid {
             search: this.search,
             timezoneOffset: new Date().getTimezoneOffset()
         };
+        
+        // transform direction values to strings
+        req.columns.forEach(this.transformSortDirection);
 
-        this.httpService.post(this.serverUrl, req).subscribe(
+        this.httpService.post(this.dataUrl, req).subscribe(
             data => callback(data, req),
             error => this.onDataError.emit(error)
         );
@@ -140,7 +144,7 @@ export class TubularGrid {
             }
         };
 
-        this.httpService.post(this.serverUrl, req).subscribe(
+        this.httpService.post(this.dataUrl, req).subscribe(
             (data) => callback(data.Payload || {}),
             (error) => this.onDataError.emit(error)
         );
@@ -148,11 +152,24 @@ export class TubularGrid {
 
     onUpdate(row) {
         this.httpService
-            .save(this.serverSaveUrl, row.values, row.$isNew ? RequestMethod.Post : RequestMethod.Put)
+            .save(this.saveUrl, row.values, row.$isNew ? RequestMethod.Post : RequestMethod.Put)
             .subscribe(
             data => this.onDataSaved.emit(data),
             error => this.onDataError.emit(error),
             () => this.refresh());
+    }
+
+    private transformSortDirection(column: ColumnModel) {
+        switch (column.direction) {
+            case ColumnSortDirection.Asc:
+                column.sortDirection = 'Ascending';
+                break;
+            case ColumnSortDirection.Desc:
+                column.sortDirection = 'Descending';
+                break;
+            default:
+                column.sortDirection = 'None';
+        }
     }
 
     private transformToObj(columns: ColumnModel[], data: any) {

@@ -10,15 +10,20 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SampleGrid } from './sampleGrid.component';
 import { OrderPopup } from './order-popup.component';
-import { GridComponent } from './grid.component';
+import { MainGridComponent } from './main-grid.component';
 import { FormComponent } from './form.component';
 import { LoginComponent } from './login.component';
-import { ExpirationComponent } from './expiration.component';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
 
 @NgModule({
-    imports: [BrowserModule, FormsModule, ReactiveFormsModule, TubularModule, AppRoutingModule, ToastModule],
-    declarations: [AppComponent, SampleGrid, OrderPopup, GridComponent, FormComponent, LoginComponent, ExpirationComponent],
+    imports: [
+        BrowserModule, FormsModule, ReactiveFormsModule, TubularModule, 
+        AppRoutingModule, ToastModule
+    ],
+    declarations: [
+        AppComponent, SampleGrid, OrderPopup, MainGridComponent, FormComponent, 
+        LoginComponent
+    ],
     providers: [
         TubularAuthService,
         TubularHttpService,

@@ -22,7 +22,7 @@ export abstract class FormPopup extends TbForm {
 
     private ngOnInit() {
         this.detailsForm = this.tbFormInit({
-            saveUrl: this.tbGrid.serverSaveUrl
+            saveUrl: this.tbGrid.saveUrl
         });
     }
 

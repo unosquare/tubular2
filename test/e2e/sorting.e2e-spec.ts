@@ -17,7 +17,7 @@ describe('grid sorting', () => {
     beforeAll(() => {
         browser.get('/');
         dataSetLowerId = '1';
-        dataSetHigherId = '49';
+        dataSetHigherId = '500';
         dataSetLowerCustomerName = 'Advanced Technology Systems';
         dataSetHigherCustomerName = 'Vesta';
         dataSetLowerDate = 'Tuesday, December 29th 2015';

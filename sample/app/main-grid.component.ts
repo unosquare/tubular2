@@ -4,9 +4,9 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'my-tbGrid',
-    templateUrl: '/app/grid.component.html'
+    templateUrl: '/app/main-grid.component.html'
 })
-export class GridComponent {
+export class MainGridComponent {
     public newOrderModalRef;
 
     constructor(private modalService: NgbModal) {

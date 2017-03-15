@@ -8,15 +8,20 @@ import { ColumnModel } from './column';
    <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label for="operator">Operator</label>
-            <select id="operator" class="form-control" formControlName="operator" (change)="selectChange($event.target.value)">
-                <option *ngFor="let operator of operators" [value]="operator.value">{{operator.name}}</option>
+            <select id="operator" class="form-control" 
+                    formControlName="operator" 
+                    (change)="selectChange($event.target.value)">
+                <option *ngFor="let operator of operators" [value]="operator.value">
+                    {{operator.name}}
+                </option>
             </select>
         </div>
         <div class="form-group">
             <label>Value</label>
             <input type="{{inputType}}" class="form-control" formControlName="text" />
             <label *ngIf="isBetween">Argument</label>
-            <input *ngIf="isBetween" type="{{inputType}}" class="form-control" formControlName="argument"/>
+            <input *ngIf="isBetween" type="{{inputType}}" 
+                class="form-control" formControlName="argument"/>
         </div>
         <div class="row">
             <div class="col-xs-6">
@@ -31,8 +36,8 @@ import { ColumnModel } from './column';
     </form>`,
     styles: [ 'form { min-width: 200px; }' ]
 })
-export class ColumnFilterDialog implements AfterViewInit {
-    @Input() column: ColumnModel;
+export class ColumnFilterDialogComponent implements AfterViewInit {
+    @Input() public column: ColumnModel;
     @Output() onFilteringChange = new EventEmitter<boolean>();
     form: FormGroup;
     operators: Object[];
@@ -41,17 +46,18 @@ export class ColumnFilterDialog implements AfterViewInit {
 
     constructor(fb: FormBuilder) {
         this.form = fb.group({
-            text: ["", Validators.required],
-            argument: [""],
-            operator: ["None", Validators.required]
+            text: ['', Validators.required],
+            argument: [''],
+            operator: ['None', Validators.required]
         });
 
-        this.form.valueChanges.subscribe(value => {
+        this.form.valueChanges.subscribe((value) => {
             this.column.filter.text = value.text;
             this.column.filter.operator = value.operator;
 
-            if (value.argument)
+            if (value.argument) {
                 this.column.filter.argument = [value.argument];
+            }
 
             this.isBetween = value.operator == "Between";
             this.inputType = this.column.getInputType();
@@ -60,7 +66,7 @@ export class ColumnFilterDialog implements AfterViewInit {
 
     ngAfterViewInit() {
         // set initial value in form with a timeout
-        setTimeout(_ => {
+        setTimeout((_) => {
             // load operator directly from the column
             this.operators = this.column.getOperators();
 
@@ -71,7 +77,9 @@ export class ColumnFilterDialog implements AfterViewInit {
                 operator: this.column.filter.operator || "None"
             });
 
-            if (this.column.filter.operator == "None") this.form.controls['text'].disable();
+            if (this.column.filter.operator == "None") {
+                this.form.controls['text'].disable();
+            }
         });
     }
 
@@ -82,7 +90,7 @@ export class ColumnFilterDialog implements AfterViewInit {
     private reset() {
         this.form.reset();
         this.column.filter.argument = null;
-        this.column.filter.operator = "None";
+        this.column.filter.operator = 'None';
 
         this.onFilteringChange.emit(false);
     }

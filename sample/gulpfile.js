@@ -34,7 +34,7 @@ gulp.task('lib', ['tubular2-module'],
             .map(key => gulp.src(libs[key]).pipe(gulp.dest('scripts/lib/' + key)))))
 
 gulp.task('clean',
-     () => del(['node_modules/@tubular2', 'scripts/lib/**/*']));
+     () => del(['node_modules/@tubular2', 'scripts/lib/**/*', 'app/**/*.js']));
 
 var standardBuild = watch => {
     gulp.src('app/main.ts')

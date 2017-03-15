@@ -42,7 +42,8 @@ export class ColumnModel {
     filterMode = ColumnFilterMode.None;
     filter = new ColumnFilter();
     isMultiSort = false;
-
+    sortDirection = 'None';
+    
     constructor(name: string, searchable?: boolean, sortable?: boolean) {
         this.name = name;
         this.label = name.replace(/([a-z])([A-Z])/g, '$1 $2');

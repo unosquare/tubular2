@@ -40,9 +40,7 @@ gulp.task('tslint',
        .pipe(gulp.dest("report/tslint")));
 
 gulp.task('connect', 
-    () => connect.server({
-        root: './sample',
-        fallback: './sample/index.html' }));
+    () => connect.server({ root: './sample' }));
 
 gulp.task('protractor', ['instrument'], 
     () => gulp.src('test/e2e/**/*.js')

@@ -3,6 +3,7 @@
     "enable_typescript_language_service": false,
     "files.exclude": {
         "**/*.js.map": true,
-        "**/*.js": { "when": "$(basename).ts" }
+        "**/*.js": { "when": "$(basename).ts" },
+        "node_modules" : true
     }
 }
