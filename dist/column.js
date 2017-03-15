@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var DataType;
 (function (DataType) {
     DataType[DataType["String"] = 1] = "String";
@@ -23,14 +24,11 @@ var ColumnFilterMode;
     ColumnFilterMode[ColumnFilterMode["Date"] = 4] = "Date";
     ColumnFilterMode[ColumnFilterMode["DateTime"] = 5] = "DateTime";
 })(ColumnFilterMode = exports.ColumnFilterMode || (exports.ColumnFilterMode = {}));
-var ColumnFilter = (function () {
-    function ColumnFilter() {
-    }
-    return ColumnFilter;
-}());
+class ColumnFilter {
+}
 exports.ColumnFilter = ColumnFilter;
-var ColumnModel = (function () {
-    function ColumnModel(name, searchable, sortable) {
+class ColumnModel {
+    constructor(name, searchable, sortable) {
         this.searchable = true;
         this.sortable = true;
         this.sortOrder = 0;
@@ -41,70 +39,72 @@ var ColumnModel = (function () {
         this.filterMode = ColumnFilterMode.None;
         this.filter = new ColumnFilter();
         this.isMultiSort = false;
+        this.sortDirection = 'None';
         this.name = name;
         this.label = name.replace(/([a-z])([A-Z])/g, '$1 $2');
-        if (searchable != null)
+        if (searchable != null) {
             this.searchable = searchable;
-        if (sortable != null)
+        }
+        if (sortable != null) {
             this.sortable = sortable;
+        }
     }
-    ColumnModel.prototype.getInputType = function () {
+    getInputType() {
         switch (this.filterMode) {
             case ColumnFilterMode.Number:
-                return "number";
+                return 'number';
             case ColumnFilterMode.Date:
-                return "date";
+                return 'date';
             case ColumnFilterMode.DateTime:
-                return "datetime-local";
+                return 'datetime-local';
             default:
-                return "text";
+                return 'text';
         }
-    };
-    ColumnModel.prototype.getOperators = function () {
+    }
+    getOperators() {
         switch (this.filterMode) {
             case ColumnFilterMode.String:
                 return [
-                    { name: "None", value: "None" },
-                    { name: "Contains", value: "Contains" },
-                    { name: "Not Contains", value: "NotContains" },
-                    { name: "Equals", value: "Equals" },
-                    { name: "Not Equals", value: "NotEquals" },
-                    { name: "Starts With", value: "StartsWith" },
-                    { name: "Not Starts With", value: "NotStartsWith" },
-                    { name: "Ends With", value: "EndsWith" },
-                    { name: "Not Ends With", value: "NotEndsWith" }
+                    { name: 'None', value: 'None' },
+                    { name: 'Contains', value: 'Contains' },
+                    { name: 'Not Contains', value: 'NotContains' },
+                    { name: 'Equals', value: 'Equals' },
+                    { name: 'Not Equals', value: 'NotEquals' },
+                    { name: 'Starts With', value: 'StartsWith' },
+                    { name: 'Not Starts With', value: 'NotStartsWith' },
+                    { name: 'Ends With', value: 'EndsWith' },
+                    { name: 'Not Ends With', value: 'NotEndsWith' }
                 ];
             case ColumnFilterMode.Number:
                 return [
-                    { name: "None", value: "None" },
-                    { name: "Equals", value: "Equals" },
-                    { name: "Between", value: "Between" },
-                    { name: ">=", value: "Gte" },
-                    { name: ">", value: "Gt" },
-                    { name: "<=", value: "Lte" },
-                    { name: "<", value: "Lt" }
+                    { name: 'None', value: 'None' },
+                    { name: 'Equals', value: 'Equals' },
+                    { name: 'Between', value: 'Between' },
+                    { name: '>=', value: 'Gte' },
+                    { name: '>', value: 'Gt' },
+                    { name: '<=', value: 'Lte' },
+                    { name: '<', value: 'Lt' }
                 ];
             case ColumnFilterMode.Date:
             case ColumnFilterMode.DateTime:
                 return [
-                    { name: "None", value: "None" },
-                    { name: "Equals", value: "Equals" },
-                    { name: "Not Equals", value: "NotEquals" },
-                    { name: "Between", value: "Between" },
-                    { name: ">=", value: "Gte" },
-                    { name: ">", value: "Gt" },
-                    { name: "<=", value: "Lte" },
-                    { name: "<", value: "Lt" }
+                    { name: 'None', value: 'None' },
+                    { name: 'Equals', value: 'Equals' },
+                    { name: 'Not Equals', value: 'NotEquals' },
+                    { name: 'Between', value: 'Between' },
+                    { name: '>=', value: 'Gte' },
+                    { name: '>', value: 'Gt' },
+                    { name: '<=', value: 'Lte' },
+                    { name: '<', value: 'Lt' }
                 ];
             case ColumnFilterMode.Boolean:
             default:
                 return [
-                    { name: "None", value: "None" },
-                    { name: "Equals", value: "Equals" },
-                    { name: "Not Equals", value: "NotEquals" }
+                    { name: 'None', value: 'None' },
+                    { name: 'Equals', value: 'Equals' },
+                    { name: 'Not Equals', value: 'NotEquals' }
                 ];
         }
-    };
-    return ColumnModel;
-}());
+    }
+}
 exports.ColumnModel = ColumnModel;

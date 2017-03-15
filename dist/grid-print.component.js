@@ -8,32 +8,33 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require("@angular/core");
-var grid_component_1 = require("./grid.component");
-var PrintButton = (function () {
-    function PrintButton(tbGrid) {
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = require("@angular/core");
+const grid_component_1 = require("./grid.component");
+let PrintButton = class PrintButton {
+    constructor(tbGrid) {
         this.tbGrid = tbGrid;
     }
-    PrintButton.prototype.print = function () {
-        var _this = this;
-        this.tbGrid.getFullDataSource(function (data) {
-            var headers = _this.tbGrid.columns.getValue().reduce(function (a, b) { return a + '<th>' + b.label + '</th>'; }, '');
-            var rows = data.reduce(function (prev, row) { return prev + '<tr>' + row.reduce(function (a, b) { return a + '<td>' + b + '</td>'; }, '') + '</tr>'; }, '');
-            var tableHtml = "<table class=\"table table-sm table-striped\"><thead><tr>" + headers + "</tr></thead><tbody>" + rows + "</tbody></table>";
-            var popup = window.open("", "", "menubar=0,location=0,height=500,width=800");
+    print() {
+        this.tbGrid.getFullDataSource(data => {
+            let headers = this.tbGrid.columns.getValue().reduce((a, b) => a + '<th>' + b.label + '</th>', '');
+            let rows = data.reduce((prev, row) => prev + '<tr>' + row.reduce((a, b) => a + '<td>' + b + '</td>', '') + '</tr>', '');
+            let tableHtml = `<table class="table table-sm table-striped"><thead><tr>${headers}</tr></thead><tbody>${rows}</tbody></table>`;
+            let popup = window.open("", "", "menubar=0,location=0,height=500,width=800");
             popup.document.write('<link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.min.css" />');
             popup.document.write('<body onload="window.print();">');
             popup.document.write(tableHtml);
             popup.document.write('</body>');
             popup.document.close();
         });
-    };
-    return PrintButton;
-}());
+    }
+};
 PrintButton = __decorate([
     core_1.Component({
         selector: 'grid-print',
-        template: "<button class=\"btn btn-info btn-sm\" (click)=\"print()\">\n        <span class=\"fa fa-print\"></span>&nbsp;Print\n    </button>"
+        template: `<button class="btn btn-info btn-sm" (click)="print()">
+        <span class="fa fa-print"></span>&nbsp;Print
+    </button>`
     }),
     __metadata("design:paramtypes", [grid_component_1.TubularGrid])
 ], PrintButton);

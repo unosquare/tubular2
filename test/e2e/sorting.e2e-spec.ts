@@ -1,4 +1,4 @@
-﻿import { browser, element, by } from '../../node_modules/protractor/built';
+﻿import { browser, element, by, ExpectedConditions } from '../../node_modules/protractor/built';
 
 describe('grid sorting', () => {
 
@@ -32,9 +32,10 @@ describe('grid sorting', () => {
 
     beforeEach(() => {
         //Go to first page if isn't there
-        if(paginator.first().getAttribute('class') != 'page-item disabled'){
-            paginator.first().$('a').click();
+        if (paginator.first().getAttribute('class') != 'page-item disabled') {
+            paginator.first().click();
         }
+        
         aCreationDateSorting.click();        
         aCreationDateSorting.click();        
     });

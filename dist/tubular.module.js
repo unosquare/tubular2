@@ -5,36 +5,36 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var core_1 = require("@angular/core");
-var platform_browser_1 = require("@angular/platform-browser");
-var forms_1 = require("@angular/forms");
-var http_1 = require("@angular/http");
-var ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
-var grid_component_1 = require("./grid.component");
-var tb_input_error_component_1 = require("./tb-input-error.component");
-var column_header_component_1 = require("./column-header.component");
-var grid_search_component_1 = require("./grid-search.component");
-var grid_pager_component_1 = require("./grid-pager.component");
-var column_filter_dialog_component_1 = require("./column-filter-dialog.component");
-var grid_pager_info_component_1 = require("./grid-pager-info.component");
-var page_size_selector_component_1 = require("./page-size-selector.component");
-var grid_export_component_1 = require("./grid-export.component");
-var grid_print_component_1 = require("./grid-print.component");
-var mdate_pipe_1 = require("./mdate.pipe");
-var TubularModule = (function () {
-    function TubularModule() {
-    }
-    return TubularModule;
-}());
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = require("@angular/core");
+const platform_browser_1 = require("@angular/platform-browser");
+const forms_1 = require("@angular/forms");
+const http_1 = require("@angular/http");
+const ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
+const grid_component_1 = require("./grid.component");
+const tb_input_error_component_1 = require("./tb-input-error.component");
+const column_header_component_1 = require("./column-header.component");
+const grid_search_component_1 = require("./grid-search.component");
+const grid_pager_component_1 = require("./grid-pager.component");
+const column_filter_dialog_component_1 = require("./column-filter-dialog.component");
+const grid_pager_info_component_1 = require("./grid-pager-info.component");
+const page_size_selector_component_1 = require("./page-size-selector.component");
+const grid_export_component_1 = require("./grid-export.component");
+const grid_print_component_1 = require("./grid-print.component");
+const mdate_pipe_1 = require("./mdate.pipe");
+let TubularModule = class TubularModule {
+};
 TubularModule = __decorate([
     core_1.NgModule({
         imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, forms_1.ReactiveFormsModule, http_1.HttpModule, ng_bootstrap_1.NgbModule.forRoot()],
         declarations: [
-            grid_component_1.TubularGrid, column_header_component_1.ColumnHeader, grid_search_component_1.GridSearch, grid_pager_component_1.GridPager, grid_pager_info_component_1.GridPagerInfo, column_filter_dialog_component_1.ColumnFilterDialog,
+            grid_component_1.TubularGrid, column_header_component_1.ColumnHeader, grid_search_component_1.GridSearchComponent,
+            grid_pager_component_1.GridPager, grid_pager_info_component_1.GridPagerInfo, column_filter_dialog_component_1.ColumnFilterDialogComponent,
             page_size_selector_component_1.PageSizeSelector, grid_export_component_1.ExportButton, grid_print_component_1.PrintButton, mdate_pipe_1.MDatePipe, tb_input_error_component_1.TbInputError
         ],
         exports: [
-            grid_component_1.TubularGrid, column_header_component_1.ColumnHeader, grid_search_component_1.GridSearch, grid_pager_component_1.GridPager, grid_pager_info_component_1.GridPagerInfo, column_filter_dialog_component_1.ColumnFilterDialog,
+            grid_component_1.TubularGrid, column_header_component_1.ColumnHeader, grid_search_component_1.GridSearchComponent,
+            grid_pager_component_1.GridPager, grid_pager_info_component_1.GridPagerInfo, column_filter_dialog_component_1.ColumnFilterDialogComponent,
             page_size_selector_component_1.PageSizeSelector, grid_export_component_1.ExportButton, grid_print_component_1.PrintButton, mdate_pipe_1.MDatePipe, ng_bootstrap_1.NgbModule, tb_input_error_component_1.TbInputError
         ]
     })

@@ -19,11 +19,9 @@
   },
   "include": [
     "src/lib/*.ts",
-    "test/**/*.ts"
+    "test/e2e/*.ts"
   ],
   "exclude": [
-    "node_modules",
-    "typings/main",
-    "typings/main.d.ts"
+    "node_modules"
   ]
 }

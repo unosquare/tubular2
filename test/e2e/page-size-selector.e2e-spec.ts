@@ -11,6 +11,7 @@ describe('page size selector', () =>{
 
     beforeAll(()=>{
         browser.get('/');
+        
         gridPager = element(by.tagName('grid-pager')).$('ngb-pagination').$('nav ul');
         pageSizeSelector = element(by.tagName('page-size-selector')).$('select');
         dataRowsCollection = element(by.tagName('tbody')).$$('tr');

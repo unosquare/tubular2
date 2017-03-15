@@ -8,30 +8,32 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require("@angular/core");
-var grid_component_1 = require("./grid.component");
-var GridPagerInfo = (function () {
-    function GridPagerInfo(tbGrid) {
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = require("@angular/core");
+const grid_component_1 = require("./grid.component");
+let GridPagerInfo = class GridPagerInfo {
+    constructor(tbGrid) {
         this.tbGrid = tbGrid;
         this.pageInfo = new grid_component_1.GridPageInfo();
         this.currentTop = 0;
         this.currentInitial = 0;
         this.filteredRecordCount = 0;
     }
-    GridPagerInfo.prototype.ngOnInit = function () {
-        var _this = this;
+    ngOnInit() {
         // live update properties
-        this.tbGrid.pageInfo.subscribe(function (x) {
-            _this.pageInfo = x;
-            _this.filtered = _this.pageInfo.totalRecordCount != _this.pageInfo.filteredRecordCount;
+        this.tbGrid.pageInfo.subscribe((x) => {
+            this.pageInfo = x;
+            this.filtered = this.pageInfo.totalRecordCount != this.pageInfo.filteredRecordCount;
         });
-    };
-    return GridPagerInfo;
-}());
+    }
+};
 GridPagerInfo = __decorate([
     core_1.Component({
         selector: 'grid-pager-info',
-        template: "<div class=\"small\">\n        Showing {{this.pageInfo.currentInitial}} to {{this.pageInfo.currentTop}} of {{pageInfo.filteredRecordCount}} records \n        <span [hidden]=\"!filtered\">(Filtered from {{pageInfo.totalRecordCount}} total records)</span>\n    </div>"
+        template: `<div class="small">
+        Showing {{this.pageInfo.currentInitial}} to {{this.pageInfo.currentTop}} of {{pageInfo.filteredRecordCount}} records 
+        <span [hidden]="!filtered">(Filtered from {{pageInfo.totalRecordCount}} total records)</span>
+    </div>`
     }),
     __metadata("design:paramtypes", [grid_component_1.TubularGrid])
 ], GridPagerInfo);

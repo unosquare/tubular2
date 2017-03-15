@@ -11,16 +11,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var core_1 = require("@angular/core");
-var http_1 = require("@angular/http");
-var tubular_settings_service_1 = require("./tubular-settings.service");
-var Rx_1 = require("rxjs/Rx");
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = require("@angular/core");
+const http_1 = require("@angular/http");
+const tubular_settings_service_1 = require("./tubular-settings.service");
+const Rx_1 = require("rxjs/Rx");
 require("rxjs/add/operator/mergeMap");
 require("rxjs/add/operator/map");
 require("rxjs/add/operator/catch");
 require("rxjs/add/observable/throw");
-var TubularAuthService = (function () {
-    function TubularAuthService(settingsProvider, http) {
+let TubularAuthService = class TubularAuthService {
+    constructor(settingsProvider, http) {
         this.settingsProvider = settingsProvider;
         this.http = http;
         this.userData = {
@@ -36,64 +37,55 @@ var TubularAuthService = (function () {
         this.requireAuthentication = true;
         this.refreshTokenUrl = this.tokenUrl = '/api/token';
     }
-    TubularAuthService.prototype.setTokenUrl = function (url) {
+    setTokenUrl(url) {
         this.tokenUrl = url;
-    };
-    TubularAuthService.prototype.setRefreshTokenUrl = function (url) {
+    }
+    setRefreshTokenUrl(url) {
         this.refreshTokenUrl = url;
-    };
-    TubularAuthService.prototype.enableRefreshTokens = function () {
+    }
+    enableRefreshTokens() {
         this.useRefreshTokens = true;
-    };
-    TubularAuthService.prototype.isUsingRefreshTokens = function () {
+    }
+    isUsingRefreshTokens() {
         return this.useRefreshTokens;
-    };
-    TubularAuthService.prototype.getRefreshTokenUrl = function () {
+    }
+    getRefreshTokenUrl() {
         return this.refreshTokenUrl;
-    };
-    TubularAuthService.prototype.setAccessTokenAsExpired = function () {
+    }
+    setAccessTokenAsExpired() {
         this.userData.expirationDate = new Date(new Date().getTime() - 10 * 1000);
         this.saveAuthData();
-    };
-    TubularAuthService.prototype.removeAuthData = function () {
+    }
+    removeAuthData() {
         this.settingsProvider.delete('auth_data');
-    };
-    TubularAuthService.prototype.saveAuthData = function () {
+    }
+    saveAuthData() {
         this.removeAuthData();
         if (this.settingsProvider)
             this.settingsProvider.put('auth_data', JSON.stringify(this.userData));
-    };
-    TubularAuthService.prototype.authenticate = function (username, password, successCallback, errorCallback) {
-        var _this = this;
+    }
+    authenticate(username, password) {
         this.removeAuthentication();
-        var headers = new http_1.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
-        var options = new http_1.RequestOptions({ headers: headers });
-        return this.http.post(this.tokenUrl, 'grant_type=password&username=' + username + '&password=' + password, options)
-            .map(function (data) { return _this.handleSuccessCallback(data); })
-            .catch(function (err) { return _this.handleAuthError(err, errorCallback); });
-    };
-    TubularAuthService.prototype.handleAuthError = function (err, errorCallback) {
-        var error = {
-            errorBody: JSON.parse(err._body),
-            status: err.status
-        };
-        if (typeof errorCallback != null)
-            errorCallback(error);
-        return Rx_1.Observable.throw(error);
-    };
-    TubularAuthService.prototype.removeAuthentication = function () {
-        if (this.settingsProvider)
+        let headers = new http_1.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+        let options = new http_1.RequestOptions({ headers });
+        return this.http.post(this.tokenUrl, `grant_type=password&username=${username}&password=${password}`, options)
+            .map(data => this.handleSuccessCallback(data));
+    }
+    removeAuthentication() {
+        if (this.settingsProvider) {
             this.settingsProvider.delete('auth_data');
+        }
         this.userData.isAuthenticated = false;
         this.userData.username = '';
         this.userData.bearerToken = '';
         this.userData.expirationDate = null;
         this.userData.role = '';
         this.userData.refreshToken = '';
-        if (this.settingsProvider)
+        if (this.settingsProvider) {
             this.settingsProvider.delete('auth_Header');
-    };
-    TubularAuthService.prototype.handleSuccessCallback = function (data) {
+        }
+    }
+    handleSuccessCallback(data) {
         data = JSON.parse(data._body);
         this.userData.isAuthenticated = true;
         this.userData.username = data.userName;
@@ -101,10 +93,11 @@ var TubularAuthService = (function () {
         this.userData.expirationDate = new Date(new Date().getTime() + data.expires_in * 1000);
         this.userData.role = data.role;
         this.userData.refreshToken = data.refresh_token;
-        if (this.settingsProvider)
+        if (this.settingsProvider) {
             this.settingsProvider.put('auth_data', JSON.stringify(this.userData));
-    };
-    TubularAuthService.prototype.isValidSession = function () {
+        }
+    }
+    isValidSession() {
         if (!this.userData.isAuthenticated || this.isDateExpired(this.userData.expirationDate)) {
             try {
                 this.retriveSaveData();
@@ -114,53 +107,51 @@ var TubularAuthService = (function () {
             }
         }
         return true;
-    };
-    TubularAuthService.prototype.retriveSaveData = function () {
-        var savedData = this.settingsProvider.get('auth_data') ? JSON.parse(this.settingsProvider.get('auth_data')) : null;
+    }
+    retriveSaveData() {
+        const savedData = this.settingsProvider.get('auth_data') ? JSON.parse(this.settingsProvider.get('auth_data')) : null;
         if (typeof savedData === 'undefined' || savedData == null) {
             throw 'No authentication exist';
         }
         else if (this.isDateExpired(savedData.expirationDate)) {
             throw 'Authentication token has already expired';
         }
-    };
-    TubularAuthService.prototype.isDateExpired = function (expirationDate) {
-        var now = new Date();
-        var expiration = new Date(expirationDate);
+    }
+    isDateExpired(expirationDate) {
+        const now = new Date();
+        let expiration = new Date(expirationDate);
         return expiration.valueOf() - now.valueOf() <= 0;
-    };
-    TubularAuthService.prototype.isAuthTokenExpired = function () {
+    }
+    isAuthTokenExpired() {
         return this.isDateExpired(this.userData.expirationDate);
-    };
-    TubularAuthService.prototype.addAuthHeaderToRequest = function (request) {
-        if (request.headers = null) {
+    }
+    addAuthHeaderToRequest(request) {
+        if (request.headers == null) {
             request.headers = new http_1.Headers();
         }
         if (request.headers.has('Authorization')) {
             request.headers.delete('Authorization');
         }
-        request.headers.append('Authorization', 'Bearer ' + this.userData.bearerToken);
-    };
-    TubularAuthService.prototype.refreshSession = function () {
-        var _this = this;
-        var refreshToken = this.userData.refreshToken;
+        request.headers.append('Authorization', `Bearer ${this.userData.bearerToken}`);
+    }
+    refreshSession() {
+        let refreshToken = this.userData.refreshToken;
         this.removeAuthentication();
-        var headers = new http_1.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
-        var options = new http_1.RequestOptions({ headers: headers });
-        return this.http.post(this.getRefreshTokenUrl(), 'grant_type=refresh_token&refresh_token=' + refreshToken, options)
-            .mergeMap(function (response) {
-            _this.handleSuccessCallback(response);
-            if (_this.isValidSession()) {
+        let headers = new http_1.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+        let options = new http_1.RequestOptions({ headers });
+        return this.http.post(this.getRefreshTokenUrl(), `grant_type=refresh_token&refresh_token=${refreshToken}`, options)
+            .mergeMap((response) => {
+            this.handleSuccessCallback(response);
+            if (this.isValidSession()) {
                 return Rx_1.Observable.create(true);
             }
             else {
-                return Rx_1.Observable.throw("error");
+                return Rx_1.Observable.throw('error');
             }
         })
-            .map(function () { return true; });
-    };
-    return TubularAuthService;
-}());
+            .map(() => true);
+    }
+};
 TubularAuthService = __decorate([
     core_1.Injectable(),
     __param(0, core_1.Optional()), __param(0, core_1.Inject(tubular_settings_service_1.SETTINGS_PROVIDER)),

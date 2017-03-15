@@ -11,16 +11,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var core_1 = require("@angular/core");
-var http_1 = require("@angular/http");
-var BehaviorSubject_1 = require("rxjs/BehaviorSubject");
-var moment = require("moment");
-var tubular_http_service_1 = require("./tubular-http.service");
-var tubular_settings_service_1 = require("./tubular-settings.service");
-var column_1 = require("./column");
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = require("@angular/core");
+const http_1 = require("@angular/http");
+const BehaviorSubject_1 = require("rxjs/BehaviorSubject");
+const moment = require("moment");
+const tubular_http_service_1 = require("./tubular-http.service");
+const tubular_settings_service_1 = require("./tubular-settings.service");
+const column_1 = require("./column");
 require("rxjs/add/operator/debounceTime");
-var GridPageInfo = (function () {
-    function GridPageInfo() {
+class GridPageInfo {
+    constructor() {
         this.currentInitial = 0;
         this.currentTop = 0;
         this.currentPage = 0;
@@ -28,11 +29,10 @@ var GridPageInfo = (function () {
         this.totalRecordCount = 0;
         this.filteredRecordCount = 0;
     }
-    return GridPageInfo;
-}());
+}
 exports.GridPageInfo = GridPageInfo;
-var TubularGrid = (function () {
-    function TubularGrid(settingsProvider, httpService) {
+let TubularGrid = class TubularGrid {
+    constructor(settingsProvider, httpService) {
         this.settingsProvider = settingsProvider;
         this.httpService = httpService;
         // data is just observable and children can't push
@@ -45,56 +45,52 @@ var TubularGrid = (function () {
         // values that to observe and allow to push from children
         this.page = new BehaviorSubject_1.BehaviorSubject(this.getPageSettingValue());
         this.columns = new BehaviorSubject_1.BehaviorSubject([]);
-        this.freeTextSearch = new BehaviorSubject_1.BehaviorSubject("");
+        this.freeTextSearch = new BehaviorSubject_1.BehaviorSubject('');
         this.pageSet = false;
         this.showLoading = false;
-        this.requestCount = 0;
         this.search = {
-            text: "",
-            operator: "None"
+            text: '',
+            operator: 'None'
         };
+        this.requestCount = 0;
         this.onDataError = new core_1.EventEmitter();
         this.onDataSaved = new core_1.EventEmitter();
     }
-    TubularGrid.prototype.ngOnInit = function () {
-        var _this = this;
+    ngOnInit() {
         // just a logging
-        this.dataStream.subscribe(function (p) { return console.log("New data", p); });
+        this.dataStream.subscribe((p) => console.log('New data', p));
         // subscriptions to events
-        this.pageSize.subscribe(function (c) {
-            _this.refresh();
-            _this.changePageSizeData();
+        this.pageSize.subscribe(c => {
+            this.refresh();
+            this.changePageSizeData();
         });
-        this.columns.subscribe(function (c) {
-            _this.refresh();
-        });
-        this.page.subscribe(function (c) {
-            _this.refresh();
-            _this.changePagesData();
+        this.columns.subscribe((c) => this.refresh());
+        this.page.subscribe((c) => {
+            this.refresh();
+            this.changePagesData();
         });
         this.freeTextSearch
             .debounceTime(500)
-            .subscribe(function (c) {
-            if (c === _this.search.text)
+            .subscribe((c) => {
+            if (c === this.search.text) {
                 return;
-            _this.search.text = c;
-            _this.search.operator = !c ? "None" : "Auto";
-            _this.refresh();
+            }
+            this.search.text = c;
+            this.search.operator = !c ? 'None' : 'Auto';
+            this.refresh();
         });
-    };
-    TubularGrid.prototype.goToPage = function (page) {
+    }
+    goToPage(page) {
         this.pageSet = true;
         this.page.next(page);
-    };
-    TubularGrid.prototype.refresh = function () {
-        var _this = this;
+    }
+    refresh() {
         if (this.pageSet && this.columns.getValue().length > 0 && this._pageSize.getValue() > 0) {
-            this.getCurrentPage(function (data, req) { return _this.transformDataset(data, req); });
+            this.getCurrentPage((data, req) => this.transformDataset(data, req));
         }
-    };
-    TubularGrid.prototype.getCurrentPage = function (callback) {
-        var _this = this;
-        var req = {
+    }
+    getCurrentPage(callback) {
+        let req = {
             count: this.requestCount++,
             columns: this.columns.getValue(),
             skip: this.page.getValue() * this._pageSize.getValue(),
@@ -102,11 +98,12 @@ var TubularGrid = (function () {
             search: this.search,
             timezoneOffset: new Date().getTimezoneOffset()
         };
-        this.httpService.post(this.serverUrl, req).subscribe(function (data) { return callback(data, req); }, function (error) { return _this.onDataError.emit(error); });
-    };
-    TubularGrid.prototype.getFullDataSource = function (callback) {
-        var _this = this;
-        var req = {
+        // transform direction values to strings
+        req.columns.forEach(this.transformSortDirection);
+        this.httpService.post(this.dataUrl, req).subscribe(data => callback(data, req), error => this.onDataError.emit(error));
+    }
+    getFullDataSource(callback) {
+        let req = {
             count: this.requestCount++,
             columns: this.columns.getValue(),
             skip: 0,
@@ -116,85 +113,98 @@ var TubularGrid = (function () {
                 operator: 'None'
             }
         };
-        this.httpService.post(this.serverUrl, req).subscribe(function (data) { return callback(data.Payload || {}); }, function (error) { return _this.onDataError.emit(error); });
-    };
-    TubularGrid.prototype.onUpdate = function (row) {
-        var _this = this;
+        this.httpService.post(this.dataUrl, req).subscribe((data) => callback(data.Payload || {}), (error) => this.onDataError.emit(error));
+    }
+    onUpdate(row) {
         this.httpService
-            .save(this.serverSaveUrl, row.values, row.$isNew ? http_1.RequestMethod.Post : http_1.RequestMethod.Put)
-            .subscribe(function (data) { return _this.onDataSaved.emit(data); }, function (error) { return _this.onDataError.emit(error); }, function () { return _this.refresh(); });
-    };
-    TubularGrid.prototype.transformToObj = function (columns, data) {
-        var obj = {};
-        columns.forEach(function (column, key) {
+            .save(this.saveUrl, row.values, row.$isNew ? http_1.RequestMethod.Post : http_1.RequestMethod.Put)
+            .subscribe(data => this.onDataSaved.emit(data), error => this.onDataError.emit(error), () => this.refresh());
+    }
+    transformSortDirection(column) {
+        switch (column.direction) {
+            case column_1.ColumnSortDirection.Asc:
+                column.sortDirection = 'Ascending';
+                break;
+            case column_1.ColumnSortDirection.Desc:
+                column.sortDirection = 'Descending';
+                break;
+            default:
+                column.sortDirection = 'None';
+        }
+    }
+    transformToObj(columns, data) {
+        let obj = {};
+        columns.forEach((column, key) => {
             obj[column.name] = data[key] || data[column.name];
-            if (column.dataType == column_1.DataType.DateTimeUtc) {
+            if (column.dataType === column_1.DataType.DateTimeUtc) {
                 obj[column.name] = moment.utc(obj[column.name]);
             }
-            if (column.dataType == column_1.DataType.Date || column.dataType == column_1.DataType.DateTime) {
+            if (column.dataType === column_1.DataType.Date || column.dataType === column_1.DataType.DateTime) {
                 obj[column.name] = moment(obj[column.name]);
             }
         });
         return obj;
-    };
-    TubularGrid.prototype.transformDataset = function (data, req) {
-        var _this = this;
-        var transform = function (d) { return _this.transformToObj(req.columns, d); };
-        var payload = (data.Payload || {}).map(transform);
+    }
+    transformDataset(data, req) {
+        let transform = d => this.transformToObj(req.columns, d);
+        let payload = (data.Payload || {}).map(transform);
         // push data
         this.data.next(payload);
-        var pageInfo = new GridPageInfo();
+        let pageInfo = new GridPageInfo();
         pageInfo.currentPage = data.CurrentPage;
         pageInfo.totalPages = data.TotalPages;
         pageInfo.filteredRecordCount = data.FilteredRecordCount;
         pageInfo.totalRecordCount = data.TotalRecordCount;
         pageInfo.currentInitial = ((pageInfo.currentPage - 1) * this._pageSize.getValue()) + 1;
-        if (pageInfo.currentInitial <= 0)
+        if (pageInfo.currentInitial <= 0) {
             pageInfo.currentInitial = data.TotalRecordCount > 0 ? 1 : 0;
+        }
         pageInfo.currentTop = this._pageSize.getValue() * pageInfo.currentPage;
-        if (pageInfo.currentTop <= 0 || pageInfo.currentTop > data.filteredRecordCount)
+        if (pageInfo.currentTop <= 0 || pageInfo.currentTop > data.filteredRecordCount) {
             pageInfo.currentTop = data.filteredRecordCount;
+        }
         // push page Info
         this._pageInfo.next(pageInfo);
-    };
-    TubularGrid.prototype.changePagesData = function () {
-        if (this.settingsProvider != null)
+    }
+    changePagesData() {
+        if (this.settingsProvider != null) {
             this.settingsProvider.put("gridPage", this.page.getValue());
-    };
-    TubularGrid.prototype.changePageSizeData = function () {
-        if (this.settingsProvider != null)
+        }
+    }
+    changePageSizeData() {
+        if (this.settingsProvider != null) {
             this.settingsProvider.put("gridPageSize", this._pageSize.getValue());
-    };
-    TubularGrid.prototype.getPageSettingValue = function () {
-        if (this.settingsProvider != null)
+        }
+    }
+    getPageSettingValue() {
+        if (this.settingsProvider != null) {
             return this.settingsProvider.get("gridPage") || 0;
-        else
-            return 0;
-    };
-    TubularGrid.prototype.getPageSizeSettingValue = function () {
-        if (this.settingsProvider != null)
+        }
+        return 0;
+    }
+    getPageSizeSettingValue() {
+        if (this.settingsProvider != null) {
             return this.settingsProvider.get("gridPageSize") || 10;
-        else
-            return 10;
-    };
-    return TubularGrid;
-}());
+        }
+        return 10;
+    }
+};
 __decorate([
-    core_1.Input('server-url'),
+    core_1.Input(),
     __metadata("design:type", String)
-], TubularGrid.prototype, "serverUrl", void 0);
+], TubularGrid.prototype, "dataUrl", void 0);
 __decorate([
-    core_1.Input('require-authentication'),
+    core_1.Input(),
     __metadata("design:type", Boolean)
 ], TubularGrid.prototype, "requireAuthentication", void 0);
 __decorate([
-    core_1.Input('request-timeout'),
+    core_1.Input(),
     __metadata("design:type", Number)
 ], TubularGrid.prototype, "requestTimeout", void 0);
 __decorate([
-    core_1.Input('server-save-url'),
+    core_1.Input(),
     __metadata("design:type", String)
-], TubularGrid.prototype, "serverSaveUrl", void 0);
+], TubularGrid.prototype, "saveUrl", void 0);
 __decorate([
     core_1.Output(),
     __metadata("design:type", Object)
@@ -206,7 +216,13 @@ __decorate([
 TubularGrid = __decorate([
     core_1.Component({
         selector: 'tubular-grid',
-        template: "\n    <div>\n        <div class=\"tubular-overlay\" [hidden]=\"!showLoading\">\n            <div><div class=\"fa fa-refresh fa-2x fa-spin\"></div>\n        </div></div>\n        <ng-content></ng-content>\n    </div>",
+        template: `
+    <div>
+        <div class="tubular-overlay" [hidden]="!showLoading">
+            <div><div class="fa fa-refresh fa-2x fa-spin"></div>
+        </div></div>
+        <ng-content></ng-content>
+    </div>`,
         styles: [
             ':host /deep/ div.row { margin-top: 4px; margin-bottom: 4px; }',
             ':host /deep/ div.row:first { margin-top: 0; }',

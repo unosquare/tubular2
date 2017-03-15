@@ -11,71 +11,60 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var core_1 = require("@angular/core");
-var http_1 = require("@angular/http");
-var Observable_1 = require("rxjs/Observable");
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = require("@angular/core");
+const http_1 = require("@angular/http");
+const Observable_1 = require("rxjs/Observable");
 require("rxjs/add/operator/mergeMap");
 require("rxjs/add/operator/map");
 require("rxjs/add/operator/catch");
 require("rxjs/add/observable/throw");
 // TODO: Add debounceTime?
-var tubular_settings_service_1 = require("./tubular-settings.service");
-var tubular_auth_service_1 = require("./tubular-auth.service");
-var TubularHttpService = (function () {
-    function TubularHttpService(settingsProvider, http, tbAuthService) {
+const tubular_settings_service_1 = require("./tubular-settings.service");
+const tubular_auth_service_1 = require("./tubular-auth.service");
+let TubularHttpService = class TubularHttpService {
+    constructor(settingsProvider, http, tbAuthService) {
         this.settingsProvider = settingsProvider;
         this.http = http;
         this.tbAuthService = tbAuthService;
     }
-    TubularHttpService.prototype.get = function (url, requireAuthentication) {
-        if (requireAuthentication === void 0) { requireAuthentication = false; }
-        var requestArgs = {
+    get(url, requireAuthentication = false) {
+        let requestArgs = {
             method: http_1.RequestMethod.Get,
-            url: url,
-            requireAuthentication: requireAuthentication
+            url,
+            requireAuthentication
         };
         return this.request(requestArgs);
-    };
-    TubularHttpService.prototype.post = function (url, data, requireAuthentication) {
-        if (requireAuthentication === void 0) { requireAuthentication = false; }
-        var requestArgs = {
+    }
+    post(url, data, requireAuthentication = false) {
+        let requestArgs = {
             method: http_1.RequestMethod.Post,
-            url: url,
             body: data,
-            requireAuthentication: requireAuthentication
+            url,
+            requireAuthentication
         };
         return this.request(requestArgs);
-    };
-    TubularHttpService.prototype.put = function (url, data, requireAuthentication) {
-        if (requireAuthentication === void 0) { requireAuthentication = false; }
-        var requestArgs = {
+    }
+    put(url, data, requireAuthentication = false) {
+        let requestArgs = {
             method: http_1.RequestMethod.Put,
-            url: url,
             body: data,
-            requireAuthentication: requireAuthentication
+            url,
+            requireAuthentication
         };
         return this.request(requestArgs);
-    };
-    TubularHttpService.prototype.delete = function (url, data, requireAuthentication) {
-        if (requireAuthentication === void 0) { requireAuthentication = false; }
-        var requestArgs = {
+    }
+    delete(url, data, requireAuthentication = false) {
+        let requestArgs = {
             method: http_1.RequestMethod.Delete,
-            url: url,
             body: data,
-            requireAuthentication: requireAuthentication
+            url,
+            requireAuthentication
         };
         return this.request(requestArgs);
-    };
-    TubularHttpService.prototype.retrieveGridData = function (url, req) {
-        req.columns.forEach(this.transformSortDirection);
-        console.log("retrieveGridData");
-        return this.post(url, req)
-            .map(this.extractData)
-            .catch(this.handleRequestError);
-    };
-    TubularHttpService.prototype.request = function (request) {
-        var _this = this;
-        var ngRequest = new http_1.Request({
+    }
+    request(request) {
+        let ngRequest = new http_1.Request({
             url: request.url,
             method: request.method,
             search: request.search || '',
@@ -89,26 +78,39 @@ var TubularHttpService = (function () {
                 this.tbAuthService.addAuthHeaderToRequest(ngRequest);
             }
             else {
-                if (this.tbAuthService.isAuthTokenExpired() && this.tbAuthService.isUsingRefreshTokens()) {
-                    return this.handleRequestError({ message: 'Token expired', status: '401', statusText: 'Token expired' }, ngRequest);
+                if (this.tbAuthService.isAuthTokenExpired() &&
+                    this.tbAuthService.isUsingRefreshTokens()) {
+                    return this.handleRequestError({
+                        message: 'Token expired',
+                        status: '401',
+                        statusText: 'Token expired'
+                    }, ngRequest);
                 }
             }
         }
         return this.http.request(ngRequest)
             .map(this.extractData)
-            .catch(function (error) { return _this.handleRequestError(error, request); });
-    };
-    TubularHttpService.prototype.handleRequestError = function (error, request) {
-        var _this = this;
-        var errMsg = (error.message) ? error.message :
-            error.status ? error.status + " - " + error.statusText : 'Server error';
+            .catch((error) => this.handleRequestError(error, request));
+    }
+    save(url, row, method = http_1.RequestMethod.Post, requireAuthentication = true) {
+        let requestArgs = {
+            body: row,
+            method,
+            url,
+            requireAuthentication
+        };
+        return this.request(requestArgs);
+    }
+    handleRequestError(error, request) {
+        let errMsg = (error.message) ? error.message :
+            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
         if (error && error.status === 401 && this.tbAuthService.isUsingRefreshTokens() && request) {
             return this.tbAuthService.refreshSession()
-                .mergeMap(function (response) {
-                if (_this.tbAuthService.isValidSession()) {
-                    return _this.http.request(request)
-                        .map(_this.extractData)
-                        .catch(_this.handleRequestError);
+                .mergeMap((response) => {
+                if (this.tbAuthService.isValidSession()) {
+                    return this.http.request(request)
+                        .map(this.extractData)
+                        .catch(this.handleRequestError);
                 }
                 else {
                     return Observable_1.Observable.throw(error);
@@ -117,44 +119,15 @@ var TubularHttpService = (function () {
                 .catch(this.handleRequestError);
         }
         return Observable_1.Observable.throw(errMsg);
-    };
-    TubularHttpService.prototype.retrieveData = function (url, req) {
-        req.columns.forEach(this.transformSortDirection);
-        return this.post(url, req)
-            .map(this.extractData)
-            .catch(this.handleRequestError);
-    };
-    TubularHttpService.prototype.save = function (url, row, method, requireAuthentication) {
-        if (method === void 0) { method = http_1.RequestMethod.Post; }
-        if (requireAuthentication === void 0) { requireAuthentication = true; }
-        var requestArgs = {
-            method: method,
-            url: url,
-            body: row,
-            requireAuthentication: requireAuthentication
-        };
-        return this.request(requestArgs);
-    };
-    TubularHttpService.prototype.transformSortDirection = function (column) {
-        switch (column.direction) {
-            case 1:
-                column.sortDirection = 'Ascending';
-                break;
-            case 2:
-                column.sortDirection = 'Descending';
-                break;
-            default:
-                column.sortDirection = 'None';
-        }
-    };
-    TubularHttpService.prototype.extractData = function (res) {
+    }
+    extractData(res) {
         return res.json() || {};
-    };
-    return TubularHttpService;
-}());
+    }
+};
 TubularHttpService = __decorate([
     core_1.Injectable(),
     __param(0, core_1.Optional()), __param(0, core_1.Inject(tubular_settings_service_1.SETTINGS_PROVIDER)),
-    __metadata("design:paramtypes", [Object, http_1.Http, tubular_auth_service_1.TubularAuthService])
+    __metadata("design:paramtypes", [Object, http_1.Http,
+        tubular_auth_service_1.TubularAuthService])
 ], TubularHttpService);
 exports.TubularHttpService = TubularHttpService;

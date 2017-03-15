@@ -1,32 +1,36 @@
 "use strict";
-var core_1 = require("@angular/core");
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = require("@angular/core");
 exports.SETTINGS_PROVIDER = new core_1.OpaqueToken('tubular-settings.service');
-var TubularLocalStorageService = (function () {
-    function TubularLocalStorageService() {
+class TubularLocalStorageService {
+    constructor() {
         this.existLocalStorage = true;
         if (!window.localStorage) {
             this.existLocalStorage = false;
-            console.log("Browser does not support localStorage");
+            console.log('Browser does not support localStorage');
         }
     }
-    TubularLocalStorageService.prototype.put = function (id, value) {
-        if (this.existLocalStorage)
+    put(id, value) {
+        if (this.existLocalStorage) {
             localStorage.setItem(id, JSON.stringify(value));
-        else
+        }
+        else {
             this._data[id] = String(value);
-    };
-    TubularLocalStorageService.prototype.get = function (key) {
-        if (this.existLocalStorage)
+        }
+    }
+    get(key) {
+        if (this.existLocalStorage) {
             return JSON.parse(localStorage.getItem(key)) || false;
-        else
-            return this._data.hasOwnProperty(key) ? this._data[key] : false;
-    };
-    TubularLocalStorageService.prototype.delete = function (key) {
-        if (this.existLocalStorage)
+        }
+        return this._data.hasOwnProperty(key) ? this._data[key] : false;
+    }
+    delete(key) {
+        if (this.existLocalStorage) {
             localStorage.removeItem(key);
-        else
-            return delete this._data[key];
-    };
-    return TubularLocalStorageService;
-}());
+        }
+        else {
+            delete this._data[key];
+        }
+    }
+}
 exports.TubularLocalStorageService = TubularLocalStorageService;

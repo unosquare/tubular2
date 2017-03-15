@@ -8,38 +8,34 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require("@angular/core");
-var grid_component_1 = require("./grid.component");
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = require("@angular/core");
+const grid_component_1 = require("./grid.component");
 require("rxjs/add/operator/debounceTime");
-var PageSizeInfo = (function () {
-    function PageSizeInfo() {
+class PageSizeInfo {
+    constructor() {
         this.value = 0;
         this.selected = false;
     }
-    return PageSizeInfo;
-}());
+}
 exports.PageSizeInfo = PageSizeInfo;
-var PageSizeSelector = (function () {
-    function PageSizeSelector(tbGrid) {
+let PageSizeSelector = class PageSizeSelector {
+    constructor(tbGrid) {
         this.tbGrid = tbGrid;
         this._options = [10, 20, 50, 100];
     }
-    Object.defineProperty(PageSizeSelector.prototype, "in", {
-        set: function (options) {
-            if (options != undefined)
-                this._options = options;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    PageSizeSelector.prototype.ngOnInit = function () {
+    set in(options) {
+        if (options != undefined) {
+            this._options = options;
+        }
+    }
+    ngOnInit() {
         this.selected = this.tbGrid._pageSize.getValue();
-    };
-    PageSizeSelector.prototype.onChange = function (newVal) {
+    }
+    onChange(newVal) {
         this.tbGrid._pageSize.next(newVal);
-    };
-    return PageSizeSelector;
-}());
+    }
+};
 __decorate([
     core_1.Input('options'),
     __metadata("design:type", Array),
@@ -48,7 +44,16 @@ __decorate([
 PageSizeSelector = __decorate([
     core_1.Component({
         selector: 'page-size-selector',
-        template: "\n    <form class=\"form-inline\">\n        <div class=\"form-group\">\n            <label class=\"small\">Page size</label>&nbsp;\n            <select (change)=\"onChange($event.target.value)\" class=\"form-control form-control-sm\" \n                [(ngModel)]=\"selected\" [ngModelOptions]=\"{standalone: true}\">\n                <option *ngFor=\"let obj of _options\" [value]=\"obj\">{{obj}}</option>\n            </select>\n        </div>\n    </form>"
+        template: `
+    <form class="form-inline">
+        <div class="form-group">
+            <label class="small">Page size</label>&nbsp;
+            <select (change)="onChange($event.target.value)" class="form-control form-control-sm" 
+                [(ngModel)]="selected" [ngModelOptions]="{standalone: true}">
+                <option *ngFor="let obj of _options" [value]="obj">{{obj}}</option>
+            </select>
+        </div>
+    </form>`
     }),
     __metadata("design:paramtypes", [grid_component_1.TubularGrid])
 ], PageSizeSelector);

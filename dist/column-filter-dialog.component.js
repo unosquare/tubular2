@@ -8,77 +8,106 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require("@angular/core");
-var forms_1 = require("@angular/forms");
-var column_1 = require("./column");
-var ColumnFilterDialog = (function () {
-    function ColumnFilterDialog(fb) {
-        var _this = this;
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = require("@angular/core");
+const forms_1 = require("@angular/forms");
+const column_1 = require("./column");
+let ColumnFilterDialogComponent = class ColumnFilterDialogComponent {
+    constructor(fb) {
         this.onFilteringChange = new core_1.EventEmitter();
         this.isBetween = false;
         this.form = fb.group({
-            text: ["", forms_1.Validators.required],
-            argument: [""],
-            operator: ["None", forms_1.Validators.required]
+            text: ['', forms_1.Validators.required],
+            argument: [''],
+            operator: ['None', forms_1.Validators.required]
         });
-        this.form.valueChanges.subscribe(function (value) {
-            _this.column.filter.text = value.text;
-            _this.column.filter.operator = value.operator;
-            if (value.argument)
-                _this.column.filter.argument = [value.argument];
-            _this.isBetween = value.operator == "Between";
-            _this.inputType = _this.column.getInputType();
+        this.form.valueChanges.subscribe((value) => {
+            this.column.filter.text = value.text;
+            this.column.filter.operator = value.operator;
+            if (value.argument) {
+                this.column.filter.argument = [value.argument];
+            }
+            this.isBetween = value.operator == "Between";
+            this.inputType = this.column.getInputType();
         });
     }
-    ColumnFilterDialog.prototype.ngAfterViewInit = function () {
-        var _this = this;
+    ngAfterViewInit() {
         // set initial value in form with a timeout
-        setTimeout(function (_) {
+        setTimeout((_) => {
             // load operator directly from the column
-            _this.operators = _this.column.getOperators();
+            this.operators = this.column.getOperators();
             // set initial value in form with a timeout
-            _this.form.patchValue({
-                text: _this.column.filter.text,
-                argument: _this.column.filter.argument,
-                operator: _this.column.filter.operator || "None"
+            this.form.patchValue({
+                text: this.column.filter.text,
+                argument: this.column.filter.argument,
+                operator: this.column.filter.operator || "None"
             });
-            if (_this.column.filter.operator == "None")
-                _this.form.controls['text'].disable();
+            if (this.column.filter.operator == "None") {
+                this.form.controls['text'].disable();
+            }
         });
-    };
-    ColumnFilterDialog.prototype.onSubmit = function () {
+    }
+    onSubmit() {
         this.onFilteringChange.emit(true);
-    };
-    ColumnFilterDialog.prototype.reset = function () {
+    }
+    reset() {
         this.form.reset();
         this.column.filter.argument = null;
-        this.column.filter.operator = "None";
+        this.column.filter.operator = 'None';
         this.onFilteringChange.emit(false);
-    };
-    ColumnFilterDialog.prototype.selectChange = function (newVal) {
+    }
+    selectChange(newVal) {
         if (newVal == 'None') {
             this.form.controls['text'].disable();
         }
         else {
             this.form.controls['text'].enable();
         }
-    };
-    return ColumnFilterDialog;
-}());
+    }
+};
 __decorate([
     core_1.Input(),
     __metadata("design:type", column_1.ColumnModel)
-], ColumnFilterDialog.prototype, "column", void 0);
+], ColumnFilterDialogComponent.prototype, "column", void 0);
 __decorate([
     core_1.Output(),
     __metadata("design:type", Object)
-], ColumnFilterDialog.prototype, "onFilteringChange", void 0);
-ColumnFilterDialog = __decorate([
+], ColumnFilterDialogComponent.prototype, "onFilteringChange", void 0);
+ColumnFilterDialogComponent = __decorate([
     core_1.Component({
         selector: 'filter-dialog',
-        template: "\n   <form [formGroup]=\"form\" (ngSubmit)=\"onSubmit()\">\n        <div class=\"form-group\">\n            <label for=\"operator\">Operator</label>\n            <select id=\"operator\" class=\"form-control\" formControlName=\"operator\" (change)=\"selectChange($event.target.value)\">\n                <option *ngFor=\"let operator of operators\" [value]=\"operator.value\">{{operator.name}}</option>\n            </select>\n        </div>\n        <div class=\"form-group\">\n            <label>Value</label>\n            <input type=\"{{inputType}}\" class=\"form-control\" formControlName=\"text\" />\n            <label *ngIf=\"isBetween\">Argument</label>\n            <input *ngIf=\"isBetween\" type=\"{{inputType}}\" class=\"form-control\" formControlName=\"argument\"/>\n        </div>\n        <div class=\"row\">\n            <div class=\"col-xs-6\">\n                <button type=\"submit\" class=\"btn btn-sm btn-success btn-block\" \n                        [disabled]=\"!form.valid\">Filter</button>\n            </div>\n            <div class=\"col-xs-6\">\n                <button type=\"button\" class=\"btn btn-sm btn-danger btn-block\" \n                        (click)=\"reset()\">Clear</button>\n            </div>\n        </div>\n    </form>",
+        template: `
+   <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="operator">Operator</label>
+            <select id="operator" class="form-control" 
+                    formControlName="operator" 
+                    (change)="selectChange($event.target.value)">
+                <option *ngFor="let operator of operators" [value]="operator.value">
+                    {{operator.name}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Value</label>
+            <input type="{{inputType}}" class="form-control" formControlName="text" />
+            <label *ngIf="isBetween">Argument</label>
+            <input *ngIf="isBetween" type="{{inputType}}" 
+                class="form-control" formControlName="argument"/>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">
+                <button type="submit" class="btn btn-sm btn-success btn-block" 
+                        [disabled]="!form.valid">Filter</button>
+            </div>
+            <div class="col-xs-6">
+                <button type="button" class="btn btn-sm btn-danger btn-block" 
+                        (click)="reset()">Clear</button>
+            </div>
+        </div>
+    </form>`,
         styles: ['form { min-width: 200px; }']
     }),
     __metadata("design:paramtypes", [forms_1.FormBuilder])
-], ColumnFilterDialog);
-exports.ColumnFilterDialog = ColumnFilterDialog;
+], ColumnFilterDialogComponent);
+exports.ColumnFilterDialogComponent = ColumnFilterDialogComponent;

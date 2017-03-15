@@ -8,29 +8,27 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require("@angular/core");
-var grid_component_1 = require("./grid.component");
-var ExportButton = (function () {
-    function ExportButton(tbGrid) {
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = require("@angular/core");
+const grid_component_1 = require("./grid.component");
+let ExportButton = class ExportButton {
+    constructor(tbGrid) {
         this.tbGrid = tbGrid;
     }
-    ExportButton.prototype.downloadCsv = function () {
-        var _this = this;
-        this.tbGrid.getCurrentPage(function (data) { return _this.processCsv(data.Payload); });
-    };
-    ExportButton.prototype.downloadAllCsv = function () {
-        var _this = this;
-        this.tbGrid.getFullDataSource(function (data) { return _this.processCsv(data); });
-    };
-    ExportButton.prototype.processCsv = function (data) {
-        var headers = this.tbGrid.columns.getValue().reduce(function (a, b) { return a + b.label + ','; }, '').slice(0, -1) + '\r\n';
-        var rows = data.map(function (row) { return row.reduce(function (a, b) { return a + '"' + b + '"' + ','; }, '').slice(0, -1) + '\r\n'; });
-        var csv = rows.reduce(function (a, b) { return a + b; }, headers);
-        var blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+    downloadCsv() {
+        this.tbGrid.getCurrentPage(data => this.processCsv(data.Payload));
+    }
+    downloadAllCsv() {
+        this.tbGrid.getFullDataSource(data => this.processCsv(data));
+    }
+    processCsv(data) {
+        let headers = this.tbGrid.columns.getValue().reduce((a, b) => a + b.label + ',', '').slice(0, -1) + '\r\n';
+        let rows = data.map((row) => row.reduce((a, b) => a + '"' + b + '"' + ',', '').slice(0, -1) + '\r\n');
+        let csv = rows.reduce((a, b) => a + b, headers);
+        let blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
         saveAs(blob, this.fileName);
-    };
-    return ExportButton;
-}());
+    }
+};
 __decorate([
     core_1.Input(),
     __metadata("design:type", String)
@@ -38,7 +36,15 @@ __decorate([
 ExportButton = __decorate([
     core_1.Component({
         selector: 'grid-export',
-        template: "<div ngbDropdown class=\"d-inline-block\">\n                <button ngbDropdownToggle class=\"btn btn-info btn-sm\">\n                <span class=\"fa fa-download\"></span>&nbsp;Export CSV&nbsp;<span class=\"caret\"></span>\n               </button>\n               <div class=\"dropdown-menu\">\n                <button class=\"dropdown-item\" (click)=\"downloadCsv()\">Current rows</button>\n                <button class=\"dropdown-item\" (click)=\"downloadAllCsv()\">All rows</button>\n               </div>\n               </div>"
+        template: `<div ngbDropdown class="d-inline-block">
+                <button ngbDropdownToggle class="btn btn-info btn-sm">
+                <span class="fa fa-download"></span>&nbsp;Export CSV&nbsp;<span class="caret"></span>
+               </button>
+               <div class="dropdown-menu">
+                <button class="dropdown-item" (click)="downloadCsv()">Current rows</button>
+                <button class="dropdown-item" (click)="downloadAllCsv()">All rows</button>
+               </div>
+               </div>`
     }),
     __metadata("design:paramtypes", [grid_component_1.TubularGrid])
 ], ExportButton);

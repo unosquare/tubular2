@@ -8,14 +8,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require("@angular/core");
-var column_1 = require("./column");
-var ColumnHeader = ColumnHeader_1 = (function () {
-    function ColumnHeader() {
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = require("@angular/core");
+const column_1 = require("./column");
+let ColumnHeader = ColumnHeader_1 = class ColumnHeader {
+    constructor() {
         this.onSort = new core_1.EventEmitter();
         this.onFilter = new core_1.EventEmitter();
     }
-    ColumnHeader.prototype.togglePopover = function () {
+    togglePopover() {
         if (ColumnHeader_1.prevPopover != null) {
             ColumnHeader_1.prevPopover.close();
             if (ColumnHeader_1.prevPopover === this.popover) {
@@ -25,21 +26,20 @@ var ColumnHeader = ColumnHeader_1 = (function () {
             }
         }
         ColumnHeader_1.prevPopover = this.popover;
-    };
-    ColumnHeader.prototype.sort = function ($event) {
+    }
+    sort($event) {
         this.column.isMultiSort = $event.ctrlKey;
         if (this.column.sortable) {
             this.onSort.emit(this.column);
         }
-    };
-    ColumnHeader.prototype.filter = function (hasValue) {
+    }
+    filter(hasValue) {
         ColumnHeader_1.prevPopover = null;
         this.popover.close();
         this.hasFilter = hasValue;
         this.onFilter.emit(this.column);
-    };
-    return ColumnHeader;
-}());
+    }
+};
 ColumnHeader.prevPopover = null;
 __decorate([
     core_1.Input(),
@@ -64,7 +64,20 @@ __decorate([
 ColumnHeader = ColumnHeader_1 = __decorate([
     core_1.Component({
         selector: 'column-header',
-        template: "\n    <div class=\"column-header\">\n        <span [ngClass]=\"{sortable: column.sortable, sortNone: column.direction == 0, sortAsc: column.direction == 1, sortDesc: column.direction == 2}\"\n            (click)=\"sort($event)\">\n            {{column.label}}\n        </span>\n        <div class=\"column-menu\" [hidden]=\"column.filterMode == 0\">\n            <button class=\"btn btn-sm\" [ngClass]=\"{ 'btn-success': hasFilter }\"\n                #popover=\"ngbPopover\" [ngbPopover]=\"filterPopoverTemplate\" \n                placement=\"left-bottom\" title=\"Filter\" (click)=\"togglePopover()\">\n                <i class=\"fa fa-filter\"></i>\n            </button>\n        </div>\n    </div>",
+        template: `
+    <div class="column-header">
+        <span [ngClass]="{sortable: column.sortable, sortNone: column.direction == 0, sortAsc: column.direction == 1, sortDesc: column.direction == 2}"
+            (click)="sort($event)">
+            {{column.label}}
+        </span>
+        <div class="column-menu" [hidden]="column.filterMode == 0">
+            <button class="btn btn-sm" [ngClass]="{ 'btn-success': hasFilter }"
+                #popover="ngbPopover" [ngbPopover]="filterPopoverTemplate" 
+                placement="left-bottom" title="Filter" (click)="togglePopover()">
+                <i class="fa fa-filter"></i>
+            </button>
+        </div>
+    </div>`,
         styles: [
             '.column-menu { position: relative; display: block; text-align: center; vertical-align: top; float: right; }',
             '.column-menu button { border-radius: 30px !important; line-height: 10px; margin: 0; padding: .25rem; }',
