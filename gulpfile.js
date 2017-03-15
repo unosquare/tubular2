@@ -7,6 +7,8 @@ var webpack = require('webpack');
 var webpackStream = require('webpack-stream');
 var tsProject = ts.createProject('tsconfig.json');
 var tslint = require('gulp-tslint');
+var concat = require("gulp-concat");
+var map = require("map-stream");
 
 gulp.task('default', 
     () => tsProject.src()
@@ -16,9 +18,26 @@ gulp.task('default',
 gulp.task('tslint', 
     () => gulp.src('lib/**/*.ts')
         .pipe(tslint())
-        .pipe(tslint.report({
-            emitError: false
-        })));
+        .pipe(map(function(file, done) {
+           // Add the tslint errors in prose format
+           if (file.tslint.output) {
+               var title = file.tslint.output.match(/^(.+?)(\[)/gm);
+               title = title ? title[0].replace('[', '') : '';
+
+               file.contents = new Buffer('<h2>' + title + '</h2>' +
+                    file.tslint.output
+                        .replace(/^(.+?(]:))/gm, '<b>$1</b>')
+                        .replace(/(?:\r\n|\r|\n)/g, '<br />\r\n') +
+                    '<hr />');
+           } else {
+               file.contents = new Buffer("");
+           }
+
+           done(null, file);
+       }))
+       // Concat and save the errors
+       .pipe(concat("index.html"))
+       .pipe(gulp.dest("report/tslint")));
 
 gulp.task('connect', 
     () => connect.server({

@@ -100,7 +100,8 @@ export class TubularHttpService {
             if (this.tbAuthService.isValidSession()) {
                 this.tbAuthService.addAuthHeaderToRequest(ngRequest);
             } else {
-                if (this.tbAuthService.isAuthTokenExpired() && this.tbAuthService.isUsingRefreshTokens()) {
+                if (this.tbAuthService.isAuthTokenExpired() &&
+                    this.tbAuthService.isUsingRefreshTokens()) {
                     return this.handleRequestError(
                         {
                             message: 'Token expired',
@@ -125,7 +126,11 @@ export class TubularHttpService {
             .catch(this.handleRequestError);
     }
 
-    public save(url: string, row: any, method: RequestMethod = RequestMethod.Post, requireAuthentication: boolean = true): Observable<any> {
+    public save(
+        url: string, 
+        row: any, 
+        method: RequestMethod = RequestMethod.Post, 
+        requireAuthentication: boolean = true): Observable<any> {
         let requestArgs = <TbRequestArgs> {
             body: row,
             method,

@@ -71,7 +71,7 @@ export class TubularGrid {
     @Output() onDataSaved = new EventEmitter<any>();
 
     constructor(
-        @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider, 
+        @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider,
         private httpService: TubularHttpService) { }
 
     private ngOnInit() {
@@ -161,11 +161,11 @@ export class TubularGrid {
         columns.forEach((column, key) => {
             obj[column.name] = data[key] || data[column.name];
 
-            if (column.dataType == DataType.DateTimeUtc) {
+            if (column.dataType === DataType.DateTimeUtc) {
                 obj[column.name] = moment.utc(obj[column.name]);
             }
 
-            if (column.dataType == DataType.Date || column.dataType == DataType.DateTime) {
+            if (column.dataType === DataType.Date || column.dataType === DataType.DateTime) {
                 obj[column.name] = moment(obj[column.name]);
             }
         });
@@ -187,12 +187,15 @@ export class TubularGrid {
 
         pageInfo.currentInitial = ((pageInfo.currentPage - 1) * this._pageSize.getValue()) + 1;
 
-        if (pageInfo.currentInitial <= 0)
+        if (pageInfo.currentInitial <= 0) {
             pageInfo.currentInitial = data.TotalRecordCount > 0 ? 1 : 0;
+        }
 
         pageInfo.currentTop = this._pageSize.getValue() * pageInfo.currentPage;
-        if (pageInfo.currentTop <= 0 || pageInfo.currentTop > data.filteredRecordCount)
+
+        if (pageInfo.currentTop <= 0 || pageInfo.currentTop > data.filteredRecordCount) {
             pageInfo.currentTop = data.filteredRecordCount;
+        }
 
         // push page Info
         this._pageInfo.next(pageInfo);
