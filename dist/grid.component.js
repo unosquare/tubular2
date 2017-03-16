@@ -18,7 +18,7 @@ const BehaviorSubject_1 = require("rxjs/BehaviorSubject");
 const moment = require("moment");
 const tubular_http_service_1 = require("./tubular-http.service");
 const tubular_settings_service_1 = require("./tubular-settings.service");
-const column_1 = require("./column");
+const column_model_1 = require("./column.model");
 require("rxjs/add/operator/debounceTime");
 class GridPageInfo {
     constructor() {
@@ -31,7 +31,7 @@ class GridPageInfo {
     }
 }
 exports.GridPageInfo = GridPageInfo;
-let TubularGrid = class TubularGrid {
+let GridComponent = class GridComponent {
     constructor(settingsProvider, httpService) {
         this.settingsProvider = settingsProvider;
         this.httpService = httpService;
@@ -120,12 +120,34 @@ let TubularGrid = class TubularGrid {
             .save(this.saveUrl, row.values, row.$isNew ? http_1.RequestMethod.Post : http_1.RequestMethod.Put)
             .subscribe(data => this.onDataSaved.emit(data), error => this.onDataError.emit(error), () => this.refresh());
     }
+    changePagesData() {
+        if (this.settingsProvider != null) {
+            this.settingsProvider.put("gridPage", this.page.getValue());
+        }
+    }
+    changePageSizeData() {
+        if (this.settingsProvider != null) {
+            this.settingsProvider.put("gridPageSize", this._pageSize.getValue());
+        }
+    }
+    getPageSettingValue() {
+        if (this.settingsProvider != null) {
+            return this.settingsProvider.get("gridPage") || 0;
+        }
+        return 0;
+    }
+    getPageSizeSettingValue() {
+        if (this.settingsProvider != null) {
+            return this.settingsProvider.get("gridPageSize") || 10;
+        }
+        return 10;
+    }
     transformSortDirection(column) {
         switch (column.direction) {
-            case column_1.ColumnSortDirection.Asc:
+            case column_model_1.ColumnSortDirection.Asc:
                 column.sortDirection = 'Ascending';
                 break;
-            case column_1.ColumnSortDirection.Desc:
+            case column_model_1.ColumnSortDirection.Desc:
                 column.sortDirection = 'Descending';
                 break;
             default:
@@ -136,10 +158,10 @@ let TubularGrid = class TubularGrid {
         let obj = {};
         columns.forEach((column, key) => {
             obj[column.name] = data[key] || data[column.name];
-            if (column.dataType === column_1.DataType.DateTimeUtc) {
+            if (column.dataType === column_model_1.DataType.DateTimeUtc) {
                 obj[column.name] = moment.utc(obj[column.name]);
             }
-            if (column.dataType === column_1.DataType.Date || column.dataType === column_1.DataType.DateTime) {
+            if (column.dataType === column_model_1.DataType.Date || column.dataType === column_model_1.DataType.DateTime) {
                 obj[column.name] = moment(obj[column.name]);
             }
         });
@@ -166,54 +188,32 @@ let TubularGrid = class TubularGrid {
         // push page Info
         this._pageInfo.next(pageInfo);
     }
-    changePagesData() {
-        if (this.settingsProvider != null) {
-            this.settingsProvider.put("gridPage", this.page.getValue());
-        }
-    }
-    changePageSizeData() {
-        if (this.settingsProvider != null) {
-            this.settingsProvider.put("gridPageSize", this._pageSize.getValue());
-        }
-    }
-    getPageSettingValue() {
-        if (this.settingsProvider != null) {
-            return this.settingsProvider.get("gridPage") || 0;
-        }
-        return 0;
-    }
-    getPageSizeSettingValue() {
-        if (this.settingsProvider != null) {
-            return this.settingsProvider.get("gridPageSize") || 10;
-        }
-        return 10;
-    }
 };
 __decorate([
     core_1.Input(),
     __metadata("design:type", String)
-], TubularGrid.prototype, "dataUrl", void 0);
+], GridComponent.prototype, "dataUrl", void 0);
 __decorate([
     core_1.Input(),
     __metadata("design:type", Boolean)
-], TubularGrid.prototype, "requireAuthentication", void 0);
+], GridComponent.prototype, "requireAuthentication", void 0);
 __decorate([
     core_1.Input(),
     __metadata("design:type", Number)
-], TubularGrid.prototype, "requestTimeout", void 0);
+], GridComponent.prototype, "requestTimeout", void 0);
 __decorate([
     core_1.Input(),
     __metadata("design:type", String)
-], TubularGrid.prototype, "saveUrl", void 0);
+], GridComponent.prototype, "saveUrl", void 0);
 __decorate([
     core_1.Output(),
     __metadata("design:type", Object)
-], TubularGrid.prototype, "onDataError", void 0);
+], GridComponent.prototype, "onDataError", void 0);
 __decorate([
     core_1.Output(),
     __metadata("design:type", Object)
-], TubularGrid.prototype, "onDataSaved", void 0);
-TubularGrid = __decorate([
+], GridComponent.prototype, "onDataSaved", void 0);
+GridComponent = __decorate([
     core_1.Component({
         selector: 'tubular-grid',
         template: `
@@ -234,5 +234,5 @@ TubularGrid = __decorate([
     }),
     __param(0, core_1.Optional()), __param(0, core_1.Inject(tubular_settings_service_1.SETTINGS_PROVIDER)),
     __metadata("design:paramtypes", [Object, tubular_http_service_1.TubularHttpService])
-], TubularGrid);
-exports.TubularGrid = TubularGrid;
+], GridComponent);
+exports.GridComponent = GridComponent;

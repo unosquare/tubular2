@@ -3,7 +3,7 @@
     ContentChild, TemplateRef, ViewChild, AfterViewInit 
 } from '@angular/core';
 
-import { ColumnModel } from './column';
+import { ColumnModel } from './column.model';
 
 @Component({
     selector: 'column-header',
@@ -27,7 +27,7 @@ import { ColumnModel } from './column';
         '.column-menu button i { font-size: 12px; }'
     ]
 })
-export class ColumnHeader {
+export class ColumnHeaderComponent {
     @Input() public column: ColumnModel;
     @Output() public onSort = new EventEmitter<ColumnModel>();
     @Output() public onFilter = new EventEmitter<ColumnModel>();
@@ -39,17 +39,17 @@ export class ColumnHeader {
     static prevPopover = null;
 
     private togglePopover() {
-        if (ColumnHeader.prevPopover != null) {
-            ColumnHeader.prevPopover.close();
+        if (ColumnHeaderComponent.prevPopover != null) {
+            ColumnHeaderComponent.prevPopover.close();
 
-            if (ColumnHeader.prevPopover === this.popover) {
-                ColumnHeader.prevPopover = null;
+            if (ColumnHeaderComponent.prevPopover === this.popover) {
+                ColumnHeaderComponent.prevPopover = null;
                 this.popover.toggle();
                 return;
             }
         }
 
-        ColumnHeader.prevPopover = this.popover;
+        ColumnHeaderComponent.prevPopover = this.popover;
     }
 
     private sort($event) {
@@ -61,7 +61,7 @@ export class ColumnHeader {
     }
 
     private filter(hasValue: boolean) {
-        ColumnHeader.prevPopover = null;
+        ColumnHeaderComponent.prevPopover = null;
         this.popover.close();
         this.hasFilter = hasValue;
         this.onFilter.emit(this.column);

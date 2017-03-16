@@ -11,12 +11,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const grid_component_1 = require("./grid.component");
-let PrintButton = class PrintButton {
+let PrintButtonComponent = class PrintButtonComponent {
     constructor(tbGrid) {
         this.tbGrid = tbGrid;
     }
     print() {
-        this.tbGrid.getFullDataSource(data => {
+        this.tbGrid.getFullDataSource((data) => {
             let headers = this.tbGrid.columns.getValue().reduce((a, b) => a + '<th>' + b.label + '</th>', '');
             let rows = data.reduce((prev, row) => prev + '<tr>' + row.reduce((a, b) => a + '<td>' + b + '</td>', '') + '</tr>', '');
             let tableHtml = `<table class="table table-sm table-striped"><thead><tr>${headers}</tr></thead><tbody>${rows}</tbody></table>`;
@@ -29,13 +29,13 @@ let PrintButton = class PrintButton {
         });
     }
 };
-PrintButton = __decorate([
+PrintButtonComponent = __decorate([
     core_1.Component({
         selector: 'grid-print',
         template: `<button class="btn btn-info btn-sm" (click)="print()">
         <span class="fa fa-print"></span>&nbsp;Print
     </button>`
     }),
-    __metadata("design:paramtypes", [grid_component_1.TubularGrid])
-], PrintButton);
-exports.PrintButton = PrintButton;
+    __metadata("design:paramtypes", [grid_component_1.GridComponent])
+], PrintButtonComponent);
+exports.PrintButtonComponent = PrintButtonComponent;

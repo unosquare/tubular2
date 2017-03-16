@@ -26,16 +26,22 @@ let TubularModule = class TubularModule {
 };
 TubularModule = __decorate([
     core_1.NgModule({
-        imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, forms_1.ReactiveFormsModule, http_1.HttpModule, ng_bootstrap_1.NgbModule.forRoot()],
+        imports: [
+            platform_browser_1.BrowserModule, forms_1.FormsModule, forms_1.ReactiveFormsModule, http_1.HttpModule,
+            ng_bootstrap_1.NgbModule.forRoot()
+        ],
         declarations: [
-            grid_component_1.TubularGrid, column_header_component_1.ColumnHeader, grid_search_component_1.GridSearchComponent,
-            grid_pager_component_1.GridPager, grid_pager_info_component_1.GridPagerInfo, column_filter_dialog_component_1.ColumnFilterDialogComponent,
-            page_size_selector_component_1.PageSizeSelector, grid_export_component_1.ExportButton, grid_print_component_1.PrintButton, mdate_pipe_1.MDatePipe, tb_input_error_component_1.TbInputError
+            grid_component_1.GridComponent, column_header_component_1.ColumnHeaderComponent, grid_search_component_1.GridSearchComponent,
+            grid_pager_component_1.GridPagerComponent, grid_pager_info_component_1.GridPagerInfoComponent, column_filter_dialog_component_1.ColumnFilterDialogComponent,
+            page_size_selector_component_1.PageSizeSelectorComponent, grid_export_component_1.ExportButtonComponent, grid_print_component_1.PrintButtonComponent,
+            mdate_pipe_1.MDatePipe, tb_input_error_component_1.TbInputErrorComponent
         ],
         exports: [
-            grid_component_1.TubularGrid, column_header_component_1.ColumnHeader, grid_search_component_1.GridSearchComponent,
-            grid_pager_component_1.GridPager, grid_pager_info_component_1.GridPagerInfo, column_filter_dialog_component_1.ColumnFilterDialogComponent,
-            page_size_selector_component_1.PageSizeSelector, grid_export_component_1.ExportButton, grid_print_component_1.PrintButton, mdate_pipe_1.MDatePipe, ng_bootstrap_1.NgbModule, tb_input_error_component_1.TbInputError
+            grid_component_1.GridComponent, column_header_component_1.ColumnHeaderComponent, grid_search_component_1.GridSearchComponent,
+            grid_pager_component_1.GridPagerComponent, grid_pager_info_component_1.GridPagerInfoComponent, column_filter_dialog_component_1.ColumnFilterDialogComponent,
+            page_size_selector_component_1.PageSizeSelectorComponent, grid_export_component_1.ExportButtonComponent, grid_print_component_1.PrintButtonComponent,
+            mdate_pipe_1.MDatePipe, tb_input_error_component_1.TbInputErrorComponent,
+            ng_bootstrap_1.NgbModule
         ]
     })
 ], TubularModule);

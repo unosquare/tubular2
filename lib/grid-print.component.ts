@@ -1,5 +1,5 @@
 ﻿import { Component } from '@angular/core';
-import { TubularGrid } from './grid.component';
+import { GridComponent } from './grid.component';
 
 @Component({
     selector: 'grid-print',
@@ -8,12 +8,12 @@ import { TubularGrid } from './grid.component';
         <span class="fa fa-print"></span>&nbsp;Print
     </button>`
 })
-export class PrintButton {
-    constructor(private tbGrid: TubularGrid) { }
+export class PrintButtonComponent {
+    constructor(private tbGrid: GridComponent) { }
 
-    print() {
+    private print() {
         this.tbGrid.getFullDataSource(
-            data => {
+            (data) => {
                 let headers = this.tbGrid.columns.getValue().reduce((a, b) => a + '<th>' + b.label + '</th>', '');
                 let rows = data.reduce((prev, row) => prev + '<tr>' + row.reduce((a, b) => a + '<td>' + b + '</td>', '') + '</tr>', '');
                 let tableHtml = `<table class="table table-sm table-striped"><thead><tr>${headers}</tr></thead><tbody>${rows}</tbody></table>`;

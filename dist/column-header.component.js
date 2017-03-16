@@ -10,22 +10,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
-const column_1 = require("./column");
-let ColumnHeader = ColumnHeader_1 = class ColumnHeader {
+const column_model_1 = require("./column.model");
+let ColumnHeaderComponent = ColumnHeaderComponent_1 = class ColumnHeaderComponent {
     constructor() {
         this.onSort = new core_1.EventEmitter();
         this.onFilter = new core_1.EventEmitter();
     }
     togglePopover() {
-        if (ColumnHeader_1.prevPopover != null) {
-            ColumnHeader_1.prevPopover.close();
-            if (ColumnHeader_1.prevPopover === this.popover) {
-                ColumnHeader_1.prevPopover = null;
+        if (ColumnHeaderComponent_1.prevPopover != null) {
+            ColumnHeaderComponent_1.prevPopover.close();
+            if (ColumnHeaderComponent_1.prevPopover === this.popover) {
+                ColumnHeaderComponent_1.prevPopover = null;
                 this.popover.toggle();
                 return;
             }
         }
-        ColumnHeader_1.prevPopover = this.popover;
+        ColumnHeaderComponent_1.prevPopover = this.popover;
     }
     sort($event) {
         this.column.isMultiSort = $event.ctrlKey;
@@ -34,34 +34,34 @@ let ColumnHeader = ColumnHeader_1 = class ColumnHeader {
         }
     }
     filter(hasValue) {
-        ColumnHeader_1.prevPopover = null;
+        ColumnHeaderComponent_1.prevPopover = null;
         this.popover.close();
         this.hasFilter = hasValue;
         this.onFilter.emit(this.column);
     }
 };
-ColumnHeader.prevPopover = null;
+ColumnHeaderComponent.prevPopover = null;
 __decorate([
     core_1.Input(),
-    __metadata("design:type", column_1.ColumnModel)
-], ColumnHeader.prototype, "column", void 0);
+    __metadata("design:type", column_model_1.ColumnModel)
+], ColumnHeaderComponent.prototype, "column", void 0);
 __decorate([
     core_1.Output(),
     __metadata("design:type", Object)
-], ColumnHeader.prototype, "onSort", void 0);
+], ColumnHeaderComponent.prototype, "onSort", void 0);
 __decorate([
     core_1.Output(),
     __metadata("design:type", Object)
-], ColumnHeader.prototype, "onFilter", void 0);
+], ColumnHeaderComponent.prototype, "onFilter", void 0);
 __decorate([
     core_1.ContentChild('filterPopover'),
     __metadata("design:type", core_1.TemplateRef)
-], ColumnHeader.prototype, "filterPopoverTemplate", void 0);
+], ColumnHeaderComponent.prototype, "filterPopoverTemplate", void 0);
 __decorate([
     core_1.ViewChild('popover'),
     __metadata("design:type", Object)
-], ColumnHeader.prototype, "popover", void 0);
-ColumnHeader = ColumnHeader_1 = __decorate([
+], ColumnHeaderComponent.prototype, "popover", void 0);
+ColumnHeaderComponent = ColumnHeaderComponent_1 = __decorate([
     core_1.Component({
         selector: 'column-header',
         template: `
@@ -84,6 +84,6 @@ ColumnHeader = ColumnHeader_1 = __decorate([
             '.column-menu button i { font-size: 12px; }'
         ]
     })
-], ColumnHeader);
-exports.ColumnHeader = ColumnHeader;
-var ColumnHeader_1;
+], ColumnHeaderComponent);
+exports.ColumnHeaderComponent = ColumnHeaderComponent;
+var ColumnHeaderComponent_1;

@@ -1,34 +1,5 @@
 ﻿import { Component, Input} from '@angular/core';
-import { TubularGrid } from './grid.component';
-
-/**
- * @summary Interface for "saveAs" function.
- * @author  Cyril Schumacher
- * @version 1.0
- */
-interface FileSaver {
-    (
-        /**
-         * @summary Data.
-         * @type {Blob}
-         */
-        data: Blob,
-
-        /**
-         * @summary File name.
-         * @type {DOMString}
-         */
-        filename: string,
-
-        /**
-         * @summary Disable Unicode text encoding hints or not.
-         * @type {boolean}
-         */
-        disableAutoBOM?: boolean
-    ): void
-}
-
-declare var saveAs: FileSaver;
+import { GridComponent } from './grid.component';
 
 @Component({
     selector: 'grid-export',
@@ -42,17 +13,17 @@ declare var saveAs: FileSaver;
                </div>
                </div>`
 })
-export class ExportButton {
-    @Input() fileName: string;
+export class ExportButtonComponent {
+    @Input() public fileName: string;
 
-    constructor(private tbGrid: TubularGrid) { }
+    constructor(private tbGrid: GridComponent) { }
     
     private downloadCsv() {
-        this.tbGrid.getCurrentPage(data => this.processCsv(data.Payload));
+        this.tbGrid.getCurrentPage((data) => this.processCsv(data.Payload));
     }
 
     private downloadAllCsv() {
-        this.tbGrid.getFullDataSource(data => this.processCsv(data));
+        this.tbGrid.getFullDataSource((data) => this.processCsv(data));
     }
 
     private processCsv(data) {
@@ -60,7 +31,7 @@ export class ExportButton {
         let rows = data.map((row) => row.reduce((a, b) => a + '"' + b + '"' + ',', '').slice(0, -1) + '\r\n');
         let csv = rows.reduce((a, b) => a + b, headers);
 
-        let blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+        let blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
         saveAs(blob, this.fileName);
     }
 }

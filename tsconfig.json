@@ -14,7 +14,8 @@
     ],
     "types": [
       "core-js",
-      "jasmine"
+      "jasmine",
+      "file-saver"
     ]
   },
   "include": [

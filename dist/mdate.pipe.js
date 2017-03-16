@@ -10,8 +10,9 @@ const core_1 = require("@angular/core");
 const moment = require("moment");
 let MDatePipe = class MDatePipe {
     transform(value, format) {
-        if (moment.isMoment(value))
+        if (moment.isMoment(value)) {
             return format ? value.format(format) : value.format();
+        }
         return value;
     }
 };

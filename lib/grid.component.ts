@@ -6,7 +6,7 @@ import * as moment from 'moment';
 
 import { TubularHttpService } from './tubular-http.service';
 import { SETTINGS_PROVIDER, ITubularSettingsProvider } from './tubular-settings.service';
-import { ColumnModel, DataType, ColumnSortDirection } from './column';
+import { ColumnModel, DataType, ColumnSortDirection } from './column.model';
 
 import 'rxjs/add/operator/debounceTime';
 
@@ -37,7 +37,7 @@ export class GridPageInfo {
         ':host /deep/ .sortDesc::after { font-family: FontAwesome; content: "\\f175"; }'
     ]
 })
-export class TubularGrid {
+export class GridComponent {
 
     // data is just observable and children can't push
     private data = new BehaviorSubject([]);
@@ -64,9 +64,9 @@ export class TubularGrid {
     private requestCount = 0;
 
     @Input() public dataUrl: string;
-    @Input() requireAuthentication: boolean;
-    @Input() requestTimeout: number;
-    @Input() saveUrl: string;
+    @Input() public requireAuthentication: boolean;
+    @Input() public requestTimeout: number;
+    @Input() public saveUrl: string;
 
     @Output() onDataError = new EventEmitter<any>();
     @Output() onDataSaved = new EventEmitter<any>();
@@ -102,18 +102,18 @@ export class TubularGrid {
             });
     }
 
-    goToPage(page){
+    public goToPage(page) {
         this.pageSet = true;
         this.page.next(page);
     }
 
-    refresh() {
+    public refresh() {
         if (this.pageSet && this.columns.getValue().length > 0 && this._pageSize.getValue() > 0) {
             this.getCurrentPage((data, req) => this.transformDataset(data, req));
         }
     }
 
-    getCurrentPage(callback) {
+    public getCurrentPage(callback) {
         let req = {
             count: this.requestCount++,
             columns: this.columns.getValue(),
@@ -132,7 +132,7 @@ export class TubularGrid {
         );
     }
 
-    getFullDataSource(callback) {
+    public getFullDataSource(callback) {
         let req = {
             count: this.requestCount++,
             columns: this.columns.getValue(),
@@ -157,6 +157,34 @@ export class TubularGrid {
             data => this.onDataSaved.emit(data),
             error => this.onDataError.emit(error),
             () => this.refresh());
+    }
+
+    changePagesData() {
+        if (this.settingsProvider != null) {
+            this.settingsProvider.put("gridPage", this.page.getValue());
+        }
+    }
+
+    changePageSizeData() {
+        if (this.settingsProvider != null) {
+            this.settingsProvider.put("gridPageSize", this._pageSize.getValue());
+        }
+    }
+
+    getPageSettingValue() {
+        if (this.settingsProvider != null) {
+            return this.settingsProvider.get("gridPage") || 0;
+        }
+        
+        return 0;
+    }
+
+    getPageSizeSettingValue() {
+        if (this.settingsProvider != null) { 
+            return this.settingsProvider.get("gridPageSize") || 10;
+        }
+        
+        return 10;
     }
 
     private transformSortDirection(column: ColumnModel) {
@@ -216,33 +244,5 @@ export class TubularGrid {
 
         // push page Info
         this._pageInfo.next(pageInfo);
-    }
-
-    changePagesData() {
-        if (this.settingsProvider != null) {
-            this.settingsProvider.put("gridPage", this.page.getValue());
-        }
-    }
-
-    changePageSizeData() {
-        if (this.settingsProvider != null) {
-            this.settingsProvider.put("gridPageSize", this._pageSize.getValue());
-        }
-    }
-
-    getPageSettingValue() {
-        if (this.settingsProvider != null) {
-            return this.settingsProvider.get("gridPage") || 0;
-        }
-        
-        return 0;
-    }
-
-    getPageSizeSettingValue() {
-        if (this.settingsProvider != null) { 
-            return this.settingsProvider.get("gridPageSize") || 10;
-        }
-        
-        return 10;
     }
 }

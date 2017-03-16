@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 //import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { TbForm, TubularGrid, TubularHttpService } from '@tubular2/tubular2';
+import { TbForm, TubularHttpService } from '@tubular2/tubular2';
 
 @Component({
     selector: 'sample-form',
@@ -20,9 +20,9 @@ export class FormComponent extends TbForm implements OnInit {
 
     ngOnInit() {
         this.detailsForm = this.tbFormInit({
-            modelKey: "OrderID",
-            serverUrl: "http://tubular.azurewebsites.net/api/orders/",
-            saveUrl: "http://tubular.azurewebsites.net/api/orders/",
+            modelKey: 'OrderID',
+            serverUrl: 'http://tubular.azurewebsites.net/api/orders/',
+            saveUrl: 'http://tubular.azurewebsites.net/api/orders/',
             requireAuthentication: true
         });
     }
@@ -32,7 +32,7 @@ export class FormComponent extends TbForm implements OnInit {
             values: this.detailsForm.value,
             $isNew: this.$isNew
         },
-            data => console.log("The record has been saved.", 'Success!'),
+            data => console.log('The record has been saved.', 'Success!'),
             error => {
                 console.error(error, 'Save error');
                 this.close();
@@ -48,9 +48,9 @@ export class FormComponent extends TbForm implements OnInit {
     getRow(): any {
         return {
             OrderID: this.route.snapshot.params['id'],
-            CustomerName: "",
+            CustomerName: '',
             ShippedDate: Date,
-            ShipperCity: ""
+            ShipperCity: ''
         };
     }
 

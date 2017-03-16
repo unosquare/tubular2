@@ -1,6 +1,6 @@
 ﻿import { Component } from '@angular/core';
 import { Router } from '@angular/router'
-import { TubularGrid, TubularAuthService } from '@tubular2/tubular2';
+import { TubularAuthService } from '@tubular2/tubular2';
  
 @Component({
     selector: 'my-app',

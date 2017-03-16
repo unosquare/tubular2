@@ -230,7 +230,6 @@ describe('Filtering e2e Tests', () => {
            expect(filterBtn.getAttribute('class')).toMatch(/btn-success/);
        });
 
-
        //it('should correctly filter data for the "Equals" filtering option', () => {
        //    let filteredDate = '01/30/2016';
        //    filterSelect.$('[value="Equals"]').click();

@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const grid_component_1 = require("./grid.component");
-let GridPagerInfo = class GridPagerInfo {
+let GridPagerInfoComponent = class GridPagerInfoComponent {
     constructor(tbGrid) {
         this.tbGrid = tbGrid;
         this.pageInfo = new grid_component_1.GridPageInfo();
@@ -27,7 +27,7 @@ let GridPagerInfo = class GridPagerInfo {
         });
     }
 };
-GridPagerInfo = __decorate([
+GridPagerInfoComponent = __decorate([
     core_1.Component({
         selector: 'grid-pager-info',
         template: `<div class="small">
@@ -35,6 +35,6 @@ GridPagerInfo = __decorate([
         <span [hidden]="!filtered">(Filtered from {{pageInfo.totalRecordCount}} total records)</span>
     </div>`
     }),
-    __metadata("design:paramtypes", [grid_component_1.TubularGrid])
-], GridPagerInfo);
-exports.GridPagerInfo = GridPagerInfo;
+    __metadata("design:paramtypes", [grid_component_1.GridComponent])
+], GridPagerInfoComponent);
+exports.GridPagerInfoComponent = GridPagerInfoComponent;

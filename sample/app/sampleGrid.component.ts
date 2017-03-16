@@ -2,7 +2,7 @@
 import { Router } from '@angular/router';
 
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import { TubularGrid, GridTable, ColumnModel, ColumnFilterMode, DataType } from '@tubular2/tubular2';
+import { GridComponent, GridTable, ColumnModel, ColumnFilterMode, DataType } from '@tubular2/tubular2';
 
 @Component({
     selector: 'grid',
@@ -11,24 +11,24 @@ import { TubularGrid, GridTable, ColumnModel, ColumnFilterMode, DataType } from 
 export class SampleGrid extends GridTable {
     public editModalRef;
 
-    constructor(public tbGrid: TubularGrid, private modalService: NgbModal, private router: Router) {
+    constructor(public tbGrid: GridComponent, private modalService: NgbModal, private router: Router) {
         super(tbGrid);
 
-        let orderIdColumn = new ColumnModel("OrderID", false);
+        let orderIdColumn = new ColumnModel('OrderID', false);
         orderIdColumn.filterMode = ColumnFilterMode.Number;
 
-        let customerColumn = new ColumnModel("CustomerName");
+        let customerColumn = new ColumnModel('CustomerName');
         customerColumn.filterMode = ColumnFilterMode.String;
 
-        let dateColumn = new ColumnModel("ShippedDate", false);
+        let dateColumn = new ColumnModel('ShippedDate', false);
         dateColumn.filterMode = ColumnFilterMode.DateTime;
         dateColumn.dataType = DataType.DateTime;
 
-        let creationDate = new ColumnModel("CreationDate", false);
+        let creationDate = new ColumnModel('CreationDate', false);
         creationDate.filterMode = ColumnFilterMode.Date;
         creationDate.dataType = DataType.Date;
 
-        let cityColumn = new ColumnModel("ShipperCity");
+        let cityColumn = new ColumnModel('ShipperCity');
         cityColumn.filterMode = ColumnFilterMode.String;
 
         this.addColumns([

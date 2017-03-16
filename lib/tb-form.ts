@@ -2,7 +2,6 @@
 //import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import * as moment from 'moment';
 
-import { TubularGrid } from './grid.component';
 import { RequestMethod } from '@angular/http';
 
 import { TubularHttpService } from './tubular-http.service';

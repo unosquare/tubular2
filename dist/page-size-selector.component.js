@@ -19,7 +19,7 @@ class PageSizeInfo {
     }
 }
 exports.PageSizeInfo = PageSizeInfo;
-let PageSizeSelector = class PageSizeSelector {
+let PageSizeSelectorComponent = class PageSizeSelectorComponent {
     constructor(tbGrid) {
         this.tbGrid = tbGrid;
         this._options = [10, 20, 50, 100];
@@ -40,8 +40,8 @@ __decorate([
     core_1.Input('options'),
     __metadata("design:type", Array),
     __metadata("design:paramtypes", [Array])
-], PageSizeSelector.prototype, "in", null);
-PageSizeSelector = __decorate([
+], PageSizeSelectorComponent.prototype, "in", null);
+PageSizeSelectorComponent = __decorate([
     core_1.Component({
         selector: 'page-size-selector',
         template: `
@@ -55,6 +55,6 @@ PageSizeSelector = __decorate([
         </div>
     </form>`
     }),
-    __metadata("design:paramtypes", [grid_component_1.TubularGrid])
-], PageSizeSelector);
-exports.PageSizeSelector = PageSizeSelector;
+    __metadata("design:paramtypes", [grid_component_1.GridComponent])
+], PageSizeSelectorComponent);
+exports.PageSizeSelectorComponent = PageSizeSelectorComponent;

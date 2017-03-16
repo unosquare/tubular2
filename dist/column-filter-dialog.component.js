@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const forms_1 = require("@angular/forms");
-const column_1 = require("./column");
+const column_model_1 = require("./column.model");
 let ColumnFilterDialogComponent = class ColumnFilterDialogComponent {
     constructor(fb) {
         this.onFilteringChange = new core_1.EventEmitter();
@@ -67,7 +67,7 @@ let ColumnFilterDialogComponent = class ColumnFilterDialogComponent {
 };
 __decorate([
     core_1.Input(),
-    __metadata("design:type", column_1.ColumnModel)
+    __metadata("design:type", column_model_1.ColumnModel)
 ], ColumnFilterDialogComponent.prototype, "column", void 0);
 __decorate([
     core_1.Output(),

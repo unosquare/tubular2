@@ -1,6 +1,6 @@
 ﻿import { Component, Input } from '@angular/core';
 
-import { TubularGrid, GridPageInfo }      from './grid.component';
+import { GridComponent, GridPageInfo }      from './grid.component';
 
 @Component({
     selector: 'grid-pager',
@@ -16,10 +16,10 @@ import { TubularGrid, GridPageInfo }      from './grid.component';
             size="sm">
     </ngb-pagination>`
 })
-export class GridPager {
+export class GridPagerComponent {
     private info = new GridPageInfo();
 
-    constructor(private tbGrid: TubularGrid) { }
+    constructor(private tbGrid: GridComponent) { }
 
     private ngOnInit() {
         this.tbGrid.pageInfo.subscribe((x: GridPageInfo) => this.info = x);

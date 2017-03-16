@@ -11,29 +11,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const grid_component_1 = require("./grid.component");
-let ExportButton = class ExportButton {
+let ExportButtonComponent = class ExportButtonComponent {
     constructor(tbGrid) {
         this.tbGrid = tbGrid;
     }
     downloadCsv() {
-        this.tbGrid.getCurrentPage(data => this.processCsv(data.Payload));
+        this.tbGrid.getCurrentPage((data) => this.processCsv(data.Payload));
     }
     downloadAllCsv() {
-        this.tbGrid.getFullDataSource(data => this.processCsv(data));
+        this.tbGrid.getFullDataSource((data) => this.processCsv(data));
     }
     processCsv(data) {
         let headers = this.tbGrid.columns.getValue().reduce((a, b) => a + b.label + ',', '').slice(0, -1) + '\r\n';
         let rows = data.map((row) => row.reduce((a, b) => a + '"' + b + '"' + ',', '').slice(0, -1) + '\r\n');
         let csv = rows.reduce((a, b) => a + b, headers);
-        let blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+        let blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
         saveAs(blob, this.fileName);
     }
 };
 __decorate([
     core_1.Input(),
     __metadata("design:type", String)
-], ExportButton.prototype, "fileName", void 0);
-ExportButton = __decorate([
+], ExportButtonComponent.prototype, "fileName", void 0);
+ExportButtonComponent = __decorate([
     core_1.Component({
         selector: 'grid-export',
         template: `<div ngbDropdown class="d-inline-block">
@@ -46,6 +46,6 @@ ExportButton = __decorate([
                </div>
                </div>`
     }),
-    __metadata("design:paramtypes", [grid_component_1.TubularGrid])
-], ExportButton);
-exports.ExportButton = ExportButton;
+    __metadata("design:paramtypes", [grid_component_1.GridComponent])
+], ExportButtonComponent);
+exports.ExportButtonComponent = ExportButtonComponent;

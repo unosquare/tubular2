@@ -2,7 +2,7 @@
 import { Observable }       from 'rxjs/Observable';
 import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
 
-import { TubularGrid }      from './grid.component';
+import { GridComponent }      from './grid.component';
 
 import 'rxjs/add/operator/debounceTime';
 
@@ -24,11 +24,11 @@ export class PageSizeInfo {
         </div>
     </form>`
 })
-export class PageSizeSelector {
-    _options: number[] = [10, 20, 50, 100];
-    selected: number;
+export class PageSizeSelectorComponent {
+    private _options: number[] = [10, 20, 50, 100];
+    private selected: number;
 
-    constructor(private tbGrid: TubularGrid) { }
+    constructor(private tbGrid: GridComponent) { }
 
     @Input('options')
     set in(options: any[]) {

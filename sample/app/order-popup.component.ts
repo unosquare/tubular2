@@ -1,14 +1,14 @@
 ﻿import { Component, Input, ChangeDetectionStrategy, OnInit } from '@angular/core';
 //import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { FormBuilder, Validators } from '@angular/forms';
-import { FormPopup, TubularGrid, TubularHttpService } from '@tubular2/tubular2'
+import { FormPopup, GridComponent, TubularHttpService } from '@tubular2/tubular2'
 
 @Component({
     selector: 'order-popup',
     templateUrl: '/app/order-popup.component.html'
 })
 export class OrderPopup extends FormPopup {
-    constructor(tbGrid: TubularGrid, formBuilder: FormBuilder, httpService: TubularHttpService) {//, public toastr: ToastsManager) {
+    constructor(tbGrid: GridComponent, formBuilder: FormBuilder, httpService: TubularHttpService) {//, public toastr: ToastsManager) {
         super(tbGrid, formBuilder, httpService); //, toastr);
     }
 

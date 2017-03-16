@@ -50,6 +50,6 @@ GridSearchComponent = __decorate([
                 </div>`
     }),
     __param(0, core_1.Optional()), __param(0, core_1.Inject(tubular_settings_service_1.SETTINGS_PROVIDER)),
-    __metadata("design:paramtypes", [Object, grid_component_1.TubularGrid])
+    __metadata("design:paramtypes", [Object, grid_component_1.GridComponent])
 ], GridSearchComponent);
 exports.GridSearchComponent = GridSearchComponent;

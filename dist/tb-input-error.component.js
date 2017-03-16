@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const tb_form_1 = require("./tb-form");
-let TbInputError = class TbInputError {
+let TbInputErrorComponent = class TbInputErrorComponent {
     constructor() { }
     ngOnInit() {
         this.formErrors = this.tbForm.formErrors;
@@ -20,12 +20,12 @@ let TbInputError = class TbInputError {
 __decorate([
     core_1.Input(),
     __metadata("design:type", tb_form_1.TbForm)
-], TbInputError.prototype, "tbForm", void 0);
+], TbInputErrorComponent.prototype, "tbForm", void 0);
 __decorate([
     core_1.Input(),
     __metadata("design:type", String)
-], TbInputError.prototype, "controlName", void 0);
-TbInputError = __decorate([
+], TbInputErrorComponent.prototype, "controlName", void 0);
+TbInputErrorComponent = __decorate([
     core_1.Component({
         selector: 'tb-input-error',
         template: `
@@ -33,9 +33,8 @@ TbInputError = __decorate([
                 <span *ngFor="let item of tbForm.formErrors[controlName]; let i = index">
                     {{item}}
                 </span>
-    </div>
-    `
+    </div>`
     }),
     __metadata("design:paramtypes", [])
-], TbInputError);
-exports.TbInputError = TbInputError;
+], TbInputErrorComponent);
+exports.TbInputErrorComponent = TbInputErrorComponent;

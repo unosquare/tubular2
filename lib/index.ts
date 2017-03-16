@@ -16,7 +16,7 @@ export * from './grid-search.component';
 export * from './grid-pager.component';
 export * from './grid-pager-info.component';
 export * from './column-header.component';
-export * from './column';
+export * from './column.model';
 export * from './grid-export.component';
 export * from './mdate.pipe';
 export * from './http-options';

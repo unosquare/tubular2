@@ -5,29 +5,35 @@ import { HttpModule } from '@angular/http';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { TubularGrid }  from './grid.component';
-import { TbInputError }  from './tb-input-error.component';
-import { ColumnHeader } from './column-header.component';
+import { GridComponent }  from './grid.component';
+import { TbInputErrorComponent }  from './tb-input-error.component';
+import { ColumnHeaderComponent } from './column-header.component';
 import { GridSearchComponent } from './grid-search.component';
-import { GridPager } from './grid-pager.component';
+import { GridPagerComponent } from './grid-pager.component';
 import { ColumnFilterDialogComponent }  from './column-filter-dialog.component';
-import { GridPagerInfo } from './grid-pager-info.component';
-import { PageSizeSelector } from './page-size-selector.component';
-import { ExportButton } from './grid-export.component';
-import { PrintButton } from './grid-print.component';
+import { GridPagerInfoComponent } from './grid-pager-info.component';
+import { PageSizeSelectorComponent } from './page-size-selector.component';
+import { ExportButtonComponent } from './grid-export.component';
+import { PrintButtonComponent } from './grid-print.component';
 import { MDatePipe } from './mdate.pipe';
 
 @NgModule({
-    imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule, NgbModule.forRoot()],
+    imports: [
+        BrowserModule, FormsModule, ReactiveFormsModule, HttpModule,
+        NgbModule.forRoot()
+    ],
     declarations: [
-        TubularGrid, ColumnHeader, GridSearchComponent,
-        GridPager, GridPagerInfo, ColumnFilterDialogComponent,
-        PageSizeSelector, ExportButton, PrintButton, MDatePipe, TbInputError
+        GridComponent, ColumnHeaderComponent, GridSearchComponent,
+        GridPagerComponent, GridPagerInfoComponent, ColumnFilterDialogComponent,
+        PageSizeSelectorComponent, ExportButtonComponent, PrintButtonComponent,
+        MDatePipe, TbInputErrorComponent
     ],
     exports: [
-        TubularGrid, ColumnHeader, GridSearchComponent,
-        GridPager, GridPagerInfo, ColumnFilterDialogComponent,
-        PageSizeSelector, ExportButton, PrintButton, MDatePipe, NgbModule, TbInputError
+        GridComponent, ColumnHeaderComponent, GridSearchComponent,
+        GridPagerComponent, GridPagerInfoComponent, ColumnFilterDialogComponent,
+        PageSizeSelectorComponent, ExportButtonComponent, PrintButtonComponent,
+        MDatePipe, TbInputErrorComponent,
+        NgbModule
     ]
 })
 export class TubularModule { }

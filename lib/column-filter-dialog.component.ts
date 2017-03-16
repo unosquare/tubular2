@@ -1,6 +1,6 @@
 ﻿import { Component, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { ColumnModel } from './column';
+import { ColumnModel } from './column.model';
 
 @Component({
     selector: 'filter-dialog',

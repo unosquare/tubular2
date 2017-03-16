@@ -8,19 +8,17 @@ import { TbForm } from './tb-form';
                 <span *ngFor="let item of tbForm.formErrors[controlName]; let i = index">
                     {{item}}
                 </span>
-    </div>
-    `
+    </div>`
 })
-export class TbInputError implements OnInit {
+export class TbInputErrorComponent implements OnInit {
     @Input() tbForm: TbForm;
     @Input() controlName: String;
 
-    formErrors: Object;
+    private formErrors: Object;
 
     constructor() { }
 
     ngOnInit() {
         this.formErrors = this.tbForm.formErrors;
     }
-
 }

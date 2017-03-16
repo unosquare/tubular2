@@ -1,6 +1,6 @@
 ﻿import { Component, Input } from '@angular/core';
 
-import { TubularGrid, GridPageInfo }      from './grid.component';
+import { GridComponent, GridPageInfo }      from './grid.component';
 
 @Component({
     selector: 'grid-pager-info',
@@ -10,14 +10,14 @@ import { TubularGrid, GridPageInfo }      from './grid.component';
         <span [hidden]="!filtered">(Filtered from {{pageInfo.totalRecordCount}} total records)</span>
     </div>`
 })
-export class GridPagerInfo {
+export class GridPagerInfoComponent {
     private pageInfo = new GridPageInfo();
     private currentTop = 0;
     private currentInitial = 0;
     private filteredRecordCount = 0;
     private filtered: boolean;
     
-    constructor(private tbGrid: TubularGrid) { }
+    constructor(private tbGrid: GridComponent) { }
 
     private ngOnInit() {
         // live update properties
