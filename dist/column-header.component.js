@@ -63,7 +63,7 @@ __decorate([
 ], ColumnHeaderComponent.prototype, "popover", void 0);
 ColumnHeaderComponent = ColumnHeaderComponent_1 = __decorate([
     core_1.Component({
-        selector: 'column-header',
+        selector: 'tb-column-header',
         template: `
     <div class="column-header">
         <span 

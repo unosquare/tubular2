@@ -3,13 +3,16 @@
         <tr>
             <th>Actions</th>
             <th *ngFor="let column of columns | async">
-                <column-header #header [column]="column" (onSort)="sort($event)" (onFilter)="applyFilter($event)">
+                <tb-column-header #header 
+                        [column]="column" 
+                        (onSort)="sort($event)" 
+                        (onFilter)="applyFilter($event)">
                     <template #filterPopover>
                         <tb-filter-dialog [column]="column"
                                        (onFilteringChange)="header.filter($event)">
                         </tb-filter-dialog>
                     </template>
-                </column-header>
+                </tb-column-header>
             </th>
         </tr>
     </thead>

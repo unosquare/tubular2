@@ -33,7 +33,7 @@ let GridSearchComponent = class GridSearchComponent {
 };
 GridSearchComponent = __decorate([
     core_1.Component({
-        selector: 'grid-search',
+        selector: 'tb-grid-search',
         template: `<div>
                     <div class="input-group input-group-sm">
                     <span class="input-group-addon"><i class="fa fa-search"></i></span>

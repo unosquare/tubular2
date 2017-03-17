@@ -6,7 +6,7 @@
 import { ColumnModel } from './column.model';
 
 @Component({
-    selector: 'column-header',
+    selector: 'tb-column-header',
     template: `
     <div class="column-header">
         <span 

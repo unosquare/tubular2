@@ -1,4 +1,7 @@
-﻿import { Component, Input, Output, EventEmitter, Inject, Optional } from '@angular/core';
+﻿import { 
+    Component, Input, Output, EventEmitter,
+    OnInit,Inject, Optional 
+} from '@angular/core';
 import { RequestMethod } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -37,7 +40,7 @@ export class GridPageInfo {
         ':host /deep/ .sortDesc::after { font-family: FontAwesome; content: "\\f175"; }'
     ]
 })
-export class GridComponent {
+export class GridComponent implements OnInit {
 
     // data is just observable and children can't push
     private data = new BehaviorSubject([]);
@@ -75,33 +78,6 @@ export class GridComponent {
         @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider,
         private httpService: TubularHttpService) { }
 
-    private ngOnInit() {
-        // just a logging
-        this.dataStream.subscribe((p) => console.log('New data', p));
-
-        // subscriptions to events
-        this.pageSize.subscribe(c => {
-            this.refresh();
-            this.changePageSizeData()
-        });
-        this.columns.subscribe((c) => this.refresh());
-        this.page.subscribe((c) => {
-            this.refresh();
-            this.changePagesData();
-        });
-        this.freeTextSearch
-            .debounceTime(500)
-            .subscribe((c) => {
-                if (c === this.search.text) {
-                    return;
-                }
-
-                this.search.text = c;
-                this.search.operator = !c ? 'None' : 'Auto';
-                this.refresh();
-            });
-    }
-
     public goToPage(page) {
         this.pageSet = true;
         this.page.next(page);
@@ -127,8 +103,8 @@ export class GridComponent {
         req.columns.forEach(this.transformSortDirection);
 
         this.httpService.post(this.dataUrl, req).subscribe(
-            data => callback(data, req),
-            error => this.onDataError.emit(error)
+            (data) => callback(data, req),
+            (error) => this.onDataError.emit(error)
         );
     }
 
@@ -154,9 +130,9 @@ export class GridComponent {
         this.httpService
             .save(this.saveUrl, row.values, row.$isNew ? RequestMethod.Post : RequestMethod.Put)
             .subscribe(
-            data => this.onDataSaved.emit(data),
-            error => this.onDataError.emit(error),
-            () => this.refresh());
+                (data) => this.onDataSaved.emit(data),
+                (error) => this.onDataError.emit(error),
+                () => this.refresh());
     }
 
     changePagesData() {
@@ -185,6 +161,33 @@ export class GridComponent {
         }
         
         return 10;
+    }
+
+    ngOnInit() {
+        // just a logging
+        this.dataStream.subscribe((p) => console.log('New data', p));
+
+        // subscriptions to events
+        this.pageSize.subscribe((c) => {
+            this.refresh();
+            this.changePageSizeData()
+        });
+        this.columns.subscribe((c) => this.refresh());
+        this.page.subscribe((c) => {
+            this.refresh();
+            this.changePagesData();
+        });
+        this.freeTextSearch
+            .debounceTime(500)
+            .subscribe((c) => {
+                if (c === this.search.text) {
+                    return;
+                }
+
+                this.search.text = c;
+                this.search.operator = !c ? 'None' : 'Auto';
+                this.refresh();
+            });
     }
 
     private transformSortDirection(column: ColumnModel) {

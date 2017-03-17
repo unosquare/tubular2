@@ -23,13 +23,13 @@ let GridPagerInfoComponent = class GridPagerInfoComponent {
         // live update properties
         this.tbGrid.pageInfo.subscribe((x) => {
             this.pageInfo = x;
-            this.filtered = this.pageInfo.totalRecordCount != this.pageInfo.filteredRecordCount;
+            this.filtered = this.pageInfo.totalRecordCount !== this.pageInfo.filteredRecordCount;
         });
     }
 };
 GridPagerInfoComponent = __decorate([
     core_1.Component({
-        selector: 'grid-pager-info',
+        selector: 'tb-grid-pager-info',
         template: `<div class="small">
         Showing {{this.pageInfo.currentInitial}} to {{this.pageInfo.currentTop}} of {{pageInfo.filteredRecordCount}} records 
         <span [hidden]="!filtered">(Filtered from {{pageInfo.totalRecordCount}} total records)</span>

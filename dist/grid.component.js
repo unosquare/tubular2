@@ -56,30 +56,6 @@ let GridComponent = class GridComponent {
         this.onDataError = new core_1.EventEmitter();
         this.onDataSaved = new core_1.EventEmitter();
     }
-    ngOnInit() {
-        // just a logging
-        this.dataStream.subscribe((p) => console.log('New data', p));
-        // subscriptions to events
-        this.pageSize.subscribe(c => {
-            this.refresh();
-            this.changePageSizeData();
-        });
-        this.columns.subscribe((c) => this.refresh());
-        this.page.subscribe((c) => {
-            this.refresh();
-            this.changePagesData();
-        });
-        this.freeTextSearch
-            .debounceTime(500)
-            .subscribe((c) => {
-            if (c === this.search.text) {
-                return;
-            }
-            this.search.text = c;
-            this.search.operator = !c ? 'None' : 'Auto';
-            this.refresh();
-        });
-    }
     goToPage(page) {
         this.pageSet = true;
         this.page.next(page);
@@ -100,7 +76,7 @@ let GridComponent = class GridComponent {
         };
         // transform direction values to strings
         req.columns.forEach(this.transformSortDirection);
-        this.httpService.post(this.dataUrl, req).subscribe(data => callback(data, req), error => this.onDataError.emit(error));
+        this.httpService.post(this.dataUrl, req).subscribe((data) => callback(data, req), (error) => this.onDataError.emit(error));
     }
     getFullDataSource(callback) {
         let req = {
@@ -118,7 +94,7 @@ let GridComponent = class GridComponent {
     onUpdate(row) {
         this.httpService
             .save(this.saveUrl, row.values, row.$isNew ? http_1.RequestMethod.Post : http_1.RequestMethod.Put)
-            .subscribe(data => this.onDataSaved.emit(data), error => this.onDataError.emit(error), () => this.refresh());
+            .subscribe((data) => this.onDataSaved.emit(data), (error) => this.onDataError.emit(error), () => this.refresh());
     }
     changePagesData() {
         if (this.settingsProvider != null) {
@@ -141,6 +117,30 @@ let GridComponent = class GridComponent {
             return this.settingsProvider.get("gridPageSize") || 10;
         }
         return 10;
+    }
+    ngOnInit() {
+        // just a logging
+        this.dataStream.subscribe((p) => console.log('New data', p));
+        // subscriptions to events
+        this.pageSize.subscribe((c) => {
+            this.refresh();
+            this.changePageSizeData();
+        });
+        this.columns.subscribe((c) => this.refresh());
+        this.page.subscribe((c) => {
+            this.refresh();
+            this.changePagesData();
+        });
+        this.freeTextSearch
+            .debounceTime(500)
+            .subscribe((c) => {
+            if (c === this.search.text) {
+                return;
+            }
+            this.search.text = c;
+            this.search.operator = !c ? 'None' : 'Auto';
+            this.refresh();
+        });
     }
     transformSortDirection(column) {
         switch (column.direction) {

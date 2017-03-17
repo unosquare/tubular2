@@ -5,7 +5,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { GridComponent, GridTable, ColumnModel, ColumnFilterMode, DataType } from '@tubular2/tubular2';
 
 @Component({
-    selector: 'grid',
+    selector: 'my-grid',
     templateUrl: '/app/sampleGrid.component.html'
 })
 export class SampleGrid extends GridTable {

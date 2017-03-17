@@ -1,5 +1,8 @@
 import { Injectable, Inject, Optional } from '@angular/core';
-import { Http, Response, RequestMethod, Request, Headers, RequestOptions } from '@angular/http';
+import { 
+    Http, Response, RequestMethod,
+    Request, Headers, RequestOptions
+} from '@angular/http';
 
 import { SETTINGS_PROVIDER, ITubularSettingsProvider } from './tubular-settings.service';
 import { Observable } from 'rxjs/Rx';
@@ -31,52 +34,46 @@ export class TubularAuthService {
         @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider,
         private http: Http) { }
 
-    setTokenUrl(url: string): void {
+    public setTokenUrl(url: string): void {
         this.tokenUrl = url;
     }
 
-    setRefreshTokenUrl(url: string): void {
+    public setRefreshTokenUrl(url: string): void {
         this.refreshTokenUrl = url;
     }
 
-    enableRefreshTokens(): void {
+    public enableRefreshTokens(): void {
         this.useRefreshTokens = true;
     }
 
-    isUsingRefreshTokens(): boolean {
+    public isUsingRefreshTokens(): boolean {
         return this.useRefreshTokens;
     }
 
-    getRefreshTokenUrl(): string {
+    public getRefreshTokenUrl(): string {
         return this.refreshTokenUrl;
     }
 
-    setAccessTokenAsExpired(): void {
+    public setAccessTokenAsExpired(): void {
         this.userData.expirationDate = new Date(new Date().getTime() - 10 * 1000);
         this.saveAuthData();
     }
 
-    removeAuthData(): void {
-        this.settingsProvider.delete('auth_data');
-    }
-
-    saveAuthData(): void {
-        this.removeAuthData();
-
-        if (this.settingsProvider)
-            this.settingsProvider.put('auth_data', JSON.stringify(this.userData));
-    }
-
-    authenticate(username: string, password: string) {
+    public authenticate(username: string, password: string) {
         this.removeAuthentication();
-        let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+        let headers = new Headers(
+            { 'Content-Type': 'application/x-www-form-urlencoded' 
+        });
         let options = new RequestOptions({ headers });
 
-        return this.http.post(this.tokenUrl, `grant_type=password&username=${username}&password=${password}`, options)
-            .map(data => this.handleSuccessCallback(data));
+        return this.http.post(
+            this.tokenUrl,
+            `grant_type=password&username=${username}&password=${password}`,
+            options)
+                .map((data) => this.handleSuccessCallback(data));
     }
 
-    removeAuthentication() {
+    public removeAuthentication() {
         if (this.settingsProvider) {
             this.settingsProvider.delete('auth_data');
         }
@@ -90,6 +87,52 @@ export class TubularAuthService {
 
         if (this.settingsProvider) {
             this.settingsProvider.delete('auth_Header');
+        }
+    }
+
+    public isValidSession() {
+        if (!this.userData.isAuthenticated || this.isDateExpired(this.userData.expirationDate)) {
+            try {
+                this.retriveSaveData();
+            } catch (e) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public refreshSession(): Observable<any> {
+        let refreshToken = this.userData.refreshToken;
+        this.removeAuthentication();
+
+        let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+        let options = new RequestOptions({ headers });
+
+        return this.http.post(
+            this.getRefreshTokenUrl(),
+            `grant_type=refresh_token&refresh_token=${refreshToken}`,
+            options)
+            .mergeMap((response) => {
+                this.handleSuccessCallback(response);
+
+                if (this.isValidSession()) {
+                    return Observable.create(true);
+                } else {
+                    return Observable.throw('error');
+                }
+            })
+            .map(() => true);
+    }
+    private removeAuthData(): void {
+        this.settingsProvider.delete('auth_data');
+    }
+
+    private saveAuthData(): void {
+        this.removeAuthData();
+
+        if (this.settingsProvider) {
+            this.settingsProvider.put('auth_data', JSON.stringify(this.userData));
         }
     }
 
@@ -107,20 +150,10 @@ export class TubularAuthService {
         }
     }
 
-    public isValidSession() {
-        if (!this.userData.isAuthenticated || this.isDateExpired(this.userData.expirationDate)) {
-            try {
-                this.retriveSaveData();
-            } catch (e) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     private retriveSaveData() {
-        const savedData = this.settingsProvider.get('auth_data') ? JSON.parse(this.settingsProvider.get('auth_data')) : null;
+        const savedData = this.settingsProvider.get('auth_data') ?
+            JSON.parse(this.settingsProvider.get('auth_data')) :
+            null;
 
         if (typeof savedData === 'undefined' || savedData == null) {
             throw 'No authentication exist';
@@ -150,25 +183,5 @@ export class TubularAuthService {
         }
 
         request.headers.append('Authorization', `Bearer ${this.userData.bearerToken}`);
-    }
-
-    public refreshSession(): Observable<any> {
-        let refreshToken = this.userData.refreshToken;
-        this.removeAuthentication();
-
-        let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
-        let options = new RequestOptions({ headers });
-
-        return this.http.post(this.getRefreshTokenUrl(), `grant_type=refresh_token&refresh_token=${refreshToken}`, options)
-            .mergeMap((response) => {
-                this.handleSuccessCallback(response);
-
-                if (this.isValidSession()) {
-                    return Observable.create(true);
-                } else {
-                    return Observable.throw('error');
-                }
-            })
-            .map(() => true);
     }
 }

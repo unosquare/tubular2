@@ -1,9 +1,9 @@
 ﻿import { Component, Input } from '@angular/core';
 
-import { GridComponent, GridPageInfo }      from './grid.component';
+import { GridComponent, GridPageInfo } from './grid.component';
 
 @Component({
-    selector: 'grid-pager-info',
+    selector: 'tb-grid-pager-info',
     template: 
     `<div class="small">
         Showing {{this.pageInfo.currentInitial}} to {{this.pageInfo.currentTop}} of {{pageInfo.filteredRecordCount}} records 
@@ -23,7 +23,7 @@ export class GridPagerInfoComponent {
         // live update properties
         this.tbGrid.pageInfo.subscribe((x : GridPageInfo) => {
             this.pageInfo = x;
-            this.filtered = this.pageInfo.totalRecordCount != this.pageInfo.filteredRecordCount;
+            this.filtered = this.pageInfo.totalRecordCount !== this.pageInfo.filteredRecordCount;
         });
     }
 }

@@ -43,7 +43,7 @@ __decorate([
 ], PageSizeSelectorComponent.prototype, "in", null);
 PageSizeSelectorComponent = __decorate([
     core_1.Component({
-        selector: 'page-size-selector',
+        selector: 'tb-page-size-selector',
         template: `
     <form class="form-inline">
         <div class="form-group">

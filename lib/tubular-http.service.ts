@@ -33,7 +33,7 @@ export class TubularHttpService {
         private tbAuthService: TubularAuthService) { }
 
     public get(url: string, requireAuthentication: boolean = false): Observable<any> {
-        let requestArgs = <TbRequestArgs>{
+        let requestArgs = <TbRequestArgs> {
             method: RequestMethod.Get,
             url,
             requireAuthentication
@@ -43,7 +43,7 @@ export class TubularHttpService {
     }
 
     public post(url: string, data: any, requireAuthentication: boolean = false): Observable<any> {
-        let requestArgs = <TbRequestArgs>{
+        let requestArgs = <TbRequestArgs> {
             method: RequestMethod.Post,
             body: data,
             url,
@@ -95,9 +95,9 @@ export class TubularHttpService {
                     return this.handleRequestError(
                         {
                             message: 'Token expired',
-                            status: '401', 
-                            statusText: 'Token expired' 
-                        }, 
+                            status: '401',
+                            statusText: 'Token expired'
+                        },
                         ngRequest);
                 }
             }
@@ -109,9 +109,9 @@ export class TubularHttpService {
     }
 
     public save(
-        url: string, 
-        row: any, 
-        method: RequestMethod = RequestMethod.Post, 
+        url: string,
+        row: any,
+        method: RequestMethod = RequestMethod.Post,
         requireAuthentication: boolean = true): Observable<any> {
         let requestArgs = <TbRequestArgs> {
             body: row,

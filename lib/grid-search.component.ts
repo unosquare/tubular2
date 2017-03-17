@@ -4,7 +4,7 @@ import { GridComponent }           from './grid.component';
 import { SETTINGS_PROVIDER, ITubularSettingsProvider } from './tubular-settings.service';
 
 @Component({
-    selector: 'grid-search',
+    selector: 'tb-grid-search',
     template: `<div>
                     <div class="input-group input-group-sm">
                     <span class="input-group-addon"><i class="fa fa-search"></i></span>

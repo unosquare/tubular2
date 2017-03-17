@@ -9,7 +9,7 @@ export abstract class GridTable {
 
     public columns = this.columnObservable.asObservable();
     public rows: any[];
-    
+
     constructor(public tbGrid: GridComponent) {
         this.tbGrid.dataStream.subscribe((payload) => this.rows = payload);
         this.columnObservable.subscribe((payload) => this.tbGrid.columns.next(payload));
@@ -32,19 +32,19 @@ export abstract class GridTable {
 
         if (column.direction === ColumnSortDirection.None) {
             column.direction = ColumnSortDirection.Asc;
-        }
-        else if (column.direction === ColumnSortDirection.Asc) {
+        } else if (column.direction === ColumnSortDirection.Asc) {
             column.direction = ColumnSortDirection.Desc;
-        }
-        else if (column.direction === ColumnSortDirection.Desc) {
+        } else if (column.direction === ColumnSortDirection.Desc) {
             column.direction = ColumnSortDirection.None;
         }
 
         column.sortOrder = column.direction === ColumnSortDirection.None ? 0 : Number.MAX_VALUE;
 
         if (!column.isMultiSort) {
-            value.forEach((v) => v.sortOrder = v.name === column.name ? v.sortOrder : 0);
-            value.forEach((v) => v.direction = v.name === column.name ? column.direction : ColumnSortDirection.None);
+            value.forEach(
+                (v) => v.sortOrder = v.name === column.name ? v.sortOrder : 0);
+            value.forEach(
+                (v) => v.direction = v.name === column.name ? column.direction : ColumnSortDirection.None);
         }
 
         let currentlySortedColumns = value.filter((col) => col.sortOrder > 0);

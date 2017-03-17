@@ -35,7 +35,7 @@ __decorate([
 ], ExportButtonComponent.prototype, "fileName", void 0);
 ExportButtonComponent = __decorate([
     core_1.Component({
-        selector: 'grid-export',
+        selector: 'tb-grid-export',
         template: `<div ngbDropdown class="d-inline-block">
                 <button ngbDropdownToggle class="btn btn-info btn-sm">
                 <span class="fa fa-download"></span>&nbsp;Export CSV&nbsp;<span class="caret"></span>
