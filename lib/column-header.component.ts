@@ -31,13 +31,17 @@ import { ColumnModel } from './column.model';
 export class ColumnHeaderComponent {
     private static prevPopover = null;
 
-    @Input() public column: ColumnModel;
-    @Output() public onSort = new EventEmitter<ColumnModel>();
-    @Output() public onFilter = new EventEmitter<ColumnModel>();
-    @ContentChild('filterPopover') private filterPopoverTemplate: TemplateRef<Object>;
-    @ViewChild('popover') private popover: any;
+    @Input()
+    public column: ColumnModel;
+    @Output()
+    public onSort = new EventEmitter<ColumnModel>();
+    @Output()
+    public onFilter = new EventEmitter<ColumnModel>();
+    @ContentChild('filterPopover')
+    public filterPopoverTemplate: TemplateRef<Object>;
+    public hasFilter: boolean;
 
-    private hasFilter: boolean;
+    @ViewChild('popover') private popover: any;
 
     public togglePopover() {
         if (ColumnHeaderComponent.prevPopover != null) {

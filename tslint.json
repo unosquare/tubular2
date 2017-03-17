@@ -53,6 +53,7 @@
       "allow-pascal-case",
       "ban-keywords",
       "check-format"
-    ]
+    ],
+    "component-selector-prefix": [false, "tb"]
   }
 }

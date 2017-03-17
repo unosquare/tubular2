@@ -98,12 +98,12 @@ let GridComponent = class GridComponent {
     }
     changePagesData() {
         if (this.settingsProvider != null) {
-            this.settingsProvider.put("gridPage", this.page.getValue());
+            this.settingsProvider.put('gridPage', this.page.getValue());
         }
     }
     changePageSizeData() {
         if (this.settingsProvider != null) {
-            this.settingsProvider.put("gridPageSize", this._pageSize.getValue());
+            this.settingsProvider.put('gridPageSize', this._pageSize.getValue());
         }
     }
     getPageSettingValue() {

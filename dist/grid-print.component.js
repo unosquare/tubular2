@@ -24,7 +24,8 @@ let PrintButtonComponent = class PrintButtonComponent {
                     <thead><tr>${headers}</tr></thead><tbody>${rows}</tbody>
                 </table>`;
             let popup = window.open('', '', 'menubar=0,location=0,height=500,width=800');
-            popup.document.write('<link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.min.css" />');
+            popup.document.write('<link rel="stylesheet" ' +
+                'href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.min.css" />');
             popup.document.write('<body onload="window.print();">');
             popup.document.write(tableHtml);
             popup.document.write('</body>');

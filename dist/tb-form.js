@@ -16,7 +16,9 @@ class TbForm {
         this.serverUrl = options.serverUrl || '';
         this.saveUrl = options.saveUrl || '';
         this.serverSaveMethod = options.serverSaveMethod || http_1.RequestMethod.Post;
-        this.requireAuthentication = options.requireAuthentication !== undefined ? options.requireAuthentication : false;
+        this.requireAuthentication = options.requireAuthentication !== undefined ?
+            options.requireAuthentication :
+            false;
         this.localForm = this.buildForm();
         // Try to load values if we have model key and server url
         if (this.hasModelKey && this.serverUrl) {
@@ -53,7 +55,9 @@ class TbForm {
     onSave(row, success, error, complete) {
         this.httpService
             .save(this.saveUrl, row.values, row.$isNew ? this.serverSaveMethod : http_1.RequestMethod.Put, this.requireAuthentication)
-            .subscribe((data) => success ? success(data) : this.defaultSaveSuccess(data), (errorMessage) => error ? error(errorMessage) : this.defaultSaveError(errorMessage), () => complete ? complete() : this.defaultSaveComplete());
+            .subscribe((data) => success ? success(data) : this.defaultSaveSuccess(data), (errorMessage) => error ?
+            error(errorMessage) :
+            this.defaultSaveError(errorMessage), () => complete ? complete() : this.defaultSaveComplete());
     }
     defaultSaveSuccess(data) {
         console.log('Success');

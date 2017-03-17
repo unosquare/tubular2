@@ -44,8 +44,8 @@ export abstract class GridTable {
             value.forEach(
                 (v) => v.sortOrder = v.name === column.name ? v.sortOrder : 0);
             value.forEach(
-                (v) => v.direction = v.name === column.name ? 
-                                        column.direction : 
+                (v) => v.direction = v.name === column.name ?
+                                        column.direction :
                                         ColumnSortDirection.None);
         }
 

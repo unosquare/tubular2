@@ -28,11 +28,11 @@ __decorate([
 TbInputErrorComponent = __decorate([
     core_1.Component({
         selector: 'tb-input-error',
-        template: `
-    <div *ngIf="tbForm.formErrors[controlName] && tbForm.formErrors[controlName].length > 0" class="alert alert-danger">
-                <span *ngFor="let item of tbForm.formErrors[controlName]; let i = index">
-                    {{item}}
-                </span>
+        template: `<div  *ngIf="tbForm.formErrors[controlName] && tbForm.formErrors[controlName].length > 0" 
+           class="alert alert-danger">
+        <span *ngFor="let item of tbForm.formErrors[controlName]; let i = index">
+            {{item}}
+        </span>
     </div>`
     }),
     __metadata("design:paramtypes", [])

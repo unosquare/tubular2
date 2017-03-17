@@ -50,5 +50,5 @@ export abstract class FormPopup extends TbForm {
         return this.row;
     };
 
-    abstract getModelDefinition(): any;
+    public abstract getModelDefinition(): any;
 }

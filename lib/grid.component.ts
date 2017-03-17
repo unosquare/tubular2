@@ -98,7 +98,7 @@ export class GridComponent implements OnInit {
             search: this.search,
             timezoneOffset: new Date().getTimezoneOffset()
         };
-        
+
         // transform direction values to strings
         req.columns.forEach(this.transformSortDirection);
 
@@ -137,13 +137,13 @@ export class GridComponent implements OnInit {
 
     changePagesData() {
         if (this.settingsProvider != null) {
-            this.settingsProvider.put("gridPage", this.page.getValue());
+            this.settingsProvider.put('gridPage', this.page.getValue());
         }
     }
 
     changePageSizeData() {
         if (this.settingsProvider != null) {
-            this.settingsProvider.put("gridPageSize", this._pageSize.getValue());
+            this.settingsProvider.put('gridPageSize', this._pageSize.getValue());
         }
     }
 
@@ -151,15 +151,15 @@ export class GridComponent implements OnInit {
         if (this.settingsProvider != null) {
             return this.settingsProvider.get("gridPage") || 0;
         }
-        
+
         return 0;
     }
 
     getPageSizeSettingValue() {
-        if (this.settingsProvider != null) { 
+        if (this.settingsProvider != null) {
             return this.settingsProvider.get("gridPageSize") || 10;
         }
-        
+
         return 10;
     }
 

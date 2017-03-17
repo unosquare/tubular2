@@ -39,7 +39,9 @@ export abstract class TbForm {
         this.serverUrl = options.serverUrl || '';
         this.saveUrl = options.saveUrl || '';
         this.serverSaveMethod = options.serverSaveMethod || RequestMethod.Post;
-        this.requireAuthentication = options.requireAuthentication !== undefined ? options.requireAuthentication : false;
+        this.requireAuthentication = options.requireAuthentication !== undefined ? 
+            options.requireAuthentication : 
+            false;
 
         this.localForm = this.buildForm();
 
@@ -88,11 +90,17 @@ export abstract class TbForm {
 
     onSave(row, success?: (success: any) => void, error?: (error: any) => void, complete?: () => void) {
         this.httpService
-            .save(this.saveUrl, row.values, row.$isNew ? this.serverSaveMethod : RequestMethod.Put, this.requireAuthentication)
+            .save(
+                this.saveUrl, 
+                row.values, 
+                row.$isNew ? this.serverSaveMethod : RequestMethod.Put, 
+                this.requireAuthentication)
             .subscribe(
-            (data) => success ? success(data) : this.defaultSaveSuccess(data),
-            (errorMessage) => error ? error(errorMessage) : this.defaultSaveError(errorMessage),
-            () => complete ? complete() : this.defaultSaveComplete());
+                (data) => success ? success(data) : this.defaultSaveSuccess(data),
+                (errorMessage) => error ? 
+                    error(errorMessage) : 
+                    this.defaultSaveError(errorMessage),
+                () => complete ? complete() : this.defaultSaveComplete());
     }
 
     private defaultSaveSuccess(data) {
@@ -158,9 +166,8 @@ export abstract class TbForm {
         return this.formBuilder.group(data);
     }
 
-    abstract getRow(): any;
-    abstract getModelDefinition(): any;
+    public abstract getRow(): any;
+    public abstract getModelDefinition(): any;
 
-    validationMessages: {};
-
+    public validationMessages: {};
 }
