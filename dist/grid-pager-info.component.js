@@ -11,8 +11,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const grid_component_1 = require("./grid.component");
-let GridPagerInfoComponent = class GridPagerInfoComponent {
+let GridPagerInfoComponent = class GridPagerInfoComponent extends core_1.OnInit {
     constructor(tbGrid) {
+        super();
         this.tbGrid = tbGrid;
         this.pageInfo = new grid_component_1.GridPageInfo();
         this.currentTop = 0;

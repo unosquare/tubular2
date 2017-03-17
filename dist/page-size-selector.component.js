@@ -25,7 +25,7 @@ let PageSizeSelectorComponent = class PageSizeSelectorComponent {
         this._options = [10, 20, 50, 100];
     }
     set in(options) {
-        if (options != undefined) {
+        if (options) {
             this._options = options;
         }
     }

@@ -10,13 +10,16 @@ import { TubularHttpService } from './tubular-http.service';
 import { TbForm } from './tb-form';
 
 export abstract class FormPopup extends TbForm {
-    @Input() modalRef: any;
-    @Input() row: any;
+    @Input() public modalRef: any;
+    @Input() public row: any;
     public $isNew: boolean;
     private detailsForm: FormGroup;
     private data: any;
 
-    constructor(public tbGrid: GridComponent, public formBuilder: FormBuilder, public httpService: TubularHttpService) {// , public toastr: ToastsManager) {
+    constructor(
+        public tbGrid: GridComponent,  // TODO: Refactor, why we need the GridComponent?
+        public formBuilder: FormBuilder, 
+        public httpService: TubularHttpService) {// , public toastr: ToastsManager) {
         super(formBuilder, httpService); //, toastr);
     }
 

@@ -11,8 +11,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const grid_component_1 = require("./grid.component");
-let GridPagerComponent = class GridPagerComponent {
+let GridPagerComponent = class GridPagerComponent extends core_1.OnInit {
     constructor(tbGrid) {
+        super();
         this.tbGrid = tbGrid;
         this.info = new grid_component_1.GridPageInfo();
     }
@@ -26,7 +27,7 @@ let GridPagerComponent = class GridPagerComponent {
 };
 GridPagerComponent = __decorate([
     core_1.Component({
-        selector: 'grid-pager',
+        selector: 'tb-grid-pager',
         template: `<ngb-pagination 
             [collectionSize]="info.filteredRecordCount"
             [pageSize]="tbGrid._pageSize.value"

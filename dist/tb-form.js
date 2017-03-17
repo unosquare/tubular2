@@ -19,9 +19,9 @@ class TbForm {
         this.requireAuthentication = options.requireAuthentication !== undefined ? options.requireAuthentication : false;
         this.localForm = this.buildForm();
         // Try to load values if we have model key and server url
-        if (this.hasModelKey &&
-            this.serverUrl) {
-            this.httpService.get(this.serverUrl + this.localForm.controls[this.modelKey].value, this.requireAuthentication).subscribe((data) => {
+        if (this.hasModelKey && this.serverUrl) {
+            this.httpService.get(this.serverUrl + this.localForm.controls[this.modelKey].value, this.requireAuthentication)
+                .subscribe((data) => {
                 for (let key in data) {
                     if (this.localForm.controls[key]) {
                         this.localForm.controls[key].setValue(data[key]);
@@ -65,8 +65,9 @@ class TbForm {
         console.log('Complete');
     }
     getVal(data, field) {
-        if (data === undefined)
+        if (data === undefined) {
             return '';
+        }
         if (moment.isMoment(data[field])) {
             return data[field].format('YYYY-MM-DDThh:mm');
         }

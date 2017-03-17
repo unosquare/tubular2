@@ -32,7 +32,7 @@ export class PageSizeSelectorComponent {
 
     @Input('options')
     set in(options: any[]) {
-        if (options != undefined) {
+        if (options) {
             this._options = options;
         }
     }

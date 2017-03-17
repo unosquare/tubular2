@@ -3,7 +3,7 @@ import { GridComponent } from './grid.component';
 
 @Component({
     selector: 'tb-grid-print',
-    template: 
+    template:
     `<button class="btn btn-info btn-sm" (click)="print()">
         <span class="fa fa-print"></span>&nbsp;Print
     </button>`
@@ -17,10 +17,10 @@ export class PrintButtonComponent {
                 let headers = this.tbGrid.columns.getValue().reduce(
                     (a, b) => a + '<th>' + b.label + '</th>', '');
                 let rows = data.reduce(
-                    (prev, row) => prev + '<tr>' + 
+                    (prev, row) => prev + '<tr>' +
                         row.reduce((a, b) => a + '<td>' + b + '</td>', '') + '</tr>', '');
 
-                let tableHtml = 
+                let tableHtml =
                 `<table class="table table-sm table-striped">
                     <thead><tr>${headers}</tr></thead><tbody>${rows}</tbody>
                 </table>`;

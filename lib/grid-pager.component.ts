@@ -1,10 +1,10 @@
-﻿import { Component, Input } from '@angular/core';
+﻿import { Component, Input, OnInit } from '@angular/core';
 
 import { GridComponent, GridPageInfo }      from './grid.component';
 
 @Component({
-    selector: 'grid-pager',
-    template: 
+    selector: 'tb-grid-pager',
+    template:
     `<ngb-pagination 
             [collectionSize]="info.filteredRecordCount"
             [pageSize]="tbGrid._pageSize.value"
@@ -16,16 +16,18 @@ import { GridComponent, GridPageInfo }      from './grid.component';
             size="sm">
     </ngb-pagination>`
 })
-export class GridPagerComponent {
-    private info = new GridPageInfo();
+export class GridPagerComponent extends OnInit {
+    public info = new GridPageInfo();
 
-    constructor(private tbGrid: GridComponent) { }
+    constructor(public tbGrid: GridComponent) {
+        super();
+     }
 
-    private ngOnInit() {
+    ngOnInit() {
         this.tbGrid.pageInfo.subscribe((x: GridPageInfo) => this.info = x);
     }
 
-    private goTo(page: number) {
+    public goTo(page: number) {
         this.info.currentPage = page;
         this.tbGrid.goToPage(page - 1);
     }

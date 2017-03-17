@@ -168,7 +168,7 @@ let GridComponent = class GridComponent {
         return obj;
     }
     transformDataset(data, req) {
-        let transform = d => this.transformToObj(req.columns, d);
+        let transform = (d) => this.transformToObj(req.columns, d);
         let payload = (data.Payload || {}).map(transform);
         // push data
         this.data.next(payload);

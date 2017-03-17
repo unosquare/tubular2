@@ -7,18 +7,18 @@ import { RequestMethod } from '@angular/http';
 import { TubularHttpService } from './tubular-http.service';
 
 export abstract class TbForm {
-    $isNew: boolean;
-    localForm: FormGroup;
-    formErrors: Object;
-    httpService: TubularHttpService;
+    public $isNew: boolean;
+    public localForm: FormGroup;
+    public formErrors: Object;
+    public httpService: TubularHttpService;
     //toastr: ToastsManager;
 
-    modelKey: string;
-    serverUrl: string;
-    saveUrl: string;
-    hasModelKey: boolean;
-    serverSaveMethod: RequestMethod;
-    requireAuthentication: boolean;
+    public modelKey: string;
+    public serverUrl: string;
+    public saveUrl: string;
+    public hasModelKey: boolean;
+    public serverSaveMethod: RequestMethod;
+    public requireAuthentication: boolean;
 
     constructor(public formBuilder: FormBuilder, httpService: TubularHttpService = null) { //, toastr: ToastsManager) {
         this.formErrors = {};
@@ -44,13 +44,12 @@ export abstract class TbForm {
         this.localForm = this.buildForm();
 
         // Try to load values if we have model key and server url
-        if (this.hasModelKey &&
-            this.serverUrl) {
+        if (this.hasModelKey && this.serverUrl) {
 
-            this.httpService.get(this.serverUrl + this.localForm.controls[this.modelKey].value, this.requireAuthentication).subscribe(
-                (data) => {
+            this.httpService.get(
+                this.serverUrl + this.localForm.controls[this.modelKey].value, this.requireAuthentication)
+                .subscribe((data) => {
                     for (let key in data) {
-
                         if (this.localForm.controls[key]) {
                             this.localForm.controls[key].setValue(data[key]);
                         }
@@ -70,7 +69,9 @@ export abstract class TbForm {
     }
 
     onValueChanged(data?: any) {
-        if (!this.localForm) { return; }
+        if (!this.localForm) { 
+            return; 
+        }
 
         for (const field in this.localForm.controls) {
             // clear previous error message (if any)
@@ -78,7 +79,6 @@ export abstract class TbForm {
             const control = this.localForm.get(field);
 
             if (control && control.dirty && !control.valid) {
-
                 for (const key in control.errors) {
                     this.formErrors[field].push(this.getErrorMessage(field, key));
                 }
@@ -92,8 +92,7 @@ export abstract class TbForm {
             .subscribe(
             (data) => success ? success(data) : this.defaultSaveSuccess(data),
             (errorMessage) => error ? error(errorMessage) : this.defaultSaveError(errorMessage),
-            () => complete ? complete() : this.defaultSaveComplete()
-            );
+            () => complete ? complete() : this.defaultSaveComplete());
     }
 
     private defaultSaveSuccess(data) {
@@ -109,8 +108,9 @@ export abstract class TbForm {
     }
 
     private getVal(data, field): any {
-        if (data === undefined)
+        if (data === undefined) {
             return '';
+        }
 
         if (moment.isMoment(data[field])) {
             return data[field].format('YYYY-MM-DDThh:mm');

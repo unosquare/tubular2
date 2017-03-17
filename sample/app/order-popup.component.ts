@@ -4,7 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { FormPopup, GridComponent, TubularHttpService } from '@tubular2/tubular2'
 
 @Component({
-    selector: 'order-popup',
+    selector: 'my-order-popup',
     templateUrl: '/app/order-popup.component.html'
 })
 export class OrderPopup extends FormPopup {

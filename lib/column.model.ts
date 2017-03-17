@@ -23,26 +23,25 @@ export enum ColumnFilterMode {
 }
 
 export class ColumnFilter {
-    text: string;
-    argument: string | string[];
-    operator: string;
+    public text: string;
+    public argument: string | string[];
+    public operator: string;
 }
 
-
 export class ColumnModel {
-    name: string;
-    label: string;
-    searchable = true;
-    sortable = true;
-    sortOrder = 0;
-    direction = ColumnSortDirection.None;
-    visible = true;
-    dataType = DataType.String;
-    hasFilter = false;
-    filterMode = ColumnFilterMode.None;
-    filter = new ColumnFilter();
-    isMultiSort = false;
-    sortDirection = 'None';
+    public name: string;
+    public label: string;
+    public searchable = true;
+    public sortable = true;
+    public sortOrder = 0;
+    public direction = ColumnSortDirection.None;
+    public visible = true;
+    public dataType = DataType.String;
+    public hasFilter = false;
+    public filterMode = ColumnFilterMode.None;
+    public filter = new ColumnFilter();
+    public isMultiSort = false;
+    public sortDirection = 'None';
 
     constructor(name: string, searchable?: boolean, sortable?: boolean) {
         this.name = name;
@@ -57,7 +56,7 @@ export class ColumnModel {
         }
     }
 
-    getInputType() {
+    public getInputType() {
         switch (this.filterMode) {
             case ColumnFilterMode.Number:
                 return 'number';
@@ -70,7 +69,7 @@ export class ColumnModel {
         }
     }
 
-    getOperators(): Object[] {
+    public getOperators(): Object[] {
         switch (this.filterMode) {
             case ColumnFilterMode.String:
                 return [

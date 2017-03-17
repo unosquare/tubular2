@@ -39,10 +39,11 @@ import { ColumnModel } from './column.model';
 export class ColumnFilterDialogComponent implements AfterViewInit {
     @Input() public column: ColumnModel;
     @Output() public filteringChange = new EventEmitter<boolean>();
-    private form: FormGroup;
+    public form: FormGroup;
+    public isBetween = false;
+    public inputType: string;
+
     private operators: Object[];
-    private isBetween = false;
-    private inputType: string;
 
     constructor(fb: FormBuilder) {
         this.form = fb.group({

@@ -1,4 +1,4 @@
-﻿import { Component, Input } from '@angular/core';
+﻿import { Component, Input, OnInit } from '@angular/core';
 
 import { GridComponent, GridPageInfo } from './grid.component';
 
@@ -10,16 +10,19 @@ import { GridComponent, GridPageInfo } from './grid.component';
         <span [hidden]="!filtered">(Filtered from {{pageInfo.totalRecordCount}} total records)</span>
     </div>`
 })
-export class GridPagerInfoComponent {
-    private pageInfo = new GridPageInfo();
+export class GridPagerInfoComponent extends OnInit {
+    public pageInfo = new GridPageInfo();
+    public filtered: boolean;
+
     private currentTop = 0;
     private currentInitial = 0;
     private filteredRecordCount = 0;
-    private filtered: boolean;
     
-    constructor(private tbGrid: GridComponent) { }
+    constructor(private tbGrid: GridComponent) {
+        super();
+    }
 
-    private ngOnInit() {
+    ngOnInit() {
         // live update properties
         this.tbGrid.pageInfo.subscribe((x : GridPageInfo) => {
             this.pageInfo = x;

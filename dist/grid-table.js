@@ -34,7 +34,9 @@ class GridTable {
         column.sortOrder = column.direction === column_model_1.ColumnSortDirection.None ? 0 : Number.MAX_VALUE;
         if (!column.isMultiSort) {
             value.forEach((v) => v.sortOrder = v.name === column.name ? v.sortOrder : 0);
-            value.forEach((v) => v.direction = v.name === column.name ? column.direction : column_model_1.ColumnSortDirection.None);
+            value.forEach((v) => v.direction = v.name === column.name ?
+                column.direction :
+                column_model_1.ColumnSortDirection.None);
         }
         let currentlySortedColumns = value.filter((col) => col.sortOrder > 0);
         currentlySortedColumns.sort((a, b) => a.sortOrder === b.sortOrder ? 0 : 1);

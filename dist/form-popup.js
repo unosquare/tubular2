@@ -12,7 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const tb_form_1 = require("./tb-form");
 class FormPopup extends tb_form_1.TbForm {
-    constructor(tbGrid, formBuilder, httpService) {
+    constructor(tbGrid, // TODO: Refactor, why we need the GridComponent?
+        formBuilder, httpService) {
         super(formBuilder, httpService); //, toastr);
         this.tbGrid = tbGrid;
         this.formBuilder = formBuilder;

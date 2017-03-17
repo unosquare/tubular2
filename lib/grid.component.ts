@@ -1,6 +1,6 @@
-﻿import { 
+﻿import {
     Component, Input, Output, EventEmitter,
-    OnInit,Inject, Optional 
+    OnInit, Inject, Optional
 } from '@angular/core';
 import { RequestMethod } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -14,12 +14,12 @@ import { ColumnModel, DataType, ColumnSortDirection } from './column.model';
 import 'rxjs/add/operator/debounceTime';
 
 export class GridPageInfo {
-    currentInitial = 0;
-    currentTop = 0;
-    currentPage = 0;
-    totalPages = 0;
-    totalRecordCount = 0;
-    filteredRecordCount = 0;
+    public currentInitial = 0;
+    public currentTop = 0;
+    public currentPage = 0;
+    public totalPages = 0;
+    public totalRecordCount = 0;
+    public filteredRecordCount = 0;
 }
 
 @Component({
@@ -44,22 +44,22 @@ export class GridComponent implements OnInit {
 
     // data is just observable and children can't push
     private data = new BehaviorSubject([]);
-    dataStream = this.data.asObservable();
+    public dataStream = this.data.asObservable();
     private _pageInfo = new BehaviorSubject(new GridPageInfo());
-    pageInfo = this._pageInfo.asObservable();
+    public pageInfo = this._pageInfo.asObservable();
 
-    _pageSize = new BehaviorSubject(this.getPageSizeSettingValue());
-    pageSize = this._pageSize.asObservable();
+    public _pageSize = new BehaviorSubject(this.getPageSizeSettingValue());
+    public pageSize = this._pageSize.asObservable();
 
     // values that to observe and allow to push from children
-    page = new BehaviorSubject(this.getPageSettingValue());
-    columns = new BehaviorSubject([]);
-    freeTextSearch = new BehaviorSubject('');
+    public page = new BehaviorSubject(this.getPageSettingValue());
+    public columns = new BehaviorSubject([]);
+    public freeTextSearch = new BehaviorSubject('');
 
     pageSet = false;
 
-    showLoading = false;
-    search = {
+    public showLoading = false;
+    public search = {
         text: '',
         operator: 'None'
     };
@@ -71,8 +71,8 @@ export class GridComponent implements OnInit {
     @Input() public requestTimeout: number;
     @Input() public saveUrl: string;
 
-    @Output() onDataError = new EventEmitter<any>();
-    @Output() onDataSaved = new EventEmitter<any>();
+    @Output() public onDataError = new EventEmitter<any>();
+    @Output() public onDataSaved = new EventEmitter<any>();
 
     constructor(
         @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider,
@@ -170,7 +170,7 @@ export class GridComponent implements OnInit {
         // subscriptions to events
         this.pageSize.subscribe((c) => {
             this.refresh();
-            this.changePageSizeData()
+            this.changePageSizeData();
         });
         this.columns.subscribe((c) => this.refresh());
         this.page.subscribe((c) => {
@@ -222,7 +222,7 @@ export class GridComponent implements OnInit {
     }
 
     private transformDataset(data, req) {
-        let transform = d => this.transformToObj(req.columns, d);
+        let transform = (d) => this.transformToObj(req.columns, d);
         let payload = (data.Payload || {}).map(transform);
         // push data
         this.data.next(payload);

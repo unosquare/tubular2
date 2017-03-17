@@ -29,6 +29,8 @@ import { ColumnModel } from './column.model';
     ]
 })
 export class ColumnHeaderComponent {
+    private static prevPopover = null;
+
     @Input() public column: ColumnModel;
     @Output() public onSort = new EventEmitter<ColumnModel>();
     @Output() public onFilter = new EventEmitter<ColumnModel>();
@@ -37,9 +39,7 @@ export class ColumnHeaderComponent {
 
     private hasFilter: boolean;
 
-    static prevPopover = null;
-
-    private togglePopover() {
+    public togglePopover() {
         if (ColumnHeaderComponent.prevPopover != null) {
             ColumnHeaderComponent.prevPopover.close();
 
@@ -53,7 +53,7 @@ export class ColumnHeaderComponent {
         ColumnHeaderComponent.prevPopover = this.popover;
     }
 
-    private sort($event) {
+    public sort($event) {
         this.column.isMultiSort = $event.ctrlKey;
 
         if (this.column.sortable) {
@@ -61,7 +61,7 @@ export class ColumnHeaderComponent {
         }
     }
 
-    private filter(hasValue: boolean) {
+    public filter(hasValue: boolean) {
         ColumnHeaderComponent.prevPopover = null;
         this.popover.close();
         this.hasFilter = hasValue;

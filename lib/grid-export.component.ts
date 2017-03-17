@@ -17,12 +17,12 @@ export class ExportButtonComponent {
     @Input() public fileName: string;
 
     constructor(private tbGrid: GridComponent) { }
-    
-    private downloadCsv() {
+
+    public downloadCsv() {
         this.tbGrid.getCurrentPage((data) => this.processCsv(data.Payload));
     }
 
-    private downloadAllCsv() {
+    public downloadAllCsv() {
         this.tbGrid.getFullDataSource((data) => this.processCsv(data));
     }
 
