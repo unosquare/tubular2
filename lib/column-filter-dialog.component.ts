@@ -3,9 +3,9 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { ColumnModel } from './column.model';
 
 @Component({
-    selector: 'filter-dialog',
+    selector: 'tb-filter-dialog',
     template: `
-   <form [formGroup]="form" (ngSubmit)="onSubmit()">
+   <form [formGroup]="form" (ngSubmit)="submit()">
         <div class="form-group">
             <label for="operator">Operator</label>
             <select id="operator" class="form-control" 
@@ -38,11 +38,11 @@ import { ColumnModel } from './column.model';
 })
 export class ColumnFilterDialogComponent implements AfterViewInit {
     @Input() public column: ColumnModel;
-    @Output() onFilteringChange = new EventEmitter<boolean>();
-    form: FormGroup;
-    operators: Object[];
-    isBetween = false;
-    inputType: string;
+    @Output() public filteringChange = new EventEmitter<boolean>();
+    private form: FormGroup;
+    private operators: Object[];
+    private isBetween = false;
+    private inputType: string;
 
     constructor(fb: FormBuilder) {
         this.form = fb.group({
@@ -59,12 +59,32 @@ export class ColumnFilterDialogComponent implements AfterViewInit {
                 this.column.filter.argument = [value.argument];
             }
 
-            this.isBetween = value.operator == "Between";
+            this.isBetween = value.operator === 'Between';
             this.inputType = this.column.getInputType();
         });
     }
 
-    ngAfterViewInit() {
+    public submit() {
+        this.filteringChange.emit(true);
+    }
+
+    public reset() {
+        this.form.reset();
+        this.column.filter.argument = null;
+        this.column.filter.operator = 'None';
+
+        this.filteringChange.emit(false);
+    }
+
+    public selectChange(newVal: any) {
+        if (newVal === 'None') {
+            this.form.controls['text'].disable();
+        } else {
+            this.form.controls['text'].enable();
+        }
+    }
+
+    public ngAfterViewInit() {
         // set initial value in form with a timeout
         setTimeout((_) => {
             // load operator directly from the column
@@ -74,32 +94,12 @@ export class ColumnFilterDialogComponent implements AfterViewInit {
             this.form.patchValue({
                 text: this.column.filter.text,
                 argument: this.column.filter.argument,
-                operator: this.column.filter.operator || "None"
+                operator: this.column.filter.operator || 'None'
             });
 
-            if (this.column.filter.operator == "None") {
+            if (this.column.filter.operator === 'None') {
                 this.form.controls['text'].disable();
             }
         });
-    }
-
-    private onSubmit() {
-        this.onFilteringChange.emit(true);
-    }
-
-    private reset() {
-        this.form.reset();
-        this.column.filter.argument = null;
-        this.column.filter.operator = 'None';
-
-        this.onFilteringChange.emit(false);
-    }
-
-    private selectChange(newVal: any) {
-        if (newVal == 'None') {
-            this.form.controls['text'].disable();
-        } else {
-            this.form.controls['text'].enable();
-        }
     }
 }

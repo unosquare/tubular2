@@ -66,7 +66,8 @@ ColumnHeaderComponent = ColumnHeaderComponent_1 = __decorate([
         selector: 'column-header',
         template: `
     <div class="column-header">
-        <span [ngClass]="{sortable: column.sortable, sortNone: column.direction == 0, sortAsc: column.direction == 1, sortDesc: column.direction == 2}"
+        <span 
+            [ngClass]="{sortable: column.sortable, sortNone: column.direction == 0, sortAsc: column.direction == 1, sortDesc: column.direction == 2}"
             (click)="sort($event)">
             {{column.label}}
         </span>

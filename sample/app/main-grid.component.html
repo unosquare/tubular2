@@ -4,7 +4,7 @@
     Angular2 components
 </p>
 
-<tubular-grid #grid dataUrl="http://tubular.azurewebsites.net/api/orders/paged" saveUrl="/api/orders/" requireAuthentication="false" (onDataError)="errorHandler($event)">
+<tb-grid #grid dataUrl="http://tubular.azurewebsites.net/api/orders/paged" saveUrl="/api/orders/" requireAuthentication="false" (onDataError)="errorHandler($event)">
     <div class="row">
         <div class="col-md-5">
             <grid-pager></grid-pager>
@@ -39,4 +39,4 @@
             <grid-pager-info></grid-pager-info>
         </div>
     </div>
-</tubular-grid>
+</tb-grid>

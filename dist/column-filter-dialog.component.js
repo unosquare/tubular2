@@ -14,7 +14,7 @@ const forms_1 = require("@angular/forms");
 const column_model_1 = require("./column.model");
 let ColumnFilterDialogComponent = class ColumnFilterDialogComponent {
     constructor(fb) {
-        this.onFilteringChange = new core_1.EventEmitter();
+        this.filteringChange = new core_1.EventEmitter();
         this.isBetween = false;
         this.form = fb.group({
             text: ['', forms_1.Validators.required],
@@ -27,9 +27,26 @@ let ColumnFilterDialogComponent = class ColumnFilterDialogComponent {
             if (value.argument) {
                 this.column.filter.argument = [value.argument];
             }
-            this.isBetween = value.operator == "Between";
+            this.isBetween = value.operator === 'Between';
             this.inputType = this.column.getInputType();
         });
+    }
+    submit() {
+        this.filteringChange.emit(true);
+    }
+    reset() {
+        this.form.reset();
+        this.column.filter.argument = null;
+        this.column.filter.operator = 'None';
+        this.filteringChange.emit(false);
+    }
+    selectChange(newVal) {
+        if (newVal === 'None') {
+            this.form.controls['text'].disable();
+        }
+        else {
+            this.form.controls['text'].enable();
+        }
     }
     ngAfterViewInit() {
         // set initial value in form with a timeout
@@ -40,29 +57,12 @@ let ColumnFilterDialogComponent = class ColumnFilterDialogComponent {
             this.form.patchValue({
                 text: this.column.filter.text,
                 argument: this.column.filter.argument,
-                operator: this.column.filter.operator || "None"
+                operator: this.column.filter.operator || 'None'
             });
-            if (this.column.filter.operator == "None") {
+            if (this.column.filter.operator === 'None') {
                 this.form.controls['text'].disable();
             }
         });
-    }
-    onSubmit() {
-        this.onFilteringChange.emit(true);
-    }
-    reset() {
-        this.form.reset();
-        this.column.filter.argument = null;
-        this.column.filter.operator = 'None';
-        this.onFilteringChange.emit(false);
-    }
-    selectChange(newVal) {
-        if (newVal == 'None') {
-            this.form.controls['text'].disable();
-        }
-        else {
-            this.form.controls['text'].enable();
-        }
     }
 };
 __decorate([
@@ -72,12 +72,12 @@ __decorate([
 __decorate([
     core_1.Output(),
     __metadata("design:type", Object)
-], ColumnFilterDialogComponent.prototype, "onFilteringChange", void 0);
+], ColumnFilterDialogComponent.prototype, "filteringChange", void 0);
 ColumnFilterDialogComponent = __decorate([
     core_1.Component({
-        selector: 'filter-dialog',
+        selector: 'tb-filter-dialog',
         template: `
-   <form [formGroup]="form" (ngSubmit)="onSubmit()">
+   <form [formGroup]="form" (ngSubmit)="submit()">
         <div class="form-group">
             <label for="operator">Operator</label>
             <select id="operator" class="form-control" 

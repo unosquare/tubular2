@@ -20,7 +20,7 @@ export class GridPageInfo {
 }
 
 @Component({
-    selector: 'tubular-grid',
+    selector: 'tb-grid',
     template: `
     <div>
         <div class="tubular-overlay" [hidden]="!showLoading">

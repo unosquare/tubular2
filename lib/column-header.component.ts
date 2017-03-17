@@ -1,6 +1,6 @@
 ﻿import {
     Component, Input, Output, EventEmitter,
-    ContentChild, TemplateRef, ViewChild, AfterViewInit 
+    ContentChild, TemplateRef, ViewChild, AfterViewInit
 } from '@angular/core';
 
 import { ColumnModel } from './column.model';
@@ -9,7 +9,8 @@ import { ColumnModel } from './column.model';
     selector: 'column-header',
     template: `
     <div class="column-header">
-        <span [ngClass]="{sortable: column.sortable, sortNone: column.direction == 0, sortAsc: column.direction == 1, sortDesc: column.direction == 2}"
+        <span 
+            [ngClass]="{sortable: column.sortable, sortNone: column.direction == 0, sortAsc: column.direction == 1, sortDesc: column.direction == 2}"
             (click)="sort($event)">
             {{column.label}}
         </span>
@@ -32,7 +33,7 @@ export class ColumnHeaderComponent {
     @Output() public onSort = new EventEmitter<ColumnModel>();
     @Output() public onFilter = new EventEmitter<ColumnModel>();
     @ContentChild('filterPopover') private filterPopoverTemplate: TemplateRef<Object>;
-    @ViewChild('popover') popover: any;
+    @ViewChild('popover') private popover: any;
 
     private hasFilter: boolean;
 

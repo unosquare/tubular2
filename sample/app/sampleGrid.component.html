@@ -5,8 +5,9 @@
             <th *ngFor="let column of columns | async">
                 <column-header #header [column]="column" (onSort)="sort($event)" (onFilter)="applyFilter($event)">
                     <template #filterPopover>
-                        <filter-dialog [column]="column"
-                                       (onFilteringChange)="header.filter($event)"></filter-dialog>
+                        <tb-filter-dialog [column]="column"
+                                       (onFilteringChange)="header.filter($event)">
+                        </tb-filter-dialog>
                     </template>
                 </column-header>
             </th>

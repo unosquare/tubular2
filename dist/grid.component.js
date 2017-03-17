@@ -215,7 +215,7 @@ __decorate([
 ], GridComponent.prototype, "onDataSaved", void 0);
 GridComponent = __decorate([
     core_1.Component({
-        selector: 'tubular-grid',
+        selector: 'tb-grid',
         template: `
     <div>
         <div class="tubular-overlay" [hidden]="!showLoading">
