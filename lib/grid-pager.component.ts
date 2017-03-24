@@ -23,7 +23,7 @@ export class GridPagerComponent extends OnInit {
         super();
      }
 
-    ngOnInit() {
+    public ngOnInit() {
         this.tbGrid.pageInfo.subscribe((x: GridPageInfo) => this.info = x);
     }
 

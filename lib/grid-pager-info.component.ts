@@ -4,7 +4,7 @@ import { GridComponent, GridPageInfo } from './grid.component';
 
 @Component({
     selector: 'tb-grid-pager-info',
-    template: 
+    template:
     `<div class="small">
         Showing {{this.pageInfo.currentInitial}} to {{this.pageInfo.currentTop}} of {{pageInfo.filteredRecordCount}} records 
         <span [hidden]="!filtered">(Filtered from {{pageInfo.totalRecordCount}} total records)</span>
@@ -17,14 +17,14 @@ export class GridPagerInfoComponent extends OnInit {
     private currentTop = 0;
     private currentInitial = 0;
     private filteredRecordCount = 0;
-    
+
     constructor(private tbGrid: GridComponent) {
         super();
     }
 
-    ngOnInit() {
+    public ngOnInit() {
         // live update properties
-        this.tbGrid.pageInfo.subscribe((x : GridPageInfo) => {
+        this.tbGrid.pageInfo.subscribe((x: GridPageInfo) => {
             this.pageInfo = x;
             this.filtered = this.pageInfo.totalRecordCount !== this.pageInfo.filteredRecordCount;
         });

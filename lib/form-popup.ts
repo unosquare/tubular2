@@ -18,12 +18,12 @@ export abstract class FormPopup extends TbForm {
 
     constructor(
         public tbGrid: GridComponent,  // TODO: Refactor, why we need the GridComponent?
-        public formBuilder: FormBuilder, 
+        public formBuilder: FormBuilder,
         public httpService: TubularHttpService) {// , public toastr: ToastsManager) {
         super(formBuilder, httpService); //, toastr);
     }
 
-    private ngOnInit() {
+    public ngOnInit() {
         this.detailsForm = this.tbFormInit({
             saveUrl: this.tbGrid.saveUrl
         });

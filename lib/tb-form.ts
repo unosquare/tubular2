@@ -39,8 +39,8 @@ export abstract class TbForm {
         this.serverUrl = options.serverUrl || '';
         this.saveUrl = options.saveUrl || '';
         this.serverSaveMethod = options.serverSaveMethod || RequestMethod.Post;
-        this.requireAuthentication = options.requireAuthentication !== undefined ? 
-            options.requireAuthentication : 
+        this.requireAuthentication = options.requireAuthentication !== undefined ?
+            options.requireAuthentication :
             false;
 
         this.localForm = this.buildForm();
@@ -71,8 +71,8 @@ export abstract class TbForm {
     }
 
     onValueChanged(data?: any) {
-        if (!this.localForm) { 
-            return; 
+        if (!this.localForm) {
+            return;
         }
 
         for (const field in this.localForm.controls) {
@@ -91,14 +91,14 @@ export abstract class TbForm {
     onSave(row, success?: (success: any) => void, error?: (error: any) => void, complete?: () => void) {
         this.httpService
             .save(
-                this.saveUrl, 
-                row.values, 
-                row.$isNew ? this.serverSaveMethod : RequestMethod.Put, 
+                this.saveUrl,
+                row.values,
+                row.$isNew ? this.serverSaveMethod : RequestMethod.Put,
                 this.requireAuthentication)
             .subscribe(
                 (data) => success ? success(data) : this.defaultSaveSuccess(data),
-                (errorMessage) => error ? 
-                    error(errorMessage) : 
+                (errorMessage) => error ?
+                    error(errorMessage) :
                     this.defaultSaveError(errorMessage),
                 () => complete ? complete() : this.defaultSaveComplete());
     }
