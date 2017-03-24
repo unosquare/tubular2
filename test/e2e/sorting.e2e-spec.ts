@@ -27,7 +27,7 @@ describe('grid sorting', () => {
         orderIdSorting = columnHeaders.get(1).$('.column-header').$$('span');
         orderCustomerNameSorting = columnHeaders.get(2).$('.column-header').$$('span');
         aCreationDateSorting = columnHeaders.get(4).$('.column-header').$$('span');
-        element(by.tagName('page-size-selector')).$('form').$('div').$('select').$('[value="10"]').click();
+        element(by.tagName('tb-page-size-selector')).$('form').$('div').$('select').$('[value="10"]').click();
     });
 
     beforeEach(() => {

@@ -12,8 +12,8 @@ describe('page size selector', () =>{
     beforeAll(()=>{
         browser.get('/');
         
-        gridPager = element(by.tagName('grid-pager')).$('ngb-pagination').$('nav ul');
-        pageSizeSelector = element(by.tagName('page-size-selector')).$('select');
+        gridPager = element(by.tagName('tb-grid-pager')).$('ngb-pagination').$('nav ul');
+        pageSizeSelector = element(by.tagName('tb-page-size-selector')).$('select');
         dataRowsCollection = element(by.tagName('tbody')).$$('tr');
         firstDataRow =  element(by.tagName('tbody')).$$('tr').first();
         lastDataRow =  element(by.tagName('tbody')).$$('tr').last();
@@ -41,7 +41,7 @@ describe('page size selector', () =>{
         expect(dataRowsCollection.count()).toBe(20);
     });
 
-    it('should filter up to 50 data rows per page when selecting a page size of "50"', () =>{
+    it('should filter up to 50 data rows per page when selecting a page size of "50"', () => {
         // Select '50' on tbPageSizeSelector
         pageSizeSelector.$('[value="50"]').click();
         

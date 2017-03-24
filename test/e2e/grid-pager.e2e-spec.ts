@@ -13,7 +13,7 @@ describe('Pager e2e Tests', () => {
 
     beforeAll(() => {
         browser.get('/');
-        gridpager = element(by.tagName('grid-pager')).$('ngb-pagination').$('nav');
+        gridpager = element(by.tagName('tb-grid-pager')).$('ngb-pagination').$('nav');
         firstNavBtn = gridpager.$('ul').$$('li').first();
         prevNavBtn = gridpager.$('ul').$$('li').get(1);
         lastNavBtn = gridpager.$('ul').$$('li').last();
@@ -21,7 +21,7 @@ describe('Pager e2e Tests', () => {
         firstRow = element(by.tagName('tbody')).$$('tr').first();
         lastRow = element(by.tagName('tbody')).$$('tr').last();
         activeNavBtn = gridpager.$('ul').$$('.page-item active');
-        pageSizeSelector = element(by.tagName('page-size-selector')).$('form').$('div').$('select');
+        pageSizeSelector = element(by.tagName('tb-page-size-selector')).$('form').$('div').$('select');
         //Go to first page if isn't there
         if (gridpager.$('ul').$$('li').first().getAttribute('class') != 'page-item disabled') {
             firstNavBtn.$('a').click();

@@ -5,8 +5,8 @@ describe('Filtering e2e Tests', () => {
     let columnHeaders;
 
     function setPagination() {
-        element(by.tagName('page-size-selector')).$('form').$('div').$('select').$('[value="50"]').click();
-        element(by.tagName('grid-pager')).$('ngb-pagination').$('nav').$('ul').$$('li').get(2).$('a').click();
+        element(by.tagName('tb-page-size-selector')).$('form').$('div').$('select').$('[value="50"]').click();
+        element(by.tagName('tb-grid-pager')).$('ngb-pagination').$('nav').$('ul').$$('li').get(2).$('a').click();
     }
 
     beforeAll(() => {
@@ -295,7 +295,7 @@ describe('Filtering e2e Tests', () => {
             clearBtn;
 
         beforeAll(() => {
-            gridSearch = element(by.tagName('grid-search')).$('div').$('div');
+            gridSearch = element(by.tagName('tb-grid-search')).$('div').$('div');
             searchInput = gridSearch.$('input');
             clearBtn = gridSearch.$('button');
         });
