@@ -54,7 +54,7 @@ describe('page size selector', () =>{
         pageSizeSelector.$('[value="100"]').click();
 
         expect(firstDataRow.$$('td').get(1).getText()).toBe('1');
-        expect(lastDataRow.$$('td').get(1).getText()).toBe('49');
-        expect(dataRowsCollection.count()).toBe(49);
+        expect(lastDataRow.$$('td').get(1).getText()).toBe('99');
+        expect(dataRowsCollection.count()).toBe(99);
     });
 });
