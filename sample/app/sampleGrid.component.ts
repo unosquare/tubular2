@@ -1,7 +1,7 @@
 ﻿import { Component, Input} from '@angular/core';
 import { Router } from '@angular/router';
 
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GridComponent, GridTable, ColumnModel, ColumnFilterMode, DataType } from '@tubular2/tubular2';
 
 @Component({

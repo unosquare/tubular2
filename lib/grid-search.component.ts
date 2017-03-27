@@ -21,13 +21,12 @@ import { SETTINGS_PROVIDER, ITubularSettingsProvider } from './tubular-settings.
         </div>
     </div>`
 })
-export class GridSearchComponent extends OnInit {
+export class GridSearchComponent implements OnInit {
     public search: string;
 
     constructor(
         @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider,
         private tbGrid: GridComponent) {
-            super();
         }
 
     public ngOnInit() {

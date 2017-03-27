@@ -15,9 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const grid_component_1 = require("./grid.component");
 const tubular_settings_service_1 = require("./tubular-settings.service");
-let GridSearchComponent = class GridSearchComponent extends core_1.OnInit {
+let GridSearchComponent = class GridSearchComponent {
     constructor(settingsProvider, tbGrid) {
-        super();
         this.settingsProvider = settingsProvider;
         this.tbGrid = tbGrid;
     }

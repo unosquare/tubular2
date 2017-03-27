@@ -16,11 +16,10 @@ import { GridComponent, GridPageInfo }      from './grid.component';
             size="sm">
     </ngb-pagination>`
 })
-export class GridPagerComponent extends OnInit {
+export class GridPagerComponent implements OnInit {
     public info = new GridPageInfo();
 
     constructor(public tbGrid: GridComponent) {
-        super();
      }
 
     public ngOnInit() {
