@@ -32,7 +32,7 @@ describe('Filtering e2e Tests', () => {
 
         beforeEach(() => {
             filterBtn.click();
-            popOverForm = columnFilter.$('ngb-popover-window').$('.popover-content').$('filter-dialog').$('form');
+            popOverForm = columnFilter.$('ngb-popover-window').$('.popover-content').$('tb-filter-dialog').$('form');
             applyBtn = popOverForm.$('.row').$$('div').get(0).$('.btn-success');
             clearBtn = popOverForm.$('.row').$$('div').get(1).$('.btn-danger');
             filterSelect = popOverForm.$$('.form-group').get(0).$('select');
@@ -203,7 +203,7 @@ describe('Filtering e2e Tests', () => {
 
        beforeEach(() => {
            filterBtn.click();
-           popOverForm = columnFilter.$('ngb-popover-window').$('.popover-content').$('filter-dialog').$('form');
+           popOverForm = columnFilter.$('ngb-popover-window').$('.popover-content').$('tb-filter-dialog').$('form');
            applyBtn = popOverForm.$('.row').$$('div').get(0).$('.btn-success');
            clearBtn = popOverForm.$('.row').$$('div').get(1).$('.btn-danger');
            filterSelect = popOverForm.$$('.form-group').get(0).$('select');
@@ -372,5 +372,4 @@ describe('Filtering e2e Tests', () => {
             expect(searchInput.getText()).toBe('');
         });
     });
-
 });
