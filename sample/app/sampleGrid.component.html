@@ -9,7 +9,7 @@
                         (onFilter)="applyFilter($event)">
                     <template #filterPopover>
                         <tb-filter-dialog [column]="column"
-                                       (onFilteringChange)="header.filter($event)">
+                                       (filterChange)="header.filter($event)">
                         </tb-filter-dialog>
                     </template>
                 </tb-column-header>

@@ -37,8 +37,10 @@ import { ColumnModel } from './column.model';
     styles: [ 'form { min-width: 200px; }' ]
 })
 export class ColumnFilterDialogComponent implements AfterViewInit {
-    @Input() public column: ColumnModel;
-    @Output() public filteringChange = new EventEmitter<boolean>();
+    @Input()
+    public column: ColumnModel;
+    @Output()
+    public filterChange = new EventEmitter<boolean>();
     public form: FormGroup;
     public isBetween = false;
     public inputType: string;
@@ -66,7 +68,7 @@ export class ColumnFilterDialogComponent implements AfterViewInit {
     }
 
     public submit() {
-        this.filteringChange.emit(true);
+        this.filterChange.emit(true);
     }
 
     public reset() {
@@ -74,7 +76,7 @@ export class ColumnFilterDialogComponent implements AfterViewInit {
         this.column.filter.argument = null;
         this.column.filter.operator = 'None';
 
-        this.filteringChange.emit(false);
+        this.filterChange.emit(false);
     }
 
     public selectChange(newVal: any) {
