@@ -6,8 +6,8 @@ describe('Filtering e2e Tests', () => {
     let columnHeaders;
 
     function setPagination() {
-        element(by.tagName('tb-page-size-selector')).$('form').$('div').$('select').$('[value="50"]').click();
-        element(by.tagName('tb-grid-pager')).$('ngb-pagination').$('nav').$('ul').$$('li').get(2).$('a').click();
+        element(by.tagName('tb-page-size-selector')).$('[value="50"]').click();
+        element(by.tagName('tb-grid-pager')).$$('li').get(2).$('a').click();
     }
 
     beforeAll(() => {
@@ -33,9 +33,9 @@ describe('Filtering e2e Tests', () => {
 
         beforeEach(() => {
             filterBtn.click();
-            popOverForm = columnFilter.$('ngb-popover-window').$('.popover-content').$('tb-filter-dialog').$('form');
-            applyBtn = popOverForm.$('.row').$$('div').get(0).$('.btn-success');
-            clearBtn = popOverForm.$('.row').$$('div').get(1).$('.btn-danger');
+            popOverForm = columnFilter.$('ngb-popover-window').$('form');
+            applyBtn = popOverForm.$('.row').$('.btn-success');
+            clearBtn = popOverForm.$('.row').$('.btn-danger');
             filterSelect = popOverForm.$$('.form-group').get(0).$('select');
             valueInput = popOverForm.$$('.form-group').get(1).$('input');
         });

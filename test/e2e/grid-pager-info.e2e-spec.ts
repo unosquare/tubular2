@@ -2,10 +2,10 @@
 
 describe('grid pager info', () => {
 
-    let paginator = element(by.tagName('ngb-pagination')).$$('nav').$$('ul').$$('li'),
+    let paginator = element(by.tagName('ngb-pagination')).$$('li'),
         gridPagerInfo = element(by.tagName('tb-grid-pager-info')).$$('div'),
-        pageSizeSelector = element(by.tagName('tb-page-size-selector')).$('form').$('div').$('select'),
-        gridSearchInput = element(by.tagName('tb-grid-search')).$('div').$('div').$('input');
+        pageSizeSelector = element(by.tagName('tb-page-size-selector')).$('select'),
+        gridSearchInput = element(by.tagName('tb-grid-search')).$('input');
 
     beforeEach(() => {
         browser.get('/');

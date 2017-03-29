@@ -35,8 +35,8 @@ describe('Pager e2e Tests', () => {
 
         describe('first/non-last results page related allity', () => {
             it('should disble first and previous navigation buttons when is not in the first result', () => {
-                expect(gridpager.$('ul').$$('li').first().getAttribute('class')).toMatch('page-item disabled');
-                expect(gridpager.$('ul').$$('li').get(1).getAttribute('class')).toMatch('page-item disabled');
+                expect(firstNavBtn.getAttribute('class')).toMatch('page-item disabled');
+                expect(prevNavBtn.getAttribute('class')).toMatch('page-item disabled');
             });
 
             it('should enable last and next navigation buttons when result page is not the last one', () => {
@@ -48,8 +48,8 @@ describe('Pager e2e Tests', () => {
         describe('last/non-first results page related allity', () => {
             it('should disable "last" and "next" navigation buttons when in last results page', () => {
                 lastNavBtn.$('a').click();
-                expect(gridpager.$('ul').$$('li').last().getAttribute('class')).toMatch('page-item disabled');
-                expect(gridpager.$('ul').$$('li').get(7).getAttribute('class')).toMatch('page-item disabled');
+                expect(lastNavBtn.getAttribute('class')).toMatch('page-item disabled');
+                expect(nextNavBtn.getAttribute('class')).toMatch('page-item disabled');
             });
 
             it('should enable "first" and "previous" navigation buttons when in a results page other than first', () => {

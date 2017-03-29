@@ -12,7 +12,7 @@ describe('page size selector', () =>{
     beforeAll(()=>{
         browser.get('/');
         
-        gridPager = element(by.tagName('tb-grid-pager')).$('ngb-pagination').$('nav ul');
+        gridPager = element(by.tagName('tb-grid-pager')).$('nav ul');
         pageSizeSelector = element(by.tagName('tb-page-size-selector')).$('select');
         dataRowsCollection = element(by.tagName('tbody')).$$('tr');
         firstDataRow =  element(by.tagName('tbody')).$$('tr').first();
