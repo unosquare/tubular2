@@ -22,16 +22,12 @@ describe('Pager e2e Tests', () => {
         lastRow = element(by.tagName('tbody')).$$('tr').last();
         activeNavBtn = gridpager.$('ul').$$('.page-item active');
         pageSizeSelector = element(by.tagName('tb-page-size-selector')).$('form').$('div').$('select');
-        //Go to first page if isn't there
-        if (gridpager.$('ul').$$('li').first().getAttribute('class') != 'page-item disabled') {
-            firstNavBtn.$('a').click();
-        }
         pageSizeSelector.$('[value="10"]').click();
     });
 
 
     describe('navigation buttons', () => {
-        it('should perform no action wehn clicking on the numbered navigation button corresponding to the current-showing results page', () => {
+        it('should perform no action when clicking on the numbered navigation button corresponding to the current-showing results page', () => {
             activeNavBtn.click();
             expect(firstRow.$$('td').get(1).getText()).toMatch('1');
             expect(lastRow.$$('td').get(1).getText()).toMatch('10');
@@ -82,7 +78,7 @@ describe('Pager e2e Tests', () => {
 
         it('should go to last results page when clicking on last navigation button', () => {
             lastNavBtn.$('a').click();
-            expect(lastRow.$$('td').get(1).getText()).toMatch('49');
+            expect(lastRow.$$('td').get(1).getText()).toMatch('500');
             firstNavBtn.$('a').click()
         });
 

@@ -23,6 +23,6 @@ describe('grid pager info', () => {
 
     it('should show count in footer', () => {
         gridSearchInput.sendKeys('a');
-        expect(gridPagerInfo.first().getText()).toContain('Showing 1 to 10 of 466 records (Filtered from 500 total records)');
+        expect(gridPagerInfo.first().getText()).toContain('Showing 1 to 10 of 454 records (Filtered from 500 total records)');
     });
 });

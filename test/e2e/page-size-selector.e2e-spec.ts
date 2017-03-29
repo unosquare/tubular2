@@ -19,11 +19,6 @@ describe('page size selector', () =>{
         lastDataRow =  element(by.tagName('tbody')).$$('tr').last();
         firstPageBtn = gridPager.$$('li').first();
         nextPageBtn = gridPager.$$('li');
-        
-        //Go to first page if isn't there
-        if(gridPager.$$('li').first().getAttribute('class') != 'page-item disabled'){
-            firstPageBtn.$('a').click();
-        }
     });
 
     it('should filter up to 10 data rows per page when selecting a page size of "10"', () => {
@@ -36,8 +31,8 @@ describe('page size selector', () =>{
     it('should filter up to 20 data rows per page when selecting a page size of "20"', () => {
         pageSizeSelector.$('[value="20"]').click();
         nextPageBtn.get(5).$('a').click();
-        expect(firstDataRow.$$('td').get(1).getText()).toMatch('21');
-        expect(lastDataRow.$$('td').get(1).getText()).toMatch('40');
+        expect(firstDataRow.$$('td').get(1).getText()).toMatch('61');
+        expect(lastDataRow.$$('td').get(1).getText()).toMatch('80');
         expect(dataRowsCollection.count()).toBe(20);
     });
 
@@ -45,16 +40,16 @@ describe('page size selector', () =>{
         // Select '50' on tbPageSizeSelector
         pageSizeSelector.$('[value="50"]').click();
         
-        expect(firstDataRow.$$('td').get(1).getText()).toBe('1');
-        expect(lastDataRow.$$('td').get(1).getText()).toBe('49');
-        expect(dataRowsCollection.count()).toBe(49);
+        expect(firstDataRow.$$('td').get(1).getText()).toBe('151');
+        expect(lastDataRow.$$('td').get(1).getText()).toBe('200');
+        expect(dataRowsCollection.count()).toBe(50);
     });
 
     it('should filter up to 100 data rows per page when selecting a page size of "100"', () => {
         pageSizeSelector.$('[value="100"]').click();
 
-        expect(firstDataRow.$$('td').get(1).getText()).toBe('1');
-        expect(lastDataRow.$$('td').get(1).getText()).toBe('99');
-        expect(dataRowsCollection.count()).toBe(99);
+        expect(firstDataRow.$$('td').get(1).getText()).toBe('301');
+        expect(lastDataRow.$$('td').get(1).getText()).toBe('400');
+        expect(dataRowsCollection.count()).toBe(100);
     });
 });

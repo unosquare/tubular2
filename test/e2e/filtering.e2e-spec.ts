@@ -1,4 +1,5 @@
 import { browser, element, by } from '../../node_modules/protractor/built';
+import * as moment from 'moment';
 
 describe('Filtering e2e Tests', () => {
 
@@ -258,14 +259,16 @@ describe('Filtering e2e Tests', () => {
            let filterOk = true;
            let argumentInput = popOverForm.$$('.form-group').get(1).$$('input').last();
            filterSelect.$('[value="Between"]').click();
-           valueInput.sendKeys('12/29/2015');
-           argumentInput.sendKeys('12/31/2015');
+           valueInput.sendKeys('29/12/2015');
+           argumentInput.sendKeys('31/12/2015');
            applyBtn.click();
            let dataRows = element(by.tagName('tbody')).$$('tr');
-
+           var valueDate = moment('2015-12-29 00:00:00');
+           var argumentDate = moment('2015-12-31 23:59:59');
            dataRows.each((row) => {
                 row.$$('td').get(4).getText().then((filter) => {
-                   filterOk = filterOk && ((new Date('12/29/2015') <= new Date(filter)) && (new Date(filter) <= new Date('12/31/2015')));
+                    var filterD = moment(filter, "dddd, MMMM Do YYYY");
+                   filterOk = filterOk && (valueDate <= filterD) && (argumentDate >= filterD);                   
                 })
             }).then(() => expect(filterOk).toBe(true));
        });
