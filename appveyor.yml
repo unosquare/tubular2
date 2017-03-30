@@ -20,14 +20,15 @@ install:
   - ps: $env:path = $env:appdata + "\npm;" + $env:path
   - npm install -g gulp
   - npm install && npm install karma-ie-launcher && npm install -g webdriver-manager 
-  - cd src\Unosquare.Tubular2.Web
+  - cd sample
   - npm install
   - gulp build
-  - cd ..\..
+  - cd ..
 
 test_script:
   - webdriver-manager update --ie
   - ps: "npm --version # PowerShell"
+  - npm run test-once
   - npm run e2e
 
 cache: node_modules
