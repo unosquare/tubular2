@@ -27,8 +27,8 @@ describe('Filtering e2e Tests', () => {
             valueInput;
 
         beforeAll(() => {
-            columnFilter = columnHeaders.get(2).$('.column-header').$('div');
-            filterBtn = columnFilter.$('button');
+            columnFilter = columnHeaders.get(2).$('.column-header').$('.column-menu');
+            filterBtn = columnFilter.$$('button').get(0);
         });
 
         beforeEach(() => {
@@ -198,15 +198,15 @@ describe('Filtering e2e Tests', () => {
            valueInput;
 
        beforeAll(() => {
-           columnFilter = columnHeaders.get(4).$('.column-header').$('div');
-           filterBtn = columnFilter.$('button');
+           columnFilter = columnHeaders.get(4).$('.column-header').$('.column-menu');
+           filterBtn = columnFilter.$$('button').get(0);
        });
 
        beforeEach(() => {
            filterBtn.click();
-           popOverForm = columnFilter.$('ngb-popover-window').$('.popover-content').$('tb-filter-dialog').$('form');
-           applyBtn = popOverForm.$('.row').$$('div').get(0).$('.btn-success');
-           clearBtn = popOverForm.$('.row').$$('div').get(1).$('.btn-danger');
+           popOverForm = columnFilter.$('ngb-popover-window').$('tb-filter-dialog').$('form');
+           applyBtn = popOverForm.$('.row').$('.btn-success');
+           clearBtn = popOverForm.$('.row').$('.btn-danger');
            filterSelect = popOverForm.$$('.form-group').get(0).$('select');
            valueInput = popOverForm.$$('.form-group').get(1).$$('input').first();
        });
@@ -298,7 +298,7 @@ describe('Filtering e2e Tests', () => {
             clearBtn;
 
         beforeAll(() => {
-            gridSearch = element(by.tagName('tb-grid-search')).$('div').$('div');
+            gridSearch = element(by.tagName('tb-grid-search')).$('.input-group');
             searchInput = gridSearch.$('input');
             clearBtn = gridSearch.$('button');
         });
