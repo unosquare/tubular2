@@ -14,7 +14,7 @@ const forms_1 = require("@angular/forms");
 const column_model_1 = require("./column.model");
 let ColumnFilterDialogComponent = class ColumnFilterDialogComponent {
     constructor(fb) {
-        this.filteringChange = new core_1.EventEmitter();
+        this.filterChange = new core_1.EventEmitter();
         this.isBetween = false;
         this.form = fb.group({
             text: ['', forms_1.Validators.required],
@@ -32,13 +32,13 @@ let ColumnFilterDialogComponent = class ColumnFilterDialogComponent {
         });
     }
     submit() {
-        this.filteringChange.emit(true);
+        this.filterChange.emit(true);
     }
     reset() {
         this.form.reset();
         this.column.filter.argument = null;
         this.column.filter.operator = 'None';
-        this.filteringChange.emit(false);
+        this.filterChange.emit(false);
     }
     selectChange(newVal) {
         if (newVal === 'None') {
@@ -72,7 +72,7 @@ __decorate([
 __decorate([
     core_1.Output(),
     __metadata("design:type", Object)
-], ColumnFilterDialogComponent.prototype, "filteringChange", void 0);
+], ColumnFilterDialogComponent.prototype, "filterChange", void 0);
 ColumnFilterDialogComponent = __decorate([
     core_1.Component({
         selector: 'tb-filter-dialog',

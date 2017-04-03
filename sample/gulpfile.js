@@ -2,6 +2,7 @@
 var gulp = require('gulp');
 var merge2 = require('merge2');
 var del = require('del');
+var connect = require('gulp-connect');
 var webpack = require('webpack');
 var webpackStream = require('webpack-stream');
 
@@ -54,6 +55,9 @@ var standardBuild = watch => {
         .pipe(gulp.dest('dist/'));
 }
 
+gulp.task('connect', 
+    () => connect.server({ root: './' }));
+
 gulp.task('build', ['lib'], () => standardBuild(false));
 
-gulp.task('default', ['lib'], () => standardBuild(true));
+gulp.task('default', ['lib', 'connect'], () => standardBuild(true));

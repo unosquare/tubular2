@@ -25,9 +25,6 @@
                 <button class="btn btn-info btn-sm" (click)="editRow(content)">
                     Edit 
                 </button>
-                <template ngbModalContainer #content>
-                    <my-order-popup [row]="row" [modalRef]="editModalRef"></my-order-popup>
-                </template>
             </td>
             <td>{{row.OrderID}}</td>
             <td>{{row.CustomerName}}</td>

@@ -6,7 +6,6 @@
 
 <tb-grid #grid 
     dataUrl="http://tubular.azurewebsites.net/api/orders/paged" 
-    saveUrl="/api/orders/" 
     requireAuthentication="false" 
     (onDataError)="errorHandler($event)">
     <div class="row">
@@ -20,10 +19,6 @@
                 <button class="btn btn-info" (click)="openDialog(content)">
                     New Item
                 </button>
-                <template ngbModalContainer #content>
-                    <my-order-popup [modalRef]="newOrderModalRef">
-                    </my-order-popup>
-                </template>
             </div>
         </div>
         <div class="col-md-3">

@@ -16,7 +16,6 @@ const core_1 = require("@angular/core");
 const http_1 = require("@angular/http");
 const BehaviorSubject_1 = require("rxjs/BehaviorSubject");
 const moment = require("moment");
-const tubular_http_service_1 = require("./tubular-http.service");
 const tubular_settings_service_1 = require("./tubular-settings.service");
 const column_model_1 = require("./column.model");
 require("rxjs/add/operator/debounceTime");
@@ -32,9 +31,9 @@ class GridPageInfo {
 }
 exports.GridPageInfo = GridPageInfo;
 let GridComponent = class GridComponent {
-    constructor(settingsProvider, httpService) {
+    constructor(settingsProvider, http) {
         this.settingsProvider = settingsProvider;
-        this.httpService = httpService;
+        this.http = http;
         // data is just observable and children can't push
         this.data = new BehaviorSubject_1.BehaviorSubject([]);
         this.dataStream = this.data.asObservable();
@@ -54,7 +53,6 @@ let GridComponent = class GridComponent {
         };
         this.requestCount = 0;
         this.onDataError = new core_1.EventEmitter();
-        this.onDataSaved = new core_1.EventEmitter();
     }
     goToPage(page) {
         this.pageSet = true;
@@ -66,7 +64,7 @@ let GridComponent = class GridComponent {
         }
     }
     getCurrentPage(callback) {
-        let req = {
+        let tbRequest = {
             count: this.requestCount++,
             columns: this.columns.getValue(),
             skip: this.page.getValue() * this._pageSize.getValue(),
@@ -75,11 +73,19 @@ let GridComponent = class GridComponent {
             timezoneOffset: new Date().getTimezoneOffset()
         };
         // transform direction values to strings
-        req.columns.forEach(this.transformSortDirection);
-        this.httpService.post(this.dataUrl, req).subscribe((data) => callback(data, req), (error) => this.onDataError.emit(error));
+        tbRequest.columns.forEach(this.transformSortDirection);
+        let ngRequestOptions = new http_1.RequestOptions({
+            body: tbRequest,
+            url: this.dataUrl,
+            method: this.requestMethod || 'POST',
+            withCredentials: false,
+            responseType: http_1.ResponseContentType.Json
+        });
+        let ngRequest = new http_1.Request(ngRequestOptions);
+        return this.http.request(ngRequest).subscribe((data) => callback(data, tbRequest), (error) => this.onDataError.emit(error));
     }
     getFullDataSource(callback) {
-        let req = {
+        let tbRequest = {
             count: this.requestCount++,
             columns: this.columns.getValue(),
             skip: 0,
@@ -89,12 +95,15 @@ let GridComponent = class GridComponent {
                 operator: 'None'
             }
         };
-        this.httpService.post(this.dataUrl, req).subscribe((data) => callback(data.Payload || {}), (error) => this.onDataError.emit(error));
-    }
-    onUpdate(row) {
-        this.httpService
-            .save(this.saveUrl, row.values, row.$isNew ? http_1.RequestMethod.Post : http_1.RequestMethod.Put)
-            .subscribe((data) => this.onDataSaved.emit(data), (error) => this.onDataError.emit(error), () => this.refresh());
+        let ngRequestOptions = new http_1.RequestOptions({
+            body: tbRequest,
+            url: this.dataUrl,
+            method: this.requestMethod || 'POST',
+            withCredentials: false,
+            responseType: http_1.ResponseContentType.Json
+        });
+        let ngRequest = new http_1.Request(ngRequestOptions);
+        this.http.request(ngRequest).subscribe((response) => callback(response.json() || {}), (error) => this.onDataError.emit(error));
     }
     changePagesData() {
         if (this.settingsProvider != null) {
@@ -195,24 +204,16 @@ __decorate([
 ], GridComponent.prototype, "dataUrl", void 0);
 __decorate([
     core_1.Input(),
-    __metadata("design:type", Boolean)
-], GridComponent.prototype, "requireAuthentication", void 0);
+    __metadata("design:type", Object)
+], GridComponent.prototype, "requestMethod", void 0);
 __decorate([
     core_1.Input(),
     __metadata("design:type", Number)
 ], GridComponent.prototype, "requestTimeout", void 0);
 __decorate([
-    core_1.Input(),
-    __metadata("design:type", String)
-], GridComponent.prototype, "saveUrl", void 0);
-__decorate([
     core_1.Output(),
     __metadata("design:type", Object)
 ], GridComponent.prototype, "onDataError", void 0);
-__decorate([
-    core_1.Output(),
-    __metadata("design:type", Object)
-], GridComponent.prototype, "onDataSaved", void 0);
 GridComponent = __decorate([
     core_1.Component({
         selector: 'tb-grid',
@@ -233,6 +234,6 @@ GridComponent = __decorate([
         ]
     }),
     __param(0, core_1.Optional()), __param(0, core_1.Inject(tubular_settings_service_1.SETTINGS_PROVIDER)),
-    __metadata("design:paramtypes", [Object, tubular_http_service_1.TubularHttpService])
+    __metadata("design:paramtypes", [Object, http_1.Http])
 ], GridComponent);
 exports.GridComponent = GridComponent;

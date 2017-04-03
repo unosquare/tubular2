@@ -9,9 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { SampleGrid } from './sampleGrid.component';
-import { OrderPopup } from './order-popup.component';
 import { MainGridComponent } from './main-grid.component';
-import { FormComponent } from './form.component';
 import { LoginComponent } from './login.component';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
 
@@ -21,7 +19,7 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr';
         AppRoutingModule, ToastModule
     ],
     declarations: [
-        AppComponent, SampleGrid, OrderPopup, MainGridComponent, FormComponent, 
+        AppComponent, SampleGrid, MainGridComponent, 
         LoginComponent
     ],
     providers: [
@@ -31,6 +29,6 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr';
         { provide: RequestOptions, useClass: HttpOptions }
     ],
     bootstrap: [AppComponent],
-    entryComponents: [OrderPopup]
+    // entryComponents: [OrderPopup]
 })
 export class AppModule { }

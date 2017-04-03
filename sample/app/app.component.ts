@@ -8,8 +8,8 @@ import { TubularAuthService } from '@tubular2/tubular2';
 })
 export class AppComponent {
     constructor(private tbAuthService:TubularAuthService, private router: Router){
-        this.tbAuthService.setTokenUrl('http://tubular.azurewebsites.net/token');
-        this.tbAuthService.setRefreshTokenUrl('http://tubular.azurewebsites.net/token');
+        // this.tbAuthService.setTokenUrl('http://tubular.azurewebsites.net/token');
+        // this.tbAuthService.setRefreshTokenUrl('http://tubular.azurewebsites.net/token');
     }
     logout(){
         this.tbAuthService.removeAuthentication();

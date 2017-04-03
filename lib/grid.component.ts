@@ -2,12 +2,11 @@
     Component, Input, Output, EventEmitter,
     OnInit, Inject, Optional
 } from '@angular/core';
-import { RequestMethod } from '@angular/http';
+import { RequestMethod, Http, RequestOptions, ResponseContentType, Request } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import * as moment from 'moment';
 
-import { TubularHttpService } from './tubular-http.service';
 import { SETTINGS_PROVIDER, ITubularSettingsProvider } from './tubular-settings.service';
 import { ColumnModel, DataType, ColumnSortDirection } from './column.model';
 
@@ -20,6 +19,20 @@ export class GridPageInfo {
     public totalPages = 0;
     public totalRecordCount = 0;
     public filteredRecordCount = 0;
+}
+
+export interface TbRequest {
+    count: number,
+    columns: any[],
+    skip: number,
+    take: number,
+    search: TbSearchParameter,
+    timezoneOffset: number
+}
+
+export interface TbSearchParameter {
+    text: string,
+    operator: string
 }
 
 @Component({
@@ -59,7 +72,7 @@ export class GridComponent implements OnInit {
     pageSet = false;
 
     public showLoading = false;
-    public search = {
+    public search = <TbSearchParameter>{
         text: '',
         operator: 'None'
     };
@@ -67,16 +80,14 @@ export class GridComponent implements OnInit {
     private requestCount = 0;
 
     @Input() public dataUrl: string;
-    @Input() public requireAuthentication: boolean;
+    @Input() public requestMethod: string | RequestMethod;
     @Input() public requestTimeout: number;
-    @Input() public saveUrl: string;
 
     @Output() public onDataError = new EventEmitter<any>();
-    @Output() public onDataSaved = new EventEmitter<any>();
 
     constructor(
         @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider,
-        private httpService: TubularHttpService) { }
+        private http: Http) { }
 
     public goToPage(page) {
         this.pageSet = true;
@@ -89,8 +100,13 @@ export class GridComponent implements OnInit {
         }
     }
 
+    private extractData(res: Response) {
+        return res.json() || {};
+    }
+
     public getCurrentPage(callback) {
-        let req = {
+
+        let tbRequest = <TbRequest>{
             count: this.requestCount++,
             columns: this.columns.getValue(),
             skip: this.page.getValue() * this._pageSize.getValue(),
@@ -100,16 +116,27 @@ export class GridComponent implements OnInit {
         };
 
         // transform direction values to strings
-        req.columns.forEach(this.transformSortDirection);
+        tbRequest.columns.forEach(this.transformSortDirection);
 
-        this.httpService.post(this.dataUrl, req).subscribe(
-            (data) => callback(data, req),
+        let ngRequestOptions = new RequestOptions({
+            body: tbRequest,
+            url: this.dataUrl,
+            method: this.requestMethod || 'POST',
+            withCredentials: false,
+            responseType: ResponseContentType.Json
+        });
+
+        let ngRequest = new Request(ngRequestOptions);
+
+        return this.http.request(ngRequest)
+            .subscribe(
+            (data) => callback(data.json(), tbRequest),
             (error) => this.onDataError.emit(error)
         );
     }
 
     public getFullDataSource(callback) {
-        let req = {
+        let tbRequest = <TbRequest> {
             count: this.requestCount++,
             columns: this.columns.getValue(),
             skip: 0,
@@ -120,19 +147,20 @@ export class GridComponent implements OnInit {
             }
         };
 
-        this.httpService.post(this.dataUrl, req).subscribe(
-            (data) => callback(data.Payload || {}),
+        let ngRequestOptions = new RequestOptions({
+            body: tbRequest,
+            url: this.dataUrl,
+            method: this.requestMethod || 'POST',
+            withCredentials: false,
+            responseType: ResponseContentType.Json
+        });
+
+        let ngRequest = new Request(ngRequestOptions);
+
+        this.http.request(ngRequest).subscribe(
+            (response) => callback(response.json() || {}),
             (error) => this.onDataError.emit(error)
         );
-    }
-
-    onUpdate(row) {
-        this.httpService
-            .save(this.saveUrl, row.values, row.$isNew ? RequestMethod.Post : RequestMethod.Put)
-            .subscribe(
-                (data) => this.onDataSaved.emit(data),
-                (error) => this.onDataError.emit(error),
-                () => this.refresh());
     }
 
     changePagesData() {
