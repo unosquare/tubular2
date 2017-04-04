@@ -2,7 +2,7 @@
     Component, Input, Output, EventEmitter,
     OnInit, Inject, Optional
 } from '@angular/core';
-import { RequestMethod, Http, RequestOptions, ResponseContentType, Request } from '@angular/http';
+import { RequestMethod, Http, RequestOptions, ResponseContentType, Request, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import * as moment from 'moment';
@@ -11,6 +11,9 @@ import { SETTINGS_PROVIDER, ITubularSettingsProvider } from './tubular-settings.
 import { ColumnModel, DataType, ColumnSortDirection } from './column.model';
 
 import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+
 
 export class GridPageInfo {
     public currentInitial = 0;
@@ -61,6 +64,8 @@ export class GridComponent implements OnInit {
     private _pageInfo = new BehaviorSubject(new GridPageInfo());
     public pageInfo = this._pageInfo.asObservable();
 
+    private tbRequestRunning: TbRequest;
+
     public _pageSize = new BehaviorSubject(this.getPageSizeSettingValue());
     public pageSize = this._pageSize.asObservable();
 
@@ -96,17 +101,16 @@ export class GridComponent implements OnInit {
 
     public refresh() {
         if (this.pageSet && this.columns.getValue().length > 0 && this._pageSize.getValue() > 0) {
-            this.getCurrentPage((data, req) => this.transformDataset(data, req));
+            this.getCurrentPage()
+                .subscribe((data: any) => {
+                    this.transformDataset(data, this.tbRequestRunning)
+                });
         }
     }
 
-    private extractData(res: Response) {
-        return res.json() || {};
-    }
+    public getCurrentPage(): Observable<Response> {
 
-    public getCurrentPage(callback) {
-
-        let tbRequest = <TbRequest>{
+        this.tbRequestRunning = <TbRequest>{
             count: this.requestCount++,
             columns: this.columns.getValue(),
             skip: this.page.getValue() * this._pageSize.getValue(),
@@ -116,10 +120,10 @@ export class GridComponent implements OnInit {
         };
 
         // transform direction values to strings
-        tbRequest.columns.forEach(this.transformSortDirection);
+        this.tbRequestRunning.columns.forEach(this.transformSortDirection);
 
         let ngRequestOptions = new RequestOptions({
-            body: tbRequest,
+            body: this.tbRequestRunning,
             url: this.dataUrl,
             method: this.requestMethod || 'POST',
             withCredentials: false,
@@ -128,15 +132,11 @@ export class GridComponent implements OnInit {
 
         let ngRequest = new Request(ngRequestOptions);
 
-        return this.http.request(ngRequest)
-            .subscribe(
-            (data) => callback(data.json(), tbRequest),
-            (error) => this.onDataError.emit(error)
-        );
+        return this.http.request(ngRequest).map(response => response.json());;
     }
 
-    public getFullDataSource(callback) {
-        let tbRequest = <TbRequest> {
+    public getFullDataSource(): Observable<Response> {
+        let tbRequest = <TbRequest>{
             count: this.requestCount++,
             columns: this.columns.getValue(),
             skip: 0,
@@ -157,10 +157,7 @@ export class GridComponent implements OnInit {
 
         let ngRequest = new Request(ngRequestOptions);
 
-        this.http.request(ngRequest).subscribe(
-            (response) => callback(response.json().Payload || {}),
-            (error) => this.onDataError.emit(error)
-        );
+        return this.http.request(ngRequest).map(response => response.json());
     }
 
     changePagesData() {

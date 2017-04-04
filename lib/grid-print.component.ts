@@ -1,5 +1,9 @@
 ﻿import { Component } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { GridComponent } from './grid.component';
+
+import 'rxjs/add/operator/map';
 
 @Component({
     selector: 'tb-grid-print',
@@ -12,16 +16,16 @@ export class PrintButtonComponent {
     constructor(private tbGrid: GridComponent) { }
 
     public print() {
-        this.tbGrid.getFullDataSource(
-            (data) => {
+        this.tbGrid.getFullDataSource()
+            .subscribe((data: any) => {
                 let headers = this.tbGrid.columns.getValue().reduce(
                     (a, b) => a + '<th>' + b.label + '</th>', '');
-                let rows = data.reduce(
+                let rows = data.Payload.reduce(
                     (prev, row) => prev + '<tr>' +
                         row.reduce((a, b) => a + '<td>' + b + '</td>', '') + '</tr>', '');
 
                 let tableHtml =
-                `<table class="table table-sm table-striped">
+                    `<table class="table table-sm table-striped">
                     <thead><tr>${headers}</tr></thead><tbody>${rows}</tbody>
                 </table>`;
 

@@ -19,6 +19,8 @@ const moment = require("moment");
 const tubular_settings_service_1 = require("./tubular-settings.service");
 const column_model_1 = require("./column.model");
 require("rxjs/add/operator/debounceTime");
+require("rxjs/add/operator/map");
+require("rxjs/add/operator/catch");
 class GridPageInfo {
     constructor() {
         this.currentInitial = 0;
@@ -60,14 +62,14 @@ let GridComponent = class GridComponent {
     }
     refresh() {
         if (this.pageSet && this.columns.getValue().length > 0 && this._pageSize.getValue() > 0) {
-            this.getCurrentPage((data, req) => this.transformDataset(data, req));
+            this.getCurrentPage()
+                .subscribe((data) => {
+                this.transformDataset(data, this.tbRequestRunning);
+            });
         }
     }
-    extractData(res) {
-        return res.json() || {};
-    }
-    getCurrentPage(callback) {
-        let tbRequest = {
+    getCurrentPage() {
+        this.tbRequestRunning = {
             count: this.requestCount++,
             columns: this.columns.getValue(),
             skip: this.page.getValue() * this._pageSize.getValue(),
@@ -76,19 +78,19 @@ let GridComponent = class GridComponent {
             timezoneOffset: new Date().getTimezoneOffset()
         };
         // transform direction values to strings
-        tbRequest.columns.forEach(this.transformSortDirection);
+        this.tbRequestRunning.columns.forEach(this.transformSortDirection);
         let ngRequestOptions = new http_1.RequestOptions({
-            body: tbRequest,
+            body: this.tbRequestRunning,
             url: this.dataUrl,
             method: this.requestMethod || 'POST',
             withCredentials: false,
             responseType: http_1.ResponseContentType.Json
         });
         let ngRequest = new http_1.Request(ngRequestOptions);
-        return this.http.request(ngRequest)
-            .subscribe((data) => callback(data.json(), tbRequest), (error) => this.onDataError.emit(error));
+        return this.http.request(ngRequest).map(response => response.json());
+        ;
     }
-    getFullDataSource(callback) {
+    getFullDataSource() {
         let tbRequest = {
             count: this.requestCount++,
             columns: this.columns.getValue(),
@@ -107,7 +109,7 @@ let GridComponent = class GridComponent {
             responseType: http_1.ResponseContentType.Json
         });
         let ngRequest = new http_1.Request(ngRequestOptions);
-        this.http.request(ngRequest).subscribe((response) => callback(response.json().Payload || {}), (error) => this.onDataError.emit(error));
+        return this.http.request(ngRequest).map(response => response.json());
     }
     changePagesData() {
         if (this.settingsProvider != null) {
