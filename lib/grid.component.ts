@@ -158,7 +158,7 @@ export class GridComponent implements OnInit {
         let ngRequest = new Request(ngRequestOptions);
 
         this.http.request(ngRequest).subscribe(
-            (response) => callback(response.json() || {}),
+            (response) => callback(response.json().Payload || {}),
             (error) => this.onDataError.emit(error)
         );
     }

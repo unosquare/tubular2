@@ -63,6 +63,9 @@ let GridComponent = class GridComponent {
             this.getCurrentPage((data, req) => this.transformDataset(data, req));
         }
     }
+    extractData(res) {
+        return res.json() || {};
+    }
     getCurrentPage(callback) {
         let tbRequest = {
             count: this.requestCount++,
@@ -82,7 +85,8 @@ let GridComponent = class GridComponent {
             responseType: http_1.ResponseContentType.Json
         });
         let ngRequest = new http_1.Request(ngRequestOptions);
-        return this.http.request(ngRequest).subscribe((data) => callback(data, tbRequest), (error) => this.onDataError.emit(error));
+        return this.http.request(ngRequest)
+            .subscribe((data) => callback(data.json(), tbRequest), (error) => this.onDataError.emit(error));
     }
     getFullDataSource(callback) {
         let tbRequest = {
@@ -103,7 +107,7 @@ let GridComponent = class GridComponent {
             responseType: http_1.ResponseContentType.Json
         });
         let ngRequest = new http_1.Request(ngRequestOptions);
-        this.http.request(ngRequest).subscribe((response) => callback(response.json() || {}), (error) => this.onDataError.emit(error));
+        this.http.request(ngRequest).subscribe((response) => callback(response.json().Payload || {}), (error) => this.onDataError.emit(error));
     }
     changePagesData() {
         if (this.settingsProvider != null) {
