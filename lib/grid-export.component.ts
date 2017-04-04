@@ -1,5 +1,9 @@
-﻿import { Component, Input} from '@angular/core';
+﻿import { Component, Input } from '@angular/core';
 import { GridComponent } from './grid.component';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
+import 'rxjs/add/operator/map';
 
 @Component({
     selector: 'tb-grid-export',
@@ -19,11 +23,17 @@ export class ExportButtonComponent {
     constructor(private tbGrid: GridComponent) { }
 
     public downloadCsv() {
-        this.tbGrid.getCurrentPage((data) => this.processCsv(data.Payload));
+        this.tbGrid.getFullDataSource()
+            .subscribe((data: any) => {
+                this.processCsv(data.Payload);
+            });
     }
 
     public downloadAllCsv() {
-        this.tbGrid.getFullDataSource((data) => this.processCsv(data));
+        this.tbGrid.getFullDataSource()
+            .subscribe((data: any) => {
+                this.processCsv(data.Payload);
+            });
     }
 
     private processCsv(data) {

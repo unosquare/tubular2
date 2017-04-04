@@ -11,15 +11,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const grid_component_1 = require("./grid.component");
+require("rxjs/add/operator/map");
 let ExportButtonComponent = class ExportButtonComponent {
     constructor(tbGrid) {
         this.tbGrid = tbGrid;
     }
     downloadCsv() {
-        this.tbGrid.getCurrentPage((data) => this.processCsv(data.Payload));
+        this.tbGrid.getFullDataSource()
+            .subscribe((data) => {
+            this.processCsv(data.Payload);
+        });
     }
     downloadAllCsv() {
-        this.tbGrid.getFullDataSource((data) => this.processCsv(data));
+        this.tbGrid.getFullDataSource()
+            .subscribe((data) => {
+            this.processCsv(data.Payload);
+        });
     }
     processCsv(data) {
         let headers = this.tbGrid.columns.getValue().reduce((a, b) => a + b.label + ',', '').slice(0, -1) + '\r\n';

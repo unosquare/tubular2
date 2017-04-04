@@ -11,14 +11,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const grid_component_1 = require("./grid.component");
+require("rxjs/add/operator/map");
 let PrintButtonComponent = class PrintButtonComponent {
     constructor(tbGrid) {
         this.tbGrid = tbGrid;
     }
     print() {
-        this.tbGrid.getFullDataSource((data) => {
+        this.tbGrid.getFullDataSource()
+            .subscribe((data) => {
             let headers = this.tbGrid.columns.getValue().reduce((a, b) => a + '<th>' + b.label + '</th>', '');
-            let rows = data.reduce((prev, row) => prev + '<tr>' +
+            let rows = data.Payload.reduce((prev, row) => prev + '<tr>' +
                 row.reduce((a, b) => a + '<td>' + b + '</td>', '') + '</tr>', '');
             let tableHtml = `<table class="table table-sm table-striped">
                     <thead><tr>${headers}</tr></thead><tbody>${rows}</tbody>
