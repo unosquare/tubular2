@@ -6,7 +6,6 @@ import { HttpModule } from '@angular/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { GridComponent }  from './grid.component';
-import { TbInputErrorComponent }  from './tb-input-error.component';
 import { ColumnHeaderComponent } from './column-header.component';
 import { GridSearchComponent } from './grid-search.component';
 import { GridPagerComponent } from './grid-pager.component';
@@ -26,13 +25,13 @@ import { MDatePipe } from './mdate.pipe';
         GridComponent, ColumnHeaderComponent, GridSearchComponent,
         GridPagerComponent, GridPagerInfoComponent, ColumnFilterDialogComponent,
         PageSizeSelectorComponent, ExportButtonComponent, PrintButtonComponent,
-        MDatePipe, TbInputErrorComponent
+        MDatePipe
     ],
     exports: [
         GridComponent, ColumnHeaderComponent, GridSearchComponent,
         GridPagerComponent, GridPagerInfoComponent, ColumnFilterDialogComponent,
         PageSizeSelectorComponent, ExportButtonComponent, PrintButtonComponent,
-        MDatePipe, TbInputErrorComponent,
+        MDatePipe,
         NgbModule
     ]
 })

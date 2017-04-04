@@ -12,7 +12,6 @@ const forms_1 = require("@angular/forms");
 const http_1 = require("@angular/http");
 const ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
 const grid_component_1 = require("./grid.component");
-const tb_input_error_component_1 = require("./tb-input-error.component");
 const column_header_component_1 = require("./column-header.component");
 const grid_search_component_1 = require("./grid-search.component");
 const grid_pager_component_1 = require("./grid-pager.component");
@@ -34,13 +33,13 @@ TubularModule = __decorate([
             grid_component_1.GridComponent, column_header_component_1.ColumnHeaderComponent, grid_search_component_1.GridSearchComponent,
             grid_pager_component_1.GridPagerComponent, grid_pager_info_component_1.GridPagerInfoComponent, column_filter_dialog_component_1.ColumnFilterDialogComponent,
             page_size_selector_component_1.PageSizeSelectorComponent, grid_export_component_1.ExportButtonComponent, grid_print_component_1.PrintButtonComponent,
-            mdate_pipe_1.MDatePipe, tb_input_error_component_1.TbInputErrorComponent
+            mdate_pipe_1.MDatePipe
         ],
         exports: [
             grid_component_1.GridComponent, column_header_component_1.ColumnHeaderComponent, grid_search_component_1.GridSearchComponent,
             grid_pager_component_1.GridPagerComponent, grid_pager_info_component_1.GridPagerInfoComponent, column_filter_dialog_component_1.ColumnFilterDialogComponent,
             page_size_selector_component_1.PageSizeSelectorComponent, grid_export_component_1.ExportButtonComponent, grid_print_component_1.PrintButtonComponent,
-            mdate_pipe_1.MDatePipe, tb_input_error_component_1.TbInputErrorComponent,
+            mdate_pipe_1.MDatePipe,
             ng_bootstrap_1.NgbModule
         ]
     })

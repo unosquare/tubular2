@@ -4,11 +4,7 @@
     Angular2 components
 </p>
 
-<tb-grid #grid 
-    dataUrl="http://tubular.azurewebsites.net/api/orders/paged" 
-    saveUrl="/api/orders/" 
-    requireAuthentication="false" 
-    (onDataError)="errorHandler($event)">
+<tb-grid #grid dataUrl="http://tubular.azurewebsites.net/api/orders/paged" requireAuthentication="false" (onDataError)="errorHandler($event)">
     <div class="row">
         <div class="col-md-5">
             <tb-grid-pager></tb-grid-pager>
@@ -17,13 +13,9 @@
             <div class="btn-group-sm">
                 <tb-grid-print></tb-grid-print>
                 <tb-grid-export fileName="sampleCsv.csv"></tb-grid-export>
-                <button class="btn btn-info" (click)="openDialog(content)">
+                <!--<button class="btn btn-info" (click)="openDialog(content)">
                     New Item
-                </button>
-                <template ngbModalContainer #content>
-                    <my-order-popup [modalRef]="newOrderModalRef">
-                    </my-order-popup>
-                </template>
+                </button>-->
             </div>
         </div>
         <div class="col-md-3">
