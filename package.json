@@ -7,8 +7,8 @@
     "url": "https://github.com/unosquare/tubular2.git"
   },
   "scripts": {
-    "test": "karma start karma.conf.js",
-    "test-once": "gulp build-lib && karma start karma.conf.js --single-run",
+    "test": "gulp build-spec && karma start karma.conf.js",
+    "test-once": "gulp build-spec && karma start karma.conf.js --single-run",
     "preweb-server": "gulp --gulpfile ./src/Unosquare.Tubular2.Web/gulpfile.js build",
     "web-server": "gulp connect",
     "start": "webpack-dev-server --config ./webpack/webpack.dev.js",

@@ -9,10 +9,15 @@ var map = require("map-stream");
 var tsProject = ts.createProject('tsconfig.json');
 
 gulp.task('build-lib', 
-    () => gulp.src('lib/**/*.ts')
+    () => gulp.src(['lib/**/*.ts', '!lib/**/*.spec.ts'])
         .pipe(tsProject())
         .js.pipe(gulp.dest('dist')));
         
+gulp.task('build-spec',
+    () => gulp.src('lib/**/*.ts')
+        .pipe(tsProject())
+        .js.pipe(gulp.dest(file => file.base)));
+
 gulp.task('build-e2e', ['build-lib'],
     () => gulp.src('test/e2e/**/*.ts')
         .pipe(tsProject())

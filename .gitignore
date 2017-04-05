@@ -262,9 +262,7 @@ paket-files/
 /sample/build
 /sample/dist
 /test/e2e/*.js
-/src/Unosquare.Tubular2.Web/_test-output
-/src/lib/*.js
-/src/Unosquare.Tubular2.Web/npm-debug.*
+/lib/*.js
 coverage/
 temp/
 /.vscode/launch.json
