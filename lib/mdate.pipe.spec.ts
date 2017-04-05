@@ -9,7 +9,7 @@ describe('Component: MDatePipe', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [MDatePipe]
-        });
+        }).compileComponents();
         
         fixture = TestBed.createComponent(MDatePipe);
         mDate = fixture.componentInstance;

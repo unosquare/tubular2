@@ -7,16 +7,12 @@ module.exports = {
 
     devtool: 'inline-source-map',
     module: {
-        
         loaders: [
             { loader: 'raw', test: /\.(css|html)$/ },
-            { exclude: /node_modules/, loader: 'ts-loader', test: /\.spec\.ts$/ },
-            { test: /\.ts$/, loader: 'awesome-typescript-loader' }
+            { exclude: /node_modules/, loader: 'ts-loader', test: /\.ts$/ }
         ]
     },
     resolve: {
-        extensions: ['.ts', '.js'],
-        //modulesDirectories: ['node_modules'],
-        //root: path.resolve('.')
+        extensions: ['.ts', '.js']
     }
 };
