@@ -1,19 +1,10 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { TubularModule } from './tubular.module';
 
 describe('module: tubular', () => {
     let tubularModule: TubularModule;
-    let fixture: ComponentFixture<TubularModule>;
-
+    
     beforeEach(() => {
-        //tubularModule = new TubularModule();
-        TestBed.configureTestingModule({
-            declarations: [TubularModule],
-        });
-        
-        fixture = TestBed.createComponent(TubularModule);
-        tubularModule = fixture.componentInstance;
+        tubularModule = new TubularModule();
     });     
      
     it('should success', () => {
