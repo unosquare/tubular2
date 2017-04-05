@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MDatePipe } from './mdate.pipe';
 
-describe('Mdate pipe Component: MDataType ',function(){
+describe('Component: MDatePipe', () => {
     let mDate: MDatePipe;
     let fixture: ComponentFixture<MDatePipe>;
 
@@ -10,6 +10,7 @@ describe('Mdate pipe Component: MDataType ',function(){
         TestBed.configureTestingModule({
             declarations: [MDatePipe]
         });
+        
         fixture = TestBed.createComponent(MDatePipe);
         mDate = fixture.componentInstance;
     });  
