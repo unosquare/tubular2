@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { SampleGrid } from './sampleGrid.component';
 import { MainGridComponent } from './main-grid.component';
 import { LoginComponent } from './login.component';
+import { OrderComponent } from './order.component';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
 
 @NgModule({
@@ -20,8 +21,9 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr';
     ],
     declarations: [
         AppComponent, SampleGrid, MainGridComponent, 
-        LoginComponent
+        LoginComponent, OrderComponent
     ],
+    entryComponents: [OrderComponent],
     providers: [
         { provide: SETTINGS_PROVIDER, useClass: TubularLocalStorageService },
         { provide: RequestOptions, useClass: HttpOptions }
