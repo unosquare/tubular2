@@ -26,6 +26,6 @@
         "dist",
         "**/*.spec.ts",
         "node_modules",
-        "sample/node_modules"
+        "sample"
     ]
 }
