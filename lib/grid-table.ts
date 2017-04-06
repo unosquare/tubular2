@@ -1,6 +1,6 @@
 ﻿import { Component, Input } from '@angular/core';
 import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/observable';
+import { Observable } from 'rxjs/Observable';
 
 import { GridComponent }      from './grid.component';
 import { ColumnModel, ColumnSortDirection } from './column.model';
