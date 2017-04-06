@@ -20,7 +20,7 @@ import 'rxjs/add/operator/map';
 export class ExportButtonComponent {
     @Input() public fileName: string;
 
-    constructor(private tbGrid: GridComponent) { }
+    constructor(private tbGrid: GridComponent, @Inject('Window') window: Window) { }
 
     public downloadCsv() {
         this.tbGrid.getFullDataSource()
@@ -42,6 +42,7 @@ export class ExportButtonComponent {
         let csv = rows.reduce((a, b) => a + b, headers);
 
         let blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
-        saveAs(blob, this.fileName);
+        // TODO: Complete: http://stackoverflow.com/questions/34177221/angular2-how-to-inject-window-into-an-angular2-service
+        //saveAs(blob, this.fileName);
     }
 }
