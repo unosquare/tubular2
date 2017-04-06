@@ -1,4 +1,7 @@
-require('es6-shim');
+Error.stackTraceLimit = Infinity;
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 2000;
+
+require('core-js/es6');
 require('reflect-metadata');
 require('zone.js/dist/zone');
 require('zone.js/dist/long-stack-trace-zone');
@@ -8,15 +11,15 @@ require('zone.js/dist/sync-test');
 require('zone.js/dist/proxy');
 require('zone.js/dist/jasmine-patch');
 
-var browserTesting = require('@angular/platform-browser-dynamic/testing');
-var coreTesting = require('@angular/core/testing');
-var context = require.context('./lib/', true, /\.ts$/);
+const browserTesting = require('@angular/platform-browser-dynamic/testing');
+const coreTesting = require('@angular/core/testing');
+const context = require.context('./lib/', true, /\.spec\.ts$/);
 
-Error.stackTraceLimit = Infinity;
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 2000;
 
-coreTesting.TestBed.resetTestEnvironment();
-coreTesting.TestBed.initTestEnvironment(
+
+
+coreTesting.getTestBed().resetTestEnvironment();
+coreTesting.getTestBed().initTestEnvironment(
     browserTesting.BrowserDynamicTestingModule,
     browserTesting.platformBrowserDynamicTesting()
 );

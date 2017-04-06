@@ -1,28 +1,34 @@
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "removeComments": false,
-    "noImplicitAny": false,
-    "typeRoots": [
-      "node_modules/@types"
+    "compileOnSave": false,
+    "compilerOptions": {
+        "noImplicitAny": false,
+        "module": "commonjs",
+        "target": "ES6",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "allowUnusedLabels": false,
+        "noImplicitReturns": true,
+        "sourceMap": true,
+        "declaration": true,
+        "outDir": "./dist",
+        "typeRoots": [
+            "node_modules/@types"
+        ],
+        "types": [
+
+            "jasmine"
+        ]
+    },
+    "angularCompilerOptions": {
+        "genDir": "compiled",
+        "strictMetadataEmit": true
+    },
+    "files": [
+        "lib/index.ts"
     ],
-    "types": [
-      "core-js",
-      "jasmine",
-      "file-saver"
+    "exclude": [
+        "dist",
+        "**/*.spec.ts",
+        "node_modules"
     ]
-  },
-  "include": [
-    "src/lib/*.ts",
-    "test/e2e/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
 }
