@@ -9,7 +9,7 @@
         "allowUnusedLabels": false,
         "noImplicitReturns": true,
         "sourceMap": true,
-        "declaration": true,
+        "declaration": false,
         "rootDir": ".",
         "typeRoots": [
             "node_modules/@types"
