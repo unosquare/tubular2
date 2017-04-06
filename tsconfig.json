@@ -3,13 +3,13 @@
     "compilerOptions": {
         "noImplicitAny": false,
         "module": "commonjs",
-        "target": "es6",
+        "target": "ES6",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "allowUnusedLabels": false,
         "noImplicitReturns": true,
         "sourceMap": true,
-        "declaration": false,
+        "declaration": true,
         "rootDir": ".",
         "typeRoots": [
             "node_modules/@types"
