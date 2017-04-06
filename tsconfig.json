@@ -3,20 +3,18 @@
     "compilerOptions": {
         "noImplicitAny": false,
         "module": "commonjs",
-        "target": "ES6",
+        "target": "es6",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "allowUnusedLabels": false,
         "noImplicitReturns": true,
         "sourceMap": true,
-        "declaration": true,
-         "rootDir": ".",
-        "outDir": "./dist",
+        "declaration": false,
+        "rootDir": ".",
         "typeRoots": [
             "node_modules/@types"
         ],
         "types": [
-
             "jasmine"
         ]
     },
@@ -24,9 +22,6 @@
         "genDir": "compiled",
         "strictMetadataEmit": true
     },
-    "files": [
-        "lib/index.ts"
-    ],
     "exclude": [
         "dist",
         "**/*.spec.ts",
