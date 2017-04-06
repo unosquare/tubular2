@@ -7,15 +7,18 @@ describe('Component: MDatePipe', () => {
     let fixture: ComponentFixture<MDatePipe>;
 
     beforeEach(() => {
+
+    });
+
+    it('should have a defined component', async () => {
         TestBed.configureTestingModule({
             declarations: [MDatePipe]
-        }).compileComponents();
-        
-        fixture = TestBed.createComponent(MDatePipe);
-        mDate = fixture.componentInstance;
-    });  
+        }).compileComponents().then(() => {
+            fixture = TestBed.createComponent(MDatePipe);
+            mDate = fixture.componentInstance;
+            expect(mDate).toBeDefined();
+        })
 
-    it('should have a defined component', () => {
-        expect(mDate).toBeDefined();
+
     });
 });
