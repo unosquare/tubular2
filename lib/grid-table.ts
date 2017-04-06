@@ -1,16 +1,18 @@
 ﻿import { Component, Input } from '@angular/core';
 import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/observable';
 
 import { GridComponent }      from './grid.component';
 import { ColumnModel, ColumnSortDirection } from './column.model';
 
 export abstract class GridTable {
-    private columnObservable: BehaviorSubject<ColumnModel[]> = new BehaviorSubject([]);
-
-    public columns = this.columnObservable.asObservable();
+    public columns: Observable<ColumnModel[]>;
     public rows: any[];
 
+    private columnObservable: BehaviorSubject<ColumnModel[]> = new BehaviorSubject([]);
+
     constructor(public tbGrid: GridComponent) {
+        this.columns = this.columnObservable.asObservable();
         this.tbGrid.dataStream.subscribe((payload) => this.rows = payload);
         this.columnObservable.subscribe((payload) => this.tbGrid.columns.next(payload));
     }
@@ -45,8 +47,8 @@ export abstract class GridTable {
                 (v) => v.sortOrder = v.name === column.name ? v.sortOrder : 0);
             value.forEach(
                 (v) => v.direction = v.name === column.name ?
-                                        column.direction :
-                                        ColumnSortDirection.None);
+                    column.direction :
+                    ColumnSortDirection.None);
         }
 
         let currentlySortedColumns = value.filter((col) => col.sortOrder > 0);
