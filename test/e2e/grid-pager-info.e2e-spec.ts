@@ -19,16 +19,16 @@ describe('grid pager info', () => {
     });
 
     it('should show text in accordance to numbered of filter rows and current results-page',() => {
-        expect(gridPagerInfo.first().getText()).eventually.be('Showing 1 to 10 of 500 records');
+        expect(gridPagerInfo.first().getText()).to.eventually.be('Showing 1 to 10 of 500 records');
         paginator.get(7).$$('a').click();
         pageSizeSelector.$('[value="20"]').click();
-        expect(gridPagerInfo.first().getText()).eventually.be('Showing 21 to 40 of 500 records');
+        expect(gridPagerInfo.first().getText()).to.eventually.be('Showing 21 to 40 of 500 records');
         paginator.get(5).$$('a').click();
-        expect(gridPagerInfo.first().getText()).eventually.be('Showing 61 to 80 of 500 records');
+        expect(gridPagerInfo.first().getText()).to.eventually.be('Showing 61 to 80 of 500 records');
     });
 
     it('should show count in footer', () => {
         gridSearchInput.sendKeys('a');
-        expect(gridPagerInfo.first().getText()).eventually.contain('Showing 1 to 10 of 454 records (Filtered from 500 total records)');
+        expect(gridPagerInfo.first().getText()).to.eventually.contain('Showing 1 to 10 of 454 records (Filtered from 500 total records)');
     });
 });
