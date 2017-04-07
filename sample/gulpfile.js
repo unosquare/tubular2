@@ -20,7 +20,6 @@ var libs = {
     'reflect': 'node_modules/reflect-metadata/*',
     'systemjs': 'node_modules/systemjs/**/*',
     'moment': 'node_modules/moment/*',
-    'filesaver': 'node_modules/filesaver.js/*.js',
     'ng2-toastr': 'node_modules/ng2-toastr/**/*',
     '@ng-bootstrap': 'node_modules/@ng-bootstrap/ng-bootstrap/**/*',
     '@tubular2': 'node_modules/@tubular2/tubular2'
