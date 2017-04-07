@@ -10,8 +10,6 @@ import { TubularLocalStorageService } from './tubular-settings.service';
 describe('Component: GridComponent', () => {
     let gridComponent:      GridComponent;
     let fixture:            ComponentFixture<GridComponent>;
-    let de:              DebugElement;
-    let el:            HTMLElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
