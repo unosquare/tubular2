@@ -12,11 +12,7 @@ git clone https://github.com/unosquare/tubular2.git -b gh-pages out -q
 
 # Move content
 mkdir out/reports/$TRAVIS_BUILD_NUMBER
-mkdir out/reports/$TRAVIS_BUILD_NUMBER/coverage
 cd report
-cd coverage
-cp -r * ../../out/reports/$TRAVIS_BUILD_NUMBER/coverage
-cd ..
 cp -r * ../out/reports/$TRAVIS_BUILD_NUMBER
 cd ..
 
@@ -32,6 +28,7 @@ git config user.email "geovanni.perez@gmail.com"
 # Commit the "changes", i.e. the new version.
 # The delta will show diffs between new and old versions.
 git add reports/*
+ls reports/$TRAVIS_BUILD_NUMBER
 git commit -m "Deploy to GitHub Pages: ${SHA}"
 
 # Now that we're all set up, we can push.
