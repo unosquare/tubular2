@@ -20,7 +20,7 @@ import 'rxjs/add/operator/map';
 export class ExportButtonComponent {
     @Input() public fileName: string;
 
-    constructor(private tbGrid: GridComponent, @Inject('Window') window: Window) { }
+    constructor(private tbGrid: GridComponent) { }
 
     public downloadCsv() {
         this.tbGrid.getFullDataSource()
