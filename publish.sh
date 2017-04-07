@@ -15,7 +15,7 @@ mkdir out/reports/$TRAVIS_BUILD_NUMBER
 mkdir out/reports/$TRAVIS_BUILD_NUMBER/coverage
 cd report
 cd coverage
-cp -r * ../out/reports/$TRAVIS_BUILD_NUMBER/coverage
+cp -r * ../../out/reports/$TRAVIS_BUILD_NUMBER/coverage
 cd ..
 cp -r * ../out/reports/$TRAVIS_BUILD_NUMBER
 cd ..
