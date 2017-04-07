@@ -79,6 +79,7 @@
     "webpack": "^2.3.3",
     "webpack-dev-server": "^2.4.2",
     "webpack-middleware": "^1.5.1",
-    "webpack-stream": "^3.2.0"
+    "webpack-stream": "^3.2.0",
+    "istanbul-instrumenter-loader":"2.0.0"
   }
 }

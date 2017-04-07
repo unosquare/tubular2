@@ -15,9 +15,28 @@ module.exports = {
 
     devtool: 'inline-source-map',
     module: {
-        loaders: [
-            { loader: 'raw', test: /\.(css|html)$/ },
-            { exclude: /node_modules/, loader: 'ts-loader', test: /\.ts$/ }
+
+        rules: [{
+                loader: 'raw',
+                test: /\.(css|html)$/
+            },
+            {
+                exclude: /node_modules/,
+                loader: 'ts-loader',
+                test: /\.ts$/
+            },
+
+            {
+                enforce: 'post',
+                test: /\.(js|ts)$/,
+                loader: 'istanbul-instrumenter-loader',
+                include: root('/lib'),
+                exclude: [
+                    /\.(e2e|spec)\.ts$/,
+                    /node_modules/
+                ]
+            }
+
         ]
     },
 
