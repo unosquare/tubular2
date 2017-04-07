@@ -27,7 +27,7 @@ module.exports = config => {
             './node_modules/es6-shim/es6-shim.min.js',
             'karma.entry.js'
         ],
-       
+
         exclude: [],
         preprocessors: {
             'karma.entry.js': ['webpack']
@@ -35,20 +35,20 @@ module.exports = config => {
         // disabled HtmlReporter; suddenly crashing w/ strange socket error
         reporters: ['progress' ,'html', 'coverage'],
         htmlReporter: {
-            outputFile: 'report/unit/index.html', // where to put the reports  
-            focusOnFailures: true, // reports show failures on start 
-            namedFiles: true, // name files instead of creating sub-directories 
+            outputFile: 'report/unit/index.html', // where to put the reports
+            focusOnFailures: true, // reports show failures on start
+            namedFiles: true, // name files instead of creating sub-directories
             reportName: 'index',
 
-            // experimental 
-            preserveDescribeNesting: false, // folded suites stay folded  
-            foldAll: false // reports start folded (only with preserveDescribeNesting) 
+            // experimental
+            preserveDescribeNesting: false, // folded suites stay folded
+            foldAll: false // reports start folded (only with preserveDescribeNesting)
         },
-       
+
         // optionally, configure the reporter
         coverageReporter: {
             type: 'lcov',
-            dir: './report/coverage',
+            dir: './reports/coverage',
             subdir: '.'
         },
         port: 9876,
