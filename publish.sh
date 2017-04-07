@@ -13,7 +13,9 @@ git clone https://github.com/unosquare/tubular2.git -b gh-pages out -q
 # Move content
 mkdir out/reports/$TRAVIS_BUILD_NUMBER
 cd report
+cd coverage
 ls
+cd ..
 cp -r * ../out/reports/$TRAVIS_BUILD_NUMBER
 cd ..
 
