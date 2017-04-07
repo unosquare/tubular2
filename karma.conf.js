@@ -47,7 +47,6 @@ module.exports = config => {
 
         // optionally, configure the reporter
         coverageReporter: {
-
             dir: './report',
             reporters: [
                 {type: 'json', subdir: 'coverage'},
