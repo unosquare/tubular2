@@ -10,6 +10,7 @@
     "pretest": "tslint --type-check --project tsconfig.json lib/index.ts",
     "test": "gulp build-spec && karma start karma.conf.js",
     "test-once": "gulp build-spec && karma start karma.conf.js --single-run",
+    "posttest-once" : "remap-istanbul -i ./report/coverage/coverage-final.json -o ./report/coverage/ -t html",
     "preweb-server": "gulp --gulpfile ./src/Unosquare.Tubular2.Web/gulpfile.js build",
     "web-server": "gulp connect",
     "start": "webpack-dev-server --config ./webpack/webpack.dev.js",
@@ -80,6 +81,7 @@
     "webpack-dev-server": "^2.4.2",
     "webpack-middleware": "^1.5.1",
     "webpack-stream": "^3.2.0",
-    "istanbul-instrumenter-loader":"2.0.0"
+    "istanbul-instrumenter-loader":"2.0.0",
+    "remap-istanbul":"0.9.5"
   }
 }

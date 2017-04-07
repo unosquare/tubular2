@@ -47,9 +47,12 @@ module.exports = config => {
 
         // optionally, configure the reporter
         coverageReporter: {
-            type: 'lcov',
-            dir: './report/coverage',
-            subdir: '.'
+
+            dir: './report',
+            reporters: [
+                {type: 'json', subdir: 'coverage'},
+                {type: 'lcov', subdir: 'lcov-coverage'}
+            ]
         },
         port: 9876,
         colors: true,
