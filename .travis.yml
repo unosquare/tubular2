@@ -29,6 +29,7 @@ script:
 - cd ..
 - gulp tslint
 - npm run test-once
+- cat ./report/lcov-coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 - npm run e2e
 - chmod +x ./publish.sh
 - ./publish.sh
