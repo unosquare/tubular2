@@ -88,7 +88,7 @@ export class GridComponent implements OnInit {
     @Input() public requestMethod: string | RequestMethod;
     @Input() public requestTimeout: number;
 
-    @Output() public tbBeforeRequest = new EventEmitter<any>();
+    @Output() public beforeRequest = new EventEmitter<any>();
 
     constructor(
         @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider,
@@ -132,7 +132,7 @@ export class GridComponent implements OnInit {
             responseType: ResponseContentType.Json
         });
 
-        this.tbBeforeRequest.emit(ngRequestOptions);
+        this.beforeRequest.emit(ngRequestOptions);
 
         let ngRequest = new Request(ngRequestOptions);
 
@@ -159,7 +159,7 @@ export class GridComponent implements OnInit {
             responseType: ResponseContentType.Json
         });
 
-        this.tbBeforeRequest.emit(ngRequestOptions);
+        this.beforeRequest.emit(ngRequestOptions);
 
         let ngRequest = new Request(ngRequestOptions);
 
