@@ -88,11 +88,13 @@ export class GridComponent implements OnInit {
     @Input() public requestMethod: string | RequestMethod;
     @Input() public requestTimeout: number;
 
-    @Output() public onDataError = new EventEmitter<any>();
+    @Output() public beforeRequest = new EventEmitter<any>();
 
     constructor(
         @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider,
-        private http: Http) { }
+        private http: Http) {
+
+    }
 
     public goToPage(page) {
         this.pageSet = true;
@@ -130,6 +132,8 @@ export class GridComponent implements OnInit {
             responseType: ResponseContentType.Json
         });
 
+        this.beforeRequest.emit(ngRequestOptions);
+
         let ngRequest = new Request(ngRequestOptions);
 
         return this.http.request(ngRequest).map(response => response.json());;
@@ -154,6 +158,8 @@ export class GridComponent implements OnInit {
             withCredentials: false,
             responseType: ResponseContentType.Json
         });
+
+        this.beforeRequest.emit(ngRequestOptions);
 
         let ngRequest = new Request(ngRequestOptions);
 

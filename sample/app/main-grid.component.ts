@@ -1,4 +1,7 @@
 ﻿import { Component } from '@angular/core';
+import { RequestOptions } from '@angular/http';
+
+
 import { OrderComponent } from './order.component';
 
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
@@ -25,5 +28,9 @@ export class MainGridComponent {
         const modalRef = this.modalService.open(OrderComponent);
         modalRef.componentInstance.name = 'Add new';
         modalRef.componentInstance.isNew = true;
+    }
+
+    beforeRequest(requestOptions: RequestOptions) {
+        // Do something before the request is sent
     }
 }
