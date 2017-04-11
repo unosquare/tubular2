@@ -4,10 +4,7 @@
     Angular2 components
 </p>
 
-<tb-grid #grid 
-    dataUrl="http://tubular.azurewebsites.net/api/orders/paged" 
-    requireAuthentication="false" 
-    (onDataError)="errorHandler($event)">
+<tb-grid #grid dataUrl="http://tubular.azurewebsites.net/api/orders/paged" (tbBeforeRequest)="beforeRequest($event)">
     <div class="row">
         <div class="col-md-5">
             <tb-grid-pager></tb-grid-pager>

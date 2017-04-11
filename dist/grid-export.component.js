@@ -33,7 +33,8 @@ let ExportButtonComponent = class ExportButtonComponent {
         let rows = data.map((row) => row.reduce((a, b) => a + '"' + b + '"' + ',', '').slice(0, -1) + '\r\n');
         let csv = rows.reduce((a, b) => a + b, headers);
         let blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
-        saveAs(blob, this.fileName);
+        // TODO: Complete: http://stackoverflow.com/questions/34177221/angular2-how-to-inject-window-into-an-angular2-service
+        //saveAs(blob, this.fileName);
     }
 };
 __decorate([

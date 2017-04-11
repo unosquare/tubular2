@@ -55,6 +55,7 @@ let GridComponent = class GridComponent {
         };
         this.requestCount = 0;
         this.onDataError = new core_1.EventEmitter();
+        this.tbBeforeRequest = new core_1.EventEmitter();
     }
     goToPage(page) {
         this.pageSet = true;
@@ -86,6 +87,7 @@ let GridComponent = class GridComponent {
             withCredentials: false,
             responseType: http_1.ResponseContentType.Json
         });
+        this.tbBeforeRequest.emit(ngRequestOptions);
         let ngRequest = new http_1.Request(ngRequestOptions);
         return this.http.request(ngRequest).map(response => response.json());
         ;
@@ -220,6 +222,10 @@ __decorate([
     core_1.Output(),
     __metadata("design:type", Object)
 ], GridComponent.prototype, "onDataError", void 0);
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", Object)
+], GridComponent.prototype, "tbBeforeRequest", void 0);
 GridComponent = __decorate([
     core_1.Component({
         selector: 'tb-grid',
