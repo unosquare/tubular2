@@ -7,10 +7,11 @@
 
 *:star:Please star this project if you find it useful!*
 
-New Tubular2 with Angular2 featuring:
+New Tubular2 with Angular4 (Angular2) featuring:
 
 * Full Grid with sorting, filtering, exporting just like the previous Tubular 1 component.
 * Login component and internal bearer token authentication (WIP)
 
 Developing with .NET as backend? check [Tubular DotNet](https://github.com/unosquare/tubular-dotnet) project.
+
 If you are looking for Angular 1 support, please see [Tubular 1](https://github.com/unosquare/tubular)
