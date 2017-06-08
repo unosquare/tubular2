@@ -5,16 +5,19 @@ import { HttpModule } from '@angular/http';
 
 import { MaterialModule } from '@angular/material';
 
-import { GridComponent }  from './grid.component';
+import { GridComponent } from './grid.component';
 import { ColumnHeaderComponent } from './column-header.component';
 import { GridSearchComponent } from './grid-search.component';
 import { GridPagerComponent } from './grid-pager.component';
-import { ColumnFilterDialogComponent }  from './column-filter-dialog.component';
+import { ColumnFilterDialogComponent } from './column-filter-dialog.component';
 import { GridPagerInfoComponent } from './grid-pager-info.component';
 import { PageSizeSelectorComponent } from './page-size-selector.component';
 import { ExportButtonComponent } from './grid-export.component';
 import { PrintButtonComponent } from './grid-print.component';
 import { MDatePipe } from './mdate.pipe';
+
+// NbBootstrap special guest (https://github.com/ng-bootstrap/ng-bootstrap)
+import { NgbPopover, NgbPopoverWindow } from './popover';
 
 @NgModule({
     imports: [
@@ -28,13 +31,13 @@ import { MDatePipe } from './mdate.pipe';
         GridComponent, ColumnHeaderComponent, GridSearchComponent,
         GridPagerComponent, GridPagerInfoComponent, ColumnFilterDialogComponent,
         PageSizeSelectorComponent, ExportButtonComponent, PrintButtonComponent,
-        MDatePipe
+        MDatePipe, NgbPopover, NgbPopoverWindow
     ],
     exports: [
         GridComponent, ColumnHeaderComponent, GridSearchComponent,
         GridPagerComponent, GridPagerInfoComponent, ColumnFilterDialogComponent,
         PageSizeSelectorComponent, ExportButtonComponent, PrintButtonComponent,
-        MDatePipe
+        MDatePipe, NgbPopover
     ]
 })
 export class TubularModule { }
