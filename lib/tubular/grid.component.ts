@@ -43,7 +43,7 @@ export interface TbSearchParameter {
     <div>
         <div class="tubular-overlay" [hidden]="!showLoading">
             <div><md-icon>refresh</md-icon></div>
-        </div></div>
+        </div>
         <ng-content></ng-content>
     </div>`,
     styles: [
