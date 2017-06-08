@@ -5,10 +5,12 @@
             <tb-grid-pager></tb-grid-pager>
         </div>
         <div fxFlex="50">
-            <tb-grid-print fxFlex></tb-grid-print>
+            <button [grid-print]="grid" fxFlex md-button>
+                <md-icon>print</md-icon> Print
+            </button>
             <tb-grid-export fxFlex fileName="sampleCsv.csv"></tb-grid-export>
-            <button fxFlex (click)="add()" md-button>
-                <md-icon>add</md-icon>&nbsp;New Item
+            <button fxFlex md-button (click)="add()">
+                <md-icon>add</md-icon> New Item
             </button>
         </div>
         <div fxFlex="20">

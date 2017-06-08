@@ -1,30 +1,19 @@
+<h4 md-dialog-title>Details</h4>
+
 <form [formGroup]="orderForm">
-    <div class="modal-header">
-        <h4 class="modal-title">Details</h4>
-        <button type="button" class="close" aria-label="Close" (click)="activeModal.close('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
+    <div md-dialog-content fxLayout="column">
+    <md-input-container>
+        <input type="text" mdInput placeholder="Customer Name" formControlName="CustomerName" required />
+    </md-input-container>
+    <md-input-container>
+        <input type="datetime-local" mdInput placeholder="Shipped Date" formControlName="ShippedDate" required />
+    </md-input-container>
+    <md-input-container>
+        <input type="text" mdInput placeholder="Shipper City" formControlName="ShipperCity" required />
+    </md-input-container>
     </div>
-    <div class="modal-body">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label>Customer Name:</label>
-                    <input type="text" class="form-control" formControlName="CustomerName" required />
-                </div>
-                <div class="form-group">
-                    <label>Shipped Date:</label>
-                    <input type="datetime-local" class="form-control" formControlName="ShippedDate" required />
-                </div>
-                <div class="form-group">
-                    <label>Shipper City:</label>
-                    <input type="text" class="form-control" formControlName="ShipperCity" required />
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <button type="button" md-button (click)="activeModal.close('Close click')">Save and close</button>
-        <button type="button" md-button (click)="activeModal.close('Close click')">Close</button>
+    <div fxLayout="row" md-dialog-actions>
+        <button fxFlex type="button" md-button color="primary" md-dialog-close>Save and close</button>
+        <button fxFlex type="button" md-button md-dialog-close>Close</button>
     </div>
 </form>

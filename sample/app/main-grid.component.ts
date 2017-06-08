@@ -1,6 +1,7 @@
 ﻿import { Component } from '@angular/core';
 import { RequestOptions } from '@angular/http';
 
+import {MdDialog} from '@angular/material';
 
 import { OrderComponent } from './order.component';
 
@@ -11,23 +12,17 @@ import { OrderComponent } from './order.component';
 export class MainGridComponent {
     public newOrderModalRef;
 
-    constructor() {
+    constructor(public dialog: MdDialog) {
     }
 
     errorHandler(error: any) {
         console.log(error);
     }
 
-    openDialog(content: string) {
-        // TODO: Change to Material
-        //this.newOrderModalRef = this.modalService.open(content);
-    }
-
     add() {
-        // TODO: Change to Material
-        //const modalRef = this.modalService.open(OrderComponent);
-        //modalRef.componentInstance.name = 'Add new';
-        //modalRef.componentInstance.isNew = true;
+        const modalRef = this.dialog.open(OrderComponent);
+        modalRef.componentInstance.name = 'Add new';
+        modalRef.componentInstance.isNew = true;
     }
 
     beforeRequest(requestOptions: RequestOptions) {

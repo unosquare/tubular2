@@ -1,6 +1,7 @@
 ﻿import { Component, Input, Output, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 
-import { GridComponent, GridPageInfo } from './grid.component';
+import { GridComponent } from './grid.component';
+import { GridPageInfo } from './grid-page-info';
 
 // TODO: Refactor to match with GridPageInfo
 @Component({

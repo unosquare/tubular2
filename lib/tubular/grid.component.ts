@@ -9,19 +9,11 @@ import * as moment from 'moment';
 
 import { SETTINGS_PROVIDER, ITubularSettingsProvider } from './tubular-settings.service';
 import { ColumnModel, DataType, ColumnSortDirection } from './column.model';
+import { GridPageInfo } from './grid-page-info';
 
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-
-export class GridPageInfo {
-    public currentInitial = 0;
-    public currentTop = 0;
-    public currentPage = 0;
-    public totalPages = 0;
-    public totalRecordCount = 0;
-    public filteredRecordCount = 0;
-}
 
 export interface TbRequest {
     count: number,

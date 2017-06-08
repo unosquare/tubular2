@@ -15,7 +15,7 @@ import { ColumnModel } from './column.model';
             {{column.label}}
         </span>
         <div class="column-menu" [hidden]="column.filterMode == 0">
-            <button md-fab [ngClass]="{ 'btn-success': hasFilter }"
+            <button md-mini-fab [ngClass]="{ 'btn-success': hasFilter }"
                 #popover="ngbPopover" [ngbPopover]="filterPopoverTemplate" 
                 placement="left-bottom" title="Filter" (click)="togglePopover()">
                 <md-icon>filter_list</md-icon>

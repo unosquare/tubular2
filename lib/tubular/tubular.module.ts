@@ -13,7 +13,7 @@ import { ColumnFilterDialogComponent } from './column-filter-dialog.component';
 import { GridPagerInfoComponent } from './grid-pager-info.component';
 import { PageSizeSelectorComponent } from './page-size-selector.component';
 import { ExportButtonComponent } from './grid-export.component';
-import { PrintButtonComponent } from './grid-print.component';
+import { PrintButtonDirective } from './grid-print.directive';
 import { MDatePipe } from './mdate.pipe';
 
 // NbBootstrap special guest (https://github.com/ng-bootstrap/ng-bootstrap)
@@ -30,13 +30,13 @@ import { NgbPopover, NgbPopoverWindow } from './popover';
     declarations: [
         GridComponent, ColumnHeaderComponent, GridSearchComponent,
         GridPagerComponent, GridPagerInfoComponent, ColumnFilterDialogComponent,
-        PageSizeSelectorComponent, ExportButtonComponent, PrintButtonComponent,
+        PageSizeSelectorComponent, ExportButtonComponent, PrintButtonDirective,
         MDatePipe, NgbPopover, NgbPopoverWindow
     ],
     exports: [
         GridComponent, ColumnHeaderComponent, GridSearchComponent,
         GridPagerComponent, GridPagerInfoComponent, ColumnFilterDialogComponent,
-        PageSizeSelectorComponent, ExportButtonComponent, PrintButtonComponent,
+        PageSizeSelectorComponent, ExportButtonComponent, PrintButtonDirective,
         MDatePipe, NgbPopover
     ],
     entryComponents: [

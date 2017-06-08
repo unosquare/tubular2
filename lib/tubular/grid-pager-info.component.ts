@@ -1,6 +1,7 @@
 ﻿import { Component, Input, OnInit } from '@angular/core';
 
-import { GridComponent, GridPageInfo } from './grid.component';
+import { GridComponent } from './grid.component';
+import { GridPageInfo } from './grid-page-info';
 
 @Component({
     selector: 'tb-grid-pager-info',

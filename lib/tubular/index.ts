@@ -15,3 +15,4 @@ export * from './column.model';
 export * from './grid-export.component';
 export * from './mdate.pipe';
 export * from './http-options';
+export * from './grid-print.directive';
