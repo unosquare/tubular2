@@ -1,7 +1,11 @@
 ﻿import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RequestOptions } from '@angular/http';
+
+import { MaterialModule } from '@angular/material';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { TubularModule, SETTINGS_PROVIDER, TubularLocalStorageService, HttpOptions } from '@tubular2/tubular2';
 
@@ -12,12 +16,17 @@ import { SampleGrid } from './sampleGrid.component';
 import { MainGridComponent } from './main-grid.component';
 import { LoginComponent } from './login.component';
 import { OrderComponent } from './order.component';
-import { ToastModule } from 'ng2-toastr/ng2-toastr';
 
 @NgModule({
     imports: [
-        BrowserModule, FormsModule, ReactiveFormsModule, TubularModule, 
-        AppRoutingModule, ToastModule.forRoot()
+        BrowserModule, 
+        FormsModule, 
+        ReactiveFormsModule,
+        AppRoutingModule,
+        FlexLayoutModule,
+        MaterialModule,
+        BrowserAnimationsModule,
+        TubularModule
     ],
     declarations: [
         AppComponent, SampleGrid, MainGridComponent, 

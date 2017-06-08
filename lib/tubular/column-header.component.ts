@@ -16,7 +16,6 @@ import { ColumnModel } from './column.model';
         </span>
         <div class="column-menu" [hidden]="column.filterMode == 0">
             <button class="btn btn-sm" [ngClass]="{ 'btn-success': hasFilter }"
-                #popover="ngbPopover" [ngbPopover]="filterPopoverTemplate" 
                 placement="left-bottom" title="Filter" (click)="togglePopover()">
                 <i class="fa fa-filter"></i>
             </button>
@@ -41,20 +40,19 @@ export class ColumnHeaderComponent {
     public filterPopoverTemplate: TemplateRef<Object>;
     public hasFilter: boolean;
 
-    @ViewChild('popover') private popover: any;
-
     public togglePopover() {
-        if (ColumnHeaderComponent.prevPopover != null) {
-            ColumnHeaderComponent.prevPopover.close();
+        // TODO: Change to Material
+        // if (ColumnHeaderComponent.prevPopover != null) {
+        //     ColumnHeaderComponent.prevPopover.close();
 
-            if (ColumnHeaderComponent.prevPopover === this.popover) {
-                ColumnHeaderComponent.prevPopover = null;
-                this.popover.toggle();
-                return;
-            }
-        }
+        //     if (ColumnHeaderComponent.prevPopover === this.popover) {
+        //         ColumnHeaderComponent.prevPopover = null;
+        //         this.popover.toggle();
+        //         return;
+        //     }
+        // }
 
-        ColumnHeaderComponent.prevPopover = this.popover;
+        // ColumnHeaderComponent.prevPopover = this.popover;
     }
 
     public sort($event) {
@@ -67,7 +65,8 @@ export class ColumnHeaderComponent {
 
     public filter(hasValue: boolean) {
         ColumnHeaderComponent.prevPopover = null;
-        this.popover.close();
+        // TODO: Change to Material
+        //this.popover.close();
         this.hasFilter = hasValue;
         this.onFilter.emit(this.column);
     }

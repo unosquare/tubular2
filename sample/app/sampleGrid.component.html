@@ -4,10 +4,10 @@
             <th>Actions</th>
             <th *ngFor="let column of columns | async">
                 <tb-column-header #header [column]="column" (onSort)="sort($event)" (onFilter)="applyFilter($event)">
-                    <template #filterPopover>
+                    <ng-template #filterPopover>
                         <tb-filter-dialog [column]="column" (filterChange)="header.filter($event)">
                         </tb-filter-dialog>
-                    </template>
+                    </ng-template>
                 </tb-column-header>
             </th>
         </tr>

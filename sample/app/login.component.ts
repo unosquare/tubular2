@@ -4,7 +4,6 @@ import { Router } from '@angular/router'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { SETTINGS_PROVIDER, ITubularSettingsProvider } from '@tubular2/tubular2';
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 import 'rxjs/add/operator/map';
 
@@ -29,8 +28,7 @@ export class LoginComponent implements OnInit {
         @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider,
         private fb: FormBuilder,
         private http: Http,
-        private router: Router,
-        private toastr: ToastsManager) {
+        private router: Router) {
     }
 
     ngOnInit() {

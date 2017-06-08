@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MdPopoverModule } from '../material-popover';
 
 import { GridComponent }  from './grid.component';
 import { ColumnHeaderComponent } from './column-header.component';
@@ -19,7 +19,7 @@ import { MDatePipe } from './mdate.pipe';
 @NgModule({
     imports: [
         BrowserModule, FormsModule, ReactiveFormsModule, HttpModule,
-        NgbModule.forRoot()
+        MdPopoverModule
     ],
     declarations: [
         GridComponent, ColumnHeaderComponent, GridSearchComponent,
@@ -31,8 +31,7 @@ import { MDatePipe } from './mdate.pipe';
         GridComponent, ColumnHeaderComponent, GridSearchComponent,
         GridPagerComponent, GridPagerInfoComponent, ColumnFilterDialogComponent,
         PageSizeSelectorComponent, ExportButtonComponent, PrintButtonComponent,
-        MDatePipe,
-        NgbModule
+        MDatePipe, MdPopoverModule
     ]
 })
 export class TubularModule { }

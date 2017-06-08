@@ -1,38 +1,28 @@
-﻿<h1 class="display-3">
-    Tubular2</h1>
-<p class="lead">
-    Angular2 components
-</p>
-
-<tb-grid #grid dataUrl="http://tubular.azurewebsites.net/api/orders/paged" (beforeRequest)="beforeRequest($event)">
-    <div class="row">
-        <div class="col-md-5">
+﻿<tb-grid #grid dataUrl="http://tubular.azurewebsites.net/api/orders/paged" (beforeRequest)="beforeRequest($event)">
+    <div fxLayout="row">
+        <div fxFlex="30">
             <tb-grid-pager></tb-grid-pager>
         </div>
-        <div class="col-md-4">
-            <div class="btn-group-sm">
-                <tb-grid-print></tb-grid-print>
-                <tb-grid-export fileName="sampleCsv.csv"></tb-grid-export>
-                <button class="btn btn-info" (click)="add()">
-                    New Item
-                </button>
-            </div>
+        <div fxFlex="50">
+            <tb-grid-print></tb-grid-print>
+            <tb-grid-export fileName="sampleCsv.csv"></tb-grid-export>
+            <button (click)="add()" md-button>
+                New Item
+            </button>
         </div>
-        <div class="col-md-3">
+        <div fxFlex="20">
             <tb-grid-search></tb-grid-search>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <my-grid></my-grid>
-        </div>
+    <div fxLayout="row">
+        <my-grid></my-grid>
     </div>
-    <div class="row">
-        <div class="col-md-5"></div>
-        <div class="col-md-3">
+    <div fxLayout="row">
+        <div fxFlex></div>
+        <div fxFlex>
             <tb-page-size-selector></tb-page-size-selector>
         </div>
-        <div class="col-md-4">
+        <div fxFlex>
             <tb-grid-pager-info></tb-grid-pager-info>
         </div>
     </div>

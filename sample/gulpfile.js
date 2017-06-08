@@ -18,11 +18,13 @@ var libs = {
     'zone.js': 'node_modules/zone.js/**/*',
     'rxjs': 'node_modules/rxjs/**/*',
     'reflect': 'node_modules/reflect-metadata/*',
-    'systemjs': 'node_modules/systemjs/**/*',
-    'moment': 'node_modules/moment/*',
-    'ng2-toastr': 'node_modules/ng2-toastr/**/*',
-    '@ng-bootstrap': 'node_modules/@ng-bootstrap/ng-bootstrap/**/*',
-    '@tubular2': 'node_modules/@tubular2/tubular2'
+    'systemjs': 'node_modules/systemjs/**/*', // TODO: Do we need this?
+    'moment': 'node_modules/moment/moment.js',
+    '@angular/animations': 'node_modules/@angular/animations/bundles/animations-browser.umd.js',
+    '@angular/flex-layout': 'node_modules/@angular/flex-layout/bundles/flex-layout.umd.js',
+    '@angular/material': 'node_modules/@angular/material/bundles/material.umd.js',
+    'materialcss': 'node_modules/@angular/material/prebuilt-themes/purple-green.css',
+    '@tubular2': 'node_modules/@tubular2/tubular2/**/*'
 };
 
 gulp.task('tubular2-module', 
@@ -55,7 +57,7 @@ var standardBuild = watch => {
 }
 
 gulp.task('connect', 
-    () => connect.server({ root: './' }));
+    () => connect.server({ root: './', port: 7777 }));
 
 gulp.task('build', ['lib'], () => standardBuild(false));
 

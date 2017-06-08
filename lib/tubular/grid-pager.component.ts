@@ -4,17 +4,18 @@ import { GridComponent, GridPageInfo }      from './grid.component';
 
 @Component({
     selector: 'tb-grid-pager',
-    template:
-    `<ngb-pagination 
-            [collectionSize]="info.filteredRecordCount"
-            [pageSize]="tbGrid._pageSize.value"
-            [(page)]="info.currentPage"
-            [boundaryLinks]="true"
-            [maxSize]="5"
-            (pageChange)="goTo($event)"
-            [ellipses]="false"
-            size="sm">
-    </ngb-pagination>`
+    template: `<div></div>`
+    // TODO: Complete
+    // `<ngb-pagination 
+    //         [collectionSize]="info.filteredRecordCount"
+    //         [pageSize]="tbGrid._pageSize.value"
+    //         [(page)]="info.currentPage"
+    //         [boundaryLinks]="true"
+    //         [maxSize]="5"
+    //         (pageChange)="goTo($event)"
+    //         [ellipses]="false"
+    //         size="sm">
+    // </ngb-pagination>`
 })
 export class GridPagerComponent implements OnInit {
     public info = new GridPageInfo();

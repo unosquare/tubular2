@@ -4,8 +4,6 @@ import { RequestOptions } from '@angular/http';
 
 import { OrderComponent } from './order.component';
 
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-
 @Component({
     selector: 'my-tbGrid',
     templateUrl: '/app/main-grid.component.html'
@@ -13,7 +11,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 export class MainGridComponent {
     public newOrderModalRef;
 
-    constructor(private modalService: NgbModal) {
+    constructor() {
     }
 
     errorHandler(error: any) {
@@ -21,13 +19,15 @@ export class MainGridComponent {
     }
 
     openDialog(content: string) {
-        this.newOrderModalRef = this.modalService.open(content);
+        // TODO: Change to Material
+        //this.newOrderModalRef = this.modalService.open(content);
     }
 
     add() {
-        const modalRef = this.modalService.open(OrderComponent);
-        modalRef.componentInstance.name = 'Add new';
-        modalRef.componentInstance.isNew = true;
+        // TODO: Change to Material
+        //const modalRef = this.modalService.open(OrderComponent);
+        //modalRef.componentInstance.name = 'Add new';
+        //modalRef.componentInstance.isNew = true;
     }
 
     beforeRequest(requestOptions: RequestOptions) {
