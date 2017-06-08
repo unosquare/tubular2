@@ -5,7 +5,7 @@ import { GridComponent, GridPageInfo } from './grid.component';
 @Component({
     selector: 'tb-grid-pager-info',
     template:
-    `<div class="small">
+    `<div>
         Showing {{this.pageInfo.currentInitial}} to {{this.pageInfo.currentTop}} of {{pageInfo.filteredRecordCount}} records 
         <span [hidden]="!filtered">(Filtered from {{pageInfo.totalRecordCount}} total records)</span>
     </div>`

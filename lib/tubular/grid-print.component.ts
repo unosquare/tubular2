@@ -8,7 +8,7 @@ import 'rxjs/add/operator/map';
 @Component({
     selector: 'tb-grid-print',
     template:
-    `<button class="btn btn-info btn-sm" (click)="print()">
+    `<button md-button (click)="print()">
         <span class="fa fa-print"></span>&nbsp;Print
     </button>`
 })

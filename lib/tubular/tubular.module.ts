@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import { MaterialModule } from '@angular/material';
 import { MdPopoverModule } from '../material-popover';
 
 import { GridComponent }  from './grid.component';
@@ -18,7 +19,11 @@ import { MDatePipe } from './mdate.pipe';
 
 @NgModule({
     imports: [
-        BrowserModule, FormsModule, ReactiveFormsModule, HttpModule,
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpModule,
+        MaterialModule,
         MdPopoverModule
     ],
     declarations: [

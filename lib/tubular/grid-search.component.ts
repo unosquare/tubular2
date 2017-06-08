@@ -7,7 +7,7 @@ import { SETTINGS_PROVIDER, ITubularSettingsProvider } from './tubular-settings.
     selector: 'tb-grid-search',
     template: 
     `<md-input-container>
-        <input #toSearch mdInput type="text"
+        <input mdInput #toSearch type="text"
         [(ngModel)]="search"
         (ngModelChange)="setSearch($event)"
         placeholder="search . . ." />
