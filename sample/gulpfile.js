@@ -1,5 +1,4 @@
-﻿/// <binding Clean='clean' ProjectOpened='default' />
-var gulp = require('gulp');
+﻿var gulp = require('gulp');
 var merge2 = require('merge2');
 var del = require('del');
 var connect = require('gulp-connect');
@@ -15,10 +14,9 @@ var libs = {
     '@angular/platform-browser': 'node_modules/@angular/platform-browser/bundles/platform-browser.umd.js',
     '@angular/platform-browser-dynamic': 'node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js',
     '@angular/router': 'node_modules/@angular/router/bundles/router.umd.js',
-    'zone.js': 'node_modules/zone.js/**/*',
-    'rxjs': 'node_modules/rxjs/**/*',
-    'reflect': 'node_modules/reflect-metadata/*',
-    'systemjs': 'node_modules/systemjs/**/*', // TODO: Do we need this?
+    'zone.js': 'node_modules/zone.js/dist/zone.js',
+    'rxjs': 'node_modules/rxjs/bundles/Rx.js',
+    'reflect': 'node_modules/reflect-metadata/Reflect.js',
     'moment': 'node_modules/moment/moment.js',
     '@angular/animations': 'node_modules/@angular/animations/bundles/animations-browser.umd.js',
     '@angular/flex-layout': 'node_modules/@angular/flex-layout/bundles/flex-layout.umd.js',

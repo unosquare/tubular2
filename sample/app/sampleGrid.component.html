@@ -1,4 +1,4 @@
-﻿<table class="table table-sm table-striped table-hover">
+﻿<table>
     <thead>
         <tr>
             <th>Actions</th>
@@ -15,7 +15,7 @@
     <tbody>
         <tr *ngFor="let row of rows">
             <td>
-                <button class="btn btn-primary btn-sm" (click)="edit(row)">Edit</button>
+                <button md-button (click)="edit(row)">Edit</button>
             </td>
             <td>{{row.OrderID}}</td>
             <td>{{row.CustomerName}}</td>
