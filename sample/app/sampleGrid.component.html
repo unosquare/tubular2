@@ -1,8 +1,9 @@
-﻿<table>
-    <thead>
-        <tr>
-            <th>Actions</th>
-            <th *ngFor="let column of columns | async">
+﻿<div class="md-table-container">
+<table class="md-table">
+    <thead class="md-head">
+        <tr class="md-row">
+            <th class="md-column">Actions</th>
+            <th *ngFor="let column of columns | async" class="md-column">
                 <tb-column-header #header [column]="column" (onSort)="sort($event)" (onFilter)="applyFilter($event)">
                     <ng-template #filterPopover>
                         <tb-filter-dialog [column]="column" (filterChange)="header.filter($event)">
@@ -12,16 +13,17 @@
             </th>
         </tr>
     </thead>
-    <tbody>
-        <tr *ngFor="let row of rows">
-            <td>
-                <button md-button (click)="edit(row)">Edit</button>
+    <tbody class="md-body">
+        <tr *ngFor="let row of rows" class="md-row">
+            <td class="md-cell">
+                <button md-mini-fab (click)="edit(row)"><md-icon>mode_edit</md-icon></button>
             </td>
-            <td>{{row.OrderID}}</td>
-            <td>{{row.CustomerName}}</td>
-            <td>{{row.ShippedDate | mdate:"dddd, MMMM Do YYYY h:mma" }}</td>
-            <td>{{row.CreationDate | mdate:"dddd, MMMM Do YYYY" }}</td>
-            <td>{{row.ShipperCity}}</td>
+            <td class="md-cell">{{row.OrderID}}</td>
+            <td class="md-cell">{{row.CustomerName}}</td>
+            <td class="md-cell">{{row.ShippedDate | mdate:"dddd, MMMM Do YYYY h:mma" }}</td>
+            <td class="md-cell">{{row.CreationDate | mdate:"dddd, MMMM Do YYYY" }}</td>
+            <td class="md-cell">{{row.ShipperCity}}</td>
         </tr>
     </tbody>
 </table>
+</div>

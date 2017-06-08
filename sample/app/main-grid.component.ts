@@ -1,7 +1,7 @@
 ﻿import { Component } from '@angular/core';
 import { RequestOptions } from '@angular/http';
 
-import {MdDialog} from '@angular/material';
+import { MdDialog } from '@angular/material';
 
 import { OrderComponent } from './order.component';
 
