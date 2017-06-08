@@ -14,7 +14,7 @@ export class PageSizeInfo {
 @Component({
     selector: 'tb-page-size-selector',
     template: `
-    <md-select placeholder="Page Size" (change)="onChange($event)"
+    <md-select placeholder="Page Size" (change)="onChange($event.value)"
         [(ngModel)]="selected" [ngModelOptions]="{standalone: true}">
         <md-option *ngFor="let obj of _options" [value]="obj">{{obj}}</md-option>
     </md-select>`

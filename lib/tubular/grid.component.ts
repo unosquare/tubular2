@@ -222,6 +222,8 @@ export class GridComponent implements OnInit {
                 this.search.operator = !c ? 'None' : 'Auto';
                 this.refresh();
             });
+
+        this.goToPage(0);
     }
 
     private transformSortDirection(column: ColumnModel) {
