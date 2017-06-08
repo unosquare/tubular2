@@ -42,7 +42,7 @@ export interface TbSearchParameter {
     template: `
     <div>
         <div class="tubular-overlay" [hidden]="!showLoading">
-            <div><div class="fa fa-refresh fa-2x fa-spin"></div>
+            <div><md-icon>refresh</md-icon></div>
         </div></div>
         <ng-content></ng-content>
     </div>`,

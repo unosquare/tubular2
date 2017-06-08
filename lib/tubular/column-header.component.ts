@@ -15,15 +15,14 @@ import { ColumnModel } from './column.model';
             {{column.label}}
         </span>
         <div class="column-menu" [hidden]="column.filterMode == 0">
-            <button class="btn btn-sm" [ngClass]="{ 'btn-success': hasFilter }"
+            <button md-fab [ngClass]="{ 'btn-success': hasFilter }"
                 placement="left-bottom" title="Filter" (click)="togglePopover()">
-                <i class="fa fa-filter"></i>
+                <md-icon>filter_list</md-icon>
             </button>
         </div>
     </div>`,
     styles: [
         '.column-menu { position: relative; display: block; text-align: center; vertical-align: top; float: right; }',
-        '.column-menu button { border-radius: 30px !important; line-height: 10px; margin: 0; padding: .25rem; }',
         '.column-menu button i { font-size: 12px; }'
     ]
 })

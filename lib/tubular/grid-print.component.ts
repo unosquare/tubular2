@@ -9,7 +9,7 @@ import 'rxjs/add/operator/map';
     selector: 'tb-grid-print',
     template:
     `<button md-button (click)="print()">
-        <span class="fa fa-print"></span>&nbsp;Print
+        <md-icon>print</md-icon>&nbsp;Print
     </button>`
 })
 export class PrintButtonComponent {
