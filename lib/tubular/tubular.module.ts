@@ -38,6 +38,9 @@ import { NgbPopover, NgbPopoverWindow } from './popover';
         GridPagerComponent, GridPagerInfoComponent, ColumnFilterDialogComponent,
         PageSizeSelectorComponent, ExportButtonComponent, PrintButtonComponent,
         MDatePipe, NgbPopover
+    ],
+    entryComponents: [
+        NgbPopoverWindow
     ]
 })
 export class TubularModule { }

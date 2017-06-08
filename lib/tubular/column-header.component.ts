@@ -16,6 +16,7 @@ import { ColumnModel } from './column.model';
         </span>
         <div class="column-menu" [hidden]="column.filterMode == 0">
             <button md-fab [ngClass]="{ 'btn-success': hasFilter }"
+                #popover="ngbPopover" [ngbPopover]="filterPopoverTemplate" 
                 placement="left-bottom" title="Filter" (click)="togglePopover()">
                 <md-icon>filter_list</md-icon>
             </button>
@@ -23,6 +24,7 @@ import { ColumnModel } from './column.model';
     </div>`,
     styles: [
         '.column-menu { position: relative; display: block; text-align: center; vertical-align: top; float: right; }',
+        '.column-menu button { line-height: 10px; margin: 0; padding: .25rem; }',
         '.column-menu button i { font-size: 12px; }'
     ]
 })
@@ -39,19 +41,20 @@ export class ColumnHeaderComponent {
     public filterPopoverTemplate: TemplateRef<Object>;
     public hasFilter: boolean;
 
+    @ViewChild('popover') private popover: any;
+
     public togglePopover() {
-        // TODO: Change to Material
-        // if (ColumnHeaderComponent.prevPopover != null) {
-        //     ColumnHeaderComponent.prevPopover.close();
+        if (ColumnHeaderComponent.prevPopover != null) {
+            ColumnHeaderComponent.prevPopover.close();
 
-        //     if (ColumnHeaderComponent.prevPopover === this.popover) {
-        //         ColumnHeaderComponent.prevPopover = null;
-        //         this.popover.toggle();
-        //         return;
-        //     }
-        // }
+            if (ColumnHeaderComponent.prevPopover === this.popover) {
+                ColumnHeaderComponent.prevPopover = null;
+                this.popover.toggle();
+                return;
+            }
+        }
 
-        // ColumnHeaderComponent.prevPopover = this.popover;
+        ColumnHeaderComponent.prevPopover = this.popover;
     }
 
     public sort($event) {
@@ -64,8 +67,7 @@ export class ColumnHeaderComponent {
 
     public filter(hasValue: boolean) {
         ColumnHeaderComponent.prevPopover = null;
-        // TODO: Change to Material
-        //this.popover.close();
+        this.popover.close();
         this.hasFilter = hasValue;
         this.onFilter.emit(this.column);
     }

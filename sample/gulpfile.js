@@ -23,7 +23,7 @@ var libs = {
     '@angular/animations': 'node_modules/@angular/animations/bundles/animations-browser.umd.js',
     '@angular/flex-layout': 'node_modules/@angular/flex-layout/bundles/flex-layout.umd.js',
     '@angular/material': 'node_modules/@angular/material/bundles/material.umd.js',
-    'materialcss': 'node_modules/@angular/material/prebuilt-themes/purple-green.css',
+    'materialcss': 'node_modules/@angular/material/prebuilt-themes/*.css',
     '@tubular2': 'node_modules/@tubular2/tubular2/**/*'
 };
 
