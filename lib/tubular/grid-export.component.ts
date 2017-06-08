@@ -7,15 +7,16 @@ import 'rxjs/add/operator/map';
 
 @Component({
     selector: 'tb-grid-export',
-    template: `<div ngbDropdown class="d-inline-block">
-                <button ngbDropdownToggle class="btn btn-info btn-sm">
-                <span class="fa fa-download"></span>&nbsp;Export CSV&nbsp;<span class="caret"></span>
-               </button>
-               <div class="dropdown-menu">
-                <button class="dropdown-item" (click)="downloadCsv()">Current rows</button>
-                <button class="dropdown-item" (click)="downloadAllCsv()">All rows</button>
-               </div>
-               </div>`
+    template: `
+    <div>
+        <button md-button [mdMenuTriggerFor]="menu">
+            <md-icon>file_download</md-icon>&nbsp;Export CSV
+        </button>
+        <md-menu #menu="mdMenu">
+            <button md-menu-item (click)="downloadCsv()">Current rows</button>
+            <button md-menu-item (click)="downloadAllCsv()">All rows</button>
+        </md-menu>
+    </div>`
 })
 export class ExportButtonComponent {
     @Input() public fileName: string;

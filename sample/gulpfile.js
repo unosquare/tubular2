@@ -41,7 +41,7 @@ gulp.task('clean',
 var standardBuild = watch => {
     gulp.src('app/main.ts')
         .pipe(webpackStream({
-            devtool: 'source-map',
+            //devtool: 'source-map',
             output: { filename: '[name].js', },
             resolve: {
                 extensions: ['', '.webpack.js', '.web.js', '.ts', '.js']

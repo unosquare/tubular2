@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { MaterialModule } from '@angular/material';
-import { MdPopoverModule } from '../material-popover';
 
 import { GridComponent }  from './grid.component';
 import { ColumnHeaderComponent } from './column-header.component';
@@ -23,8 +22,7 @@ import { MDatePipe } from './mdate.pipe';
         FormsModule,
         ReactiveFormsModule,
         HttpModule,
-        MaterialModule,
-        MdPopoverModule
+        MaterialModule
     ],
     declarations: [
         GridComponent, ColumnHeaderComponent, GridSearchComponent,
@@ -36,7 +34,7 @@ import { MDatePipe } from './mdate.pipe';
         GridComponent, ColumnHeaderComponent, GridSearchComponent,
         GridPagerComponent, GridPagerInfoComponent, ColumnFilterDialogComponent,
         PageSizeSelectorComponent, ExportButtonComponent, PrintButtonComponent,
-        MDatePipe, MdPopoverModule
+        MDatePipe
     ]
 })
 export class TubularModule { }
