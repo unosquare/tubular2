@@ -14,7 +14,6 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
-
 export class GridPageInfo {
     public currentInitial = 0;
     public currentTop = 0;
@@ -94,6 +93,10 @@ export class GridComponent implements OnInit {
         @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider,
         private http: Http) {
 
+    }
+
+    public testRemove(callback) {
+        this.http.request('/mock/api').map(callback);
     }
 
     public goToPage(page) {

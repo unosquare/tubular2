@@ -14,20 +14,12 @@ describe('Component: GridComponent', () => {
     let mockJsonTest = {"Counter":1,"Payload":[[1,"Microsoft","2017-02-01T23:00:00","2015-12-30T00:00:00","Guadalajara, JAL, Mexico"],[3,"Unosquare LLC","2016-12-18T00:00:00","2016-01-01T00:00:00","Portland, OR, USA"],[11,"Vesta","2016-11-12T00:00:00","2015-12-30T00:00:00","Los Angeles, CA, USA"],[7,"Microsoft","2016-11-12T00:00:00","2016-01-01T00:00:00","Leon, GTO, Mexico"],[21,"Unosquare LLC","2016-11-12T00:00:00","2016-01-01T00:00:00","Leon, GTO, Mexico"],[31,"Super La Playa","2016-11-12T00:00:00","2015-12-30T00:00:00","Leon, GTO, Mexico"],[36,"Super La Playa","2016-11-12T00:00:00","2015-12-30T00:00:00","Leon, GTO, Mexico"],[45,"Unosquare LLC","2016-11-12T00:00:00","2015-12-30T00:00:00","Los Angeles, CA, USA"],[48,"Unosquare LLC","2016-11-12T00:00:00","2015-12-30T00:00:00","Leon, GTO, Mexico"],[51,"Vesta","2016-11-12T00:00:00","2015-12-30T00:00:00","Portland, OR, USA"],[59,"Microsoft","2016-11-12T00:00:00","2016-01-01T00:00:00","Los Angeles, CA, USA"],[63,"Vesta","2016-11-12T00:00:00","2015-12-30T00:00:00","Los Angeles, CA, USA"],[72,"Microsoft","2016-11-12T00:00:00","2016-01-01T00:00:00","Guadalajara, JAL, Mexico"],[95,"Vesta","2016-11-12T00:00:00","2015-12-30T00:00:00","Los Angeles, CA, USA"],[127,"Microsoft","2016-11-12T00:00:00","2016-01-01T00:00:00","Portland, OR, USA"],[130,"Super La Playa","2016-11-12T00:00:00","2016-01-01T00:00:00","Los Angeles, CA, USA"],[137,"Unosquare LLC","2016-11-12T00:00:00","2015-12-30T00:00:00","Guadalajara, JAL, Mexico"],[141,"Vesta","2016-11-12T00:00:00","2016-01-01T00:00:00","Los Angeles, CA, USA"],[144,"Oxxo","2016-11-12T00:00:00","2016-01-01T00:00:00","Leon, GTO, Mexico"],[145,"Super La Playa","2016-11-12T00:00:00","2016-01-01T00:00:00","Guadalajara, JAL, Mexico"]],"TotalRecordCount":500,"FilteredRecordCount":500,"TotalPages":25,"CurrentPage":3,"AggregationPayload":{}};
     let response: ResponseOptions;
 
-    const mockHttpProvider = 
-    { 
-       provide: Http,
-       deps: [MockBackend, BaseRequestOptions],
-       useFactory: ( backend: MockBackend, options: BaseRequestOptions ) =>  
-       { new Http( backend, options ) }
-    };
-
     beforeEach(() => {
          TestBed.configureTestingModule({
             declarations: [GridComponent],
             providers:   
              [
-                MockBackend, 
+                MockBackend,
                 BaseRequestOptions,
                 { 
                     provide: Http,
@@ -51,42 +43,23 @@ describe('Component: GridComponent', () => {
         beforeEach( () => {
             gridComponent.dataUrl ='/mock/api';// http://0.0.0.0:9876/    
             //MockedBackend
-            mockBackend = getTestBed().get(MockBackend);  
-           
-        });
-
-        it('should have a conection with done', (done: DoneFn) => {
-            getTestBed().compileComponents().then( () => {
-                mockBackend.connections.subscribe((c: MockConnection) =>  {     
+           mockBackend = getTestBed().get(MockBackend);  
+           getTestBed().compileComponents().then(() => {
+               mockBackend.connections.subscribe((c: MockConnection) =>  {     
                     if(c.request.url === '/mock/api'){
                          response = new ResponseOptions( { body: JSON.stringify( mockJson ) });
                         c.mockRespond(new Response(response));  
                     } 
-                    expect(c.request.url).toBe('/mocki');
-                    done();
-                });
-            });        
+               });
+           });
         });
-         
-        it('should have a connection with async', async(() => {
-            getTestBed().compileComponents().then( () => {
-                mockBackend.connections.subscribe((c: MockConnection) =>  {      
-                    response = new ResponseOptions( { body: JSON.stringify( mockJson ) });
-                    c.mockRespond(new Response(response));  
-                    expect(c.request.url).toBe(mockUrl); 
-                });
-            });
-        }));
 
-        it('should have a connection with fakeAsync', fakeAsync(() => {
-            getTestBed().compileComponents().then( () => {
-                mockBackend.connections.subscribe((c: MockConnection) =>  {      
-                    response = new ResponseOptions( { body: JSON.stringify( mockJson ) });
-                    c.mockRespond(new Response(response));  
-                    expect(c.request.url).toBe(mockUrl); 
-                });
+        it('should get data', done => {
+            expect(gridComponent.dataUrl).toBeDefined();
+            gridComponent.testRemove((response) => {
+                expect(response).toBeDefined();
+                done();
             });
-            tick();
-        }));
+        });
     });//Describe MockBackend
 });

@@ -28,7 +28,6 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr';
         { provide: SETTINGS_PROVIDER, useClass: TubularLocalStorageService },
         { provide: RequestOptions, useClass: HttpOptions }
     ],
-    bootstrap: [AppComponent],
-    // entryComponents: [OrderPopup]
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

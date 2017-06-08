@@ -56,6 +56,9 @@ let GridComponent = class GridComponent {
         this.requestCount = 0;
         this.beforeRequest = new core_1.EventEmitter();
     }
+    testRemove(callback) {
+        this.http.request('/mock/api').map(callback);
+    }
     goToPage(page) {
         this.pageSet = true;
         this.page.next(page);

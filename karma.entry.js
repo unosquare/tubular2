@@ -15,9 +15,6 @@ const browserTesting = require('@angular/platform-browser-dynamic/testing');
 const coreTesting = require('@angular/core/testing');
 const context = require.context('./lib/', true, /\.spec\.ts$/);
 
-
-
-
 coreTesting.getTestBed().resetTestEnvironment();
 coreTesting.getTestBed().initTestEnvironment(
     browserTesting.BrowserDynamicTestingModule,

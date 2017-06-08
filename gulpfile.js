@@ -48,7 +48,7 @@ gulp.task('tslint',
        .pipe(gulp.dest("report/tslint")));
 
 gulp.task('connect', 
-    () => connect.server({ root: './sample' }));
+    () => connect.server({ root: './sample', port: 7777 }));
 
 gulp.task('e2e', ['connect', 'build-e2e'],
     () => gulp.src('test/e2e/**/*.js')
