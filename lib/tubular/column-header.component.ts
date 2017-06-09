@@ -18,15 +18,15 @@ import { ColumnModel } from './column.model';
         <div class="column-menu" [hidden]="column.filterMode == 0">
             <button md-mini-fab
                 #popover="ngbPopover" [ngbPopover]="filterPopoverTemplate" 
-                placement="left-bottom" title="Filter" (click)="togglePopover()">
+                placement="bottom" popoverTitle="Filter" (click)="togglePopover()">
                 <md-icon>filter_list</md-icon>
             </button>
         </div>
     </div>`,
     styles: [
         '.column-menu { position: relative; display: block; text-align: center; vertical-align: top; float: right; }',
-        '.column-menu button { line-height: 10px; margin: 0; padding: .25rem; }',
-        '.column-menu button i { font-size: 12px; }'
+        '.column-header .mat-mini-fab { width: 20px; height: 20px; }',
+        '.column-header .mat-mini-fab .mat-icon { font-size: 14px; padding: 0; line-height: 12px; }'
     ]
 })
 export class ColumnHeaderComponent {
@@ -47,15 +47,10 @@ export class ColumnHeaderComponent {
     public togglePopover() {
         if (ColumnHeaderComponent.prevPopover != null) {
             ColumnHeaderComponent.prevPopover.close();
-
-            if (ColumnHeaderComponent.prevPopover === this.popover) {
-                ColumnHeaderComponent.prevPopover = null;
-                this.popover.toggle();
-                return;
-            }
         }
 
         ColumnHeaderComponent.prevPopover = this.popover;
+        this.popover.toggle();
     }
 
     public sort($event) {

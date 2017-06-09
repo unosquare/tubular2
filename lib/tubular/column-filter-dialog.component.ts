@@ -8,7 +8,7 @@ import { ColumnModel } from './column.model';
    <form [formGroup]="form" (ngSubmit)="submit()">
         <md-select placeholder="Operator" 
             formControlName="operator" 
-            (change)="selectChange($event.target.value)">
+            (change)="selectChange($event.value)">
             <md-option *ngFor="let operator of operators" [value]="operator.value">
                 {{operator.name}}
             </md-option>
