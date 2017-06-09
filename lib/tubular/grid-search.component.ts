@@ -10,7 +10,7 @@ import { SETTINGS_PROVIDER, ITubularSettingsProvider } from './tubular-settings.
         <input mdInput #toSearch type="text"
         [(ngModel)]="search"
         (ngModelChange)="setSearch($event)"
-        placeholder="search . . ." />
+        placeholder="search..." />
     </md-input-container>`
 })
 export class GridSearchComponent implements OnInit {

@@ -1,33 +1,40 @@
-﻿<tb-grid #grid dataUrl="http://tubular.azurewebsites.net/api/orders/paged" (beforeRequest)="beforeRequest($event)">
-    <div fxLayout="row">
-        <div fxFlex="30">
-            <tb-grid-pager></tb-grid-pager>
-        </div>
-        <div fxFlex="50">
-            <button [grid-print]="grid" fxFlex md-button>
-                <md-icon>print</md-icon> Print
-            </button>
-            <tb-grid-export fxFlex fileName="sampleCsv.csv"></tb-grid-export>
-            <button fxFlex md-button (click)="add()">
-                <md-icon>add</md-icon> New Item
-            </button>
-        </div>
-        <div fxFlex="20">
-            <tb-grid-search></tb-grid-search>
-        </div>
-    </div>
-    <div fxLayout="row">
-        <my-grid fxFlex></my-grid>
-    </div>
-    <div fxLayout="row">
-        <div fxFlex>
-            <tb-grid-pager></tb-grid-pager>
-        </div>
-        <div fxFlex>
-            <tb-page-size-selector></tb-page-size-selector>
-        </div>
-        <div fxFlex>
-            <tb-grid-pager-info></tb-grid-pager-info>
-        </div>
-    </div>
-</tb-grid>
+﻿<md-card>
+    <md-card-header>
+        <md-card-title>Sample Grid using Angular Material</md-card-title>
+    </md-card-header>
+    <md-card-content>
+        <tb-grid #grid dataUrl="http://tubular.azurewebsites.net/api/orders/paged" (beforeRequest)="beforeRequest($event)">
+            <md-toolbar>
+                <div fxFlex>
+                    <tb-grid-pager></tb-grid-pager>
+                </div>
+                <div fxFlex>
+                <button md-icon-button (click)="add()"aria-label="Add New">
+                    <md-icon>add</md-icon>
+                </button>
+                <button md-icon-button [grid-print]="grid" aria-label="Print">
+                    <md-icon>print</md-icon>
+                </button>
+                <tb-grid-export fxFlex fileName="sampleCsv.csv"></tb-grid-export>
+                </div>
+                <div fxFlex>
+                    <tb-grid-search></tb-grid-search>
+                </div>
+            </md-toolbar>
+            <div fxLayout="row">
+                <my-grid fxFlex></my-grid>
+            </div>
+            <md-toolbar>
+                <div fxFlex>
+                    <tb-grid-pager></tb-grid-pager>
+                </div>
+                <div fxFlex>
+                    <tb-page-size-selector></tb-page-size-selector>
+                </div>
+                <div fxFlex>
+                    <tb-grid-pager-info></tb-grid-pager-info>
+                </div>
+            </md-toolbar>
+        </tb-grid>
+    </md-card-content>
+</md-card>
