@@ -1,51 +1,41 @@
-﻿import { Component, Input, Output, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-
+﻿import { Component, Input, Output, OnInit, OnChanges, SimpleChanges, EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { GridComponent } from './grid.component';
 import { GridPageInfo } from './grid-page-info';
+import { getValueInRange, isNumber } from './util';
 
 // TODO: Refactor to match with GridPageInfo
 @Component({
-    selector: 'tb-grid-pager', 
+    selector: 'tb-grid-pager',
     host: { 'role': 'navigation' },
     template: `
-    <ul [class]="'pagination' + (size ? ' pagination-' + size : '')">
-      <li *ngIf="boundaryLinks" class="page-item"
-        [class.disabled]="!hasPrevious() || disabled">
-        <a aria-label="First" class="page-link" href (click)="!!selectPage(1)" [attr.tabindex]="(hasPrevious() ? null : '-1')">
-          <span aria-hidden="true">&laquo;&laquo;</span>
-        </a>
-      </li>
-      <li *ngIf="directionLinks" class="page-item"
-        [class.disabled]="!hasPrevious() || disabled">
-        <a aria-label="Previous" class="page-link" href (click)="!!selectPage(page-1)" [attr.tabindex]="(hasPrevious() ? null : '-1')">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-      </li>
-      <li *ngFor="let pageNumber of pages" class="page-item" [class.active]="pageNumber === page"
-        [class.disabled]="isEllipsis(pageNumber) || disabled">
-        <a *ngIf="isEllipsis(pageNumber)" class="page-link">...</a>
-        <a *ngIf="!isEllipsis(pageNumber)" class="page-link" href (click)="!!selectPage(pageNumber)">
-          {{pageNumber}}
-          <span *ngIf="pageNumber === page" class="sr-only">(current)</span>
-        </a>
-      </li>
-      <li *ngIf="directionLinks" class="page-item" [class.disabled]="!hasNext() || disabled">
-        <a aria-label="Next" class="page-link" href (click)="!!selectPage(page+1)" [attr.tabindex]="(hasNext() ? null : '-1')">
-          <span aria-hidden="true">&raquo;</span>
-        </a>
-      </li>
-      <li *ngIf="boundaryLinks" class="page-item" [class.disabled]="!hasNext() || disabled">
-        <a aria-label="Last" class="page-link" href (click)="!!selectPage(pageCount)" [attr.tabindex]="(hasNext() ? null : '-1')">
-          <span aria-hidden="true">&raquo;&raquo;</span>
-        </a>
-      </li>
-    </ul>
+    <div class="tubular-pager">
+        <md-button-toggle-group>
+            <md-button-toggle value="first" [disabled]="!hasPrevious() || disabled" (click)="!!selectPage(1)" [attr.tabindex]="(hasPrevious() ? null : '-1')">
+                <md-icon>first_page</md-icon>
+            </md-button-toggle>
+            <md-button-toggle value="previous" [disabled]="!hasPrevious() || disabled" (click)="!!selectPage(page-1)" [attr.tabindex]="(hasPrevious() ? null : '-1')">
+                <md-icon>chevron_left</md-icon>
+            </md-button-toggle>
+            <md-button-toggle *ngFor="let pageNumber of pages" value="{{pageNumber}}" (click)="selectPage(pageNumber)" [checked]="pageNumber === page" [disabled]="(isEllipsis(pageNumber) || disabled) ? 'disabled': null">
+                {{pageNumber}}
+            </md-button-toggle>
+            <md-button-toggle value="next" [disabled]="!hasNext() || disabled" (click)="!!selectPage(page+1)" [attr.tabindex]="(hasNext() ? null : '-1')">
+                <md-icon>chevron_right</md-icon>
+            </md-button-toggle>
+            <md-button-toggle value="last" [disabled]="!hasNext() || disabled" (click)="!!selectPage(pageCount)" [attr.tabindex]="(hasNext() ? null : '-1')">
+                <md-icon>last_page</md-icon>
+            </md-button-toggle>
+        </md-button-toggle-group>
+    </div>
   `
 })
 export class GridPagerComponent implements OnInit, OnChanges {
     pageCount = 0;
     pages: number[] = [];
     public info = new GridPageInfo();
+    public collectionSize = new BehaviorSubject(0);
 
     /**
      * Whether to disable buttons from user input
@@ -55,17 +45,17 @@ export class GridPagerComponent implements OnInit, OnChanges {
     /**
      *  Whether to show the "First" and "Last" page links
      */
-    @Input() boundaryLinks: boolean;
+    @Input() boundaryLinks: boolean = true;
 
     /**
      *  Whether to show the "Next" and "Previous" page links
      */
-    @Input() directionLinks: boolean;
+    @Input() directionLinks: boolean = true;
 
     /**
      *  Whether to show ellipsis symbols and first/last page numbers when maxSize > number of pages
      */
-    @Input() ellipses: boolean;
+    @Input() ellipses: boolean = false;
 
     /**
      *  Whether to rotate pages when maxSize > number of pages.
@@ -74,14 +64,14 @@ export class GridPagerComponent implements OnInit, OnChanges {
     @Input() rotate: boolean;
 
     /**
-     *  Number of items in collection.
+     *  Maximum number of pages to display.
      */
-    @Input() collectionSize: number;
+    // @Input() collectionSize: number = 0;
 
     /**
      *  Maximum number of pages to display.
      */
-    @Input() maxSize: number;
+    @Input() maxSize: number = 5;
 
     /**
      *  Current page.
@@ -91,31 +81,42 @@ export class GridPagerComponent implements OnInit, OnChanges {
     /**
      *  Number of items per page.
      */
-    @Input() pageSize: number;
+    @Input() pageSize: number = 10;
 
     /**
      * Pagination display size: small or large
      */
     @Input() size: 'sm' | 'lg';
 
+    /**
+     *  An event fired when the page is changed.
+     *  Event's payload equals to the newly selected page.
+     */
+    @Output() pageChange = new EventEmitter<number>(true);
+
     constructor(public tbGrid: GridComponent) {
+
     }
 
     public ngOnInit() {
-        this.tbGrid.pageInfo.subscribe((x: GridPageInfo) => this.info = x);
+        this.tbGrid.pageInfo.subscribe((x: GridPageInfo) => {
+
+            if (x.filteredRecordCount != this.collectionSize.getValue()) {
+                this.collectionSize.next(x.filteredRecordCount);
+                this.selectPage(x.currentPage);
+            }
+
+            this.collectionSize.next(x.filteredRecordCount)
+        });
     }
 
     hasPrevious(): boolean { return this.page > 1; }
 
     hasNext(): boolean { return this.page < this.pageCount; }
 
-    selectPage(pageNumber: number): void {
-        this.info.currentPage = pageNumber;
-        this.tbGrid.goToPage(pageNumber - 1);
-        this._updatePages(pageNumber);
-    }
+    selectPage(pageNumber: number): void { this._updatePages(pageNumber); }
 
-    ngOnChanges(changes: SimpleChanges): void { this.selectPage(this.page); }
+    ngOnChanges(changes: SimpleChanges): void { this._updatePages(this.page); }
 
     /**
      * @internal
@@ -182,23 +183,20 @@ export class GridPagerComponent implements OnInit, OnChanges {
         return [start, end];
     }
 
-     private getValueInRange(value: number, max: number, min = 0): number {
-  return Math.max(Math.min(value, max), min);
-}
-
     private _setPageInRange(newPageNo) {
         const prevPageNo = this.page;
-        this.page = this.getValueInRange(newPageNo, this.pageCount, 1);
+        this.page = getValueInRange(newPageNo, this.pageCount, 1);
 
         if (this.page !== prevPageNo) {
-            // TODO: Complete this.pageChange.emit(this.page);
+            this.tbGrid.goToPage(this.page - 1);
+            // this.pageChange.emit(this.page);
         }
     }
 
     private _updatePages(newPage: number) {
-        this.pageCount = Math.ceil(this.collectionSize / this.pageSize);
+        this.pageCount = Math.ceil(this.collectionSize.getValue() / this.pageSize);
 
-        if (typeof this.pageCount === 'number') { // TODO: I dont know
+        if (!isNumber(this.pageCount)) {
             this.pageCount = 0;
         }
 

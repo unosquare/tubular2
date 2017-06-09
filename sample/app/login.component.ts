@@ -1,5 +1,5 @@
 import { Component, OnInit, Injectable, Inject, Optional } from '@angular/core';
-import { Http, RequestOptions, RequestOptionsArgs } from '@angular/http';
+import { Http, RequestOptions, RequestOptionsArgs, Headers} from '@angular/http';
 import { Router } from '@angular/router'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
