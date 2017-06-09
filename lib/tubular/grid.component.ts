@@ -39,12 +39,10 @@ export interface TbSearchParameter {
         <ng-content></ng-content>
     </div>`,
     styles: [
-        ':host /deep/ div.row { margin-top: 4px; margin-bottom: 4px; }',
-        ':host /deep/ div.row:first { margin-top: 0; }',
-        ':host /deep/ .sortable { text-decoration: underline; cursor: pointer; }',
-        ':host /deep/ .sortable:hover { text-decoration: none; color: yellow; }',
-        ':host /deep/ .sortAsc::after { font-family: FontAwesome; content: "\\f176"; }',
-        ':host /deep/ .sortDesc::after { font-family: FontAwesome; content: "\\f175"; }'
+        ':host /deep/ .sortable { cursor: pointer; }',
+        ':host /deep/ .sortable:hover { font-weight: bold }',
+        ':host /deep/ .sortAsc::after { font-family: "Material Icons"; content: "\\E5D8"; }',
+        ':host /deep/ .sortDesc::after { font-family: "Material Icons"; content: "\\E5DB"; }'
     ]
 })
 export class GridComponent implements OnInit {

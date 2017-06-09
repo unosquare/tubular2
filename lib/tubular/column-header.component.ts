@@ -5,6 +5,7 @@
 
 import { ColumnModel } from './column.model';
 
+// TODO: Add different color if the filter is ON
 @Component({
     selector: 'tb-column-header',
     template: `
@@ -15,7 +16,7 @@ import { ColumnModel } from './column.model';
             {{column.label}}
         </span>
         <div class="column-menu" [hidden]="column.filterMode == 0">
-            <button md-mini-fab [ngClass]="{ 'btn-success': hasFilter }"
+            <button md-mini-fab
                 #popover="ngbPopover" [ngbPopover]="filterPopoverTemplate" 
                 placement="left-bottom" title="Filter" (click)="togglePopover()">
                 <md-icon>filter_list</md-icon>
