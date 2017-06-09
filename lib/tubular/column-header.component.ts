@@ -15,18 +15,15 @@ import { ColumnModel } from './column.model';
             (click)="sort($event)">
             {{column.label}}
         </span>
-        <div class="column-menu" [hidden]="column.filterMode == 0">
-            <button md-mini-fab
-                #popover="ngbPopover" [ngbPopover]="filterPopoverTemplate" 
-                placement="bottom" popoverTitle="Filter" (click)="togglePopover()">
-                <md-icon>filter_list</md-icon>
-            </button>
+        <div class="column-menu" [hidden]="column.filterMode == 0" 
+            #popover="ngbPopover" [ngbPopover]="filterPopoverTemplate" 
+            placement="bottom" popoverTitle="Filter" (click)="togglePopover()">
+            <md-icon>filter_list</md-icon>
         </div>
     </div>`,
     styles: [
         '.column-menu { position: relative; display: block; text-align: center; vertical-align: top; float: right; }',
-        '.column-header .mat-mini-fab { width: 20px; height: 20px; }',
-        '.column-header .mat-mini-fab .mat-icon { font-size: 14px; padding: 0; line-height: 12px; }'
+        '.column-header .mat-icon { font-size: 14px; cursor: pointer; }'
     ]
 })
 export class ColumnHeaderComponent {
@@ -47,6 +44,12 @@ export class ColumnHeaderComponent {
     public togglePopover() {
         if (ColumnHeaderComponent.prevPopover != null) {
             ColumnHeaderComponent.prevPopover.close();
+        }
+
+        if (ColumnHeaderComponent.prevPopover == this.popover) {
+            ColumnHeaderComponent.prevPopover = null;
+            this.popover.close();
+            return;
         }
 
         ColumnHeaderComponent.prevPopover = this.popover;

@@ -1,5 +1,4 @@
 ﻿<tb-grid #grid dataUrl="http://tubular.azurewebsites.net/api/orders/paged" (beforeRequest)="beforeRequest($event)">
-    <div class="container">
     <div fxLayout="row">
         <div fxFlex="30">
             <tb-grid-pager></tb-grid-pager>
@@ -17,9 +16,8 @@
             <tb-grid-search></tb-grid-search>
         </div>
     </div>
-    </div>
     <div fxLayout="row">
-        <my-grid></my-grid>
+        <my-grid fxFlex></my-grid>
     </div>
     <div fxLayout="row">
         <div fxFlex>

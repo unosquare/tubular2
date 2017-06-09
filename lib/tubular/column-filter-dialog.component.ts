@@ -23,10 +23,10 @@ import { ColumnModel } from './column.model';
                 type="{{inputType}}" formControlName="argument"
                 placeholder="Argument" />
         </md-input-container>
-        <div>
-            <button type="submit" md-button
+        <div fxLayout="row">
+            <button type="submit" md-button fxFlex
                     [disabled]="!form.valid">Filter</button>
-            <button type="button" md-button
+            <button type="button" md-button fxFlex
                     (click)="reset()">Clear</button>
         </div>
     </form>`,
