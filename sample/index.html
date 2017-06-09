@@ -9,213 +9,38 @@
     <style type="text/css">
         body {
             margin: 0;
-            font-family: Roboto,"Helvetica Neue",sans-serif;
+            font-family: Roboto, "Helvetica Neue", sans-serif;
+        }
+        /* TODO: Move */
+
+        div.md-table-container {
+            display: block;
+            max-width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch
         }
 
-        /* TODO: Move */
-        
-div.md-table-container {
-    display: block;
-    max-width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch
-}
+        table.md-table tbody.md-body>tr.md-row,
+        table.md-table tfoot.md-foot>tr.md-row {
+            height: 48px
+        }
 
-table.md-table {
-    width: 100%;
-    border-spacing: 0;
-    overflow: hidden
-}
+        table.md-table th.md-column md-icon.md-sort-icon {
+            color: rgba(0, 0, 0, .26);
+            opacity: 0;
+            transition: -webkit-transform .25s, opacity .25s;
+            transition: transform .25s, opacity .25s
+        }
 
-table.md-table thead.md-head>tr.md-row {
-    height: 56px
-}
+        table.md-table th.md-column md-icon.md-sort-icon.md-asc {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg)
+        }
 
-table.md-table tbody.md-body>tr.md-row,table.md-table tfoot.md-foot>tr.md-row {
-    height: 48px
-}
-
-table.md-table thead.md-head+.md-table-progress md-progress-linear {
-    top: -3px
-}
-
-table.md-table .md-table-progress th {
-    padding: 0
-}
-
-table.md-table .md-table-progress th md-progress-linear {
-    height: 0;
-    transition: opacity 1s
-}
-
-table.md-table .md-table-progress th md-progress-linear.ng-hide {
-    opacity: 0
-}
-
-table.md-table .md-table-progress th md-progress-linear>.md-container {
-    height: 3px;
-    top: 0;
-    transition: none
-}
-
-table.md-table .md-table-progress th md-progress-linear>.md-container>.md-bar {
-    height: 3px
-}
-
-table.md-table th.md-column {
-    color: rgba(0,0,0,.54);
-    font-size: 12px;
-    font-weight: 700;
-    white-space: nowrap
-}
-
-table.md-table th.md-column.md-sort {
-    cursor: pointer
-}
-
-table.md-table th.md-column md-icon {
-    height: 16px;
-    width: 16px;
-    font-size: 16px!important;
-    line-height: 16px!important
-}
-
-table.md-table th.md-column md-icon.md-sort-icon {
-    color: rgba(0,0,0,.26);
-    opacity: 0;
-    transition: -webkit-transform .25s,opacity .25s;
-    transition: transform .25s,opacity .25s
-}
-
-table.md-table th.md-column md-icon.md-sort-icon.md-asc {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg)
-}
-
-table.md-table th.md-column md-icon.md-sort-icon.md-desc {
-    -webkit-transform: rotate(180deg);
-    transform: rotate(180deg)
-}
-
-table.md-table th.md-column md-icon:not(:first-child) {
-    margin-left: 8px
-}
-
-table.md-table th.md-column md-icon:not(:last-child) {
-    margin-right: 8px
-}
-
-table.md-table th.md-column.md-active,table.md-table th.md-column.md-active md-icon {
-    color: rgba(0,0,0,.87)
-}
-
-table.md-table th.md-column.md-active md-icon.md-sort-icon,table.md-table th.md-column:hover md-icon.md-sort-icon {
-    opacity: 1
-}
-
-table.md-table tr.md-row[data-ng-repeat].ng-leave,table.md-table tr.md-row[ng-repeat].ng-leave,table.md-table tr.md-row[ng\:repeat].ng-leave,table.md-table tr.md-row[x-ng-repeat].ng-leave {
-    display: none
-}
-
-table.md-table.md-row-select tbody.md-body>tr.md-row {
-    transition: background-color .2s
-}
-
-table.md-table.md-row-select tbody.md-body>tr.md-row:not([disabled]):hover {
-    background-color: #eee!important
-}
-
-table.md-table.md-row-select tbody.md-body>tr.md-row.md-selected {
-    background-color: #f5f5f5
-}
-
-table.md-table.md-row-select td.md-cell:first-child,table.md-table.md-row-select th.md-column:first-child {
-    width: 20px;
-    padding: 0 0 0 24px
-}
-
-table.md-table.md-row-select td.md-cell:nth-child(2),table.md-table.md-row-select th.md-column:nth-child(2) {
-    padding: 0 24px
-}
-
-table.md-table.md-row-select td.md-cell:nth-child(n+3):nth-last-child(n+2),table.md-table.md-row-select th.md-column:nth-child(n+3):nth-last-child(n+2) {
-    padding: 0 56px 0 0
-}
-
-table.md-table:not(.md-row-select) td.md-cell:first-child,table.md-table:not(.md-row-select) th.md-column:first-child {
-    padding: 0 24px
-}
-
-table.md-table:not(.md-row-select) td.md-cell:nth-child(n+2):nth-last-child(n+2),table.md-table:not(.md-row-select) th.md-column:nth-child(n+2):nth-last-child(n+2) {
-    padding: 0 56px 0 0
-}
-
-table.md-table td.md-cell,table.md-table th.md-column {
-    vertical-align: middle;
-    text-align: left
-}
-
-table.md-table td.md-cell>*,table.md-table th.md-column>* {
-    vertical-align: middle
-}
-
-table.md-table td.md-cell:last-child,table.md-table th.md-column:last-child {
-    padding: 0 24px 0 0
-}
-
-table.md-table td.md-cell.md-clickable,table.md-table th.md-column.md-clickable {
-    cursor: pointer
-}
-
-table.md-table td.md-cell.md-clickable:focus,table.md-table th.md-column.md-clickable:focus {
-    outline: 0
-}
-
-table.md-table td.md-cell.md-numeric,table.md-table th.md-column.md-numeric {
-    text-align: right
-}
-
-table.md-table td.md-cell md-checkbox,table.md-table th.md-column md-checkbox {
-    margin: 0;
-    width: 20px
-}
-
-table.md-table td.md-cell {
-    color: rgba(0,0,0,.87);
-    font-size: 13px;
-    border-top: 1px rgba(0,0,0,.12) solid
-}
-
-table.md-table td.md-cell.md-numeric md-select {
-    -webkit-justify-content: flex-end;
-    -ms-flex-pack: end;
-    justify-content: flex-end
-}
-
-table.md-table td.md-cell.md-numeric md-select .md-select-value {
-    -webkit-flex: 0 0 auto;
-    -ms-flex: 0 0 auto;
-    flex: 0 0 auto
-}
-
-table.md-table td.md-cell.md-placeholder {
-    color: rgba(0,0,0,.26)
-}
-
-table.md-table td.md-cell md-select>.md-select-value>span.md-select-icon {
-    -webkit-justify-content: flex-end;
-    -ms-flex-pack: end;
-    justify-content: flex-end;
-    color: rgba(0,0,0,.54);
-    width: 18px;
-    text-align: right
-}
-
-table.md-table td.md-cell md-select>.md-select-value>span.md-select-icon:after {
-    -webkit-transform: scaleY(0.4) scaleX(0.8);
-    transform: scaleY(0.4) scaleX(0.8)
-}
-
+        table.md-table th.md-column md-icon.md-sort-icon.md-desc {
+            -webkit-transform: rotate(180deg);
+            transform: rotate(180deg)
+        }
     </style>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">

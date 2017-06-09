@@ -29,6 +29,7 @@ export interface TbSearchParameter {
     operator: string
 }
 
+// TODO: Add animation to sortable
 @Component({
     selector: 'tb-grid',
     template: `
@@ -42,7 +43,11 @@ export interface TbSearchParameter {
         ':host /deep/ .sortable { cursor: pointer; }',
         ':host /deep/ .sortable:hover { font-weight: bold }',
         ':host /deep/ .sortAsc::after { font-family: "Material Icons"; content: "\\E5D8"; }',
-        ':host /deep/ .sortDesc::after { font-family: "Material Icons"; content: "\\E5DB"; }'
+        ':host /deep/ .sortDesc::after { font-family: "Material Icons"; content: "\\E5DB"; }',
+        ':host /deep/ table { width: 100%; border-spacing: 0; overflow: hidden; }',
+        ':host /deep/ thead > tr { height: 56px }',
+        ':host /deep/ th { vertical-align: middle; text-align: left; color: rgba(0,0,0,.54); font-size: 12px; font-weight: 700; white-space: nowrap }',
+        ':host /deep/ td { vertical-align: middle; text-align: left; color: rgba(0,0,0,.87); font-size: 13px; border-top: 1px rgba(0,0,0,.12) solid; }'
     ]
 })
 export class GridComponent implements OnInit {

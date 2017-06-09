@@ -9,7 +9,10 @@ import { GridPageInfo } from './grid-page-info';
     `<div>
         Showing {{this.pageInfo.currentInitial}} to {{this.pageInfo.currentTop}} of {{pageInfo.filteredRecordCount}} records 
         <span [hidden]="!filtered">(Filtered from {{pageInfo.totalRecordCount}} total records)</span>
-    </div>`
+    </div>`,
+    styles: [
+        ':host /deep/ div { font-size: 12px; }',
+    ]
 })
 export class GridPagerInfoComponent implements OnInit {
     public pageInfo = new GridPageInfo();
@@ -23,8 +26,8 @@ export class GridPagerInfoComponent implements OnInit {
 
     public ngOnInit() {
         // live update properties
-        this.tbGrid.pageInfo.subscribe((x: GridPageInfo) => {
-            this.pageInfo = x;
+        this.tbGrid.pageInfo.subscribe((pageInfo: GridPageInfo) => {
+            this.pageInfo = pageInfo;
             this.filtered = this.pageInfo.totalRecordCount !== this.pageInfo.filteredRecordCount;
         });
     }
