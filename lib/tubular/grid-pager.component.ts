@@ -76,12 +76,12 @@ export class GridPagerComponent implements OnInit, OnChanges {
     /**
      *  Current page.
      */
-    @Input() page = 0;
+    public page = 0;
 
     /**
      *  Number of items per page.
      */
-    @Input() pageSize: number = 10;
+    public pageSize: number = 10;
 
     /**
      * Pagination display size: small or large
@@ -99,6 +99,17 @@ export class GridPagerComponent implements OnInit, OnChanges {
     }
 
     public ngOnInit() {
+        this.tbGrid.page.subscribe(page => {
+            let requireUpdate = this.page !== (page + 1);
+            if (requireUpdate)
+                this.selectPage(page + 1)
+        });
+        this.tbGrid.pageSize.subscribe(pageSize => {
+            let requireUpdate = this.pageSize !== pageSize;
+            this.pageSize = pageSize;
+            if (requireUpdate)
+                this._updatePages(this.page);
+        })
         this.tbGrid.pageInfo.subscribe((x: GridPageInfo) => {
 
             if (x.filteredRecordCount != this.collectionSize.getValue()) {
@@ -114,7 +125,10 @@ export class GridPagerComponent implements OnInit, OnChanges {
 
     hasNext(): boolean { return this.page < this.pageCount; }
 
-    selectPage(pageNumber: number): void { this._updatePages(pageNumber); }
+    selectPage(pageNumber: number): void {
+        // this.page = pageNumber;
+        this._updatePages(pageNumber);
+    }
 
     ngOnChanges(changes: SimpleChanges): void { this._updatePages(this.page); }
 
@@ -187,13 +201,14 @@ export class GridPagerComponent implements OnInit, OnChanges {
         const prevPageNo = this.page;
         this.page = getValueInRange(newPageNo, this.pageCount, 1);
 
-        if (this.page !== prevPageNo) {
+        if (this.page !== prevPageNo && (this.tbGrid.page.getValue() + 1) !== this.page) {
             this.tbGrid.goToPage(this.page - 1);
             // this.pageChange.emit(this.page);
         }
     }
 
     private _updatePages(newPage: number) {
+
         this.pageCount = Math.ceil(this.collectionSize.getValue() / this.pageSize);
 
         if (!isNumber(this.pageCount)) {
