@@ -201,7 +201,7 @@ export class GridPagerComponent implements OnInit, OnChanges {
         const prevPageNo = this.page;
         this.page = getValueInRange(newPageNo, this.pageCount, 1);
 
-        if (this.page !== prevPageNo && (this.tbGrid.page.getValue() + 1) !== this.page) {
+        if (this.page !== prevPageNo) {
             this.tbGrid.goToPage(this.page - 1);
             // this.pageChange.emit(this.page);
         }
