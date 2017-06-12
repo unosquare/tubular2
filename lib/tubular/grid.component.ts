@@ -47,7 +47,8 @@ export interface TbSearchParameter {
         ':host /deep/ table { width: 100%; border-spacing: 0; overflow: hidden; }',
         ':host /deep/ thead > tr { height: 56px }',
         ':host /deep/ th { vertical-align: middle; text-align: left; color: rgba(0,0,0,.54); font-size: 12px; font-weight: 700; white-space: nowrap }',
-        ':host /deep/ td { vertical-align: middle; text-align: left; color: rgba(0,0,0,.87); font-size: 13px; border-top: 1px rgba(0,0,0,.12) solid; }'
+        ':host /deep/ td { vertical-align: middle; text-align: left; color: rgba(0,0,0,.87); font-size: 13px; border-top: 1px rgba(0,0,0,.12) solid; }',
+        ':host /deep/ tbody > tr, tfoot > tr { height: 48px; }'
     ]
 })
 export class GridComponent implements OnInit {

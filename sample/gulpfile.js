@@ -26,7 +26,7 @@ var libs = {
 };
 
 gulp.task('tubular2-module', 
-    () => gulp.src(['../package.json', '../lib/**/*.ts', '!../lib/**/*.spec.ts'])
+    () => gulp.src(['../package.json', '../lib/**/*.ts', '../lib/**/*.css', '!../lib/**/*.spec.ts'])
         .pipe(gulp.dest('node_modules/@tubular2/tubular2')));
 
 gulp.task('lib', ['tubular2-module'], 
