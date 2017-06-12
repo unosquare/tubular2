@@ -6,7 +6,7 @@
         <tb-grid #grid dataUrl="http://tubular.azurewebsites.net/api/orders/paged" (beforeRequest)="beforeRequest($event)">
             <md-toolbar>
                 <div fxFlex>
-                    <tb-grid-pager></tb-grid-pager>
+                    <tb-grid-pager [ellipses]="pagerShowEllipses" [boundaryLinks]="pagerBoundaryLinks" [maxSize]="10"></tb-grid-pager>
                 </div>
                 <div fxFlex>
                 <button md-icon-button (click)="add()"aria-label="Add New">
@@ -26,7 +26,7 @@
             </div>
             <md-toolbar>
                 <div fxFlex>
-                    <tb-grid-pager></tb-grid-pager>
+                    <tb-grid-pager [ellipses]="!pagerShowEllipses" [boundaryLinks]="!pagerBoundaryLinks"></tb-grid-pager>
                 </div>
                 <div fxFlex>
                     <tb-page-size-selector></tb-page-size-selector>

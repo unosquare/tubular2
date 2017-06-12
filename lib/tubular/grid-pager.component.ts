@@ -12,19 +12,24 @@ import { getValueInRange, isNumber } from './util';
     template: `
     <div class="tubular-pager">
         <md-button-toggle-group>
-            <md-button-toggle value="first" [disabled]="!hasPrevious() || disabled" (click)="!!selectPage(1)" [attr.tabindex]="(hasPrevious() ? null : '-1')">
+            <md-button-toggle *ngIf="boundaryLinks" value="first" [disabled]="!hasPrevious() || disabled" (click)="!!selectPage(1)" [attr.tabindex]="(hasPrevious() ? null : '-1')">
                 <md-icon>first_page</md-icon>
             </md-button-toggle>
             <md-button-toggle value="previous" [disabled]="!hasPrevious() || disabled" (click)="!!selectPage(page-1)" [attr.tabindex]="(hasPrevious() ? null : '-1')">
                 <md-icon>chevron_left</md-icon>
             </md-button-toggle>
-            <md-button-toggle *ngFor="let pageNumber of pages" value="{{pageNumber}}" (click)="selectPage(pageNumber)" [checked]="pageNumber === page" [disabled]="(isEllipsis(pageNumber) || disabled) ? 'disabled': null">
-                {{pageNumber}}
+            <md-button-toggle 
+                *ngFor="let pageNumber of pages" 
+                value="{{pageNumber}}" 
+                (click)="selectPage(pageNumber)" 
+                [checked]="pageNumber === page" 
+                [disabled]="(isEllipsis(pageNumber) || disabled) ? 'disabled': null">
+                {{ (isEllipsis(pageNumber) ? "..." : pageNumber) }}
             </md-button-toggle>
             <md-button-toggle value="next" [disabled]="!hasNext() || disabled" (click)="!!selectPage(page+1)" [attr.tabindex]="(hasNext() ? null : '-1')">
                 <md-icon>chevron_right</md-icon>
             </md-button-toggle>
-            <md-button-toggle value="last" [disabled]="!hasNext() || disabled" (click)="!!selectPage(pageCount)" [attr.tabindex]="(hasNext() ? null : '-1')">
+            <md-button-toggle *ngIf="boundaryLinks" value="last" [disabled]="!hasNext() || disabled" (click)="!!selectPage(pageCount)" [attr.tabindex]="(hasNext() ? null : '-1')">
                 <md-icon>last_page</md-icon>
             </md-button-toggle>
         </md-button-toggle-group>
@@ -135,7 +140,9 @@ export class GridPagerComponent implements OnInit, OnChanges {
     /**
      * @internal
      */
-    isEllipsis(pageNumber): boolean { return pageNumber === -1; }
+    isEllipsis(pageNumber): boolean { 
+        return pageNumber === -1; 
+    }
 
     /**
      * Appends ellipses and first/last page number to the displayed pages

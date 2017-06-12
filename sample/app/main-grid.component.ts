@@ -12,6 +12,9 @@ import { OrderComponent } from './order.component';
 export class MainGridComponent {
     public newOrderModalRef;
 
+    public pagerShowEllipses = true;
+    public pagerBoundaryLinks = false;
+
     constructor(public dialog: MdDialog) {
     }
 
