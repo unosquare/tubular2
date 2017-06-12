@@ -8,12 +8,16 @@ import { ColumnModel, ColumnSortDirection } from './column.model';
 export abstract class GridTable {
     public columns: Observable<ColumnModel[]>;
     public rows: any[];
+    public isEmpty: boolean;
 
     private columnObservable: BehaviorSubject<ColumnModel[]> = new BehaviorSubject([]);
 
     constructor(public tbGrid: GridComponent) {
         this.columns = this.columnObservable.asObservable();
-        this.tbGrid.dataStream.subscribe((payload) => this.rows = payload);
+        this.tbGrid.dataStream.subscribe((payload) => {
+            this.rows = payload
+            this.isEmpty = !this.rows || this.rows.length === 0;
+        });
         this.columnObservable.subscribe((payload) => this.tbGrid.columns.next(payload));
     }
 
