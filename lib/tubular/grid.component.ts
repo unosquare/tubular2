@@ -34,9 +34,6 @@ export interface TbSearchParameter {
     selector: 'tb-grid',
     template: `
     <div>
-        <div class="tubular-overlay" [hidden]="!showLoading">
-            <div><md-icon>refresh</md-icon></div>
-        </div>
         <ng-content></ng-content>
     </div>`,
     styles: [
@@ -70,7 +67,7 @@ export class GridComponent implements OnInit {
 
     pageSet = false;
 
-    public showLoading = false;
+    public isLoading = false;
     public search = <TbSearchParameter>{
         text: '',
         operator: 'None'
@@ -110,6 +107,8 @@ export class GridComponent implements OnInit {
 
     public getCurrentPage(): Observable<Response> {
 
+        this.isLoading = true;
+
         this.tbRequestRunning = <TbRequest>{
             count: this.requestCount++,
             columns: this.columns.getValue(),
@@ -134,7 +133,10 @@ export class GridComponent implements OnInit {
 
         let ngRequest = new Request(ngRequestOptions);
 
-        return this.http.request(ngRequest).map(response => response.json());;
+        return this.http.request(ngRequest).map(response => {
+            this.isLoading = false;
+            return response.json();
+        });
     }
 
     public getFullDataSource(): Observable<Response> {
@@ -161,7 +163,10 @@ export class GridComponent implements OnInit {
 
         let ngRequest = new Request(ngRequestOptions);
 
-        return this.http.request(ngRequest).map(response => response.json());
+        return this.http.request(ngRequest).map(response => {
+            this.isLoading = false;
+            return response.json();
+        });
     }
 
     changePagesData() {
