@@ -1,5 +1,4 @@
-﻿<div class="md-table-container">
-<table>
+﻿<table>
     <thead>
         <tr>
             <th>Actions</th>
@@ -14,6 +13,9 @@
         </tr>
     </thead>
     <tbody>
+        <tr *ngIf="isEmpty">
+            <td colspan="6">No data</td>
+        </tr>
         <tr *ngFor="let row of rows">
             <td>
                 <button md-button (click)="edit(row)"><md-icon>mode_edit</md-icon></button>
@@ -26,4 +28,3 @@
         </tr>
     </tbody>
 </table>
-</div>

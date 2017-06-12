@@ -18,7 +18,7 @@ exports.config = {
     useAllAngular2AppRoots: true,
 
     // Base URL for application server
-    baseUrl: 'http://localhost:8080/',
+    baseUrl: 'http://localhost:7777/',
 
     onPrepare: function() {
         jasmine.getEnv().addReporter(

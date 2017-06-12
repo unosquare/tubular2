@@ -25,7 +25,7 @@
   "devDependencies": {
     "@types/core-js": "^0.9.41",
     "@types/file-saver": "^0.0.1",
-    "del": "2.2.2",
+    "del": "3.0.0",
     "gulp": "3.9.1",
     "gulp-typescript": "^3.1.7",
     "merge2": "1.0.3",
