@@ -59,4 +59,4 @@ gulp.task('connect',
 
 gulp.task('build', ['lib'], () => standardBuild(false));
 
-gulp.task('default', ['lib', 'connect'], () => standardBuild(gul));
+gulp.task('default', ['lib', 'connect'], () => standardBuild(false));
