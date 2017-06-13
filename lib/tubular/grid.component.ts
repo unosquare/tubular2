@@ -9,19 +9,11 @@ import * as moment from 'moment';
 
 import { SETTINGS_PROVIDER, ITubularSettingsProvider } from './tubular-settings.service';
 import { ColumnModel, DataType, ColumnSortDirection } from './column.model';
+import { GridPageInfo } from './grid-page-info';
 
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-
-export class GridPageInfo {
-    public currentInitial = 0;
-    public currentTop = 0;
-    public currentPage = 0;
-    public totalPages = 0;
-    public totalRecordCount = 0;
-    public filteredRecordCount = 0;
-}
 
 export interface TbRequest {
     count: number,
@@ -37,22 +29,23 @@ export interface TbSearchParameter {
     operator: string
 }
 
+// TODO: Add animation to sortable
 @Component({
     selector: 'tb-grid',
     template: `
     <div>
-        <div class="tubular-overlay" [hidden]="!showLoading">
-            <div><div class="fa fa-refresh fa-2x fa-spin"></div>
-        </div></div>
         <ng-content></ng-content>
     </div>`,
     styles: [
-        ':host /deep/ div.row { margin-top: 4px; margin-bottom: 4px; }',
-        ':host /deep/ div.row:first { margin-top: 0; }',
-        ':host /deep/ .sortable { text-decoration: underline; cursor: pointer; }',
-        ':host /deep/ .sortable:hover { text-decoration: none; color: yellow; }',
-        ':host /deep/ .sortAsc::after { font-family: FontAwesome; content: "\\f176"; }',
-        ':host /deep/ .sortDesc::after { font-family: FontAwesome; content: "\\f175"; }'
+        ':host /deep/ .sortable { cursor: pointer; }',
+        ':host /deep/ .sortable:hover { font-weight: bold }',
+        ':host /deep/ .sortAsc::after { font-family: "Material Icons"; content: "\\E5D8"; }',
+        ':host /deep/ .sortDesc::after { font-family: "Material Icons"; content: "\\E5DB"; }',
+        ':host /deep/ table { width: 100%; border-spacing: 0; overflow: hidden; }',
+        ':host /deep/ thead > tr { height: 56px }',
+        ':host /deep/ th { vertical-align: middle; text-align: left; color: rgba(0,0,0,.54); font-size: 12px; font-weight: 700; white-space: nowrap }',
+        ':host /deep/ td { vertical-align: middle; text-align: left; color: rgba(0,0,0,.87); font-size: 13px; border-top: 1px rgba(0,0,0,.12) solid; }',
+        ':host /deep/ tbody > tr, tfoot > tr { height: 48px; }'
     ]
 })
 export class GridComponent implements OnInit {
@@ -75,7 +68,7 @@ export class GridComponent implements OnInit {
 
     pageSet = false;
 
-    public showLoading = false;
+    public isLoading = false;
     public search = <TbSearchParameter>{
         text: '',
         operator: 'None'
@@ -115,6 +108,8 @@ export class GridComponent implements OnInit {
 
     public getCurrentPage(): Observable<Response> {
 
+        this.isLoading = true;
+
         this.tbRequestRunning = <TbRequest>{
             count: this.requestCount++,
             columns: this.columns.getValue(),
@@ -139,7 +134,10 @@ export class GridComponent implements OnInit {
 
         let ngRequest = new Request(ngRequestOptions);
 
-        return this.http.request(ngRequest).map(response => response.json());;
+        return this.http.request(ngRequest).map(response => {
+            this.isLoading = false;
+            return response.json();
+        });
     }
 
     public getFullDataSource(): Observable<Response> {
@@ -166,7 +164,10 @@ export class GridComponent implements OnInit {
 
         let ngRequest = new Request(ngRequestOptions);
 
-        return this.http.request(ngRequest).map(response => response.json());
+        return this.http.request(ngRequest).map(response => {
+            this.isLoading = false;
+            return response.json();
+        });
     }
 
     changePagesData() {
@@ -222,6 +223,8 @@ export class GridComponent implements OnInit {
                 this.search.operator = !c ? 'None' : 'Auto';
                 this.refresh();
             });
+
+        this.goToPage(0);
     }
 
     private transformSortDirection(column: ColumnModel) {

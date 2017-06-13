@@ -1,7 +1,8 @@
 ﻿import { Component, Input, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { MdDialog } from '@angular/material';
+
 import { GridComponent, GridTable, ColumnModel, ColumnFilterMode, DataType } from '@tubular2/tubular2';
 import { OrderComponent } from './order.component';
 
@@ -12,7 +13,7 @@ import { OrderComponent } from './order.component';
 export class SampleGrid extends GridTable {
     public editModalRef;
 
-    constructor(public tbGrid: GridComponent, private modalService: NgbModal, private router: Router) {
+    constructor(public tbGrid: GridComponent, public dialog: MdDialog, private router: Router) {
         super(tbGrid);
 
         let orderIdColumn = new ColumnModel('OrderID', false);
@@ -41,10 +42,8 @@ export class SampleGrid extends GridTable {
         ]);
     }
 
-    closeResult: string;
-
     edit(row) {
-        const modalRef = this.modalService.open(OrderComponent);
+        const modalRef = this.dialog.open(OrderComponent);
         modalRef.componentInstance.name = 'World';
         modalRef.componentInstance.model = row;
     }

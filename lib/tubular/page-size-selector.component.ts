@@ -14,15 +14,10 @@ export class PageSizeInfo {
 @Component({
     selector: 'tb-page-size-selector',
     template: `
-    <form class="form-inline">
-        <div class="form-group">
-            <label class="small">Page size</label>&nbsp;
-            <select (change)="onChange($event.target.value)" class="form-control form-control-sm" 
-                [(ngModel)]="selected" [ngModelOptions]="{standalone: true}">
-                <option *ngFor="let obj of _options" [value]="obj">{{obj}}</option>
-            </select>
-        </div>
-    </form>`
+    <md-select placeholder="Page Size" (change)="onChange($event.value)"
+        [(ngModel)]="selected" [ngModelOptions]="{standalone: true}">
+        <md-option *ngFor="let obj of _options" [value]="obj">{{obj}}</md-option>
+    </md-select>`
 })
 export class PageSizeSelectorComponent {
     private _options: number[] = [10, 20, 50, 100];
@@ -42,6 +37,7 @@ export class PageSizeSelectorComponent {
     }
 
     private onChange(newVal: number) {
+        // TODO: Fix
         this.tbGrid._pageSize.next(newVal);
     }
 }

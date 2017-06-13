@@ -1,5 +1,4 @@
-﻿/// <binding Clean='clean' ProjectOpened='default' />
-var gulp = require('gulp');
+﻿var gulp = require('gulp');
 var merge2 = require('merge2');
 var del = require('del');
 var connect = require('gulp-connect');
@@ -15,18 +14,19 @@ var libs = {
     '@angular/platform-browser': 'node_modules/@angular/platform-browser/bundles/platform-browser.umd.js',
     '@angular/platform-browser-dynamic': 'node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js',
     '@angular/router': 'node_modules/@angular/router/bundles/router.umd.js',
-    'zone.js': 'node_modules/zone.js/**/*',
-    'rxjs': 'node_modules/rxjs/**/*',
-    'reflect': 'node_modules/reflect-metadata/*',
-    'systemjs': 'node_modules/systemjs/**/*',
-    'moment': 'node_modules/moment/*',
-    'ng2-toastr': 'node_modules/ng2-toastr/**/*',
-    '@ng-bootstrap': 'node_modules/@ng-bootstrap/ng-bootstrap/**/*',
-    '@tubular2': 'node_modules/@tubular2/tubular2'
+    'zone.js': 'node_modules/zone.js/dist/zone.js',
+    'rxjs': 'node_modules/rxjs/bundles/Rx.js',
+    'reflect': 'node_modules/reflect-metadata/Reflect.js',
+    'moment': 'node_modules/moment/moment.js',
+    '@angular/animations': 'node_modules/@angular/animations/bundles/animations-browser.umd.js',
+    '@angular/flex-layout': 'node_modules/@angular/flex-layout/bundles/flex-layout.umd.js',
+    '@angular/material': 'node_modules/@angular/material/bundles/material.umd.js',
+    'materialcss': 'node_modules/@angular/material/prebuilt-themes/*.css',
+    '@tubular2': 'node_modules/@tubular2/tubular2/**/*'
 };
 
 gulp.task('tubular2-module', 
-    () => gulp.src(['../package.json', '../lib/**/*.ts', '!../lib/**/*.spec.ts'])
+    () => gulp.src(['../package.json', '../lib/**/*.ts', '../lib/**/*.css', '!../lib/**/*.spec.ts'])
         .pipe(gulp.dest('node_modules/@tubular2/tubular2')));
 
 gulp.task('lib', ['tubular2-module'], 
@@ -55,8 +55,8 @@ var standardBuild = watch => {
 }
 
 gulp.task('connect', 
-    () => connect.server({ root: './' }));
+    () => connect.server({ root: './', port: 7777 }));
 
 gulp.task('build', ['lib'], () => standardBuild(false));
 
-gulp.task('default', ['lib', 'connect'], () => standardBuild(true));
+gulp.task('default', ['lib', 'connect'], () => standardBuild(false));

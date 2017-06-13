@@ -1,21 +1,24 @@
-﻿<table class="table table-sm table-striped table-hover">
+﻿<table>
     <thead>
         <tr>
             <th>Actions</th>
             <th *ngFor="let column of columns | async">
                 <tb-column-header #header [column]="column" (onSort)="sort($event)" (onFilter)="applyFilter($event)">
-                    <template #filterPopover>
+                    <ng-template #filterPopover>
                         <tb-filter-dialog [column]="column" (filterChange)="header.filter($event)">
                         </tb-filter-dialog>
-                    </template>
+                    </ng-template>
                 </tb-column-header>
             </th>
         </tr>
     </thead>
     <tbody>
+        <tr *ngIf="isEmpty">
+            <td colspan="6">No data</td>
+        </tr>
         <tr *ngFor="let row of rows">
             <td>
-                <button class="btn btn-primary btn-sm" (click)="edit(row)">Edit</button>
+                <button md-button (click)="edit(row)"><md-icon>mode_edit</md-icon></button>
             </td>
             <td>{{row.OrderID}}</td>
             <td>{{row.CustomerName}}</td>

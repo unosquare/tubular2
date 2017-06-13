@@ -5,6 +5,7 @@
 
 import { ColumnModel } from './column.model';
 
+// TODO: Add different color if the filter is ON
 @Component({
     selector: 'tb-column-header',
     template: `
@@ -14,18 +15,15 @@ import { ColumnModel } from './column.model';
             (click)="sort($event)">
             {{column.label}}
         </span>
-        <div class="column-menu" [hidden]="column.filterMode == 0">
-            <button class="btn btn-sm" [ngClass]="{ 'btn-success': hasFilter }"
-                #popover="ngbPopover" [ngbPopover]="filterPopoverTemplate" 
-                placement="left-bottom" title="Filter" (click)="togglePopover()">
-                <i class="fa fa-filter"></i>
-            </button>
+        <div class="column-menu" [hidden]="column.filterMode == 0" 
+            #popover="ngbPopover" [ngbPopover]="filterPopoverTemplate" 
+            placement="bottom" popoverTitle="Filter" (click)="togglePopover()">
+            <md-icon>filter_list</md-icon>
         </div>
     </div>`,
     styles: [
         '.column-menu { position: relative; display: block; text-align: center; vertical-align: top; float: right; }',
-        '.column-menu button { border-radius: 30px !important; line-height: 10px; margin: 0; padding: .25rem; }',
-        '.column-menu button i { font-size: 12px; }'
+        '.column-header .mat-icon { font-size: 14px; cursor: pointer; }'
     ]
 })
 export class ColumnHeaderComponent {
@@ -46,15 +44,16 @@ export class ColumnHeaderComponent {
     public togglePopover() {
         if (ColumnHeaderComponent.prevPopover != null) {
             ColumnHeaderComponent.prevPopover.close();
+        }
 
-            if (ColumnHeaderComponent.prevPopover === this.popover) {
-                ColumnHeaderComponent.prevPopover = null;
-                this.popover.toggle();
-                return;
-            }
+        if (ColumnHeaderComponent.prevPopover == this.popover) {
+            ColumnHeaderComponent.prevPopover = null;
+            this.popover.close();
+            return;
         }
 
         ColumnHeaderComponent.prevPopover = this.popover;
+        this.popover.toggle();
     }
 
     public sort($event) {

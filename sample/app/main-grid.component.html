@@ -1,39 +1,44 @@
-﻿<h1 class="display-3">
-    Tubular2</h1>
-<p class="lead">
-    Angular2 components
-</p>
-
-<tb-grid #grid dataUrl="http://tubular.azurewebsites.net/api/orders/paged" (beforeRequest)="beforeRequest($event)">
-    <div class="row">
-        <div class="col-md-5">
-            <tb-grid-pager></tb-grid-pager>
-        </div>
-        <div class="col-md-4">
-            <div class="btn-group-sm">
-                <tb-grid-print></tb-grid-print>
-                <tb-grid-export fileName="sampleCsv.csv"></tb-grid-export>
-                <button class="btn btn-info" (click)="add()">
-                    New Item
+﻿<md-card>
+    <md-card-header>
+        <md-card-title>Sample Grid using Angular Material</md-card-title>
+    </md-card-header>
+    <md-card-content>
+        <tb-grid #grid dataUrl="http://tubular.azurewebsites.net/api/orders/paged" (beforeRequest)="beforeRequest($event)">
+            <md-toolbar>
+                <div fxFlex>
+                    <tb-grid-pager [ellipses]="pagerShowEllipses" [boundaryLinks]="pagerBoundaryLinks" [maxSize]="10" [disabled]="grid.isLoading"></tb-grid-pager>
+                </div>
+                <div fxFlex>
+                    <button md-icon-button (click)="add()" aria-label="Add New">
+                    <md-icon>add</md-icon>
                 </button>
+                    <button md-icon-button [grid-print]="grid" aria-label="Print">
+                    <md-icon>print</md-icon>
+                </button>
+                    <tb-grid-export fxFlex fileName="sampleCsv.csv"></tb-grid-export>
+                </div>
+                <div fxFlex>
+                    <tb-grid-search></tb-grid-search>
+                </div>
+            </md-toolbar>
+            <div fxLayout="row" >
+                <md-progress-bar [color]="primary" mode="indeterminate" *ngIf="grid.isLoading" class="tb-progress-bar">
+                </md-progress-bar>
             </div>
-        </div>
-        <div class="col-md-3">
-            <tb-grid-search></tb-grid-search>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <my-grid></my-grid>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-5"></div>
-        <div class="col-md-3">
-            <tb-page-size-selector></tb-page-size-selector>
-        </div>
-        <div class="col-md-4">
-            <tb-grid-pager-info></tb-grid-pager-info>
-        </div>
-    </div>
-</tb-grid>
+            <div fxLayout="row">
+                <my-grid fxFlex></my-grid>
+            </div>
+            <md-toolbar>
+                <div fxFlex>
+                    <tb-grid-pager [ellipses]="!pagerShowEllipses" [boundaryLinks]="!pagerBoundaryLinks"></tb-grid-pager>
+                </div>
+                <div fxFlex>
+                    <tb-page-size-selector></tb-page-size-selector>
+                </div>
+                <div fxFlex>
+                    <tb-grid-pager-info></tb-grid-pager-info>
+                </div>
+            </md-toolbar>
+        </tb-grid>
+    </md-card-content>
+</md-card>

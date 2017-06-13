@@ -1,10 +1,9 @@
 ﻿import { Component } from '@angular/core';
 import { RequestOptions } from '@angular/http';
 
+import { MdDialog } from '@angular/material';
 
 import { OrderComponent } from './order.component';
-
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'my-tbGrid',
@@ -13,19 +12,18 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 export class MainGridComponent {
     public newOrderModalRef;
 
-    constructor(private modalService: NgbModal) {
+    public pagerShowEllipses = true;
+    public pagerBoundaryLinks = false;
+
+    constructor(public dialog: MdDialog) {
     }
 
     errorHandler(error: any) {
         console.log(error);
     }
 
-    openDialog(content: string) {
-        this.newOrderModalRef = this.modalService.open(content);
-    }
-
     add() {
-        const modalRef = this.modalService.open(OrderComponent);
+        const modalRef = this.dialog.open(OrderComponent);
         modalRef.componentInstance.name = 'Add new';
         modalRef.componentInstance.isNew = true;
     }

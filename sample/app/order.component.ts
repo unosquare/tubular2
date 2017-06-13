@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'tb-order-modal',
@@ -13,7 +12,7 @@ export class OrderComponent implements OnInit {
     @Input() model;
     @Input() isNew: boolean;
 
-    constructor(public activeModal: NgbActiveModal, private fb: FormBuilder) {
+    constructor(private fb: FormBuilder) {
 
     }
 
