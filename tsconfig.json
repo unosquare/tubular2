@@ -9,7 +9,7 @@
         "allowUnusedLabels": false,
         "noImplicitReturns": true,
         "sourceMap": true,
-        "declaration": false,
+        "declaration": true,
         "rootDir": ".",
         "typeRoots": [
             "node_modules/@types"
@@ -18,6 +18,9 @@
             "jasmine"
         ]
     },
+    "files": [
+       "./lib/index.ts"
+    ],
     "angularCompilerOptions": {
         "genDir": "compiled",
         "strictMetadataEmit": true

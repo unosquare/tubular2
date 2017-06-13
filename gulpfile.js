@@ -5,22 +5,35 @@ var connect = require('gulp-connect');
 var tslint = require('gulp-tslint');
 var concat = require("gulp-concat");
 var map = require("map-stream");
+var merge = require("merge2");
 var gulp = require('gulp');
 var Server = require('karma').Server;
 
 var tsProject = ts.createProject('tsconfig.json');
 
+
+
 gulp.task('build-lib',
-  () => gulp.src(['lib/**/*.ts', '!lib/**/*.spec.ts'])
-  .pipe(tsProject())
-  .js.pipe(gulp.dest('dist')));
+  () => {
+    const tsResult = gulp.src(['lib/**/*.ts', '!lib/**/*.spec.ts'])
+      .pipe(tsProject());
+    return merge(
+      [
+        tsResult.dts.pipe(gulp.dest('dist/typings')),
+        tsResult.js.pipe(gulp.dest('dist'))
+      ]);
+  });
 
 gulp.task('build-spec',
   () => gulp.src('lib/**/*.ts')
   .pipe(tsProject())
   .js.pipe(gulp.dest(file => file.base)));
 
-gulp.task('build-e2e', ['build-lib'],
+gulp.task('tubular2-module',
+  () => gulp.src(['./package.json', './dist/**/*.ts', './dist/**/*.js'])
+  .pipe(gulp.dest('./node_modules/@tubular2/tubular2')));
+
+gulp.task('build-e2e', ['build-lib', 'tubular2-module'],
   () => gulp.src('test/e2e/**/*.ts')
   .pipe(tsProject())
   .js.pipe(gulp.dest(file => file.base)));
@@ -54,6 +67,16 @@ gulp.task('connect',
     root: './sample',
     port: 7777
   }));
+
+
+
+gulp.task('e2e-ci', ['build-e2e'],
+  (done) => {
+    new Server({
+      configFile: __dirname + '/karma.e2e.js',
+      singleRun: true
+    }, done).start();
+  });
 
 gulp.task('e2e', ['build-e2e'],
   (done) => {

@@ -3,15 +3,13 @@
 module.exports = config => {
     var configuration = {
         basePath: '',
-        frameworks: ['jasmine', 'source-map-support'],
+        frameworks: ['jasmine', 'karma-typescript', 'browserify'],
         plugins: [
             require('karma-jasmine'),
             require('karma-firefox-launcher'),
-            require('karma-source-map-support'),
-            require('karma-sourcemap-loader'),
-            require('karma-coverage'),
-            //require('karma-mocha-reporter'),
-            require('karma-htmlfile-reporter')
+            require('karma-htmlfile-reporter'),
+            require('karma-typescript'),
+            require('karma-browserify')
         ],
 
         customLaunchers: {
@@ -23,10 +21,15 @@ module.exports = config => {
             }
         },
         files: [
-
-            '/dist/**/*.js',
-            'test/**/*.spec.js'
+          { pattern: "node_modules/reflect-metadata/Reflect.js", include: true },
+            'dist/**/*.js',
+            'test/**/*.spec.ts'
         ],
+        preprocessors: {
+            'test/**/*.spec.ts': ['karma-typescript'],
+            'test/**/*.spec.js': ['browserify'],
+            'dist/**/*.js': ['browserify']
+        },
 
         exclude: [],
 
@@ -49,7 +52,7 @@ module.exports = config => {
         logLevel: config.LOG_DEBUG,
         autoWatch: true,
         browsers: ['Firefox'],
-        singleRun: true,
+        singleRun: false,
         failOnEmptyTestSuite: false
 
     };
