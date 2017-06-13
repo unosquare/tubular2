@@ -14,8 +14,7 @@
     "preweb-server": "gulp --gulpfile ./src/Unosquare.Tubular2.Web/gulpfile.js build",
     "web-server": "gulp connect",
     "start": "webpack-dev-server --config ./webpack/webpack.dev.js",
-    "e2e": "gulp e2e",
-    "pree2e": "webdriver-manager update"
+    "e2e": "gulp e2e && karma start karma.e2e.js"
   },
   "dependencies": {
     "@angular/animations": "^4.1.3",

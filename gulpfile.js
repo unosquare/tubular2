@@ -7,11 +7,11 @@ var map = require("map-stream");
 
 var tsProject = ts.createProject('tsconfig.json');
 
-gulp.task('build-lib', 
+gulp.task('build-lib',
     () => gulp.src(['lib/**/*.ts', '!lib/**/*.spec.ts'])
         .pipe(tsProject())
         .js.pipe(gulp.dest('dist')));
-        
+
 gulp.task('build-spec',
     () => gulp.src('lib/**/*.ts')
         .pipe(tsProject())
@@ -22,7 +22,7 @@ gulp.task('build-e2e', ['build-lib'],
         .pipe(tsProject())
         .js.pipe(gulp.dest(file => file.base)));
 
-gulp.task('tslint', 
+gulp.task('tslint',
     () => gulp.src('lib/**/*.ts')
         .pipe(tslint())
         .pipe(map(function(file, done) {
@@ -46,10 +46,10 @@ gulp.task('tslint',
        .pipe(concat("index.html"))
        .pipe(gulp.dest("report/tslint")));
 
-gulp.task('connect', 
+gulp.task('connect',
     () => connect.server({ root: './sample', port: 7777 }));
 
-gulp.task('e2e', ['connect', 'build-e2e'],
+gulp.task('e2e', ['build-e2e'],
     () => {
         // TODO: Pending implement karma for e2e
     });
