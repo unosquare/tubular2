@@ -1,7 +1,6 @@
 ﻿var gulp = require('gulp');
 var ts = require('gulp-typescript');
 var connect = require('gulp-connect');
-var protractor = require('gulp-protractor').protractor;
 var tslint = require('gulp-tslint');
 var concat = require("gulp-concat");
 var map = require("map-stream");
@@ -51,7 +50,6 @@ gulp.task('connect',
     () => connect.server({ root: './sample', port: 7777 }));
 
 gulp.task('e2e', ['connect', 'build-e2e'],
-    () => gulp.src('test/e2e/**/*.js')
-            .pipe(protractor({ configFile: 'protractor.config.js' }))
-            .on('error', connect.serverClose)
-            .on('end', connect.serverClose));
+    () => {
+        // TODO: Pending implement karma for e2e
+    });

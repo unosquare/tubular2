@@ -1,6 +1,4 @@
-﻿var Jasmine2HtmlReporter = require('protractor-jasmine2-html-reporter');
-
-exports.config = {
+﻿exports.config = {
     directConnect: true,
 
     // Capabilities to be passed to the webdriver instance.
@@ -22,15 +20,7 @@ exports.config = {
 
     onPrepare: function() {
         jasmine.getEnv().addReporter(
-          new Jasmine2HtmlReporter({
-              savePath: './report/e2e',
-              cleanDestination: false,
-              consolidate: true,
-              consolidateAll: true,
-              showPassed: false,
-              takeScreenshotsOnlyOnFailures: true,
-              fileName: 'index.html'
-          })
+          
         );
     },
     jasmineNodeOpts: {
