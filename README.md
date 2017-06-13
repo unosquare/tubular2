@@ -7,7 +7,7 @@
 
 *:star:Please star this project if you find it useful!*
 
-New Tubular2 with Angular4 (Angular2) featuring:
+New Tubular2 with Angular4 (Angular2) and Angular Material 2 featuring:
 
 * Full Grid with sorting, filtering, exporting just like the previous Tubular 1 component.
 * Login component and internal bearer token authentication (WIP)
