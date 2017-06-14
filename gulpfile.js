@@ -1,5 +1,4 @@
-﻿
-var gulp = require('gulp');
+﻿var gulp = require('gulp');
 var ts = require('gulp-typescript');
 var connect = require('gulp-connect');
 var tslint = require('gulp-tslint');
@@ -10,8 +9,6 @@ var gulp = require('gulp');
 var Server = require('karma').Server;
 
 var tsProject = ts.createProject('tsconfig.json');
-
-
 
 gulp.task('build-lib',
   () => {

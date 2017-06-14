@@ -11,7 +11,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const column_model_1 = require("./column.model");
+// TODO: Add different color if the filter is ON
 let ColumnHeaderComponent = ColumnHeaderComponent_1 = class ColumnHeaderComponent {
+    // TODO: Add different color if the filter is ON
     constructor() {
         this.onSort = new core_1.EventEmitter();
         this.onFilter = new core_1.EventEmitter();
@@ -19,13 +21,14 @@ let ColumnHeaderComponent = ColumnHeaderComponent_1 = class ColumnHeaderComponen
     togglePopover() {
         if (ColumnHeaderComponent_1.prevPopover != null) {
             ColumnHeaderComponent_1.prevPopover.close();
-            if (ColumnHeaderComponent_1.prevPopover === this.popover) {
-                ColumnHeaderComponent_1.prevPopover = null;
-                this.popover.toggle();
-                return;
-            }
+        }
+        if (ColumnHeaderComponent_1.prevPopover == this.popover) {
+            ColumnHeaderComponent_1.prevPopover = null;
+            this.popover.close();
+            return;
         }
         ColumnHeaderComponent_1.prevPopover = this.popover;
+        this.popover.toggle();
     }
     sort($event) {
         this.column.isMultiSort = $event.ctrlKey;
@@ -71,18 +74,15 @@ ColumnHeaderComponent = ColumnHeaderComponent_1 = __decorate([
             (click)="sort($event)">
             {{column.label}}
         </span>
-        <div class="column-menu" [hidden]="column.filterMode == 0">
-            <button class="btn btn-sm" [ngClass]="{ 'btn-success': hasFilter }"
-                #popover="ngbPopover" [ngbPopover]="filterPopoverTemplate" 
-                placement="left-bottom" title="Filter" (click)="togglePopover()">
-                <i class="fa fa-filter"></i>
-            </button>
+        <div class="column-menu" [hidden]="column.filterMode == 0" 
+            #popover="ngbPopover" [ngbPopover]="filterPopoverTemplate" 
+            placement="bottom" popoverTitle="Filter" (click)="togglePopover()">
+            <md-icon>filter_list</md-icon>
         </div>
     </div>`,
         styles: [
             '.column-menu { position: relative; display: block; text-align: center; vertical-align: top; float: right; }',
-            '.column-menu button { border-radius: 30px !important; line-height: 10px; margin: 0; padding: .25rem; }',
-            '.column-menu button i { font-size: 12px; }'
+            '.column-header .mat-icon { font-size: 14px; cursor: pointer; }'
         ]
     })
 ], ColumnHeaderComponent);

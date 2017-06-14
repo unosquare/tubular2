@@ -10,7 +10,7 @@ const core_1 = require("@angular/core");
 const platform_browser_1 = require("@angular/platform-browser");
 const forms_1 = require("@angular/forms");
 const http_1 = require("@angular/http");
-const ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
+const material_1 = require("@angular/material");
 const grid_component_1 = require("./grid.component");
 const column_header_component_1 = require("./column-header.component");
 const grid_search_component_1 = require("./grid-search.component");
@@ -19,28 +19,35 @@ const column_filter_dialog_component_1 = require("./column-filter-dialog.compone
 const grid_pager_info_component_1 = require("./grid-pager-info.component");
 const page_size_selector_component_1 = require("./page-size-selector.component");
 const grid_export_component_1 = require("./grid-export.component");
-const grid_print_component_1 = require("./grid-print.component");
+const grid_print_directive_1 = require("./grid-print.directive");
 const mdate_pipe_1 = require("./mdate.pipe");
+// NbBootstrap special guest (https://github.com/ng-bootstrap/ng-bootstrap)
+const popover_1 = require("./popover");
 let TubularModule = class TubularModule {
 };
 TubularModule = __decorate([
     core_1.NgModule({
         imports: [
-            platform_browser_1.BrowserModule, forms_1.FormsModule, forms_1.ReactiveFormsModule, http_1.HttpModule,
-            ng_bootstrap_1.NgbModule.forRoot()
+            platform_browser_1.BrowserModule,
+            forms_1.FormsModule,
+            forms_1.ReactiveFormsModule,
+            http_1.HttpModule,
+            material_1.MaterialModule
         ],
         declarations: [
             grid_component_1.GridComponent, column_header_component_1.ColumnHeaderComponent, grid_search_component_1.GridSearchComponent,
             grid_pager_component_1.GridPagerComponent, grid_pager_info_component_1.GridPagerInfoComponent, column_filter_dialog_component_1.ColumnFilterDialogComponent,
-            page_size_selector_component_1.PageSizeSelectorComponent, grid_export_component_1.ExportButtonComponent, grid_print_component_1.PrintButtonComponent,
-            mdate_pipe_1.MDatePipe
+            page_size_selector_component_1.PageSizeSelectorComponent, grid_export_component_1.ExportButtonComponent, grid_print_directive_1.PrintButtonDirective,
+            mdate_pipe_1.MDatePipe, popover_1.NgbPopover, popover_1.NgbPopoverWindow
         ],
         exports: [
             grid_component_1.GridComponent, column_header_component_1.ColumnHeaderComponent, grid_search_component_1.GridSearchComponent,
             grid_pager_component_1.GridPagerComponent, grid_pager_info_component_1.GridPagerInfoComponent, column_filter_dialog_component_1.ColumnFilterDialogComponent,
-            page_size_selector_component_1.PageSizeSelectorComponent, grid_export_component_1.ExportButtonComponent, grid_print_component_1.PrintButtonComponent,
-            mdate_pipe_1.MDatePipe,
-            ng_bootstrap_1.NgbModule
+            page_size_selector_component_1.PageSizeSelectorComponent, grid_export_component_1.ExportButtonComponent, grid_print_directive_1.PrintButtonDirective,
+            mdate_pipe_1.MDatePipe, popover_1.NgbPopover
+        ],
+        entryComponents: [
+            popover_1.NgbPopoverWindow
         ]
     })
 ], TubularModule);

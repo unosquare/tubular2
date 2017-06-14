@@ -34,20 +34,12 @@ let GridSearchComponent = class GridSearchComponent {
 GridSearchComponent = __decorate([
     core_1.Component({
         selector: 'tb-grid-search',
-        template: `<div>
-        <div class="input-group input-group-sm">
-        <span class="input-group-addon"><i class="fa fa-search"></i></span>
-            <input #toSearch type="text" class="form-control" 
-            [(ngModel)]="search"
-            (ngModelChange)="setSearch($event)"
-            placeholder="search . . ." />
-            <span class="input-group-btn" [hidden]="!toSearch.value">
-                <button class="btn btn-default" (click)="clearInput()">
-                <i class="fa fa-times-circle"></i>
-                </button>
-            </span>
-        </div>
-    </div>`
+        template: `<md-input-container>
+        <input mdInput #toSearch type="text"
+        [(ngModel)]="search"
+        (ngModelChange)="setSearch($event)"
+        placeholder="search..." />
+    </md-input-container>`
     }),
     __param(0, core_1.Optional()), __param(0, core_1.Inject(tubular_settings_service_1.SETTINGS_PROVIDER)),
     __metadata("design:paramtypes", [Object, grid_component_1.GridComponent])

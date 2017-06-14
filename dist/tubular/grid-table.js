@@ -7,7 +7,10 @@ class GridTable {
         this.tbGrid = tbGrid;
         this.columnObservable = new BehaviorSubject_1.BehaviorSubject([]);
         this.columns = this.columnObservable.asObservable();
-        this.tbGrid.dataStream.subscribe((payload) => this.rows = payload);
+        this.tbGrid.dataStream.subscribe((payload) => {
+            this.rows = payload;
+            this.isEmpty = !this.rows || this.rows.length === 0;
+        });
         this.columnObservable.subscribe((payload) => this.tbGrid.columns.next(payload));
     }
     addColumns(columns) {

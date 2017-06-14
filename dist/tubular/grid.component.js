@@ -18,20 +18,11 @@ const BehaviorSubject_1 = require("rxjs/BehaviorSubject");
 const moment = require("moment");
 const tubular_settings_service_1 = require("./tubular-settings.service");
 const column_model_1 = require("./column.model");
+const grid_page_info_1 = require("./grid-page-info");
 require("rxjs/add/operator/debounceTime");
 require("rxjs/add/operator/map");
 require("rxjs/add/operator/catch");
-class GridPageInfo {
-    constructor() {
-        this.currentInitial = 0;
-        this.currentTop = 0;
-        this.currentPage = 0;
-        this.totalPages = 0;
-        this.totalRecordCount = 0;
-        this.filteredRecordCount = 0;
-    }
-}
-exports.GridPageInfo = GridPageInfo;
+// TODO: Add animation to sortable
 let GridComponent = class GridComponent {
     constructor(settingsProvider, http) {
         this.settingsProvider = settingsProvider;
@@ -39,7 +30,7 @@ let GridComponent = class GridComponent {
         // data is just observable and children can't push
         this.data = new BehaviorSubject_1.BehaviorSubject([]);
         this.dataStream = this.data.asObservable();
-        this._pageInfo = new BehaviorSubject_1.BehaviorSubject(new GridPageInfo());
+        this._pageInfo = new BehaviorSubject_1.BehaviorSubject(new grid_page_info_1.GridPageInfo());
         this.pageInfo = this._pageInfo.asObservable();
         this._pageSize = new BehaviorSubject_1.BehaviorSubject(this.getPageSizeSettingValue());
         this.pageSize = this._pageSize.asObservable();
@@ -48,7 +39,7 @@ let GridComponent = class GridComponent {
         this.columns = new BehaviorSubject_1.BehaviorSubject([]);
         this.freeTextSearch = new BehaviorSubject_1.BehaviorSubject('');
         this.pageSet = false;
-        this.showLoading = false;
+        this.isLoading = false;
         this.search = {
             text: '',
             operator: 'None'
@@ -72,6 +63,7 @@ let GridComponent = class GridComponent {
         }
     }
     getCurrentPage() {
+        this.isLoading = true;
         this.tbRequestRunning = {
             count: this.requestCount++,
             columns: this.columns.getValue(),
@@ -91,8 +83,10 @@ let GridComponent = class GridComponent {
         });
         this.beforeRequest.emit(ngRequestOptions);
         let ngRequest = new http_1.Request(ngRequestOptions);
-        return this.http.request(ngRequest).map(response => response.json());
-        ;
+        return this.http.request(ngRequest).map(response => {
+            this.isLoading = false;
+            return response.json();
+        });
     }
     getFullDataSource() {
         let tbRequest = {
@@ -114,7 +108,10 @@ let GridComponent = class GridComponent {
         });
         this.beforeRequest.emit(ngRequestOptions);
         let ngRequest = new http_1.Request(ngRequestOptions);
-        return this.http.request(ngRequest).map(response => response.json());
+        return this.http.request(ngRequest).map(response => {
+            this.isLoading = false;
+            return response.json();
+        });
     }
     changePagesData() {
         if (this.settingsProvider != null) {
@@ -161,6 +158,7 @@ let GridComponent = class GridComponent {
             this.search.operator = !c ? 'None' : 'Auto';
             this.refresh();
         });
+        this.goToPage(0);
     }
     transformSortDirection(column) {
         switch (column.direction) {
@@ -192,7 +190,7 @@ let GridComponent = class GridComponent {
         let payload = (data.Payload || {}).map(transform);
         // push data
         this.data.next(payload);
-        let pageInfo = new GridPageInfo();
+        let pageInfo = new grid_page_info_1.GridPageInfo();
         pageInfo.currentPage = data.CurrentPage;
         pageInfo.totalPages = data.TotalPages;
         pageInfo.filteredRecordCount = data.FilteredRecordCount;
@@ -230,18 +228,18 @@ GridComponent = __decorate([
         selector: 'tb-grid',
         template: `
     <div>
-        <div class="tubular-overlay" [hidden]="!showLoading">
-            <div><div class="fa fa-refresh fa-2x fa-spin"></div>
-        </div></div>
         <ng-content></ng-content>
     </div>`,
         styles: [
-            ':host /deep/ div.row { margin-top: 4px; margin-bottom: 4px; }',
-            ':host /deep/ div.row:first { margin-top: 0; }',
-            ':host /deep/ .sortable { text-decoration: underline; cursor: pointer; }',
-            ':host /deep/ .sortable:hover { text-decoration: none; color: yellow; }',
-            ':host /deep/ .sortAsc::after { font-family: FontAwesome; content: "\\f176"; }',
-            ':host /deep/ .sortDesc::after { font-family: FontAwesome; content: "\\f175"; }'
+            ':host /deep/ .sortable { cursor: pointer; }',
+            ':host /deep/ .sortable:hover { font-weight: bold }',
+            ':host /deep/ .sortAsc::after { font-family: "Material Icons"; content: "\\E5D8"; }',
+            ':host /deep/ .sortDesc::after { font-family: "Material Icons"; content: "\\E5DB"; }',
+            ':host /deep/ table { width: 100%; border-spacing: 0; overflow: hidden; }',
+            ':host /deep/ thead > tr { height: 56px }',
+            ':host /deep/ th { vertical-align: middle; text-align: left; color: rgba(0,0,0,.54); font-size: 12px; font-weight: 700; white-space: nowrap }',
+            ':host /deep/ td { vertical-align: middle; text-align: left; color: rgba(0,0,0,.87); font-size: 13px; border-top: 1px rgba(0,0,0,.12) solid; }',
+            ':host /deep/ tbody > tr, tfoot > tr { height: 48px; }'
         ]
     }),
     __param(0, core_1.Optional()), __param(0, core_1.Inject(tubular_settings_service_1.SETTINGS_PROVIDER)),

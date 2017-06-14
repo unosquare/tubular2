@@ -11,33 +11,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const grid_component_1 = require("./grid.component");
-let GridPagerComponent = class GridPagerComponent {
+const grid_page_info_1 = require("./grid-page-info");
+let GridPagerInfoComponent = class GridPagerInfoComponent {
     constructor(tbGrid) {
         this.tbGrid = tbGrid;
-        this.info = new grid_component_1.GridPageInfo();
+        this.pageInfo = new grid_page_info_1.GridPageInfo();
+        this.currentTop = 0;
+        this.currentInitial = 0;
+        this.filteredRecordCount = 0;
     }
     ngOnInit() {
-        this.tbGrid.pageInfo.subscribe((x) => this.info = x);
-    }
-    goTo(page) {
-        this.info.currentPage = page;
-        this.tbGrid.goToPage(page - 1);
+        // live update properties
+        this.tbGrid.pageInfo.subscribe((pageInfo) => {
+            this.pageInfo = pageInfo;
+            this.filtered = this.pageInfo.totalRecordCount !== this.pageInfo.filteredRecordCount;
+        });
     }
 };
-GridPagerComponent = __decorate([
+GridPagerInfoComponent = __decorate([
     core_1.Component({
-        selector: 'tb-grid-pager',
-        template: `<ngb-pagination 
-            [collectionSize]="info.filteredRecordCount"
-            [pageSize]="tbGrid._pageSize.value"
-            [(page)]="info.currentPage"
-            [boundaryLinks]="true"
-            [maxSize]="5"
-            (pageChange)="goTo($event)"
-            [ellipses]="false"
-            size="sm">
-    </ngb-pagination>`
+        selector: 'tb-grid-pager-info',
+        template: `<div>
+        Showing {{this.pageInfo.currentInitial}} to {{this.pageInfo.currentTop}} of {{pageInfo.filteredRecordCount}} records 
+        <span [hidden]="!filtered">(Filtered from {{pageInfo.totalRecordCount}} total records)</span>
+    </div>`,
+        styles: [
+            ':host /deep/ div { font-size: 12px; }',
+        ]
     }),
     __metadata("design:paramtypes", [grid_component_1.GridComponent])
-], GridPagerComponent);
-exports.GridPagerComponent = GridPagerComponent;
+], GridPagerInfoComponent);
+exports.GridPagerInfoComponent = GridPagerInfoComponent;

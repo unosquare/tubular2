@@ -78,32 +78,28 @@ ColumnFilterDialogComponent = __decorate([
         selector: 'tb-filter-dialog',
         template: `
    <form [formGroup]="form" (ngSubmit)="submit()">
-        <div class="form-group">
-            <label for="operator">Operator</label>
-            <select id="operator" class="form-control" 
-                    formControlName="operator" 
-                    (change)="selectChange($event.target.value)">
-                <option *ngFor="let operator of operators" [value]="operator.value">
-                    {{operator.name}}
-                </option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>Value</label>
-            <input type="{{inputType}}" class="form-control" formControlName="text" />
-            <label *ngIf="isBetween">Argument</label>
-            <input *ngIf="isBetween" type="{{inputType}}" 
-                class="form-control" formControlName="argument"/>
-        </div>
-        <div class="row">
-            <div class="col-xs-6">
-                <button type="submit" class="btn btn-sm btn-success btn-block" 
-                        [disabled]="!form.valid">Filter</button>
-            </div>
-            <div class="col-xs-6">
-                <button type="button" class="btn btn-sm btn-danger btn-block" 
-                        (click)="reset()">Clear</button>
-            </div>
+        <md-select placeholder="Operator" 
+            formControlName="operator" 
+            (change)="selectChange($event.value)">
+            <md-option *ngFor="let operator of operators" [value]="operator.value">
+                {{operator.name}}
+            </md-option>
+        </md-select>
+        <md-input-container>
+            <input mdInput
+                type="{{inputType}}" formControlName="text" 
+                placeholder="Value" />
+        </md-input-container>
+        <md-input-container *ngIf="isBetween">
+            <input mdInput
+                type="{{inputType}}" formControlName="argument"
+                placeholder="Argument" />
+        </md-input-container>
+        <div fxLayout="row">
+            <button type="submit" md-button fxFlex
+                    [disabled]="!form.valid">Filter</button>
+            <button type="button" md-button fxFlex
+                    (click)="reset()">Clear</button>
         </div>
     </form>`,
         styles: ['form { min-width: 200px; }']

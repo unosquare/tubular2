@@ -11,23 +11,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const grid_component_1 = require("./grid.component");
-require("rxjs/add/operator/map");
-let PrintButtonComponent = class PrintButtonComponent {
-    constructor(tbGrid) {
-        this.tbGrid = tbGrid;
-    }
-    print() {
-        this.tbGrid.getFullDataSource()
+let PrintButtonDirective = class PrintButtonDirective {
+    onClick(event) {
+        this.gridInstance.getFullDataSource()
             .subscribe((data) => {
-            let headers = this.tbGrid.columns.getValue().reduce((a, b) => a + '<th>' + b.label + '</th>', '');
+            let headers = this.gridInstance.columns.getValue().reduce((a, b) => a + '<th>' + b.label + '</th>', '');
             let rows = data.Payload.reduce((prev, row) => prev + '<tr>' +
                 row.reduce((a, b) => a + '<td>' + b + '</td>', '') + '</tr>', '');
-            let tableHtml = `<table class="table table-sm table-striped">
-                    <thead><tr>${headers}</tr></thead><tbody>${rows}</tbody>
-                </table>`;
-            let popup = window.open('', '', 'menubar=0,location=0,height=500,width=800');
-            popup.document.write('<link rel="stylesheet" ' +
-                'href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.min.css" />');
+            let tableHtml = `<table><thead><tr>${headers}</tr></thead><tbody>${rows}</tbody></table>`;
+            let popup = window.open('', '', 'menubar=0,location3=0,height=500,width=800');
             popup.document.write('<body onload="window.print();">');
             popup.document.write(tableHtml);
             popup.document.write('</body>');
@@ -35,13 +27,19 @@ let PrintButtonComponent = class PrintButtonComponent {
         });
     }
 };
-PrintButtonComponent = __decorate([
-    core_1.Component({
-        selector: 'tb-grid-print',
-        template: `<button class="btn btn-info btn-sm" (click)="print()">
-        <span class="fa fa-print"></span>&nbsp;Print
-    </button>`
-    }),
-    __metadata("design:paramtypes", [grid_component_1.GridComponent])
-], PrintButtonComponent);
-exports.PrintButtonComponent = PrintButtonComponent;
+__decorate([
+    core_1.Input('grid-print'),
+    __metadata("design:type", grid_component_1.GridComponent)
+], PrintButtonDirective.prototype, "gridInstance", void 0);
+__decorate([
+    core_1.HostListener('click', ['$event.target']),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [MouseEvent]),
+    __metadata("design:returntype", void 0)
+], PrintButtonDirective.prototype, "onClick", null);
+PrintButtonDirective = __decorate([
+    core_1.Directive({
+        selector: '[grid-print]'
+    })
+], PrintButtonDirective);
+exports.PrintButtonDirective = PrintButtonDirective;
