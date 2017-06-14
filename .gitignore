@@ -270,3 +270,4 @@ coverage/
 temp/
 /.vscode/launch.json
 /.vscode/tasks.json
+package-lock.json
