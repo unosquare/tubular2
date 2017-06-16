@@ -1,3 +1,12 @@
+;(function(root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    define([], factory);
+  } else if (typeof exports === 'object') {
+    module.exports = factory();
+  } else {
+    root.Triggers = factory();
+  }
+}(this, function() {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class Trigger {
@@ -51,3 +60,6 @@ function listenToTriggers(renderer, nativeElement, triggers, openFn, closeFn, to
     return () => { listeners.forEach(unsubscribeFn => unsubscribeFn()); };
 }
 exports.listenToTriggers = listenToTriggers;
+
+return Triggers;
+}));

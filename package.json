@@ -1,5 +1,5 @@
 {
-  "version": "0.9.2",
+  "version": "0.9.3",
   "name": "tubular2",
   "license": "MIT",
   "repository": {
@@ -7,7 +7,7 @@
     "url": "https://github.com/unosquare/tubular2.git"
   },
   "main": "./dist/index.js",
-  "files":[
+  "files": [
     "dist/**/*",
     "lib/**/*"
   ],
@@ -62,6 +62,7 @@
     "gulp-replace": "0.5.4",
     "gulp-tslint": "^8.1.1",
     "gulp-typescript": "^3.1.7",
+    "gulp-umd": "^0.2.1",
     "html-webpack-plugin": "2.28.0",
     "istanbul-instrumenter-loader": "2.0.0",
     "jasmine-core": "2.6.3",

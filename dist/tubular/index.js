@@ -1,3 +1,12 @@
+;(function(root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    define([], factory);
+  } else if (typeof exports === 'object') {
+    module.exports = factory();
+  } else {
+    root.Index = factory();
+  }
+}(this, function() {
 "use strict";
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
@@ -19,3 +28,6 @@ __export(require("./grid-export.directive"));
 __export(require("./mdate.pipe"));
 __export(require("./http-options"));
 __export(require("./grid-print.directive"));
+
+return Index;
+}));

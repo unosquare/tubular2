@@ -1,3 +1,12 @@
+;(function(root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    define([], factory);
+  } else if (typeof exports === 'object') {
+    module.exports = factory();
+  } else {
+    root.Http-options = factory();
+  }
+}(this, function() {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 //import {ReflectiveInjector} from '@angular/core'
@@ -18,3 +27,6 @@ class HttpOptions extends http_1.BaseRequestOptions {
     }
 }
 exports.HttpOptions = HttpOptions;
+
+return Http-options;
+}));

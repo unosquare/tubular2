@@ -1,3 +1,12 @@
+;(function(root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    define([], factory);
+  } else if (typeof exports === 'object') {
+    module.exports = factory();
+  } else {
+    root.Grid-print.directive = factory();
+  }
+}(this, function() {
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -43,3 +52,6 @@ PrintButtonDirective = __decorate([
     })
 ], PrintButtonDirective);
 exports.PrintButtonDirective = PrintButtonDirective;
+
+return Grid-print.directive;
+}));

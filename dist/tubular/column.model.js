@@ -1,3 +1,12 @@
+;(function(root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    define([], factory);
+  } else if (typeof exports === 'object') {
+    module.exports = factory();
+  } else {
+    root.Column.model = factory();
+  }
+}(this, function() {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var ColumnDataType;
@@ -108,3 +117,6 @@ class ColumnModel {
     }
 }
 exports.ColumnModel = ColumnModel;
+
+return Column.model;
+}));

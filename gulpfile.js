@@ -2,6 +2,7 @@
 var ts = require('gulp-typescript');
 var connect = require('gulp-connect');
 var tslint = require('gulp-tslint');
+var umd = require('gulp-umd');
 var concat = require("gulp-concat");
 var map = require("map-stream");
 var merge = require("merge2");
@@ -17,7 +18,8 @@ gulp.task('build-lib',
     return merge(
       [
         tsResult.dts.pipe(gulp.dest('dist/typings')),
-        tsResult.js.pipe(gulp.dest('dist'))
+        tsResult.js.pipe(gulp.dest('dist')),
+        tsResult.js.pipe(umd()).pipe(concat('tubular2.bundle.js')).pipe(gulp.dest('dist')),
       ]);
   });
 

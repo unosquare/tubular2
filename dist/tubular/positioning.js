@@ -1,3 +1,12 @@
+;(function(root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    define([], factory);
+  } else if (typeof exports === 'object') {
+    module.exports = factory();
+  } else {
+    root.Positioning = factory();
+  }
+}(this, function() {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class Positioning {
@@ -127,3 +136,6 @@ function positionElements(hostElement, targetElement, placement, appendToBody) {
     targetElement.style.left = `${pos.left}px`;
 }
 exports.positionElements = positionElements;
+
+return Positioning;
+}));
