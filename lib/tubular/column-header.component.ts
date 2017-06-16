@@ -18,7 +18,7 @@ import { ColumnModel } from './column.model';
         <div class="column-menu" [hidden]="column.filterMode == 0" 
             #popover="ngbPopover" [ngbPopover]="filterPopoverTemplate" 
             placement="bottom" popoverTitle="Filter" (click)="togglePopover()">
-            <md-icon>filter_list</md-icon>
+            <md-icon color="{{ hasFilter ? 'primary' : '' }}">filter_list</md-icon>
         </div>
     </div>`,
     styles: [
