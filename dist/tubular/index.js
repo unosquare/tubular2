@@ -15,7 +15,7 @@ __export(require("./grid-pager.component"));
 __export(require("./grid-pager-info.component"));
 __export(require("./column-header.component"));
 __export(require("./column.model"));
-__export(require("./grid-export.component"));
+__export(require("./grid-export.directive"));
 __export(require("./mdate.pipe"));
 __export(require("./http-options"));
 __export(require("./grid-print.directive"));

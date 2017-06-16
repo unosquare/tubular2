@@ -18,7 +18,7 @@ const grid_pager_component_1 = require("./grid-pager.component");
 const column_filter_dialog_component_1 = require("./column-filter-dialog.component");
 const grid_pager_info_component_1 = require("./grid-pager-info.component");
 const page_size_selector_component_1 = require("./page-size-selector.component");
-const grid_export_component_1 = require("./grid-export.component");
+const grid_export_directive_1 = require("./grid-export.directive");
 const grid_print_directive_1 = require("./grid-print.directive");
 const mdate_pipe_1 = require("./mdate.pipe");
 // NbBootstrap special guest (https://github.com/ng-bootstrap/ng-bootstrap)
@@ -37,13 +37,13 @@ TubularModule = __decorate([
         declarations: [
             grid_component_1.GridComponent, column_header_component_1.ColumnHeaderComponent, grid_search_component_1.GridSearchComponent,
             grid_pager_component_1.GridPagerComponent, grid_pager_info_component_1.GridPagerInfoComponent, column_filter_dialog_component_1.ColumnFilterDialogComponent,
-            page_size_selector_component_1.PageSizeSelectorComponent, grid_export_component_1.ExportButtonComponent, grid_print_directive_1.PrintButtonDirective,
+            page_size_selector_component_1.PageSizeSelectorComponent, grid_export_directive_1.ExportButtonDirective, grid_print_directive_1.PrintButtonDirective,
             mdate_pipe_1.MDatePipe, popover_1.NgbPopover, popover_1.NgbPopoverWindow
         ],
         exports: [
             grid_component_1.GridComponent, column_header_component_1.ColumnHeaderComponent, grid_search_component_1.GridSearchComponent,
             grid_pager_component_1.GridPagerComponent, grid_pager_info_component_1.GridPagerInfoComponent, column_filter_dialog_component_1.ColumnFilterDialogComponent,
-            page_size_selector_component_1.PageSizeSelectorComponent, grid_export_component_1.ExportButtonComponent, grid_print_directive_1.PrintButtonDirective,
+            page_size_selector_component_1.PageSizeSelectorComponent, grid_export_directive_1.ExportButtonDirective, grid_print_directive_1.PrintButtonDirective,
             mdate_pipe_1.MDatePipe, popover_1.NgbPopover
         ],
         entryComponents: [

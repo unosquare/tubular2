@@ -15,7 +15,9 @@
                     <button md-icon-button [grid-print]="grid" aria-label="Print">
                     <md-icon>print</md-icon>
                 </button>
-                    <tb-grid-export fxFlex fileName="sampleCsv.csv"></tb-grid-export>
+                <button md-icon-button [grid-export]="grid" file-name="sampleCsv.csv" aria-label="Export">
+                    <md-icon>file_download</md-icon>
+                </button>
                 </div>
                 <div fxFlex>
                     <tb-grid-search></tb-grid-search>

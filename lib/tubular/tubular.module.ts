@@ -12,7 +12,7 @@ import { GridPagerComponent } from './grid-pager.component';
 import { ColumnFilterDialogComponent } from './column-filter-dialog.component';
 import { GridPagerInfoComponent } from './grid-pager-info.component';
 import { PageSizeSelectorComponent } from './page-size-selector.component';
-import { ExportButtonComponent } from './grid-export.component';
+import { ExportButtonDirective } from './grid-export.directive';
 import { PrintButtonDirective } from './grid-print.directive';
 import { MDatePipe } from './mdate.pipe';
 
@@ -30,13 +30,13 @@ import { NgbPopover, NgbPopoverWindow } from './popover';
     declarations: [
         GridComponent, ColumnHeaderComponent, GridSearchComponent,
         GridPagerComponent, GridPagerInfoComponent, ColumnFilterDialogComponent,
-        PageSizeSelectorComponent, ExportButtonComponent, PrintButtonDirective,
+        PageSizeSelectorComponent, ExportButtonDirective, PrintButtonDirective,
         MDatePipe, NgbPopover, NgbPopoverWindow
     ],
     exports: [
         GridComponent, ColumnHeaderComponent, GridSearchComponent,
         GridPagerComponent, GridPagerInfoComponent, ColumnFilterDialogComponent,
-        PageSizeSelectorComponent, ExportButtonComponent, PrintButtonDirective,
+        PageSizeSelectorComponent, ExportButtonDirective, PrintButtonDirective,
         MDatePipe, NgbPopover
     ],
     entryComponents: [

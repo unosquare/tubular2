@@ -1,5 +1,5 @@
 {
-  "version": "0.9.1",
+  "version": "0.9.2",
   "name": "tubular2",
   "license": "MIT",
   "repository": {
@@ -7,6 +7,10 @@
     "url": "https://github.com/unosquare/tubular2.git"
   },
   "main": "./dist/index.js",
+  "files":[
+    "dist/**/*",
+    "lib/**/*"
+  ],
   "scripts": {
     "pretest": "tsc && ts-npm-lint --fix-typings && tslint --type-check --project tsconfig.json lib/index.ts",
     "test": "gulp build-spec && karma start karma.conf.js",
