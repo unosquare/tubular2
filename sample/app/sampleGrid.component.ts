@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { MdDialog } from '@angular/material';
 
-import { GridComponent, GridTable, ColumnModel, ColumnFilterMode, DataType } from '@tubular2/tubular2';
+import { GridComponent, GridTable, ColumnModel, ColumnFilterMode, ColumnDataType } from '@tubular2/tubular2';
 import { OrderComponent } from './order.component';
 
 @Component({
@@ -24,11 +24,11 @@ export class SampleGrid extends GridTable {
 
         let dateColumn = new ColumnModel('ShippedDate', false);
         dateColumn.filterMode = ColumnFilterMode.DateTime;
-        dateColumn.dataType = DataType.DateTime;
+        dateColumn.dataType = ColumnDataType.DateTime;
 
         let creationDate = new ColumnModel('CreationDate', false);
         creationDate.filterMode = ColumnFilterMode.Date;
-        creationDate.dataType = DataType.Date;
+        creationDate.dataType = ColumnDataType.Date;
 
         let cityColumn = new ColumnModel('ShipperCity');
         cityColumn.filterMode = ColumnFilterMode.String;

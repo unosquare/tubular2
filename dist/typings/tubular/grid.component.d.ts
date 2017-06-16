@@ -4,21 +4,10 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ITubularSettingsProvider } from './tubular-settings.service';
 import { GridPageInfo } from './grid-page-info';
+import { GridSearchParameter } from './grid-request';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-export interface TbRequest {
-    count: number;
-    columns: any[];
-    skip: number;
-    take: number;
-    search: TbSearchParameter;
-    timezoneOffset: number;
-}
-export interface TbSearchParameter {
-    text: string;
-    operator: string;
-}
 export declare class GridComponent implements OnInit {
     private settingsProvider;
     private http;
@@ -34,14 +23,13 @@ export declare class GridComponent implements OnInit {
     freeTextSearch: BehaviorSubject<string>;
     pageSet: boolean;
     isLoading: boolean;
-    search: TbSearchParameter;
+    search: GridSearchParameter;
     private requestCount;
     dataUrl: string;
     requestMethod: string | RequestMethod;
     requestTimeout: number;
     beforeRequest: EventEmitter<any>;
     constructor(settingsProvider: ITubularSettingsProvider, http: Http);
-    testRemove(callback: any): void;
     goToPage(page: any): void;
     refresh(): void;
     getCurrentPage(): Observable<Response>;
@@ -51,6 +39,7 @@ export declare class GridComponent implements OnInit {
     getPageSettingValue(): any;
     getPageSizeSettingValue(): any;
     ngOnInit(): void;
+    private requestData(tbRequest);
     private transformSortDirection(column);
     private transformToObj(columns, data);
     private transformDataset(data, req);

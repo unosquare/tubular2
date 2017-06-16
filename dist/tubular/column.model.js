@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var DataType;
-(function (DataType) {
-    DataType[DataType["String"] = 1] = "String";
-    DataType[DataType["Number"] = 2] = "Number";
-    DataType[DataType["Boolean"] = 3] = "Boolean";
-    DataType[DataType["Date"] = 4] = "Date";
-    DataType[DataType["DateTime"] = 5] = "DateTime";
-    DataType[DataType["DateTimeUtc"] = 6] = "DateTimeUtc";
-})(DataType = exports.DataType || (exports.DataType = {}));
+var ColumnDataType;
+(function (ColumnDataType) {
+    ColumnDataType[ColumnDataType["String"] = 1] = "String";
+    ColumnDataType[ColumnDataType["Number"] = 2] = "Number";
+    ColumnDataType[ColumnDataType["Boolean"] = 3] = "Boolean";
+    ColumnDataType[ColumnDataType["Date"] = 4] = "Date";
+    ColumnDataType[ColumnDataType["DateTime"] = 5] = "DateTime";
+    ColumnDataType[ColumnDataType["DateTimeUtc"] = 6] = "DateTimeUtc";
+})(ColumnDataType = exports.ColumnDataType || (exports.ColumnDataType = {}));
 var ColumnSortDirection;
 (function (ColumnSortDirection) {
     ColumnSortDirection[ColumnSortDirection["None"] = 0] = "None";
@@ -34,7 +34,7 @@ class ColumnModel {
         this.sortOrder = 0;
         this.direction = ColumnSortDirection.None;
         this.visible = true;
-        this.dataType = DataType.String;
+        this.dataType = ColumnDataType.String;
         this.hasFilter = false;
         this.filterMode = ColumnFilterMode.None;
         this.filter = new ColumnFilter();

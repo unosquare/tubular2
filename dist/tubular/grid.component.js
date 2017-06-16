@@ -47,9 +47,6 @@ let GridComponent = class GridComponent {
         this.requestCount = 0;
         this.beforeRequest = new core_1.EventEmitter();
     }
-    testRemove(callback) {
-        this.http.request('/mock/api').map(callback);
-    }
     goToPage(page) {
         this.pageSet = true;
         this.page.next(page);
@@ -72,21 +69,7 @@ let GridComponent = class GridComponent {
             search: this.search,
             timezoneOffset: new Date().getTimezoneOffset()
         };
-        // transform direction values to strings
-        this.tbRequestRunning.columns.forEach(this.transformSortDirection);
-        let ngRequestOptions = new http_1.RequestOptions({
-            body: this.tbRequestRunning,
-            url: this.dataUrl,
-            method: this.requestMethod || 'POST',
-            withCredentials: false,
-            responseType: http_1.ResponseContentType.Json
-        });
-        this.beforeRequest.emit(ngRequestOptions);
-        let ngRequest = new http_1.Request(ngRequestOptions);
-        return this.http.request(ngRequest).map(response => {
-            this.isLoading = false;
-            return response.json();
-        });
+        return this.requestData(this.tbRequestRunning);
     }
     getFullDataSource() {
         let tbRequest = {
@@ -99,19 +82,7 @@ let GridComponent = class GridComponent {
                 operator: 'None'
             }
         };
-        let ngRequestOptions = new http_1.RequestOptions({
-            body: tbRequest,
-            url: this.dataUrl,
-            method: this.requestMethod || 'POST',
-            withCredentials: false,
-            responseType: http_1.ResponseContentType.Json
-        });
-        this.beforeRequest.emit(ngRequestOptions);
-        let ngRequest = new http_1.Request(ngRequestOptions);
-        return this.http.request(ngRequest).map(response => {
-            this.isLoading = false;
-            return response.json();
-        });
+        return this.requestData(tbRequest);
     }
     changePagesData() {
         if (this.settingsProvider != null) {
@@ -160,6 +131,23 @@ let GridComponent = class GridComponent {
         });
         this.goToPage(0);
     }
+    requestData(tbRequest) {
+        // transform direction values to strings
+        tbRequest.columns.forEach(this.transformSortDirection);
+        let ngRequestOptions = new http_1.RequestOptions({
+            body: tbRequest,
+            url: this.dataUrl,
+            method: this.requestMethod || 'POST',
+            withCredentials: false,
+            responseType: http_1.ResponseContentType.Json
+        });
+        this.beforeRequest.emit(ngRequestOptions);
+        let ngRequest = new http_1.Request(ngRequestOptions);
+        return this.http.request(ngRequest).map(response => {
+            this.isLoading = false;
+            return response.json();
+        });
+    }
     transformSortDirection(column) {
         switch (column.direction) {
             case column_model_1.ColumnSortDirection.Asc:
@@ -176,10 +164,10 @@ let GridComponent = class GridComponent {
         let obj = {};
         columns.forEach((column, key) => {
             obj[column.name] = data[key] || data[column.name];
-            if (column.dataType === column_model_1.DataType.DateTimeUtc) {
+            if (column.dataType === column_model_1.ColumnDataType.DateTimeUtc) {
                 obj[column.name] = moment.utc(obj[column.name]);
             }
-            if (column.dataType === column_model_1.DataType.Date || column.dataType === column_model_1.DataType.DateTime) {
+            if (column.dataType === column_model_1.ColumnDataType.Date || column.dataType === column_model_1.ColumnDataType.DateTime) {
                 obj[column.name] = moment(obj[column.name]);
             }
         });

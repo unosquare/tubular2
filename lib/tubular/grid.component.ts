@@ -2,32 +2,22 @@
     Component, Input, Output, EventEmitter,
     OnInit, Inject, Optional
 } from '@angular/core';
-import { RequestMethod, Http, RequestOptions, ResponseContentType, Request, Response } from '@angular/http';
+import { 
+    RequestMethod, Http, RequestOptions,
+    ResponseContentType, Request, Response
+} from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import * as moment from 'moment';
 
 import { SETTINGS_PROVIDER, ITubularSettingsProvider } from './tubular-settings.service';
-import { ColumnModel, DataType, ColumnSortDirection } from './column.model';
+import { ColumnModel, ColumnDataType, ColumnSortDirection } from './column.model';
 import { GridPageInfo } from './grid-page-info';
+import { GridRequest, GridSearchParameter } from './grid-request';
 
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-
-export interface TbRequest {
-    count: number,
-    columns: any[],
-    skip: number,
-    take: number,
-    search: TbSearchParameter,
-    timezoneOffset: number
-}
-
-export interface TbSearchParameter {
-    text: string,
-    operator: string
-}
 
 // TODO: Add animation to sortable
 @Component({
@@ -49,14 +39,13 @@ export interface TbSearchParameter {
     ]
 })
 export class GridComponent implements OnInit {
-
     // data is just observable and children can't push
     private data = new BehaviorSubject([]);
     public dataStream = this.data.asObservable();
     private _pageInfo = new BehaviorSubject(new GridPageInfo());
     public pageInfo = this._pageInfo.asObservable();
 
-    private tbRequestRunning: TbRequest;
+    private tbRequestRunning: GridRequest;
 
     public _pageSize = new BehaviorSubject(this.getPageSizeSettingValue());
     public pageSize = this._pageSize.asObservable();
@@ -69,7 +58,7 @@ export class GridComponent implements OnInit {
     pageSet = false;
 
     public isLoading = false;
-    public search = <TbSearchParameter>{
+    public search = <GridSearchParameter>{
         text: '',
         operator: 'None'
     };
@@ -88,10 +77,6 @@ export class GridComponent implements OnInit {
 
     }
 
-    public testRemove(callback) {
-        this.http.request('/mock/api').map(callback);
-    }
-
     public goToPage(page) {
         this.pageSet = true;
         this.page.next(page);
@@ -107,10 +92,9 @@ export class GridComponent implements OnInit {
     }
 
     public getCurrentPage(): Observable<Response> {
-
         this.isLoading = true;
 
-        this.tbRequestRunning = <TbRequest>{
+        this.tbRequestRunning = <GridRequest>{
             count: this.requestCount++,
             columns: this.columns.getValue(),
             skip: this.page.getValue() * this._pageSize.getValue(),
@@ -119,55 +103,22 @@ export class GridComponent implements OnInit {
             timezoneOffset: new Date().getTimezoneOffset()
         };
 
-        // transform direction values to strings
-        this.tbRequestRunning.columns.forEach(this.transformSortDirection);
-
-        let ngRequestOptions = new RequestOptions({
-            body: this.tbRequestRunning,
-            url: this.dataUrl,
-            method: this.requestMethod || 'POST',
-            withCredentials: false,
-            responseType: ResponseContentType.Json
-        });
-
-        this.beforeRequest.emit(ngRequestOptions);
-
-        let ngRequest = new Request(ngRequestOptions);
-
-        return this.http.request(ngRequest).map(response => {
-            this.isLoading = false;
-            return response.json();
-        });
+        return this.requestData(this.tbRequestRunning);
     }
 
     public getFullDataSource(): Observable<Response> {
-        let tbRequest = <TbRequest>{
+        let tbRequest = <GridRequest>{
             count: this.requestCount++,
             columns: this.columns.getValue(),
             skip: 0,
             take: -1,
-            search: {
+            search: <GridSearchParameter>{
                 text: '',
                 operator: 'None'
             }
         };
 
-        let ngRequestOptions = new RequestOptions({
-            body: tbRequest,
-            url: this.dataUrl,
-            method: this.requestMethod || 'POST',
-            withCredentials: false,
-            responseType: ResponseContentType.Json
-        });
-
-        this.beforeRequest.emit(ngRequestOptions);
-
-        let ngRequest = new Request(ngRequestOptions);
-
-        return this.http.request(ngRequest).map(response => {
-            this.isLoading = false;
-            return response.json();
-        });
+        return this.requestData(tbRequest);
     }
 
     changePagesData() {
@@ -227,6 +178,28 @@ export class GridComponent implements OnInit {
         this.goToPage(0);
     }
 
+    private requestData(tbRequest: GridRequest): Observable<Response> {
+        // transform direction values to strings
+        tbRequest.columns.forEach(this.transformSortDirection);
+
+        let ngRequestOptions = new RequestOptions({
+            body: tbRequest,
+            url: this.dataUrl,
+            method: this.requestMethod || 'POST',
+            withCredentials: false,
+            responseType: ResponseContentType.Json
+        });
+
+        this.beforeRequest.emit(ngRequestOptions);
+
+        let ngRequest = new Request(ngRequestOptions);
+
+        return this.http.request(ngRequest).map(response => {
+            this.isLoading = false;
+            return response.json();
+        });
+    }
+
     private transformSortDirection(column: ColumnModel) {
         switch (column.direction) {
             case ColumnSortDirection.Asc:
@@ -246,11 +219,11 @@ export class GridComponent implements OnInit {
         columns.forEach((column, key) => {
             obj[column.name] = data[key] || data[column.name];
 
-            if (column.dataType === DataType.DateTimeUtc) {
+            if (column.dataType === ColumnDataType.DateTimeUtc) {
                 obj[column.name] = moment.utc(obj[column.name]);
             }
 
-            if (column.dataType === DataType.Date || column.dataType === DataType.DateTime) {
+            if (column.dataType === ColumnDataType.Date || column.dataType === ColumnDataType.DateTime) {
                 obj[column.name] = moment(obj[column.name]);
             }
         });

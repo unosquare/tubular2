@@ -1,4 +1,4 @@
-﻿export enum DataType {
+﻿export enum ColumnDataType {
     String = 1,
     Number,
     Boolean,
@@ -36,7 +36,7 @@ export class ColumnModel {
     public sortOrder = 0;
     public direction = ColumnSortDirection.None;
     public visible = true;
-    public dataType = DataType.String;
+    public dataType = ColumnDataType.String;
     public hasFilter = false;
     public filterMode = ColumnFilterMode.None;
     public filter = new ColumnFilter();

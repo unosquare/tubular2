@@ -1,4 +1,4 @@
-export declare enum DataType {
+export declare enum ColumnDataType {
     String = 1,
     Number = 2,
     Boolean = 3,
@@ -32,7 +32,7 @@ export declare class ColumnModel {
     sortOrder: number;
     direction: ColumnSortDirection;
     visible: boolean;
-    dataType: DataType;
+    dataType: ColumnDataType;
     hasFilter: boolean;
     filterMode: ColumnFilterMode;
     filter: ColumnFilter;
