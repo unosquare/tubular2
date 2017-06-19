@@ -7,10 +7,11 @@ import { SETTINGS_PROVIDER, ITubularSettingsProvider } from './tubular-settings.
     selector: 'tb-grid-search',
     template: 
     `<div fxLayout="row" class="search-container">
-        <md-icon class="icon-gray">search</md-icon>
+        <md-icon (click)="inputField.focus()" class="icon-gray">search</md-icon>
         <input type="text" 
             [(ngModel)]="search"
             (ngModelChange)="setSearch($event)"
+            #inputField
             fxFlex
             placeholder="Search..." />
         <md-icon *ngIf="search" (click)="clearInput()" class="icon-gray">close</md-icon>
