@@ -1,12 +1,4 @@
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.Util = factory();
-  }
-}(this, function() {
+;(function () {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function toInteger(value) {
@@ -51,5 +43,5 @@ function regExpEscape(text) {
 }
 exports.regExpEscape = regExpEscape;
 
-return Util;
-}));
+this.tubular2 = util;
+}).call(this);

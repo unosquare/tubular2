@@ -1,12 +1,4 @@
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.Triggers = factory();
-  }
-}(this, function() {
+;(function () {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class Trigger {
@@ -61,5 +53,5 @@ function listenToTriggers(renderer, nativeElement, triggers, openFn, closeFn, to
 }
 exports.listenToTriggers = listenToTriggers;
 
-return Triggers;
-}));
+this.tubular2 = triggers;
+}).call(this);

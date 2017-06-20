@@ -1,12 +1,4 @@
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.Column-header.component = factory();
-  }
-}(this, function() {
+;(function () {
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -86,7 +78,7 @@ ColumnHeaderComponent = ColumnHeaderComponent_1 = __decorate([
         <div class="column-menu" [hidden]="column.filterMode == 0" 
             #popover="ngbPopover" [ngbPopover]="filterPopoverTemplate" 
             placement="bottom" popoverTitle="Filter" (click)="togglePopover()">
-            <md-icon>filter_list</md-icon>
+            <md-icon color="{{ hasFilter ? 'primary' : '' }}">filter_list</md-icon>
         </div>
     </div>`,
         styles: [
@@ -98,5 +90,5 @@ ColumnHeaderComponent = ColumnHeaderComponent_1 = __decorate([
 exports.ColumnHeaderComponent = ColumnHeaderComponent;
 var ColumnHeaderComponent_1;
 
-return Column-header.component;
-}));
+this.tubular2 = columnheader_component;
+}).call(this);

@@ -1,12 +1,4 @@
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.Popup = factory();
-  }
-}(this, function() {
+;(function () {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
@@ -58,5 +50,5 @@ class PopupService {
 }
 exports.PopupService = PopupService;
 
-return Popup;
-}));
+this.tubular2 = popup;
+}).call(this);

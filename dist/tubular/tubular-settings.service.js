@@ -1,12 +1,4 @@
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.Tubular-settings.service = factory();
-  }
-}(this, function() {
+;(function () {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
@@ -44,5 +36,5 @@ class TubularLocalStorageService {
 }
 exports.TubularLocalStorageService = TubularLocalStorageService;
 
-return Tubular-settings.service;
-}));
+this.tubular2 = tubularsettings_service;
+}).call(this);

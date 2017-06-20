@@ -8,7 +8,7 @@ var map = require("map-stream");
 var merge = require("merge2");
 var gulp = require('gulp');
 var Server = require('karma').Server;
-
+var path = require('path');
 var tsProject = ts.createProject('tsconfig.json');
 
 gulp.task('build-lib',
@@ -19,7 +19,13 @@ gulp.task('build-lib',
       [
         tsResult.dts.pipe(gulp.dest('dist/typings')),
         tsResult.js.pipe(gulp.dest('dist')),
-        tsResult.js.pipe(umd()).pipe(concat('tubular2.bundle.js')).pipe(gulp.dest('dist')),
+        tsResult.js.pipe(umd({
+          templateName: 'web',
+          namespace: file => 'tubular2',
+          exports: function(file) {
+            return path.basename(file.path, path.extname(file.path)).replace(/-/g, '').replace(/\./g, '_');
+        }
+        })).pipe(concat('tubular2.bundle.js')).pipe(gulp.dest('dist')),
       ]);
   });
 

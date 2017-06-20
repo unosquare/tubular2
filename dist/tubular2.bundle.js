@@ -1,12 +1,4 @@
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.Index = factory();
-  }
-}(this, function() {
+;(function () {
 "use strict";
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
@@ -14,18 +6,10 @@ function __export(m) {
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./tubular"));
 
-return Index;
-}));
+this.tubular2 = index;
+}).call(this);
 
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.Column-filter-dialog.component = factory();
-  }
-}(this, function() {
+;(function () {
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -136,18 +120,10 @@ ColumnFilterDialogComponent = __decorate([
 ], ColumnFilterDialogComponent);
 exports.ColumnFilterDialogComponent = ColumnFilterDialogComponent;
 
-return Column-filter-dialog.component;
-}));
+this.tubular2 = columnfilterdialog_component;
+}).call(this);
 
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.Column-header.component = factory();
-  }
-}(this, function() {
+;(function () {
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -227,7 +203,7 @@ ColumnHeaderComponent = ColumnHeaderComponent_1 = __decorate([
         <div class="column-menu" [hidden]="column.filterMode == 0" 
             #popover="ngbPopover" [ngbPopover]="filterPopoverTemplate" 
             placement="bottom" popoverTitle="Filter" (click)="togglePopover()">
-            <md-icon>filter_list</md-icon>
+            <md-icon color="{{ hasFilter ? 'primary' : '' }}">filter_list</md-icon>
         </div>
     </div>`,
         styles: [
@@ -239,18 +215,10 @@ ColumnHeaderComponent = ColumnHeaderComponent_1 = __decorate([
 exports.ColumnHeaderComponent = ColumnHeaderComponent;
 var ColumnHeaderComponent_1;
 
-return Column-header.component;
-}));
+this.tubular2 = columnheader_component;
+}).call(this);
 
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.Column.model = factory();
-  }
-}(this, function() {
+;(function () {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var ColumnDataType;
@@ -362,18 +330,10 @@ class ColumnModel {
 }
 exports.ColumnModel = ColumnModel;
 
-return Column.model;
-}));
+this.tubular2 = column_model;
+}).call(this);
 
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.Grid-export.directive = factory();
-  }
-}(this, function() {
+;(function () {
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -429,18 +389,10 @@ ExportButtonDirective = __decorate([
 ], ExportButtonDirective);
 exports.ExportButtonDirective = ExportButtonDirective;
 
-return Grid-export.directive;
-}));
+this.tubular2 = gridexport_directive;
+}).call(this);
 
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.Grid-page-info = factory();
-  }
-}(this, function() {
+;(function () {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class GridPageInfo {
@@ -455,18 +407,10 @@ class GridPageInfo {
 }
 exports.GridPageInfo = GridPageInfo;
 
-return Grid-page-info;
-}));
+this.tubular2 = gridpageinfo;
+}).call(this);
 
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.Grid-pager-info.component = factory();
-  }
-}(this, function() {
+;(function () {
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -512,18 +456,10 @@ GridPagerInfoComponent = __decorate([
 ], GridPagerInfoComponent);
 exports.GridPagerInfoComponent = GridPagerInfoComponent;
 
-return Grid-pager-info.component;
-}));
+this.tubular2 = gridpagerinfo_component;
+}).call(this);
 
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.Grid-pager.component = factory();
-  }
-}(this, function() {
+;(function () {
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -775,18 +711,10 @@ GridPagerComponent = __decorate([
 ], GridPagerComponent);
 exports.GridPagerComponent = GridPagerComponent;
 
-return Grid-pager.component;
-}));
+this.tubular2 = gridpager_component;
+}).call(this);
 
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.Grid-print.directive = factory();
-  }
-}(this, function() {
+;(function () {
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -833,33 +761,17 @@ PrintButtonDirective = __decorate([
 ], PrintButtonDirective);
 exports.PrintButtonDirective = PrintButtonDirective;
 
-return Grid-print.directive;
-}));
+this.tubular2 = gridprint_directive;
+}).call(this);
 
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.Grid-request = factory();
-  }
-}(this, function() {
+;(function () {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 
-return Grid-request;
-}));
+this.tubular2 = gridrequest;
+}).call(this);
 
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.Grid-search.component = factory();
-  }
-}(this, function() {
+;(function () {
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -896,30 +808,32 @@ let GridSearchComponent = class GridSearchComponent {
 GridSearchComponent = __decorate([
     core_1.Component({
         selector: 'tb-grid-search',
-        template: `<md-input-container>
-        <input mdInput #toSearch type="text"
-        [(ngModel)]="search"
-        (ngModelChange)="setSearch($event)"
-        placeholder="search..." />
-    </md-input-container>`
+        template: `<div fxLayout="row" class="search-container">
+        <md-icon (click)="inputField.focus()" class="icon-gray">search</md-icon>
+        <input type="text" 
+            [(ngModel)]="search"
+            (ngModelChange)="setSearch($event)"
+            #inputField
+            fxFlex
+            placeholder="Search..." />
+        <md-icon *ngIf="search" (click)="clearInput()" class="icon-gray">close</md-icon>
+    </div>`,
+        styles: [
+            ':host /deep/ input { border-width: 0; background-color: transparent; }',
+            ':host /deep/ input:focus { outline:none; }',
+            ':host /deep/ .search-container { border: 1px solid #CCC; padding: 6px;     box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12); position: relative; display: inline-flex; }',
+            ':host /deep/ .icon-gray { cursor: pointer; color: #CCC; }'
+        ]
     }),
     __param(0, core_1.Optional()), __param(0, core_1.Inject(tubular_settings_service_1.SETTINGS_PROVIDER)),
     __metadata("design:paramtypes", [Object, grid_component_1.GridComponent])
 ], GridSearchComponent);
 exports.GridSearchComponent = GridSearchComponent;
 
-return Grid-search.component;
-}));
+this.tubular2 = gridsearch_component;
+}).call(this);
 
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.Grid-table = factory();
-  }
-}(this, function() {
+;(function () {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const BehaviorSubject_1 = require("rxjs/BehaviorSubject");
@@ -975,18 +889,10 @@ class GridTable {
 }
 exports.GridTable = GridTable;
 
-return Grid-table;
-}));
+this.tubular2 = gridtable;
+}).call(this);
 
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.Grid.component = factory();
-  }
-}(this, function() {
+;(function () {
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1224,18 +1130,10 @@ GridComponent = __decorate([
 ], GridComponent);
 exports.GridComponent = GridComponent;
 
-return Grid.component;
-}));
+this.tubular2 = grid_component;
+}).call(this);
 
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.Http-options = factory();
-  }
-}(this, function() {
+;(function () {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 //import {ReflectiveInjector} from '@angular/core'
@@ -1257,18 +1155,10 @@ class HttpOptions extends http_1.BaseRequestOptions {
 }
 exports.HttpOptions = HttpOptions;
 
-return Http-options;
-}));
+this.tubular2 = httpoptions;
+}).call(this);
 
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.Index = factory();
-  }
-}(this, function() {
+;(function () {
 "use strict";
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
@@ -1291,18 +1181,10 @@ __export(require("./mdate.pipe"));
 __export(require("./http-options"));
 __export(require("./grid-print.directive"));
 
-return Index;
-}));
+this.tubular2 = index;
+}).call(this);
 
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.Mdate.pipe = factory();
-  }
-}(this, function() {
+;(function () {
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1326,18 +1208,10 @@ MDatePipe = __decorate([
 ], MDatePipe);
 exports.MDatePipe = MDatePipe;
 
-return Mdate.pipe;
-}));
+this.tubular2 = mdate_pipe;
+}).call(this);
 
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.Page-size-selector.component = factory();
-  }
-}(this, function() {
+;(function () {
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1395,18 +1269,10 @@ PageSizeSelectorComponent = __decorate([
 ], PageSizeSelectorComponent);
 exports.PageSizeSelectorComponent = PageSizeSelectorComponent;
 
-return Page-size-selector.component;
-}));
+this.tubular2 = pagesizeselector_component;
+}).call(this);
 
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.Popover = factory();
-  }
-}(this, function() {
+;(function () {
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1570,18 +1436,10 @@ NgbPopover = __decorate([
 ], NgbPopover);
 exports.NgbPopover = NgbPopover;
 
-return Popover;
-}));
+this.tubular2 = popover;
+}).call(this);
 
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.Popup = factory();
-  }
-}(this, function() {
+;(function () {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
@@ -1633,18 +1491,10 @@ class PopupService {
 }
 exports.PopupService = PopupService;
 
-return Popup;
-}));
+this.tubular2 = popup;
+}).call(this);
 
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.Positioning = factory();
-  }
-}(this, function() {
+;(function () {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class Positioning {
@@ -1775,18 +1625,10 @@ function positionElements(hostElement, targetElement, placement, appendToBody) {
 }
 exports.positionElements = positionElements;
 
-return Positioning;
-}));
+this.tubular2 = positioning;
+}).call(this);
 
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.Triggers = factory();
-  }
-}(this, function() {
+;(function () {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class Trigger {
@@ -1841,18 +1683,10 @@ function listenToTriggers(renderer, nativeElement, triggers, openFn, closeFn, to
 }
 exports.listenToTriggers = listenToTriggers;
 
-return Triggers;
-}));
+this.tubular2 = triggers;
+}).call(this);
 
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.Tubular-settings.service = factory();
-  }
-}(this, function() {
+;(function () {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
@@ -1890,18 +1724,10 @@ class TubularLocalStorageService {
 }
 exports.TubularLocalStorageService = TubularLocalStorageService;
 
-return Tubular-settings.service;
-}));
+this.tubular2 = tubularsettings_service;
+}).call(this);
 
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.Tubular.module = factory();
-  }
-}(this, function() {
+;(function () {
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1957,18 +1783,10 @@ TubularModule = __decorate([
 ], TubularModule);
 exports.TubularModule = TubularModule;
 
-return Tubular.module;
-}));
+this.tubular2 = tubular_module;
+}).call(this);
 
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.Util = factory();
-  }
-}(this, function() {
+;(function () {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function toInteger(value) {
@@ -2013,5 +1831,5 @@ function regExpEscape(text) {
 }
 exports.regExpEscape = regExpEscape;
 
-return Util;
-}));
+this.tubular2 = util;
+}).call(this);

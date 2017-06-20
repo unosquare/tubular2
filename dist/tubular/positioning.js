@@ -1,12 +1,4 @@
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.Positioning = factory();
-  }
-}(this, function() {
+;(function () {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class Positioning {
@@ -137,5 +129,5 @@ function positionElements(hostElement, targetElement, placement, appendToBody) {
 }
 exports.positionElements = positionElements;
 
-return Positioning;
-}));
+this.tubular2 = positioning;
+}).call(this);
