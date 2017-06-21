@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <base href="/">
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css">
+        body {
+            margin: 0;
+            font-family: Roboto, "Helvetica Neue", sans-serif;
+        }
+
+        table.md-table th.md-column md-icon.md-sort-icon {
+            color: rgba(0, 0, 0, .26);
+            opacity: 0;
+            transition: -webkit-transform .25s, opacity .25s;
+            transition: transform .25s, opacity .25s
+        }
+
+        table.md-table th.md-column md-icon.md-sort-icon.md-asc {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg)
+        }
+
+        table.md-table th.md-column md-icon.md-sort-icon.md-desc {
+            -webkit-transform: rotate(180deg);
+            transform: rotate(180deg)
+        }
+    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="/scripts/lib/materialcss/deeppurple-amber.css" />
+    <link rel="stylesheet" href="/scripts/lib/@tubular2/tubular/tubular.css" />
+
+    <script src="/scripts/lib/zone.js/zone.js"></script>
+
+    <title>Tubular2</title>
+</head>
+
+<body>
+    <my-app>
+        Loading...
+    </my-app>
+    <script src="/dist/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+{
+  "version": "1.0.0",
+  "name": "tubular2-sample",
+  "private": true,
+  "scripts": {},
+  "dependencies": {
+    "@angular/animations": "^4.2.2",
+    "@angular/common": "^4.2.2",
+    "@angular/compiler": "^4.2.2",
+    "@angular/core": "^4.2.2",
+    "@angular/flex-layout": "^2.0.0-beta.6",
+    "@angular/forms": "^4.2.2",
+    "@angular/http": "^4.2.2",
+    "@angular/material": "^2.0.0-beta.6",
+    "@angular/platform-browser": "^4.2.2",
+    "@angular/platform-browser-dynamic": "^4.2.2",
+    "@angular/router": "^4.2.2",
+    "@angular/upgrade": "^4.2.2",
+    "core-js": "^2.4.1",
+    "moment": "2.18.1",
+    "reflect-metadata": "^0.1.10",
+    "rxjs": "^5.4.0",
+    "zone.js": "^0.8.12"
+  },
+  "devDependencies": {
+    "@types/core-js": "^0.9.41",
+    "@types/file-saver": "^0.0.1",
+    "del": "3.0.0",
+    "gulp": "3.9.1",
+    "gulp-typescript": "^3.1.7",
+    "merge2": "1.0.3",
+    "ts-loader": "^2.1.0",
+    "typescript": "~2.3.4",
+    "webpack": "2.6.1",
+    "webpack-stream": "^3.2.0"
+  }
+}
