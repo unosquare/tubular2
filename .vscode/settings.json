@@ -8,7 +8,6 @@
         "**/*.d.ts": { "when": "$(basename).ts" },
         "node_modules" : true,
         "dist": true,
-        "sample/node_modules": true,
-        "sample/scripts/lib": true
+        "out-tsc": true
     }
 }
