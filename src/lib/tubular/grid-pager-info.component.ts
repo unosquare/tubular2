@@ -1,4 +1,4 @@
-﻿import { Component, Input, OnInit } from '@angular/core';
+﻿ import { Component, Input, OnInit } from '@angular/core';
 
 import { GridComponent } from './grid.component';
 import { GridPageInfo } from './grid-page-info';
@@ -7,7 +7,7 @@ import { GridPageInfo } from './grid-page-info';
     selector: 'tb-grid-pager-info',
     template:
     `<div>
-        Showing {{this.pageInfo.currentInitial}} to {{this.pageInfo.currentTop}} of {{pageInfo.filteredRecordCount}} records 
+        Showing {{this.pageInfo.currentInitial}} to {{this.pageInfo.currentTop}} of {{pageInfo.filteredRecordCount}} records
         <span [hidden]="!filtered">(Filtered from {{pageInfo.totalRecordCount}} total records)</span>
     </div>`,
     styles: [

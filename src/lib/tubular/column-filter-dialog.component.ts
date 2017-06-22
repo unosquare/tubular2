@@ -1,4 +1,4 @@
-﻿import { Component, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
+﻿ import { Component, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ColumnModel } from './column.model';
 
@@ -6,8 +6,8 @@ import { ColumnModel } from './column.model';
     selector: 'tb-filter-dialog',
     template: `
    <form [formGroup]="form" (ngSubmit)="submit()">
-        <md-select placeholder="Operator" 
-            formControlName="operator" 
+        <md-select placeholder="Operator"
+            formControlName="operator"
             (change)="selectChange($event.value)">
             <md-option *ngFor="let operator of operators" [value]="operator.value">
                 {{operator.name}}
@@ -15,7 +15,7 @@ import { ColumnModel } from './column.model';
         </md-select>
         <md-input-container>
             <input mdInput
-                type="{{inputType}}" formControlName="text" 
+                type="{{inputType}}" formControlName="text"
                 placeholder="Value" />
         </md-input-container>
         <md-input-container *ngIf="isBetween">

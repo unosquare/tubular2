@@ -1,14 +1,14 @@
-﻿import { Component, Inject, Optional, OnInit } from '@angular/core';
+﻿ import { Component, Inject, Optional, OnInit } from '@angular/core';
 
 import { GridComponent }           from './grid.component';
 import { SETTINGS_PROVIDER, ITubularSettingsProvider } from './tubular-settings.service';
 
 @Component({
     selector: 'tb-grid-search',
-    template: 
+    template:
     `<div fxLayout="row" class="search-container">
         <md-icon (click)="inputField.focus()" class="icon-gray">search</md-icon>
-        <input type="text" 
+        <input type="text"
             [(ngModel)]="search"
             (ngModelChange)="setSearch($event)"
             #inputField

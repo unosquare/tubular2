@@ -1,4 +1,4 @@
-﻿import { Component, Input } from '@angular/core';
+﻿ import { Component, Input } from '@angular/core';
 import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
@@ -15,7 +15,7 @@ export abstract class GridTable {
     constructor(public tbGrid: GridComponent) {
         this.columns = this.columnObservable.asObservable();
         this.tbGrid.dataStream.subscribe((payload) => {
-            this.rows = payload
+            this.rows = payload;
             this.isEmpty = !this.rows || this.rows.length === 0;
         });
         this.columnObservable.subscribe((payload) => this.tbGrid.columns.next(payload));
@@ -23,14 +23,14 @@ export abstract class GridTable {
 
     public addColumns(columns: ColumnModel[]) {
         columns.forEach((c) => {
-            let val = this.columnObservable.getValue();
+            const val = this.columnObservable.getValue();
             val.push(c);
             this.columnObservable.next(val);
         });
     }
 
     public sort(column: ColumnModel) {
-        let value = this.columnObservable.getValue();
+        const value = this.columnObservable.getValue();
 
         if (!column.sortable) {
             return;
@@ -55,7 +55,7 @@ export abstract class GridTable {
                     ColumnSortDirection.None);
         }
 
-        let currentlySortedColumns = value.filter((col) => col.sortOrder > 0);
+        const currentlySortedColumns = value.filter((col) => col.sortOrder > 0);
         currentlySortedColumns.sort((a, b) => a.sortOrder === b.sortOrder ? 0 : 1);
         currentlySortedColumns.forEach((col, index) => { col.sortOrder = index + 1; });
 
@@ -63,7 +63,7 @@ export abstract class GridTable {
     }
 
     public applyFilter(column: ColumnModel) {
-        let val = this.columnObservable.getValue();
+        const val = this.columnObservable.getValue();
         this.columnObservable.next(val);
     }
 }

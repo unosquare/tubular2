@@ -1,6 +1,6 @@
 import { Component, OnInit, Injectable, Inject, Optional } from '@angular/core';
 import { Http, RequestOptions, RequestOptionsArgs, Headers} from '@angular/http';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { SETTINGS_PROVIDER, ITubularSettingsProvider } from '@tubular2/tubular2';
@@ -39,25 +39,25 @@ export class LoginComponent implements OnInit {
     }
 
     onSubmit(data) {
-        let username = data.value.username;
-        let password = data.value.password;
+        const username = data.value.username;
+        const password = data.value.password;
 
-        let requestArgs = <RequestOptionsArgs>{
+        const requestArgs = {
             headers: new Headers(
                 {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 })
-        }
+        } as RequestOptionsArgs;
 
         this.http.post('http://tubular.azurewebsites.net/api/token', `grant_type=password&username=${username}&password=${password}`, requestArgs)
             .map((data) => this.handleSuccessCallback(data))
             .subscribe(
-            data => {
-                console.log("Authenticated", data);
+            (data) => {
+                console.log('Authenticated', data);
                 this.router.navigate(['/exp']);
             },
-            error => {
-                let errorJson = error.json();
+            (error) => {
+                const errorJson = error.json();
                 alert(error.status + ' - ' + errorJson.error_description);
                 this.router.navigate(['/login']);
             }

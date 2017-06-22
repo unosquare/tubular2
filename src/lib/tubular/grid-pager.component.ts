@@ -1,4 +1,4 @@
-﻿import { Component, Input, Output, OnInit, OnChanges, SimpleChanges, EventEmitter } from '@angular/core';
+﻿ import { Component, Input, Output, OnInit, OnChanges, SimpleChanges, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { GridComponent } from './grid.component';
@@ -8,7 +8,7 @@ import { getValueInRange, isNumber } from './util';
 // TODO: Refactor to match with GridPageInfo
 @Component({
     selector: 'tb-grid-pager',
-    host: { 'role': 'navigation' },
+    host: { role: 'navigation' },
     template: `
     <div class="tubular-pager">
         <md-button-toggle-group>
@@ -18,11 +18,11 @@ import { getValueInRange, isNumber } from './util';
             <md-button-toggle value="previous" [disabled]="!hasPrevious() || disabled" (click)="!!selectPage(page-1)" [attr.tabindex]="(hasPrevious() ? null : '-1')">
                 <md-icon>chevron_left</md-icon>
             </md-button-toggle>
-            <md-button-toggle 
-                *ngFor="let pageNumber of pages" 
-                value="{{pageNumber}}" 
-                (click)="selectPage(pageNumber)" 
-                [checked]="pageNumber === page" 
+            <md-button-toggle
+                *ngFor="let pageNumber of pages"
+                value="{{pageNumber}}"
+                (click)="selectPage(pageNumber)"
+                [checked]="pageNumber === page"
                 [disabled]="(isEllipsis(pageNumber) || disabled) ? 'disabled': null">
                 {{ (isEllipsis(pageNumber) ? "..." : pageNumber) }}
             </md-button-toggle>
@@ -104,17 +104,17 @@ export class GridPagerComponent implements OnInit, OnChanges {
     }
 
     public ngOnInit() {
-        this.tbGrid.page.subscribe(page => {
-            let requireUpdate = this.page !== (page + 1);
+        this.tbGrid.page.subscribe((page) => {
+            const requireUpdate = this.page !== (page + 1);
             if (requireUpdate)
-                this.selectPage(page + 1)
+                this.selectPage(page + 1);
         });
-        this.tbGrid.pageSize.subscribe(pageSize => {
-            let requireUpdate = this.pageSize !== pageSize;
+        this.tbGrid.pageSize.subscribe((pageSize) => {
+            const requireUpdate = this.pageSize !== pageSize;
             this.pageSize = pageSize;
             if (requireUpdate)
                 this._updatePages(this.page);
-        })
+        });
         this.tbGrid.pageInfo.subscribe((x: GridPageInfo) => {
 
             if (x.filteredRecordCount != this.collectionSize.getValue()) {
@@ -122,7 +122,7 @@ export class GridPagerComponent implements OnInit, OnChanges {
                 this.selectPage(x.currentPage);
             }
 
-            this.collectionSize.next(x.filteredRecordCount)
+            this.collectionSize.next(x.filteredRecordCount);
         });
     }
 
@@ -140,8 +140,8 @@ export class GridPagerComponent implements OnInit, OnChanges {
     /**
      * @internal
      */
-    isEllipsis(pageNumber): boolean { 
-        return pageNumber === -1; 
+    isEllipsis(pageNumber): boolean {
+        return pageNumber === -1;
     }
 
     /**
@@ -175,8 +175,8 @@ export class GridPagerComponent implements OnInit, OnChanges {
     private _applyRotation(): [number, number] {
         let start = 0;
         let end = this.pageCount;
-        let leftOffset = Math.floor(this.maxSize / 2);
-        let rightOffset = this.maxSize % 2 === 0 ? leftOffset - 1 : leftOffset;
+        const leftOffset = Math.floor(this.maxSize / 2);
+        const rightOffset = this.maxSize % 2 === 0 ? leftOffset - 1 : leftOffset;
 
         if (this.page <= leftOffset) {
             // very beginning, no rotation -> [0..maxSize]
@@ -197,9 +197,9 @@ export class GridPagerComponent implements OnInit, OnChanges {
      * Paginates page numbers based on maxSize items per page
      */
     private _applyPagination(): [number, number] {
-        let page = Math.ceil(this.page / this.maxSize) - 1;
-        let start = page * this.maxSize;
-        let end = start + this.maxSize;
+        const page = Math.ceil(this.page / this.maxSize) - 1;
+        const start = page * this.maxSize;
+        const end = start + this.maxSize;
 
         return [start, end];
     }

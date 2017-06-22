@@ -1,8 +1,8 @@
-﻿import {
+﻿ import {
     Component, Input, Output, EventEmitter,
     OnInit, Inject, Optional
 } from '@angular/core';
-import { 
+import {
     RequestMethod, Http, RequestOptions,
     ResponseContentType, Request, Response
 } from '@angular/http';
@@ -58,10 +58,10 @@ export class GridComponent implements OnInit {
     pageSet = false;
 
     public isLoading = false;
-    public search = <GridSearchParameter>{
+    public search = {
         text: '',
         operator: 'None'
-    };
+    } as GridSearchParameter;
 
     private requestCount = 0;
 
@@ -86,7 +86,7 @@ export class GridComponent implements OnInit {
         if (this.pageSet && this.columns.getValue().length > 0 && this._pageSize.getValue() > 0) {
             this.getCurrentPage()
                 .subscribe((data: any) => {
-                    this.transformDataset(data, this.tbRequestRunning)
+                    this.transformDataset(data, this.tbRequestRunning);
                 });
         }
     }
@@ -94,29 +94,29 @@ export class GridComponent implements OnInit {
     public getCurrentPage(): Observable<Response> {
         this.isLoading = true;
 
-        this.tbRequestRunning = <GridRequest>{
+        this.tbRequestRunning = {
             count: this.requestCount++,
             columns: this.columns.getValue(),
             skip: this.page.getValue() * this._pageSize.getValue(),
             take: this._pageSize.getValue(),
             search: this.search,
             timezoneOffset: new Date().getTimezoneOffset()
-        };
+        } as GridRequest;
 
         return this.requestData(this.tbRequestRunning);
     }
 
     public getFullDataSource(): Observable<Response> {
-        let tbRequest = <GridRequest>{
+        const tbRequest = {
             count: this.requestCount++,
             columns: this.columns.getValue(),
             skip: 0,
             take: -1,
-            search: <GridSearchParameter>{
+            search: {
                 text: '',
                 operator: 'None'
-            }
-        };
+            } as GridSearchParameter
+        } as GridRequest;
 
         return this.requestData(tbRequest);
     }
@@ -135,7 +135,7 @@ export class GridComponent implements OnInit {
 
     getPageSettingValue() {
         if (this.settingsProvider != null) {
-            return this.settingsProvider.get("gridPage") || 0;
+            return this.settingsProvider.get('gridPage') || 0;
         }
 
         return 0;
@@ -143,7 +143,7 @@ export class GridComponent implements OnInit {
 
     getPageSizeSettingValue() {
         if (this.settingsProvider != null) {
-            return this.settingsProvider.get("gridPageSize") || 10;
+            return this.settingsProvider.get('gridPageSize') || 10;
         }
 
         return 10;
@@ -182,7 +182,7 @@ export class GridComponent implements OnInit {
         // transform direction values to strings
         tbRequest.columns.forEach(this.transformSortDirection);
 
-        let ngRequestOptions = new RequestOptions({
+        const ngRequestOptions = new RequestOptions({
             body: tbRequest,
             url: this.dataUrl,
             method: this.requestMethod || 'POST',
@@ -192,9 +192,9 @@ export class GridComponent implements OnInit {
 
         this.beforeRequest.emit(ngRequestOptions);
 
-        let ngRequest = new Request(ngRequestOptions);
+        const ngRequest = new Request(ngRequestOptions);
 
-        return this.http.request(ngRequest).map(response => {
+        return this.http.request(ngRequest).map((response) => {
             this.isLoading = false;
             return response.json();
         });
@@ -214,7 +214,7 @@ export class GridComponent implements OnInit {
     }
 
     private transformToObj(columns: ColumnModel[], data: any) {
-        let obj = {};
+        const obj = {};
 
         columns.forEach((column, key) => {
             obj[column.name] = data[key] || data[column.name];
@@ -232,12 +232,12 @@ export class GridComponent implements OnInit {
     }
 
     private transformDataset(data, req) {
-        let transform = (d) => this.transformToObj(req.columns, d);
-        let payload = (data.Payload || {}).map(transform);
+        const transform = (d) => this.transformToObj(req.columns, d);
+        const payload = (data.Payload || {}).map(transform);
         // push data
         this.data.next(payload);
 
-        let pageInfo = new GridPageInfo();
+        const pageInfo = new GridPageInfo();
         pageInfo.currentPage = data.CurrentPage;
         pageInfo.totalPages = data.TotalPages;
         pageInfo.filteredRecordCount = data.FilteredRecordCount;

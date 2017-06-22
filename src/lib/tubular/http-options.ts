@@ -12,6 +12,6 @@ export class HttpOptions extends BaseRequestOptions {
     //     this.headers = new Headers({ 'Authorization': dataService.getToken() })
     // }
 
-    //The is try to use Injector 
-    headers: Headers = new Headers({ 'Authorization': JSON.parse(localStorage.getItem('auth_Header'))});
+    //The is try to use Injector
+    headers: Headers = new Headers({ Authorization: JSON.parse(localStorage.getItem('auth_Header'))});
 }

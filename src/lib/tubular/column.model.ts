@@ -1,4 +1,4 @@
-﻿export enum ColumnDataType {
+﻿ export enum ColumnDataType {
     String = 1,
     Number,
     Boolean,

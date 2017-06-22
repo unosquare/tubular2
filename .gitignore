@@ -257,16 +257,17 @@ paket-files/
 *.sln.iml
 
 # Typescript
-/sample/scripts/lib
-/sample/app/*.js
-/sample/tubular/*.js
+/src/sample/scripts/lib
+/src/sample/app/*.js
+/src/sample/tubular/*.js
 *.js.map
-/sample/build
-/sample/dist
+/src/sample/build
+/src/sample/dist
 /test/e2e/*.js
-/lib/*.js
+/src/lib/*.js
 coverage/
 temp/
 /.vscode/launch.json
 /.vscode/tasks.json
 package-lock.json
+/fix

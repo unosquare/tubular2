@@ -1,4 +1,4 @@
-﻿import { NgModule } from '@angular/core';
+﻿ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -19,8 +19,8 @@ import { OrderComponent } from './order.component';
 
 @NgModule({
     imports: [
-        BrowserModule, 
-        FormsModule, 
+        BrowserModule,
+        FormsModule,
         ReactiveFormsModule,
         AppRoutingModule,
         FlexLayoutModule,
@@ -29,7 +29,7 @@ import { OrderComponent } from './order.component';
         TubularModule
     ],
     declarations: [
-        AppComponent, SampleGrid, MainGridComponent, 
+        AppComponent, SampleGrid, MainGridComponent,
         LoginComponent, OrderComponent
     ],
     entryComponents: [OrderComponent],

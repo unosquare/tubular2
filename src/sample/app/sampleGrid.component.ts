@@ -1,4 +1,4 @@
-﻿import { Component, Input, EventEmitter } from '@angular/core';
+﻿ import { Component, Input, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MdDialog } from '@angular/material';
@@ -16,21 +16,21 @@ export class SampleGrid extends GridTable {
     constructor(public tbGrid: GridComponent, public dialog: MdDialog, private router: Router) {
         super(tbGrid);
 
-        let orderIdColumn = new ColumnModel('OrderID', false);
+        const orderIdColumn = new ColumnModel('OrderID', false);
         orderIdColumn.filterMode = ColumnFilterMode.Number;
 
-        let customerColumn = new ColumnModel('CustomerName');
+        const customerColumn = new ColumnModel('CustomerName');
         customerColumn.filterMode = ColumnFilterMode.String;
 
-        let dateColumn = new ColumnModel('ShippedDate', false);
+        const dateColumn = new ColumnModel('ShippedDate', false);
         dateColumn.filterMode = ColumnFilterMode.DateTime;
         dateColumn.dataType = ColumnDataType.DateTime;
 
-        let creationDate = new ColumnModel('CreationDate', false);
+        const creationDate = new ColumnModel('CreationDate', false);
         creationDate.filterMode = ColumnFilterMode.Date;
         creationDate.dataType = ColumnDataType.Date;
 
-        let cityColumn = new ColumnModel('ShipperCity');
+        const cityColumn = new ColumnModel('ShipperCity');
         cityColumn.filterMode = ColumnFilterMode.String;
 
         this.addColumns([

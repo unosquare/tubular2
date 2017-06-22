@@ -1,15 +1,15 @@
-import { ColumnFilterMode } from './column.model'
-import { ColumnModel } from './column.model'
+import { ColumnFilterMode } from './column.model';
+import { ColumnModel } from './column.model';
 
 describe('Column Model', () => {
-    let columnModel:            ColumnModel;
+    let columnModel: ColumnModel;
 
     beforeAll(() => {
         columnModel = new ColumnModel('mock', false, false);
     });
 
     describe('constructor', () => {
-        
+
         it('should not be searchable', () => {
             expect(columnModel.searchable).toBeFalsy();
         });
@@ -23,32 +23,32 @@ describe('Column Model', () => {
 
         it('should be number', () => {
             columnModel.filterMode = ColumnFilterMode.Number;
-            expect(columnModel.getInputType()).toBe("number");
+            expect(columnModel.getInputType()).toBe('number');
         });
 
         it('should be date', () => {
             columnModel.filterMode = ColumnFilterMode.Date;
-            expect(columnModel.getInputType()).toBe("date");
+            expect(columnModel.getInputType()).toBe('date');
         });
 
         it('should be datetime-local', () => {
             columnModel.filterMode = ColumnFilterMode.DateTime;
-            expect(columnModel.getInputType()).toBe("datetime-local");
+            expect(columnModel.getInputType()).toBe('datetime-local');
         });
 
         it('should be text', () => {
             columnModel.filterMode = ColumnFilterMode.None;
-            expect(columnModel.getInputType()).toBe("text");
+            expect(columnModel.getInputType()).toBe('text');
             columnModel.filterMode = ColumnFilterMode.String;
-            expect(columnModel.getInputType()).toBe("text");
+            expect(columnModel.getInputType()).toBe('text');
             columnModel.filterMode = ColumnFilterMode.Boolean;
-            expect(columnModel.getInputType()).toBe("text");
+            expect(columnModel.getInputType()).toBe('text');
         });
     });
 
-    describe('get Operators', () =>{
+    describe('get Operators', () => {
         let operators;
-        
+
         it('by String', () => {
             columnModel.filterMode = ColumnFilterMode.String;
             operators = columnModel.getOperators();

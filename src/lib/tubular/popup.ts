@@ -50,7 +50,7 @@ export class PopupService<T> {
     if (!content) {
       return new ContentRef([]);
     } else if (content instanceof TemplateRef) {
-      const viewRef = this._viewContainerRef.createEmbeddedView(<TemplateRef<T>>content, context);
+      const viewRef = this._viewContainerRef.createEmbeddedView(content as TemplateRef<T>, context);
       return new ContentRef([viewRef.rootNodes], viewRef);
     } else {
       return new ContentRef([[this._renderer.createText(`${content}`)]]);

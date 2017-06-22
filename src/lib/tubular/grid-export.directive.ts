@@ -1,4 +1,4 @@
-﻿import { Directive, Input, HostListener } from '@angular/core';
+﻿ import { Directive, Input, HostListener } from '@angular/core';
 import { GridComponent } from './grid.component';
 
 @Directive({
@@ -23,7 +23,7 @@ export class ExportButtonDirective {
 
     private saveAs(blob) {
           const fileURL = window.URL.createObjectURL(blob);
-          const downloadLink = window.document.createElement("a");
+          const downloadLink = window.document.createElement('a');
 
           downloadLink.href = fileURL;
           downloadLink.download = this.fileName || 'export.csv';

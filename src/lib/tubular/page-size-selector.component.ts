@@ -1,4 +1,4 @@
-﻿import { Component, Input } from '@angular/core';
+﻿ import { Component, Input } from '@angular/core';
 import { Observable }       from 'rxjs/Observable';
 import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
 

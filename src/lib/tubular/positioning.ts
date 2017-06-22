@@ -6,10 +6,10 @@ export class Positioning {
   }
 
   private offsetParent(element: HTMLElement): HTMLElement {
-    let offsetParentEl = <HTMLElement>element.offsetParent || document.documentElement;
+    let offsetParentEl = element.offsetParent as HTMLElement || document.documentElement;
 
     while (offsetParentEl && offsetParentEl !== document.documentElement && this.isStaticPositioned(offsetParentEl)) {
-      offsetParentEl = <HTMLElement>offsetParentEl.offsetParent;
+      offsetParentEl = offsetParentEl.offsetParent as HTMLElement;
     }
 
     return offsetParentEl || document.documentElement;
@@ -56,7 +56,7 @@ export class Positioning {
       left: window.pageXOffset - document.documentElement.clientLeft
     };
 
-    let elOffset = {
+    const elOffset = {
       height: elBcr.height || element.offsetHeight,
       width: elBcr.width || element.offsetWidth,
       top: elBcr.top + viewportOffset.top,
@@ -84,7 +84,7 @@ export class Positioning {
     const placementPrimary = placement.split('-')[0] || 'top';
     const placementSecondary = placement.split('-')[1] || 'center';
 
-    let targetElPosition: ClientRect = {
+    const targetElPosition: ClientRect = {
       height: targetElBCR.height || targetElement.offsetHeight,
       width: targetElBCR.width || targetElement.offsetWidth,
       top: 0,

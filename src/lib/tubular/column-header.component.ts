@@ -1,4 +1,4 @@
-﻿import {
+﻿ import {
     Component, Input, Output, EventEmitter,
     ContentChild, TemplateRef, ViewChild, AfterViewInit
 } from '@angular/core';
@@ -10,13 +10,13 @@ import { ColumnModel } from './column.model';
     selector: 'tb-column-header',
     template: `
     <div class="column-header">
-        <span 
+        <span
             [ngClass]="{sortable: column.sortable, sortNone: column.direction == 0, sortAsc: column.direction == 1, sortDesc: column.direction == 2}"
             (click)="sort($event)">
             {{column.label}}
         </span>
-        <div class="column-menu" [hidden]="column.filterMode == 0" 
-            #popover="ngbPopover" [ngbPopover]="filterPopoverTemplate" 
+        <div class="column-menu" [hidden]="column.filterMode == 0"
+            #popover="ngbPopover" [ngbPopover]="filterPopoverTemplate"
             placement="bottom" popoverTitle="Filter" (click)="togglePopover()">
             <md-icon color="{{ hasFilter ? 'primary' : '' }}">filter_list</md-icon>
         </div>
