@@ -99,6 +99,7 @@ export class GridComponent implements OnInit {
             columns: this.columns.getValue(),
             skip: 0,
             take: -1,
+            timezoneOffset: new Date().getTimezoneOffset(),
             search: {
                 text: '',
                 operator: 'None'
@@ -141,12 +142,12 @@ export class GridComponent implements OnInit {
         this.dataStream.subscribe((p) => console.log('New data', p));
 
         // subscriptions to events
-        this.pageSize.subscribe((c) => {
+        this.pageSize.subscribe(() => {
             this.refresh();
             this.changePageSizeData();
         });
-        this.columns.subscribe((c) => this.refresh());
-        this.page.subscribe((c) => {
+        this.columns.subscribe(() => this.refresh());
+        this.page.subscribe(() => {
             this.refresh();
             this.changePagesData();
         });
