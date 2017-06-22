@@ -6,7 +6,7 @@ import {sync as glob} from 'glob';
 
 /** Finds all JavaScript files in a directory and inlines all resources of Angular components. */
 export function inlineResourcesForDirectory(folderPath: string) {
-  glob(join(folderPath, '**/*.js')).forEach(filePath => inlineResources(filePath));
+  glob(join(folderPath, '**/*.js')).forEach((filePath) => inlineResources(filePath));
 }
 
 /** Inlines the external resources of Angular components of a file. */
@@ -37,8 +37,8 @@ function inlineStyles(fileContent: string, filePath: string) {
     const styleUrls = eval(styleUrlsValue) as string[];
 
     const styleContents = styleUrls
-      .map(url => join(dirname(filePath), url))
-      .map(path => loadResourceFile(path));
+      .map((url) => join(dirname(filePath), url))
+      .map((path) => loadResourceFile(path));
 
     return `styles: ["${styleContents.join(' ')}"]`;
   });

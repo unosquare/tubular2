@@ -9,7 +9,6 @@ import * as minimist from 'minimist';
 
 /** Packages that will be published to NPM by the release task. */
 export const releasePackages = [
-  'cdk',
   'material',
 ];
 
@@ -19,7 +18,7 @@ const argv = minimist(process.argv.slice(3));
 /** Task that builds all releases that will be published. */
 task(':publish:build-releases', sequenceTask(
   'clean',
-  releasePackages.map(packageName => `${packageName}:build-release`)
+  releasePackages.map((packageName) => `${packageName}:build-release`)
 ));
 
 /** Make sure we're logged in. */
@@ -29,7 +28,6 @@ task(':publish:whoami', execTask('npm', ['whoami'], {
 }));
 
 task(':publish:logout', execTask('npm', ['logout']));
-
 
 function _execNpmPublish(label: string, packageName: string): Promise<{}> {
   const packageDir = join(buildConfig.outputDir, 'releases', packageName);

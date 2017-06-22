@@ -25,7 +25,7 @@ export async function buildPackageBundles(entryFile: string, packageName: string
 
   // Build FESM-2015 bundle file.
   await createRollupBundle({
-    moduleName: moduleName,
+    moduleName,
     entry: entryFile,
     dest: fesm2015File,
     format: 'es',
@@ -45,7 +45,7 @@ export async function buildPackageBundles(entryFile: string, packageName: string
 
   // Create UMD bundle of FESM-2014 output.
   await createRollupBundle({
-    moduleName: moduleName,
+    moduleName,
     entry: fesm2014File,
     dest: umdFile,
     format: 'umd'

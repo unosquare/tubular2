@@ -35,7 +35,6 @@ export function inlineMetadataResources(metadata: any, componentResources: Map<s
   }
 }
 
-
 /** Inlines HTML and CSS resources into `metadata.json` files. */
 export function inlinePackageMetadataFiles(packagePath: string) {
   // Create a map of fileName -> fullFilePath. This is needed because the templateUrl and
@@ -43,13 +42,13 @@ export function inlinePackageMetadataFiles(packagePath: string) {
   // and the resources live in the same directory.
   const componentResources = new Map<string, string>();
 
-  glob(join(packagePath, '**/*.+(html|css)')).forEach(resourcePath => {
+  glob(join(packagePath, '**/*.+(html|css)')).forEach((resourcePath) => {
     componentResources.set(basename(resourcePath), resourcePath);
   });
 
   // Find all metadata files. For each one, parse the JSON content, inline the resources, and
   // reserialize and rewrite back to the original location.
-  glob(join(packagePath, '**/*.metadata.json')).forEach(path => {
+  glob(join(packagePath, '**/*.metadata.json')).forEach((path) => {
     const metadata = JSON.parse(readFileSync(path, 'utf-8'));
     inlineMetadataResources(metadata, componentResources);
     writeFileSync(path , JSON.stringify(metadata), 'utf-8');

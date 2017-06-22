@@ -75,7 +75,7 @@ task('markdown-docs', () => {
         highlight: (code: string, language: string) => {
           if (language) {
             // highlight.js expects "typescript" written out, while Github supports "ts".
-            let lang = language.toLowerCase() === 'ts' ? 'typescript' : language;
+            const lang = language.toLowerCase() === 'ts' ? 'typescript' : language;
             return hljs.highlight(lang, code).value;
           }
 
@@ -98,7 +98,7 @@ task('highlight-examples', () => {
     path.basename = `${path.basename}-${extension}`;
   };
 
-  return src('src/material-examples/**/*.+(html|css|ts)')
+  return src('src/sample/**/*.+(html|css|ts)')
       .pipe(flatten())
       .pipe(rename(renameFile))
       .pipe(highlight())
@@ -121,7 +121,7 @@ task('minified-api-docs', ['api-docs'], () => {
 
 /** Copies example sources to be used as plunker assets for the docs site. */
 task('plunker-example-assets', () => {
-  src(path.join(packagesDir, 'material-examples', '**/*'))
+  src(path.join(packagesDir, 'sample', '**/*'))
       .pipe(dest(path.join(DIST_DOCS, 'plunker', 'examples')));
 });
 
@@ -154,7 +154,7 @@ function fixMarkdownDocLinks(link: string, filePath: string): string {
     return link;
   }
 
-  let baseName = path.basename(link, path.extname(link));
+  const baseName = path.basename(link, path.extname(link));
 
   // Temporary link the file to the /guide URL because that's the route where the
   // guides can be loaded in the Material docs.
@@ -168,8 +168,8 @@ function fixMarkdownDocLinks(link: string, filePath: string): string {
  */
 function createTagNameAliaser(classPrefix: string) {
   return function() {
-    MARKDOWN_TAGS_TO_CLASS_ALIAS.forEach(tag => {
-      for (let el of this.querySelectorAll(tag)) {
+    MARKDOWN_TAGS_TO_CLASS_ALIAS.forEach((tag) => {
+      for (const el of this.querySelectorAll(tag)) {
         el.classList.add(`${classPrefix}-${tag}`);
       }
     });

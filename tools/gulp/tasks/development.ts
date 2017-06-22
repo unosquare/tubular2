@@ -18,7 +18,7 @@ const materialOutPath = join(outputDir, 'packages', 'material');
 
 /** Array of vendors that are required to serve the demo-app. */
 const appVendors = [
-  '@angular', 'systemjs', 'zone.js', 'rxjs', 'hammerjs', 'core-js', 'web-animations-js'
+  '@angular', 'systemjs', 'zone.js', 'rxjs', 'core-js', 'web-animations-js'
 ];
 
 /** Glob that matches all required vendors for the demo-app. */
@@ -46,5 +46,5 @@ task('build:devapp', buildAppTask('devapp'));
 task(':serve:devapp', serverTask(outDir, true));
 
 task('serve:devapp', ['build:devapp'], sequenceTask(
-  [':serve:devapp', 'material:watch', ':watch:devapp']
+  [':serve:devapp', 'tubular2:watch', ':watch:devapp']
 ));

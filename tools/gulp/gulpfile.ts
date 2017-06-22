@@ -14,6 +14,5 @@ import './tasks/lint';
 import './tasks/publish';
 import './tasks/unit-test';
 import './tasks/aot';
-import './tasks/material-release';
-import './tasks/universal';
+import './tasks/tubular-release';
 import './tasks/validate-release';

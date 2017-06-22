@@ -19,9 +19,11 @@ const ROLLUP_GLOBALS = {
   '@angular/platform-browser-dynamic': 'ng.platformBrowserDynamic',
   '@angular/platform-browser/animations': 'ng.platformBrowser.animations',
 
-  // Local Angular packages inside of Material.
+  // Additional dependencies
   '@angular/material': 'ng.material',
-  '@angular/cdk': 'ng.cdk',
+
+  // Local Angular packages inside of Material.
+  '@tubular2': 'tubular2',
 
   // Rxjs dependencies
   'rxjs/BehaviorSubject': 'Rx',
@@ -50,12 +52,12 @@ const ROLLUP_GLOBALS = {
   'rxjs/add/operator/toPromise': 'Rx.Observable.prototype',
 };
 
-export type BundleConfig = {
+export interface BundleConfig {
   entry: string;
   dest: string;
   format: string;
   moduleName: string;
-};
+}
 
 /** Creates a rollup bundle of a specified JavaScript file.*/
 export function createRollupBundle(config: BundleConfig): Promise<any> {
@@ -68,7 +70,7 @@ export function createRollupBundle(config: BundleConfig): Promise<any> {
   const writeOptions = {
     // Keep the moduleId empty because we don't want to force developers to a specific moduleId.
     moduleId: '',
-    moduleName: config.moduleName || 'ng.material',
+    moduleName: config.moduleName || 'tubular2',
     banner: buildConfig.licenseBanner,
     format: config.format,
     dest: config.dest,

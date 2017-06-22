@@ -34,7 +34,7 @@ task('e2e', sequenceTask(
 /** Task that builds the e2e-app in AOT mode. */
 task('e2e-app:build', sequenceTask(
   'clean',
-  ['material:build-release', 'cdk:build-release'],
+  ['tubular2:build-release'],
   ['e2e-app:copy-release', 'e2e-app:copy-assets'],
   'e2e-app:build-ts'
 ));
@@ -69,12 +69,11 @@ task('serve:e2eapp', sequenceTask('e2e-app:build', ':serve:e2eapp'));
  * [Watch task] Builds and serves e2e app, rebuilding whenever the sources change.
  * This should only be used when running e2e tests locally.
  */
-task('serve:e2eapp:watch', ['serve:e2eapp', 'material:watch', ':watch:e2eapp']);
+task('serve:e2eapp:watch', ['serve:e2eapp', 'tubular2:watch', ':watch:e2eapp']);
 
 // As a workaround for https://github.com/angular/angular/issues/12249, we need to
-// copy the Material and CDK ESM output inside of the demo-app output.
+// copy the Material  output inside of the demo-app output.
 task('e2e-app:copy-release', () => {
-  copySync(join(releasesDir, 'material'), join(outDir, 'material'));
-  copySync(join(releasesDir, 'cdk'), join(outDir, 'cdk'));
+  copySync(join(releasesDir, 'tubular2'), join(outDir, 'tubular2'));
 });
-
+

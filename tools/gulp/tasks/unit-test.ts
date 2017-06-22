@@ -20,7 +20,7 @@ task(':test:build', sequenceTask(
  */
 task('test:single-run', [':test:build'], (done: () => void) => {
   // Load karma not outside. Karma pollutes Promise with a different implementation.
-  let karma = require('karma');
+  const karma = require('karma');
 
   new karma.Server({
     configFile: join(projectDir, 'test/karma.conf.js'),
@@ -44,12 +44,12 @@ task('test:single-run', [':test:build'], (done: () => void) => {
  * This task should be used when running unit tests locally.
  */
 task('test', [':test:build'], () => {
-  let patternRoot = join(packagesDir, '**/*');
+  const patternRoot = join(packagesDir, '**/*');
   // Load karma not outside. Karma pollutes Promise with a different implementation.
-  let karma = require('karma');
+  const karma = require('karma');
 
   // Configure the Karma server and override the autoWatch and singleRun just in case.
-  let server = new karma.Server({
+  const server = new karma.Server({
     configFile: join(projectDir, 'test/karma.conf.js'),
     autoWatch: false,
     singleRun: false
@@ -57,7 +57,7 @@ task('test', [':test:build'], () => {
 
   // Refreshes Karma's file list and schedules a test run.
   // Tests will only run if TypeScript compilation was successful.
-  let runTests = (err?: Error) => {
+  const runTests = (err?: Error) => {
     if (!err) {
       server.refreshFiles().then(() => server._injector.get('executor').schedule());
     }

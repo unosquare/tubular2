@@ -19,7 +19,7 @@ export function transpileFile(inputPath: string, outputPath: string, options: ts
 
 /** Formats the TypeScript diagnostics into a error string. */
 function formatDiagnostics(diagnostics: ts.Diagnostic[], baseDir: string): string {
-  return diagnostics.map(diagnostic => {
+  return diagnostics.map((diagnostic) => {
     let res = `• ${chalk.red(`TS${diagnostic.code}`)} - `;
 
     if (diagnostic.file) {

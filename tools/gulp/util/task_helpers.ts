@@ -29,7 +29,6 @@ function _globify(maybeGlob: string, suffix = '**/*') {
   return path.join(maybeGlob, suffix);
 }
 
-
 /** Creates a task that runs the TypeScript compiler */
 export function tsBuildTask(tsConfigPath: string) {
   return execNodeTask('typescript', 'tsc', ['-p', tsConfigPath]);
@@ -88,12 +87,12 @@ export function execTask(binPath: string, args: string[], options: ExecTaskOptio
 export function execNodeTask(packageName: string, executable: string | string[], args?: string[],
                              options: ExecTaskOptions = {}) {
   if (!args) {
-    args = <string[]>executable;
+    args = executable as string[];
     executable = undefined;
   }
 
   return (done: (err: any) => void) => {
-    resolveBin(packageName, { executable: executable }, (err: any, binPath: string) => {
+    resolveBin(packageName, { executable }, (err: any, binPath: string) => {
       if (err) {
         done(err);
       } else {
@@ -106,28 +105,25 @@ export function execNodeTask(packageName: string, executable: string | string[],
   };
 }
 
-
 /** Copy files from a glob to a destination. */
 export function copyTask(srcGlobOrDir: string | string[], outRoot: string) {
   if (typeof srcGlobOrDir === 'string') {
     return () => gulp.src(_globify(srcGlobOrDir)).pipe(gulp.dest(outRoot));
   } else {
-    return () => gulp.src(srcGlobOrDir.map(name => _globify(name))).pipe(gulp.dest(outRoot));
+    return () => gulp.src(srcGlobOrDir.map((name) => _globify(name))).pipe(gulp.dest(outRoot));
   }
 }
-
 
 /** Delete files. */
 export function cleanTask(glob: string) {
   return () => gulp.src(glob, { read: false }).pipe(gulpClean(null));
 }
 
-
 /** Build an task that depends on all application build tasks. */
 export function buildAppTask(appName: string) {
   const buildTasks = ['ts', 'scss', 'assets']
-    .map(taskName => `:build:${appName}:${taskName}`)
-    .filter(taskName => gulp.hasTask(taskName));
+    .map((taskName) => `:build:${appName}:${taskName}`)
+    .filter((taskName) => gulp.hasTask(taskName));
 
   return (done: () => void) => {
     gulpRunSequence(
@@ -149,7 +145,7 @@ export function serverTask(packagePath: string, livereload = true) {
   return () => {
     gulpConnect.server({
       root: projectDir,
-      livereload: livereload,
+      livereload,
       port: 4200,
       fallback: path.join(packagePath, 'index.html'),
       middleware: () => {

@@ -20,16 +20,16 @@ task('validate-release', sequenceTask(':publish:build-releases', 'validate-relea
 /** Task that checks the release bundles for any common mistakes before releasing to the public. */
 task('validate-release:check-bundles', () => {
   const releaseFailures = releasePackages
-    .map(packageName => checkReleasePackage(packageName))
+    .map((packageName) => checkReleasePackage(packageName))
     .map((failures, index) => ({failures, packageName: releasePackages[index]}));
 
   releaseFailures.forEach(({failures, packageName}) => {
-    failures.forEach(failure => console.error(red(`Failure (${packageName}): ${failure}`)));
+    failures.forEach((failure) => console.error(red(`Failure (${packageName}): ${failure}`)));
   });
 
   if (releaseFailures.some(({failures}) => failures.length > 0)) {
     // Throw an error to notify Gulp about the failures that have been detected.
-    throw 'Release output is not valid and not ready for being released.';
+    throw new Error('Release output is not valid and not ready for being released.');
   } else {
     console.log(green('Release output has been checked and everything looks fine.'));
   }

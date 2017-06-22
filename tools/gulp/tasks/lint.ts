@@ -11,18 +11,7 @@ const tsLintBaseFlags = [
   '-c', 'tslint.json', '+(src|e2e|tools)/**/*.ts', '--exclude', '**/node_modules/**/*'
 ];
 
-/** Path to the output of the Material package. */
-const materialOutPath = join(buildConfig.outputDir, 'packages', 'material');
-
-/** Path to the output of the CDK package. */
-const cdkOutPath = join(buildConfig.outputDir, 'packages', 'cdk');
-
-task('lint', ['tslint', 'stylelint', 'madge']);
-
-/** Task that runs madge to detect circular dependencies. */
-task('madge', ['material:clean-build'], execNodeTask(
-  'madge', ['--circular', materialOutPath, cdkOutPath])
-);
+task('lint', ['tslint', 'stylelint']);
 
 /** Task to lint Angular Material's scss stylesheets. */
 task('stylelint', execNodeTask(
