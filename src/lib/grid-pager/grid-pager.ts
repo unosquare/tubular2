@@ -7,7 +7,7 @@ import { getValueInRange, isNumber } from '../core/util';
 @Component({
     selector: 'tb-grid-pager',
     host: { role: 'navigation' },
-    templateUrl: 'grid-pager.html'
+    templateUrl: './grid-pager.html'
 })
 export class GridPagerComponent implements OnInit, OnChanges {
     pageCount = 0;

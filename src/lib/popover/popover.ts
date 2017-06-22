@@ -27,7 +27,7 @@ let nextId = 0;
     selector: 'ngb-popover-window',
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: { '[class]': '"popover show popover-" + placement', 'role': 'tooltip', '[id]': 'id' },
-    templateUrl: 'popover.html'
+    templateUrl: './popover.html'
 })
 export class NgbPopoverWindow {
     @Input() placement: 'top' | 'bottom' | 'left' | 'right' = 'top';

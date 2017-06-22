@@ -4,8 +4,8 @@ import { GridComponent, GridPageInfo } from '../grid/index';
 
 @Component({
     selector: 'tb-grid-pager-info',
-    templateUrl: 'grid-pager-info.html',
-    styleUrls: [ 'grid-pager-info.css' ]
+    templateUrl: './grid-pager-info.html',
+    styleUrls: [ './grid-pager-info.css' ]
 })
 export class GridPagerInfoComponent implements OnInit {
     public pageInfo = new GridPageInfo();

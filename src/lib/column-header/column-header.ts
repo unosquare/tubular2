@@ -7,8 +7,8 @@ import { ColumnModel } from '../grid/index';
 
 @Component({
     selector: 'tb-column-header',
-    templateUrl: 'column-header.html',
-    styleUrls: ['column-header.css']
+    templateUrl: './column-header.html',
+    styleUrls: ['./column-header.css']
 })
 export class ColumnHeaderComponent {
     private static prevPopover = null;

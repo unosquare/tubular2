@@ -22,8 +22,8 @@ import 'rxjs/add/operator/catch';
 // TODO: Add animation to sortable
 @Component({
     selector: 'tb-grid',
-    templateUrl: 'grid.html',
-    styleUrls: [ 'grid.css' ]
+    templateUrl: './grid.html',
+    styleUrls: [ './grid.css' ]
 })
 export class GridComponent implements OnInit {
     // data is just observable and children can't push

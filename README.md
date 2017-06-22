@@ -15,3 +15,14 @@ New Tubular2 with Angular4 (Angular2) and Angular Material 2 featuring:
 Developing with .NET as backend? check [Tubular DotNet](https://github.com/unosquare/tubular-dotnet) project.
 
 If you are looking for Angular 1 support, please see [Tubular 1](https://github.com/unosquare/tubular)
+
+## Running sample and tests
+
+Common tasks are present as npm scripts:
+
+- `npm start` to run a live-reload server with the sample app
+- `npm run build` to build the library
+- `npm run lint` to lint 
+- `npm run clean` to clean
+
+This project is using [Angular QuickStart Library seed](https://github.com/filipesilva/angular-quickstart-lib)

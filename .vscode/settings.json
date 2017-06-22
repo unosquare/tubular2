@@ -5,6 +5,7 @@
     "files.exclude": {
         "**/*.js.map": true,
         "**/*.js": { "when": "$(basename).ts" },
+        "**/*.d.ts": { "when": "$(basename).ts" },
         "node_modules" : true,
         "dist": true,
         "sample/node_modules": true,

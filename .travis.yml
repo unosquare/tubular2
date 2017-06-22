@@ -1,35 +1,28 @@
+dist: trusty
+sudo: required
 language: node_js
 node_js:
-- node
-sudo: required
-dist: trusty
-addons:
-  firefox: '52.0'
+  - "6"
 notifications:
   slack: unolabs:cbusXPH6pBwZ35rVDzi4k4ve
 env:
   global:
     secure: "om4+xqksolW3be1/YAblfDaC2So816WQQ+Crfmlbib6FlV6EUuRItXhM+78cY8/v5IV6Jrh+3XJbLw8fKWRYKJPT7mEyKwAeI+3+bTk+qqpzx50bK/uEzb3H/a7r+u1vTC7xgaspwPvVZaEEvRcZTMSJx1k7mBP00thJfc0m0djayka44bUR/0M7SUrXOXHwV0nJnGL+wsiX3/tKluEebRnKazfbS3pNM80iH6wo2KDgJ8cCOs26HZa5H0El7+58T/8+B/YgspdmGPzOuS26B8uR8egNHYC+o99WHFih7xfFT6YZcoXTkp5F5sRaECyT+rR5IPryfe1rOvlz0d1k+xjMuc6nFrrGGKEfw1pgDC0UedHZx1PGo2fNpZnuhJ8Jd1p5Hv30S81hGvZLtW9NsAHMElfVRqFIzDecYV0TAaGKj3PDGUDnrAPx62Dsf8TwmP+ayY9FFNTdzm1FvSMeIvV0dhvskor0gJort8VOy0K4SymrE4y145HCvQjKDfD/FHI2KY9xzRr8L7igdMcczRsp5eIupgFD7IfFnfujQ/oE+1nZ2sV6QddbQns4b2PDoaT2RKwGls+z+WuT8HexajuHasjZDTDhN7qfTrNr8EZLYbXAGb5JuWUgGePOhVMYTSP/fUAa4vwhmpbPVzIDgzg8eTxTfIVaEgos5oxFhpo="
 before_install:
-- export TZ=Mexico/General
-- date
-- sudo apt-get update
-- sudo apt-get install -y libappindicator1 fonts-liberation
-- export DISPLAY=:99.0
-- wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-- sudo dpkg -i google-chrome*.deb
-- export CHROME_BIN=/usr/bin/google-chrome
-before_script:
-- sh -e /etc/init.d/xvfb start
-- nohup bash -c "webdriver-manager start 2>&1 &";
-- cd sample
-- npm install
+  - export TZ=Mexico/General
+  # Use a virtual display.
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  # Install latest chrome.
+  - export CHROME_BIN=/usr/bin/google-chrome
+  - sudo apt-get update
+  - sudo apt-get install -y libappindicator1 fonts-liberation
+  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  - sudo dpkg -i google-chrome*.deb
+install:
+  - npm install
 script:
-- gulp build
-- cd ..
-- gulp tslint
-- npm run test-once
-- cat ./report/lcov-coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
-- npm run e2e
-- chmod +x ./publish.sh
-- ./publish.sh
+  - npm run lint
+  - npm run build
+  - chmod +x ./publish.sh
+  - ./publish.sh

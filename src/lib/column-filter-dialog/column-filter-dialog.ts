@@ -4,8 +4,8 @@ import { ColumnModel } from '../grid/index';
 
 @Component({
     selector: 'tb-filter-dialog',
-    templateUrl: 'column-filter-dialog.html',
-    styleUrls: ['column-filter-dialog.css']
+    templateUrl: './column-filter-dialog.html',
+    styleUrls: ['./column-filter-dialog.css']
 })
 export class ColumnFilterDialogComponent implements AfterViewInit {
     @Input()

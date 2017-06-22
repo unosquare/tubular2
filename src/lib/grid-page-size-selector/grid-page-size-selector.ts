@@ -13,7 +13,7 @@ export class PageSizeInfo {
 
 @Component({
     selector: 'tb-page-size-selector',
-    templateUrl: 'grid-page-size-selector.html'
+    templateUrl: './grid-page-size-selector.html'
 })
 export class GridPageSizeSelectorComponent {
     private _options: number[] = [10, 20, 50, 100];

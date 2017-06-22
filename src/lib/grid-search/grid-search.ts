@@ -5,8 +5,8 @@ import { SETTINGS_PROVIDER, ITubularSettingsProvider } from '../core/tubular-loc
 
 @Component({
     selector: 'tb-grid-search',
-    templateUrl: 'grid-search.html',
-    styleUrls: [ 'grid-search.css' ]
+    templateUrl: './grid-search.html',
+    styleUrls: [ './grid-search.css' ]
 })
 export class GridSearchComponent implements OnInit {
     public search: string;

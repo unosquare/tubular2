@@ -17,5 +17,4 @@ export * from './grid-pager-info/grid-pager-info';
 export * from './grid-print/grid-print';
 export * from './grid-search/grid-search';
 export * from './grid-table/grid-table';
-export * from './mdate/mdate';
 export * from './popover/index';
