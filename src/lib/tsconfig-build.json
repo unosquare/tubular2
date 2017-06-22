@@ -22,7 +22,8 @@
     "baseUrl": "."
   },
   "files": [
-    "**/*.ts"
+    "index.ts",
+    "typings.d.ts"
   ],
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
