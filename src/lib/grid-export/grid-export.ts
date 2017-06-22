@@ -4,7 +4,7 @@ import { GridComponent } from './grid.component';
 @Directive({
     selector: '[grid-export]'
 })
-export class ExportButtonDirective {
+export class GridExportButtonDirective {
     @Input('grid-export') gridInstance: GridComponent;
     @Input('file-name') fileName: string;
 

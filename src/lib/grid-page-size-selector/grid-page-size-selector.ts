@@ -2,7 +2,7 @@
 import { Observable }       from 'rxjs/Observable';
 import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
 
-import { GridComponent }      from './grid.component';
+import { GridComponent }      from '../grid/index';
 
 import 'rxjs/add/operator/debounceTime';
 
@@ -19,7 +19,7 @@ export class PageSizeInfo {
         <md-option *ngFor="let obj of _options" [value]="obj">{{obj}}</md-option>
     </md-select>`
 })
-export class PageSizeSelectorComponent {
+export class GridPageSizeSelectorComponent {
     private _options: number[] = [10, 20, 50, 100];
     private selected: number;
 

@@ -5,19 +5,19 @@ import { HttpModule } from '@angular/http';
 
 import { MaterialModule } from '@angular/material';
 
-import { GridComponent } from './grid.component';
-import { ColumnHeaderComponent } from './column-header.component';
-import { GridSearchComponent } from './grid-search.component';
-import { GridPagerComponent } from './grid-pager.component';
-import { ColumnFilterDialogComponent } from './column-filter-dialog.component';
-import { GridPagerInfoComponent } from './grid-pager-info.component';
-import { PageSizeSelectorComponent } from './page-size-selector.component';
-import { ExportButtonDirective } from './grid-export.directive';
-import { PrintButtonDirective } from './grid-print.directive';
-import { MDatePipe } from './mdate.pipe';
+import { GridComponent } from './grid/index';
+import { ColumnHeaderComponent } from './column-header/column-header';
+import { GridSearchComponent } from './grid-search/grid-search';
+import { GridPagerComponent } from './grid-pager/grid-pager';
+import { ColumnFilterDialogComponent } from './column-filter-dialog/column-filter-dialog';
+import { GridPagerInfoComponent } from './grid-pager-info/grid-pager-info';
+import { PageSizeSelectorComponent } from './grid-page-size-selector/grid-page-size-selector';
+import { ExportButtonDirective } from './grid-export/grid-export';
+import { PrintButtonDirective } from './grid-print/grid-print';
+import { MDatePipe } from './mdate/mdate';
 
 // NbBootstrap special guest (https://github.com/ng-bootstrap/ng-bootstrap)
-import { NgbPopover, NgbPopoverWindow } from './popover';
+import { NgbPopover, NgbPopoverWindow } from './popover/popover';
 
 @NgModule({
     imports: [
