@@ -23,6 +23,7 @@ export async function buildPackageBundles(entryFile: string, packageName: string
   const umdFile = join(bundlesDir, `${packageName}.umd.js`);
   const umdMinFile = join(bundlesDir, `${packageName}.umd.min.js`);
 
+console.log("FESM2015");
   // Build FESM-2015 bundle file.
   await createRollupBundle({
     moduleName,
@@ -32,7 +33,7 @@ export async function buildPackageBundles(entryFile: string, packageName: string
   });
 
   await remapSourcemap(fesm2015File);
-
+console.log("ES2015");
   // Downlevel FESM-2015 file to ES5.
   transpileFile(fesm2015File, fesm2014File, {
     importHelpers: true,
@@ -42,7 +43,7 @@ export async function buildPackageBundles(entryFile: string, packageName: string
   });
 
   await remapSourcemap(fesm2014File);
-
+console.log("UMD");
   // Create UMD bundle of FESM-2014 output.
   await createRollupBundle({
     moduleName,

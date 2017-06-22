@@ -20,7 +20,7 @@
         ]
     },
     "files": [
-        "public_api.ts"
+        "index.ts"
     ],
     "angularCompilerOptions": {
         "genDir": "compiled",
