@@ -131,7 +131,7 @@ function transformMarkdownFiles(buffer: Buffer, file: any): string {
 
   // Replace <!-- example(..) --> comments with HTML elements.
   content = content.replace(EXAMPLE_PATTERN, (_match: string, name: string) =>
-    `<div material-docs-example="${name}"></div>`
+    `<div docs-example="${name}"></div>`
   );
 
   // Replace the URL in anchor elements inside of compiled markdown files.
