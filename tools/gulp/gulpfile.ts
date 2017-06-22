@@ -11,8 +11,6 @@ import './tasks/development';
 import './tasks/docs';
 import './tasks/e2e';
 import './tasks/lint';
-import './tasks/publish';
 import './tasks/unit-test';
 import './tasks/aot';
 import './tasks/tubular-release';
-import './tasks/validate-release';
