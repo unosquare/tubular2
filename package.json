@@ -1,5 +1,5 @@
 {
-  "version": "0.9.3",
+  "version": "0.9.4",
   "name": "tubular2",
   "description": "Grid library with Angular4 and Material2",
   "main": "./bundles/tubular2.umd.js",
