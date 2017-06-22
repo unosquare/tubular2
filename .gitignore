@@ -22,10 +22,6 @@ bld/
 [Oo]bj/
 [Ll]og/
 report/
-lib/**/*.js
-test/**/*.js
-lib/**/*.d.ts
-
 
 # Visual Studio 2015 cache/options directory
 .vs/
