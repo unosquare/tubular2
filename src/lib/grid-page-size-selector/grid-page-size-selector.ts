@@ -1,4 +1,4 @@
-﻿ import { Component, Input } from '@angular/core';
+﻿import { Component, Input } from '@angular/core';
 import { Observable }       from 'rxjs/Observable';
 import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
 
@@ -13,11 +13,7 @@ export class PageSizeInfo {
 
 @Component({
     selector: 'tb-page-size-selector',
-    template: `
-    <md-select placeholder="Page Size" (change)="onChange($event.value)"
-        [(ngModel)]="selected" [ngModelOptions]="{standalone: true}">
-        <md-option *ngFor="let obj of _options" [value]="obj">{{obj}}</md-option>
-    </md-select>`
+    templateUrl: 'grid-page-size-selector.html'
 })
 export class GridPageSizeSelectorComponent {
     private _options: number[] = [10, 20, 50, 100];

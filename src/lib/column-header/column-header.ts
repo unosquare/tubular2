@@ -3,28 +3,12 @@
     ContentChild, TemplateRef, ViewChild, AfterViewInit
 } from '@angular/core';
 
-import { ColumnModel } from './column.model';
+import { ColumnModel } from '../grid/index';
 
-// TODO: Add different color if the filter is ON
 @Component({
     selector: 'tb-column-header',
-    template: `
-    <div class="column-header">
-        <span
-            [ngClass]="{sortable: column.sortable, sortNone: column.direction == 0, sortAsc: column.direction == 1, sortDesc: column.direction == 2}"
-            (click)="sort($event)">
-            {{column.label}}
-        </span>
-        <div class="column-menu" [hidden]="column.filterMode == 0"
-            #popover="ngbPopover" [ngbPopover]="filterPopoverTemplate"
-            placement="bottom" popoverTitle="Filter" (click)="togglePopover()">
-            <md-icon color="{{ hasFilter ? 'primary' : '' }}">filter_list</md-icon>
-        </div>
-    </div>`,
-    styles: [
-        '.column-menu { position: relative; display: block; text-align: center; vertical-align: top; float: right; }',
-        '.column-header .mat-icon { font-size: 14px; cursor: pointer; }'
-    ]
+    templateUrl: 'column-header.html',
+    styleUrls: ['column-header.css']
 })
 export class ColumnHeaderComponent {
     private static prevPopover = null;

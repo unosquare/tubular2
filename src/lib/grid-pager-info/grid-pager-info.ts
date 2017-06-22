@@ -1,18 +1,11 @@
 ﻿ import { Component, Input, OnInit } from '@angular/core';
 
-import { GridComponent } from './grid.component';
-import { GridPageInfo } from './grid-page-info';
+import { GridComponent, GridPageInfo } from '../grid/index';
 
 @Component({
     selector: 'tb-grid-pager-info',
-    template:
-    `<div>
-        Showing {{this.pageInfo.currentInitial}} to {{this.pageInfo.currentTop}} of {{pageInfo.filteredRecordCount}} records
-        <span [hidden]="!filtered">(Filtered from {{pageInfo.totalRecordCount}} total records)</span>
-    </div>`,
-    styles: [
-        ':host /deep/ div { font-size: 12px; }',
-    ]
+    templateUrl: 'grid-pager-info.html',
+    styleUrls: [ 'grid-pager-info.css' ]
 })
 export class GridPagerInfoComponent implements OnInit {
     public pageInfo = new GridPageInfo();

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MDatePipe } from './mdate.pipe';
+import { MDatePipe } from './mdate';
 
 describe('Pipe: MDatePipe', () => {
     let pipe: MDatePipe;

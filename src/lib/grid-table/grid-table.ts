@@ -2,8 +2,7 @@
 import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
-import { GridComponent }      from './grid.component';
-import { ColumnModel, ColumnSortDirection } from './column.model';
+import { GridComponent, ColumnModel, ColumnSortDirection } from '../grid/index';
 
 export abstract class GridTable {
     public columns: Observable<ColumnModel[]>;

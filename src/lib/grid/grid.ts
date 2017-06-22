@@ -10,8 +10,8 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import * as moment from 'moment';
 
-import { SETTINGS_PROVIDER, ITubularSettingsProvider } from './tubular-settings.service';
-import { ColumnModel, ColumnDataType, ColumnSortDirection } from './column.model';
+import { SETTINGS_PROVIDER, ITubularSettingsProvider } from '../core/tubular-local-storage-service';
+import { ColumnModel, ColumnDataType, ColumnSortDirection } from './column';
 import { GridPageInfo } from './grid-page-info';
 import { GridRequest, GridSearchParameter } from './grid-request';
 
@@ -22,21 +22,8 @@ import 'rxjs/add/operator/catch';
 // TODO: Add animation to sortable
 @Component({
     selector: 'tb-grid',
-    template: `
-    <div>
-        <ng-content></ng-content>
-    </div>`,
-    styles: [
-        ':host /deep/ .sortable { cursor: pointer; }',
-        ':host /deep/ .sortable:hover { font-weight: bold }',
-        ':host /deep/ .sortAsc::after { font-family: "Material Icons"; content: "\\E5D8"; }',
-        ':host /deep/ .sortDesc::after { font-family: "Material Icons"; content: "\\E5DB"; }',
-        ':host /deep/ table { width: 100%; border-spacing: 0; overflow: hidden; }',
-        ':host /deep/ thead > tr { height: 56px }',
-        ':host /deep/ th { vertical-align: middle; text-align: left; color: rgba(0,0,0,.54); font-size: 12px; font-weight: 700; white-space: nowrap }',
-        ':host /deep/ td { vertical-align: middle; text-align: left; color: rgba(0,0,0,.87); font-size: 13px; border-top: 1px rgba(0,0,0,.12) solid; }',
-        ':host /deep/ tbody > tr, tfoot > tr { height: 48px; }'
-    ]
+    templateUrl: 'grid.html',
+    styleUrls: [ 'grid.css' ]
 })
 export class GridComponent implements OnInit {
     // data is just observable and children can't push

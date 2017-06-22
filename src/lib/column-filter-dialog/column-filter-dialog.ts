@@ -4,33 +4,8 @@ import { ColumnModel } from '../grid/index';
 
 @Component({
     selector: 'tb-filter-dialog',
-    template: `
-   <form [formGroup]="form" (ngSubmit)="submit()">
-        <md-select placeholder="Operator"
-            formControlName="operator"
-            (change)="selectChange($event.value)">
-            <md-option *ngFor="let operator of operators" [value]="operator.value">
-                {{operator.name}}
-            </md-option>
-        </md-select>
-        <md-input-container>
-            <input mdInput
-                type="{{inputType}}" formControlName="text"
-                placeholder="Value" />
-        </md-input-container>
-        <md-input-container *ngIf="isBetween">
-            <input mdInput
-                type="{{inputType}}" formControlName="argument"
-                placeholder="Argument" />
-        </md-input-container>
-        <div fxLayout="row">
-            <button type="submit" md-button fxFlex
-                    [disabled]="!form.valid">Filter</button>
-            <button type="button" md-button fxFlex
-                    (click)="reset()">Clear</button>
-        </div>
-    </form>`,
-    styles: [ 'form { min-width: 200px; }' ]
+    templateUrl: 'column-filter-dialog.html',
+    styleUrls: ['column-filter-dialog.css']
 })
 export class ColumnFilterDialogComponent implements AfterViewInit {
     @Input()

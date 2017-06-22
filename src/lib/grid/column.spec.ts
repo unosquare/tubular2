@@ -1,5 +1,4 @@
-import { ColumnFilterMode } from './column.model';
-import { ColumnModel } from './column.model';
+import { ColumnFilterMode, ColumnModel } from './column';
 
 describe('Column Model', () => {
     let columnModel: ColumnModel;

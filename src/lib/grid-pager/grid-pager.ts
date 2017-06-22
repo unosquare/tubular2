@@ -1,40 +1,13 @@
 ﻿ import { Component, Input, Output, OnInit, OnChanges, SimpleChanges, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { GridComponent } from './grid.component';
-import { GridPageInfo } from './grid-page-info';
-import { getValueInRange, isNumber } from './util';
+import { GridComponent, GridPageInfo } from '../grid/index';
+import { getValueInRange, isNumber } from '../core/util';
 
-// TODO: Refactor to match with GridPageInfo
 @Component({
     selector: 'tb-grid-pager',
     host: { role: 'navigation' },
-    template: `
-    <div class="tubular-pager">
-        <md-button-toggle-group>
-            <md-button-toggle *ngIf="boundaryLinks" value="first" [disabled]="!hasPrevious() || disabled" (click)="!!selectPage(1)" [attr.tabindex]="(hasPrevious() ? null : '-1')">
-                <md-icon>first_page</md-icon>
-            </md-button-toggle>
-            <md-button-toggle value="previous" [disabled]="!hasPrevious() || disabled" (click)="!!selectPage(page-1)" [attr.tabindex]="(hasPrevious() ? null : '-1')">
-                <md-icon>chevron_left</md-icon>
-            </md-button-toggle>
-            <md-button-toggle
-                *ngFor="let pageNumber of pages"
-                value="{{pageNumber}}"
-                (click)="selectPage(pageNumber)"
-                [checked]="pageNumber === page"
-                [disabled]="(isEllipsis(pageNumber) || disabled) ? 'disabled': null">
-                {{ (isEllipsis(pageNumber) ? "..." : pageNumber) }}
-            </md-button-toggle>
-            <md-button-toggle value="next" [disabled]="!hasNext() || disabled" (click)="!!selectPage(page+1)" [attr.tabindex]="(hasNext() ? null : '-1')">
-                <md-icon>chevron_right</md-icon>
-            </md-button-toggle>
-            <md-button-toggle *ngIf="boundaryLinks" value="last" [disabled]="!hasNext() || disabled" (click)="!!selectPage(pageCount)" [attr.tabindex]="(hasNext() ? null : '-1')">
-                <md-icon>last_page</md-icon>
-            </md-button-toggle>
-        </md-button-toggle-group>
-    </div>
-  `
+    templateUrl: 'grid-pager.html'
 })
 export class GridPagerComponent implements OnInit, OnChanges {
     pageCount = 0;
