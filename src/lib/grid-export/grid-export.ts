@@ -1,5 +1,5 @@
-﻿ import { Directive, Input, HostListener } from '@angular/core';
-import { GridComponent } from './grid.component';
+﻿import { Directive, Input, HostListener } from '@angular/core';
+import { GridComponent } from '../grid/index';
 
 @Directive({
     selector: '[grid-export]'

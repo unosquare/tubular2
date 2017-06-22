@@ -11,9 +11,9 @@ import { GridSearchComponent } from './grid-search/grid-search';
 import { GridPagerComponent } from './grid-pager/grid-pager';
 import { ColumnFilterDialogComponent } from './column-filter-dialog/column-filter-dialog';
 import { GridPagerInfoComponent } from './grid-pager-info/grid-pager-info';
-import { PageSizeSelectorComponent } from './grid-page-size-selector/grid-page-size-selector';
-import { ExportButtonDirective } from './grid-export/grid-export';
-import { PrintButtonDirective } from './grid-print/grid-print';
+import { GridPageSizeSelectorComponent } from './grid-page-size-selector/grid-page-size-selector';
+import { GridExportButtonDirective } from './grid-export/grid-export';
+import { GridPrintButtonDirective } from './grid-print/grid-print';
 import { MDatePipe } from './mdate/mdate';
 
 // NbBootstrap special guest (https://github.com/ng-bootstrap/ng-bootstrap)
@@ -30,13 +30,13 @@ import { NgbPopover, NgbPopoverWindow } from './popover/popover';
     declarations: [
         GridComponent, ColumnHeaderComponent, GridSearchComponent,
         GridPagerComponent, GridPagerInfoComponent, ColumnFilterDialogComponent,
-        PageSizeSelectorComponent, ExportButtonDirective, PrintButtonDirective,
+        GridPageSizeSelectorComponent, GridExportButtonDirective, GridPrintButtonDirective,
         MDatePipe, NgbPopover, NgbPopoverWindow
     ],
     exports: [
         GridComponent, ColumnHeaderComponent, GridSearchComponent,
         GridPagerComponent, GridPagerInfoComponent, ColumnFilterDialogComponent,
-        PageSizeSelectorComponent, ExportButtonDirective, PrintButtonDirective,
+        GridPageSizeSelectorComponent, GridExportButtonDirective, GridPrintButtonDirective,
         MDatePipe, NgbPopover
     ],
     entryComponents: [

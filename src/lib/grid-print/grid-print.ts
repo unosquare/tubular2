@@ -1,10 +1,10 @@
 ﻿ import { Directive, Input, HostListener } from '@angular/core';
-import { GridComponent } from './grid.component';
+import { GridComponent } from '../grid/index';
 
 @Directive({
     selector: '[grid-print]'
 })
-export class PrintButtonDirective {
+export class GridPrintButtonDirective {
     @Input('grid-print') gridInstance: GridComponent;
 
     @HostListener('click', ['$event.target'])
