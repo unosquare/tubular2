@@ -127,7 +127,7 @@ export function buildAppTask(appName: string) {
 
   return (done: () => void) => {
     gulpRunSequence(
-      'material:clean-build',
+      'tubular2:clean-build',
       [...buildTasks],
       done
     );
