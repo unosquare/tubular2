@@ -8,6 +8,8 @@ module.exports = function (config) {
 
     plugins: [
       require('karma-jasmine'),
+      require('karma-html-reporter'),
+      require('karma-coverage'),
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter')
     ],
@@ -79,8 +81,33 @@ module.exports = function (config) {
     },
 
     exclude: [],
-    preprocessors: {},
-    reporters: ['progress', 'kjhtml'],
+
+    preprocessors: {
+        [libBase + '/**/!(*spec|*bundle).js'] : ['coverage']
+    },
+
+    // test results reporter to use
+    // possible values: 'dots', 'progress'
+    // available reporters: https://npmjs.org/browse/keyword/karma-reporter
+    reporters: ['progress', 'coverage', 'kjhtml', 'html'],
+
+    htmlReporter: {
+        outputDir: 'report/unit', // where to put the reports
+        focusOnFailures: true, // reports show failures on start
+        namedFiles: true, // name files instead of creating sub-directories
+        reportName: 'index',
+
+        // experimental
+        preserveDescribeNesting: false, // folded suites stay folded
+        foldAll: false // reports start folded (only with preserveDescribeNesting)
+    },
+
+    // optionally, configure the reporter
+    coverageReporter: {
+        type: 'lcov',
+        dir: 'report/coverage',
+        subdir: '.'
+    },
 
     port: 9876,
     colors: true,
