@@ -41,6 +41,8 @@ module.exports = function (config) {
       'node_modules/zone.js/dist/jasmine-patch.js',
       'node_modules/zone.js/dist/async-test.js',
       'node_modules/zone.js/dist/fake-async-test.js',
+      
+      'node_modules/moment/moment.js',
 
       // RxJs
       { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
@@ -72,7 +74,8 @@ module.exports = function (config) {
     proxies: {
       // required for modules fetched by SystemJS
       '/base/src/lib/node_modules/': '/base/node_modules/',
-      '/base/src/lib/demo/': '/base/src/demo/'
+      '/base/src/lib/demo/': '/base/src/demo/',
+      '/base/src/lib/moment.js': '/base/node_modules/moment/moment.js'
     },
 
     exclude: [],
