@@ -25,6 +25,6 @@ script:
   - npm run lint
   - npm run build
   - npm run test:once
-  - cat ./report/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+  - cat ./report/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
   - chmod +x ./publish.sh
   - ./publish.sh
