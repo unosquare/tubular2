@@ -33,15 +33,15 @@ describe('Component: GridComponent', () => {
             [483, 'Vesta', '2016-11-12T00:00:00', '2015-12-30T00:00:00', 'Los Angeles, CA, USA'],
             [482, 'Super La Playa', '2016-11-07T00:00:00', '2016-01-01T00:00:00', 'Leon, GTO, Mexico'],
             [481, 'Oxxo', '2015-02-24T12:00:00', '2015-12-30T00:00:00', 'Guadalajara, JAL, Mexico']
-            ], 
-        TotalRecordCount: 500, 
-        FilteredRecordCount: 500, 
-        TotalPages: 25, 
+            ],
+        TotalRecordCount: 500,
+        FilteredRecordCount: 500,
+        TotalPages: 25,
         CurrentPage: 1,
         AggregationPayload: {}
     };
-    const mockJsonTest = { 
-        Counter: 1, 
+    const mockJsonTest = {
+        Counter: 1,
         Payload: [[
             1, 'Microsoft', '2017-02-01T23:00:00', '2015-12-30T00:00:00', 'Guadalajara, JAL, Mexico'],
             [3, 'Unosquare LLC', '2016-12-18T00:00:00', '2016-01-01T00:00:00', 'Portland, OR, USA'],
@@ -68,7 +68,7 @@ describe('Component: GridComponent', () => {
         FilteredRecordCount: 500,
         TotalPages: 25,
         CurrentPage: 3,
-        AggregationPayload: {} 
+        AggregationPayload: {}
     };
     let response: ResponseOptions;
 

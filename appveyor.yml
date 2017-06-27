@@ -15,7 +15,6 @@ init:
   - npm config set loglevel warn
 
 install:
-  - del package-lock.json
   - ps: Install-Product node $env:nodejs_version
   - npm install -g npm
   - ps: $env:path = $env:appdata + "\npm;" + $env:path
