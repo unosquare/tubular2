@@ -76,14 +76,10 @@ export class NgbPopover implements OnInit, OnDestroy {
     private _unregisterListenersFn;
     private _zoneSubscription: any;
 
-    // TODO: Ignoring config for now
     constructor(
         private _elementRef: ElementRef, private _renderer: Renderer2, injector: Injector,
-        componentFactoryResolver: ComponentFactoryResolver, viewContainerRef: ViewContainerRef, //config: NgbPopoverConfig,
+        componentFactoryResolver: ComponentFactoryResolver, viewContainerRef: ViewContainerRef,
         ngZone: NgZone) {
-        //this.placement = config.placement;
-        //this.triggers = config.triggers;
-        //this.container = config.container;
         this._popupService = new PopupService<NgbPopoverWindow>(
             NgbPopoverWindow, injector, viewContainerRef, _renderer, componentFactoryResolver);
 

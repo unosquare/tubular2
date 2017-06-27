@@ -23,17 +23,17 @@ export class GridPagerComponent implements OnInit, OnChanges {
     /**
      *  Whether to show the "First" and "Last" page links
      */
-    @Input() boundaryLinks: boolean = true;
+    @Input() boundaryLinks = true;
 
     /**
      *  Whether to show the "Next" and "Previous" page links
      */
-    @Input() directionLinks: boolean = true;
+    @Input() directionLinks = true;
 
     /**
      *  Whether to show ellipsis symbols and first/last page numbers when maxSize > number of pages
      */
-    @Input() ellipses: boolean = false;
+    @Input() ellipses = false;
 
     /**
      *  Whether to rotate pages when maxSize > number of pages.
@@ -49,7 +49,7 @@ export class GridPagerComponent implements OnInit, OnChanges {
     /**
      *  Maximum number of pages to display.
      */
-    @Input() maxSize: number = 5;
+    @Input() maxSize = 5;
 
     /**
      *  Current page.
@@ -59,7 +59,7 @@ export class GridPagerComponent implements OnInit, OnChanges {
     /**
      *  Number of items per page.
      */
-    public pageSize: number = 10;
+    public pageSize = 10;
 
     /**
      * Pagination display size: small or large
@@ -94,7 +94,7 @@ export class GridPagerComponent implements OnInit, OnChanges {
         });
         this.tbGrid.pageInfo.subscribe((x: GridPageInfo) => {
 
-            if (x.filteredRecordCount != this.collectionSize.getValue()) {
+            if (x.filteredRecordCount !== this.collectionSize.getValue()) {
                 this.collectionSize.next(x.filteredRecordCount);
                 this.selectPage(x.currentPage);
             }

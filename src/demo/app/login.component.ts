@@ -49,8 +49,8 @@ export class LoginComponent implements OnInit {
                 })
         } as RequestOptionsArgs;
 
-        this.http.post('http://tubular.azurewebsites.net/api/token', 
-            `grant_type=password&username=${username}&password=${password}`, 
+        this.http.post('http://tubular.azurewebsites.net/api/token',
+            `grant_type=password&username=${username}&password=${password}`,
             requestArgs)
             .map((response) => this.handleSuccessCallback(response))
             .subscribe(
