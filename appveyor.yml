@@ -18,17 +18,11 @@ install:
   - ps: Install-Product node $env:nodejs_version
   - npm install -g npm
   - ps: $env:path = $env:appdata + "\npm;" + $env:path
-  - npm install -g gulp
-  - npm install && npm install karma-ie-launcher && npm install -g webdriver-manager 
-  - cd sample
   - npm install
-  - gulp build
-  - cd ..
 
 test_script:
-  - webdriver-manager update --ie
-  - ps: "npm --version # PowerShell"
-  - npm run test-once
-  - npm run e2e
+  - npm run lint
+  - npm run build
+  - npm run test:once
 
 cache: node_modules
