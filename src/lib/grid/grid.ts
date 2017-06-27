@@ -146,13 +146,15 @@ export class GridComponent implements OnInit {
             this.refresh();
             this.changePageSizeData();
         });
+
         this.columns.subscribe(() => this.refresh());
+
         this.page.subscribe(() => {
             this.refresh();
             this.changePagesData();
         });
+        
         this.freeTextSearch
-            .debounceTime(500)
             .subscribe((c) => {
                 if (c === this.search.text) {
                     return;

@@ -1,6 +1,6 @@
-﻿ import { NgModule } from '@angular/core';
+﻿import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RequestOptions } from '@angular/http';
 
@@ -25,7 +25,7 @@ import { OrderComponent } from './order.component';
         AppRoutingModule,
         FlexLayoutModule,
         MaterialModule,
-        BrowserAnimationsModule,
+        // BrowserAnimationsModule,
         TubularModule
     ],
     declarations: [
