@@ -30,7 +30,7 @@ export class ColumnHeaderComponent {
             ColumnHeaderComponent.prevPopover.close();
         }
 
-        if (ColumnHeaderComponent.prevPopover == this.popover) {
+        if (ColumnHeaderComponent.prevPopover === this.popover) {
             ColumnHeaderComponent.prevPopover = null;
             this.popover.close();
             return;

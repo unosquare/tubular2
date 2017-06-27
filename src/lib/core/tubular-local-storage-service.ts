@@ -10,7 +10,7 @@ export interface ITubularSettingsProvider {
 
 export class TubularLocalStorageService implements ITubularSettingsProvider {
 
-    private existLocalStorage: boolean = true;
+    private existLocalStorage = true;
     private _data: {};
 
     constructor() {
