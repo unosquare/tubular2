@@ -1,10 +1,43 @@
 ﻿import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RequestOptions } from '@angular/http';
 
-import { MaterialModule } from '@angular/material';
+import {
+  FullscreenOverlayContainer,
+  MdAutocompleteModule,
+  MdButtonModule,
+  MdButtonToggleModule,
+  MdCardModule,
+  MdCheckboxModule,
+  MdChipsModule,
+  MdCoreModule,
+  MdDatepickerModule,
+  MdDialogModule,
+  MdExpansionModule,
+  MdGridListModule,
+  MdIconModule,
+  MdInputModule,
+  MdListModule,
+  MdMenuModule,
+  MdNativeDateModule,
+  MdProgressBarModule,
+  MdProgressSpinnerModule,
+  MdRadioModule,
+  MdRippleModule,
+  MdSelectModule,
+  MdSidenavModule,
+  MdSliderModule,
+  MdSlideToggleModule,
+  MdSnackBarModule,
+  MdTabsModule,
+  MdToolbarModule,
+  MdTooltipModule,
+  OverlayContainer
+} from '@angular/material';
+
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { TubularModule, SETTINGS_PROVIDER, TubularLocalStorageService, HttpOptions } from '@tubular2/tubular2';
@@ -18,15 +51,50 @@ import { LoginComponent } from './login.component';
 import { OrderComponent } from './order.component';
 
 @NgModule({
+  exports: [
+    MdAutocompleteModule,
+    MdButtonModule,
+    MdButtonToggleModule,
+    MdCardModule,
+    MdCheckboxModule,
+    MdChipsModule,
+    MdDatepickerModule,
+    MdDialogModule,
+    MdExpansionModule,
+    MdGridListModule,
+    MdIconModule,
+    MdInputModule,
+    MdListModule,
+    MdMenuModule,
+    MdCoreModule,
+    MdProgressBarModule,
+    MdProgressSpinnerModule,
+    MdRadioModule,
+    MdRippleModule,
+    MdSelectModule,
+    MdSidenavModule,
+    MdSlideToggleModule,
+    MdSliderModule,
+    MdSnackBarModule,
+    MdTabsModule,
+    MdToolbarModule,
+    MdTooltipModule,
+    MdNativeDateModule
+  ]
+})
+export class CustomMaterialModule {}
+
+@NgModule({
     imports: [
         BrowserModule,
+        CommonModule,
         FormsModule,
         ReactiveFormsModule,
         AppRoutingModule,
-        FlexLayoutModule,
-        MaterialModule,
-        // BrowserAnimationsModule,
-        TubularModule
+        CustomMaterialModule,
+        BrowserAnimationsModule,
+        TubularModule,
+        FlexLayoutModule
     ],
     declarations: [
         AppComponent, SampleGrid, MainGridComponent,
