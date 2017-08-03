@@ -1,20 +1,31 @@
-﻿ import { Component, Input } from '@angular/core';
-import { BehaviorSubject }  from 'rxjs/BehaviorSubject';
+﻿import { Component, Input } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/merge';
+import 'rxjs/add/operator/map';
+
+
 
 import { GridComponent, ColumnModel, ColumnSortDirection } from '../grid/index';
+
+import { DataSource } from '@angular/cdk';
+
 
 export abstract class GridTable {
     public columns: Observable<ColumnModel[]>;
     public rows: any[];
     public isEmpty: boolean;
+    dataSource: TubularDataSource | null;
+
 
     private columnObservable: BehaviorSubject<ColumnModel[]> = new BehaviorSubject([]);
 
+    ngOnInit() {
+        this.dataSource = new TubularDataSource(this.tbGrid);
+    }
     constructor(public tbGrid: GridComponent) {
         this.columns = this.columnObservable.asObservable();
         this.tbGrid.dataStream.subscribe((payload) => {
-            this.rows = payload;
             this.isEmpty = !this.rows || this.rows.length === 0;
         });
         this.columnObservable.subscribe((payload) => this.tbGrid.columns.next(payload));
@@ -65,4 +76,19 @@ export abstract class GridTable {
         const val = this.columnObservable.getValue();
         this.columnObservable.next(val);
     }
+}
+
+
+export class TubularDataSource extends DataSource<any> {
+    constructor(private _tbGrid: GridComponent) {
+        super();
+    }
+
+    /** Connect function called by the table to retrieve one stream containing the data to render. */
+    connect(): Observable<any[]> {
+        return this._tbGrid.dataStream;
+
+    }
+
+    disconnect() { }
 }

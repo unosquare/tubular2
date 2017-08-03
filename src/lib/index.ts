@@ -8,7 +8,6 @@ export * from './core';
 export * from './module';
 
 export * from './column-filter-dialog/index';
-export * from './column-header/column-header';
 export * from './grid/index';
 export * from './grid-export/grid-export';
 export * from './grid-page-size-selector/grid-page-size-selector';
