@@ -1,11 +1,9 @@
-﻿import { Component, Input } from '@angular/core';
+﻿import { Component, Input, ViewChild } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/map';
-
-
-
+import { MdSort } from '@angular/material';
 import { GridComponent, ColumnModel, ColumnSortDirection } from '../grid/index';
 
 import { DataSource } from '@angular/cdk';
@@ -13,21 +11,16 @@ import { DataSource } from '@angular/cdk';
 
 export abstract class GridTable {
     public columns: Observable<ColumnModel[]>;
-    public rows: any[];
-    public isEmpty: boolean;
-    dataSource: TubularDataSource | null;
 
+    public isEmpty: boolean;
+    public dataSource: TubularDataSource | null;
 
     private columnObservable: BehaviorSubject<ColumnModel[]> = new BehaviorSubject([]);
 
-    ngOnInit() {
-        this.dataSource = new TubularDataSource(this.tbGrid);
-    }
+    @ViewChild(MdSort) mdSort: MdSort;
+
     constructor(public tbGrid: GridComponent) {
         this.columns = this.columnObservable.asObservable();
-        this.tbGrid.dataStream.subscribe((payload) => {
-            this.isEmpty = !this.rows || this.rows.length === 0;
-        });
         this.columnObservable.subscribe((payload) => this.tbGrid.columns.next(payload));
     }
 
@@ -37,6 +30,17 @@ export abstract class GridTable {
             val.push(c);
             this.columnObservable.next(val);
         });
+    }
+
+    public sortByColumnName(columnName: string) {
+        const value = this.columnObservable.getValue();
+        const columnModel = value.find(c => c.name === columnName);
+
+        if (!columnName) {
+            throw Error('Invalid column name');
+        }
+
+        this.sort(columnModel);
     }
 
     public sort(column: ColumnModel) {
@@ -76,6 +80,16 @@ export abstract class GridTable {
         const val = this.columnObservable.getValue();
         this.columnObservable.next(val);
     }
+
+    ngOnInit() {
+        this.dataSource = new TubularDataSource(this.tbGrid);
+
+        if (this.mdSort) {
+            this.mdSort.mdSortChange.subscribe((element) => {
+                this.sortByColumnName(element.active);
+            })
+        }
+    }
 }
 
 
@@ -87,7 +101,6 @@ export class TubularDataSource extends DataSource<any> {
     /** Connect function called by the table to retrieve one stream containing the data to render. */
     connect(): Observable<any[]> {
         return this._tbGrid.dataStream;
-
     }
 
     disconnect() { }

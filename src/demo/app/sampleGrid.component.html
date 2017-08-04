@@ -1,16 +1,16 @@
-﻿<md-table #table [dataSource]="dataSource">
+﻿<md-table [dataSource]="dataSource" mdSort>
     <ng-container cdkColumnDef="options" >
         <md-header-cell *cdkHeaderCellDef> Options </md-header-cell>
         <md-cell *cdkCellDef="let row"> <button md-button (click)="edit(row)"><md-icon>mode_edit</md-icon></button> </md-cell>
     </ng-container>
 
     <ng-container cdkColumnDef="OrderID" >
-        <md-header-cell *cdkHeaderCellDef> Order ID </md-header-cell>
+        <md-header-cell *cdkHeaderCellDef md-sort-header> Order ID </md-header-cell>
         <md-cell *cdkCellDef="let row"> {{row.OrderID}} </md-cell>
     </ng-container>
 
     <ng-container cdkColumnDef="CustomerName" >
-        <md-header-cell *cdkHeaderCellDef> Customer Name </md-header-cell>
+        <md-header-cell *cdkHeaderCellDef md-sort-header> Customer Name </md-header-cell>
         <md-cell *cdkCellDef="let row"> {{row.CustomerName}} </md-cell>
     </ng-container>
 

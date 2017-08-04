@@ -153,7 +153,7 @@ export class GridComponent implements OnInit {
             this.refresh();
             this.changePagesData();
         });
-        
+
         this.freeTextSearch
             .subscribe((c) => {
                 if (c === this.search.text) {

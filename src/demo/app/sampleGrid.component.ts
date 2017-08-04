@@ -1,9 +1,9 @@
-﻿ import { Component, Input, EventEmitter } from '@angular/core';
+﻿import { Component, Input, EventEmitter, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MdDialog } from '@angular/material';
 
-import { GridComponent, GridTable, ColumnModel, ColumnFilterMode, ColumnDataType } from '@tubular2/tubular2';
+import { GridComponent, GridTable, ColumnModel, ColumnFilterMode, ColumnDataType, TubularDataSource } from '@tubular2/tubular2';
 import { OrderComponent } from './order.component';
 
 @Component({
