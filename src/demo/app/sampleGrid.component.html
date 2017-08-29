@@ -1,15 +1,21 @@
 ﻿<md-table [dataSource]="dataSource" mdSort>
-    <ng-container cdkColumnDef="options" >
+    <ng-container cdkColumnDef="options">
         <md-header-cell *cdkHeaderCellDef> Options </md-header-cell>
         <md-cell *cdkCellDef="let row"> <button md-button (click)="edit(row)"><md-icon>mode_edit</md-icon></button> </md-cell>
     </ng-container>
 
-    <ng-container cdkColumnDef="OrderID" >
-        <md-header-cell *cdkHeaderCellDef md-sort-header> Order ID </md-header-cell>
+    <ng-container cdkColumnDef="OrderID">
+        <md-header-cell *cdkHeaderCellDef>
+            <span md-sort-header>
+                Order ID
+            </span>
+            <tb-filter-dialog column="OrderID" (filterChange)="applyFilterByColumnName($event)">
+            </tb-filter-dialog>
+        </md-header-cell>
         <md-cell *cdkCellDef="let row"> {{row.OrderID}} </md-cell>
     </ng-container>
 
-    <ng-container cdkColumnDef="CustomerName" >
+    <ng-container cdkColumnDef="CustomerName">
         <md-header-cell *cdkHeaderCellDef md-sort-header> Customer Name </md-header-cell>
         <md-cell *cdkCellDef="let row"> {{row.CustomerName}} </md-cell>
     </ng-container>

@@ -36,7 +36,7 @@ export abstract class GridTable {
         const value = this.columnObservable.getValue();
         const columnModel = value.find(c => c.name === columnName);
 
-        if (!columnName) {
+        if (!columnModel) {
             throw Error('Invalid column name');
         }
 
@@ -76,9 +76,15 @@ export abstract class GridTable {
         this.columnObservable.next(value);
     }
 
-    public applyFilter(column: ColumnModel) {
-        const val = this.columnObservable.getValue();
-        this.columnObservable.next(val);
+    public applyFilterByColumnName(columnName: string) {
+        const value = this.columnObservable.getValue();
+        const columnModel = value.find(c => c.name === columnName);
+
+        if (!columnModel) {
+            throw Error('Invalid column name');
+        }
+
+        this.columnObservable.next(value);
     }
 
     ngOnInit() {

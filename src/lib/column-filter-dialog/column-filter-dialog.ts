@@ -1,24 +1,35 @@
-﻿ import { Component, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
+﻿import { Component, Input, Output, EventEmitter, AfterViewInit, OnInit, ContentChild, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ColumnModel } from '../grid/index';
+import { GridComponent } from '../grid/grid';
 
 @Component({
     selector: 'tb-filter-dialog',
     templateUrl: './column-filter-dialog.html',
     styleUrls: ['./column-filter-dialog.css']
 })
-export class ColumnFilterDialogComponent implements AfterViewInit {
+export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
+    private static prevPopover = null;
+
+    @ContentChild('filterPopover')
+    public filterPopoverTemplate: TemplateRef<Object>;
+
+    @ViewChild('popover') private popover: any;
+
     @Input()
-    public column: ColumnModel;
+    public column: string;
+    private columnModel: ColumnModel;
+
     @Output()
-    public filterChange = new EventEmitter<boolean>();
+    public filterChange = new EventEmitter<string>();
     public form: FormGroup;
     public isBetween = false;
     public inputType: string;
 
     private operators: Object[];
 
-    constructor(fb: FormBuilder) {
+    constructor(fb: FormBuilder, private tbGrid: GridComponent) {
+
         this.form = fb.group({
             text: ['', Validators.required],
             argument: [''],
@@ -26,28 +37,40 @@ export class ColumnFilterDialogComponent implements AfterViewInit {
         });
 
         this.form.valueChanges.subscribe((value) => {
-            this.column.filter.text = value.text;
-            this.column.filter.operator = value.operator;
+            this.columnModel.filter.text = value.text;
+            this.columnModel.filter.operator = value.operator;
 
             if (value.argument) {
-                this.column.filter.argument = [value.argument];
+                this.columnModel.filter.argument = [value.argument];
             }
 
             this.isBetween = value.operator === 'Between';
-            this.inputType = this.column.getInputType();
+            this.inputType = this.columnModel.getInputType();
         });
     }
 
+    ngOnInit(): void {
+
+        const value = this.tbGrid.columns.getValue();
+        const columnModel = value.find(c => c.name === this.column);
+
+        if (!columnModel) {
+            throw Error('Invalid column name');
+        }
+
+        this.columnModel = columnModel;
+    }
+
     public submit() {
-        this.filterChange.emit(true);
+        this.filterChange.emit(this.column);
     }
 
     public reset() {
         this.form.reset();
-        this.column.filter.argument = null;
-        this.column.filter.operator = 'None';
+        this.columnModel.filter.argument = null;
+        this.columnModel.filter.operator = 'None';
 
-        this.filterChange.emit(false);
+        this.filterChange.emit(this.column);
     }
 
     public selectChange(newVal: any) {
@@ -62,18 +85,33 @@ export class ColumnFilterDialogComponent implements AfterViewInit {
         // set initial value in form with a timeout
         setTimeout((_) => {
             // load operator directly from the column
-            this.operators = this.column.getOperators();
+            this.operators = this.columnModel.getOperators();
 
             // set initial value in form with a timeout
             this.form.patchValue({
-                text: this.column.filter.text,
-                argument: this.column.filter.argument,
-                operator: this.column.filter.operator || 'None'
+                text: this.columnModel.filter.text,
+                argument: this.columnModel.filter.argument,
+                operator: this.columnModel.filter.operator || 'None'
             });
 
-            if (this.column.filter.operator === 'None') {
+            if (this.columnModel.filter.operator === 'None') {
                 this.form.controls['text'].disable();
             }
         });
+    }
+
+    public togglePopover() {
+        if (ColumnFilterDialogComponent.prevPopover != null) {
+            ColumnFilterDialogComponent.prevPopover.close();
+        }
+
+        if (ColumnFilterDialogComponent.prevPopover === this.popover) {
+            ColumnFilterDialogComponent.prevPopover = null;
+            this.popover.close();
+            return;
+        }
+
+        ColumnFilterDialogComponent.prevPopover = this.popover;
+        this.popover.toggle();
     }
 }
