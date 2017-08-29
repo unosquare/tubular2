@@ -16,7 +16,13 @@
     </ng-container>
 
     <ng-container cdkColumnDef="CustomerName">
-        <md-header-cell *cdkHeaderCellDef md-sort-header> Customer Name </md-header-cell>
+        <md-header-cell *cdkHeaderCellDef>
+            <span md-sort-header>
+                Customer Name
+            </span>
+            <tb-filter-dialog column="CustomerName" (filterChange)="applyFilterByColumnName($event)">
+            </tb-filter-dialog>
+        </md-header-cell>
         <md-cell *cdkCellDef="let row"> {{row.CustomerName}} </md-cell>
     </ng-container>
 

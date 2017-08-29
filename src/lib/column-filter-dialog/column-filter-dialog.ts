@@ -101,14 +101,10 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
     }
 
     public togglePopover() {
-        if (ColumnFilterDialogComponent.prevPopover != null) {
-            ColumnFilterDialogComponent.prevPopover.close();
-        }
 
-        if (ColumnFilterDialogComponent.prevPopover === this.popover) {
+        if (ColumnFilterDialogComponent.prevPopover !== null && ColumnFilterDialogComponent.prevPopover !== this.popover) {
+            ColumnFilterDialogComponent.prevPopover.close();
             ColumnFilterDialogComponent.prevPopover = null;
-            this.popover.close();
-            return;
         }
 
         ColumnFilterDialogComponent.prevPopover = this.popover;
