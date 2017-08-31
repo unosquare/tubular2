@@ -8,9 +8,9 @@ module.exports = function (config) {
 
     plugins: [
       require('karma-jasmine'),
+      require('karma-chrome-launcher'),
       require('karma-html-reporter'),
       require('karma-coverage'),
-      require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter')
     ],
 
@@ -43,7 +43,7 @@ module.exports = function (config) {
       'node_modules/zone.js/dist/jasmine-patch.js',
       'node_modules/zone.js/dist/async-test.js',
       'node_modules/zone.js/dist/fake-async-test.js',
-      
+
       'node_modules/moment/moment.js',
 
       // RxJs
@@ -81,9 +81,9 @@ module.exports = function (config) {
     },
 
     exclude: [],
-
+    
     preprocessors: {
-        [libBase + '/**/!(*spec|*bundle).js'] : ['coverage']
+      [libBase + '/**/!(*spec|*bundle).js']: ['coverage']
     },
 
     // test results reporter to use
@@ -92,21 +92,21 @@ module.exports = function (config) {
     reporters: ['progress', 'coverage', 'kjhtml', 'html'],
 
     htmlReporter: {
-        outputDir: 'report/unit', // where to put the reports
-        focusOnFailures: true, // reports show failures on start
-        namedFiles: true, // name files instead of creating sub-directories
-        reportName: 'index',
+      outputDir: 'report/unit', // where to put the reports
+      focusOnFailures: true, // reports show failures on start
+      namedFiles: true, // name files instead of creating sub-directories
+      reportName: 'index',
 
-        // experimental
-        preserveDescribeNesting: false, // folded suites stay folded
-        foldAll: false // reports start folded (only with preserveDescribeNesting)
+      // experimental
+      preserveDescribeNesting: false, // folded suites stay folded
+      foldAll: false // reports start folded (only with preserveDescribeNesting)
     },
 
     // optionally, configure the reporter
     coverageReporter: {
-        type: 'lcov',
-        dir: 'report/coverage',
-        subdir: '.'
+      type: 'lcov',
+      dir: 'report/coverage',
+      subdir: '.'
     },
 
     port: 9876,
