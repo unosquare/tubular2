@@ -6,7 +6,6 @@ import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 
 import { GridComponent } from './grid/index';
-import { ColumnHeaderComponent } from './column-header/column-header';
 import { GridSearchComponent } from './grid-search/grid-search';
 import { GridPagerComponent } from './grid-pager/grid-pager';
 import { ColumnFilterDialogComponent } from './column-filter-dialog/column-filter-dialog';
@@ -28,13 +27,13 @@ import { NgbPopover, NgbPopoverWindow } from './popover/popover';
         MaterialModule
     ],
     declarations: [
-        GridComponent, ColumnHeaderComponent, GridSearchComponent,
+        GridComponent, GridSearchComponent,
         GridPagerComponent, GridPagerInfoComponent, ColumnFilterDialogComponent,
         GridPageSizeSelectorComponent, GridExportButtonDirective, GridPrintButtonDirective,
         MDatePipe, NgbPopover, NgbPopoverWindow
     ],
     exports: [
-        GridComponent, ColumnHeaderComponent, GridSearchComponent,
+        GridComponent, GridSearchComponent,
         GridPagerComponent, GridPagerInfoComponent, ColumnFilterDialogComponent,
         GridPageSizeSelectorComponent, GridExportButtonDirective, GridPrintButtonDirective,
         MDatePipe, NgbPopover

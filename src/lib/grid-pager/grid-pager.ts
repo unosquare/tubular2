@@ -77,14 +77,14 @@ export class GridPagerComponent implements OnInit, OnChanges {
     }
 
     public ngOnInit() {
-        this.tbGrid.page.subscribe((page) => {
+        this.tbGrid.page.subscribe(page => {
             const requireUpdate = this.page !== (page + 1);
 
             if (requireUpdate) {
                 this.selectPage(page + 1);
             }
         });
-        this.tbGrid.pageSize.subscribe((pageSize) => {
+        this.tbGrid.pageSize.subscribe(pageSize => {
             const requireUpdate = this.pageSize !== pageSize;
             this.pageSize = pageSize;
 

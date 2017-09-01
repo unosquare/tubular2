@@ -151,8 +151,11 @@ export class NgbPopover implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.close();
-        this._unregisterListenersFn();
-        this._zoneSubscription.unsubscribe();
+        // TODO: Check why this is being called before Init
+        if (this._unregisterListenersFn) {
+            this.close();
+            this._unregisterListenersFn();
+            this._zoneSubscription.unsubscribe();
+        }
     }
 }

@@ -139,7 +139,7 @@ export class GridComponent implements OnInit {
 
     ngOnInit() {
         // just a logging
-        this.dataStream.subscribe((p) => console.log('New data', p));
+        this.dataStream.subscribe(p => console.log('New data', p));
 
         // subscriptions to events
         this.pageSize.subscribe(() => {
@@ -153,9 +153,9 @@ export class GridComponent implements OnInit {
             this.refresh();
             this.changePagesData();
         });
-        
+
         this.freeTextSearch
-            .subscribe((c) => {
+            .subscribe(c => {
                 if (c === this.search.text) {
                     return;
                 }
@@ -184,7 +184,7 @@ export class GridComponent implements OnInit {
 
         const ngRequest = new Request(ngRequestOptions);
 
-        return this.http.request(ngRequest).map((response) => {
+        return this.http.request(ngRequest).map(response => {
             this.isLoading = false;
             return response.json();
         });
@@ -222,7 +222,7 @@ export class GridComponent implements OnInit {
     }
 
     private transformDataset(data, req) {
-        const transform = (d) => this.transformToObj(req.columns, d);
+        const transform = d => this.transformToObj(req.columns, d);
         const payload = (data.Payload || {}).map(transform);
         // push data
         this.data.next(payload);

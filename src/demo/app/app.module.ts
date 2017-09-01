@@ -32,11 +32,15 @@ import {
   MdSliderModule,
   MdSlideToggleModule,
   MdSnackBarModule,
+  MdSortModule,
+  MdTableModule,
   MdTabsModule,
   MdToolbarModule,
   MdTooltipModule,
   OverlayContainer
 } from '@angular/material';
+
+import {CdkTableModule} from '@angular/cdk';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -52,6 +56,7 @@ import { OrderComponent } from './order.component';
 
 @NgModule({
   exports: [
+    CdkTableModule,
     MdAutocompleteModule,
     MdButtonModule,
     MdButtonToggleModule,
@@ -76,6 +81,8 @@ import { OrderComponent } from './order.component';
     MdSlideToggleModule,
     MdSliderModule,
     MdSnackBarModule,
+    MdSortModule,
+    MdTableModule,
     MdTabsModule,
     MdToolbarModule,
     MdTooltipModule,
