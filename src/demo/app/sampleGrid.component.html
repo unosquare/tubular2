@@ -9,7 +9,7 @@
             <span md-sort-header>
                 Order ID
             </span>
-            <tb-filter-dialog column="OrderID" (filterChange)="applyFilterByColumnName($event)">
+            <tb-filter-dialog column="OrderID" (filterChange)="filterByColumnName($event)">
             </tb-filter-dialog>
         </md-header-cell>
         <md-cell *cdkCellDef="let row"> {{row.OrderID}} </md-cell>
@@ -20,7 +20,7 @@
             <span md-sort-header>
                 Customer Name
             </span>
-            <tb-filter-dialog column="CustomerName" (filterChange)="applyFilterByColumnName($event)">
+            <tb-filter-dialog column="CustomerName" (filterChange)="filterByColumnName($event)">
             </tb-filter-dialog>
         </md-header-cell>
         <md-cell *cdkCellDef="let row"> {{row.CustomerName}} </md-cell>

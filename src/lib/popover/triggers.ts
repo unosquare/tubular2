@@ -19,12 +19,12 @@ export function parseTriggers(triggers: string, aliases = DEFAULT_ALIASES): Trig
         return [];
     }
 
-    const parsedTriggers = trimmedTriggers.split(/\s+/).map((trigger) => trigger.split(':')).map((triggerPair) => {
+    const parsedTriggers = trimmedTriggers.split(/\s+/).map(trigger => trigger.split(':')).map((triggerPair) => {
         const alias = aliases[triggerPair[0]] || triggerPair;
         return new Trigger(alias[0], alias[1]);
     });
 
-    const manualTriggers = parsedTriggers.filter((triggerPair) => triggerPair.isManual());
+    const manualTriggers = parsedTriggers.filter(triggerPair => triggerPair.isManual());
 
     if (manualTriggers.length > 1) {
         throw new Error('Triggers parse error: only one manual trigger is allowed');
@@ -56,5 +56,5 @@ export function listenToTriggers(renderer: any, nativeElement: any, triggers: st
         }
     });
 
-    return () => { listeners.forEach((unsubscribeFn) => unsubscribeFn()); };
+    return () => { listeners.forEach(unsubscribeFn => unsubscribeFn()); };
 }

@@ -21,11 +21,11 @@ export abstract class GridTable {
 
     constructor(public tbGrid: GridComponent) {
         this.columns = this.columnObservable.asObservable();
-        this.columnObservable.subscribe((payload) => this.tbGrid.columns.next(payload));
+        this.columnObservable.subscribe(payload => this.tbGrid.columns.next(payload));
     }
 
     public addColumns(columns: ColumnModel[]) {
-        columns.forEach((c) => {
+        columns.forEach(c => {
             const val = this.columnObservable.getValue();
             val.push(c);
             this.columnObservable.next(val);
@@ -62,21 +62,21 @@ export abstract class GridTable {
 
         if (!column.isMultiSort) {
             value.forEach(
-                (v) => v.sortOrder = v.name === column.name ? v.sortOrder : 0);
+                v => v.sortOrder = v.name === column.name ? v.sortOrder : 0);
             value.forEach(
-                (v) => v.direction = v.name === column.name ?
+                v => v.direction = v.name === column.name ?
                     column.direction :
                     ColumnSortDirection.None);
         }
 
-        const currentlySortedColumns = value.filter((col) => col.sortOrder > 0);
+        const currentlySortedColumns = value.filter(col => col.sortOrder > 0);
         currentlySortedColumns.sort((a, b) => a.sortOrder === b.sortOrder ? 0 : 1);
         currentlySortedColumns.forEach((col, index) => { col.sortOrder = index + 1; });
 
         this.columnObservable.next(value);
     }
 
-    public applyFilterByColumnName(columnName: string) {
+    public filterByColumnName(columnName: string) {
         const value = this.columnObservable.getValue();
         const columnModel = value.find(c => c.name === columnName);
 
@@ -91,7 +91,7 @@ export abstract class GridTable {
         this.dataSource = new TubularDataSource(this.tbGrid);
 
         if (this.mdSort) {
-            this.mdSort.mdSortChange.subscribe((element) => {
+            this.mdSort.mdSortChange.subscribe(element => {
                 this.sortByColumnName(element.active);
             })
         }

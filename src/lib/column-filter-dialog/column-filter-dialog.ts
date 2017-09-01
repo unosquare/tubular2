@@ -36,7 +36,7 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
             operator: ['None', Validators.required]
         });
 
-        this.form.valueChanges.subscribe((value) => {
+        this.form.valueChanges.subscribe(value => {
             this.columnModel.filter.text = value.text;
             this.columnModel.filter.operator = value.operator;
 
@@ -83,7 +83,7 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
 
     public ngAfterViewInit() {
         // set initial value in form with a timeout
-        setTimeout((_) => {
+        setTimeout(_ => {
             // load operator directly from the column
             this.operators = this.columnModel.getOperators();
 
