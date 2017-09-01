@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 import { MdSort } from '@angular/material';
 import { GridComponent, ColumnModel, ColumnSortDirection } from '../grid/index';
 
-import { DataSource } from '@angular/cdk';
+import { DataSource } from '@angular/cdk/collections';
 
 
 export abstract class GridTable {
