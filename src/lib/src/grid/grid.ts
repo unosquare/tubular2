@@ -1,4 +1,4 @@
-﻿ import {
+﻿import {
     Component, Input, Output, EventEmitter,
     OnInit, Inject, Optional
 } from '@angular/core';
@@ -14,6 +14,7 @@ import { SETTINGS_PROVIDER, ITubularSettingsProvider } from '../core/tubular-loc
 import { ColumnModel, ColumnDataType, ColumnSortDirection } from './column';
 import { GridPageInfo } from './grid-page-info';
 import { GridRequest, GridSearchParameter } from './grid-request';
+import { DataService } from '../services/data.service';
 
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/map';
@@ -23,7 +24,7 @@ import 'rxjs/add/operator/catch';
 @Component({
     selector: 'tb-grid',
     templateUrl: './grid.html',
-    styleUrls: [ './grid.css' ]
+    styleUrls: ['./grid.css']
 })
 export class GridComponent implements OnInit {
     // data is just observable and children can't push
@@ -60,7 +61,7 @@ export class GridComponent implements OnInit {
 
     constructor(
         @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider,
-        private http: Http) {
+        private dataService: DataService) {
 
     }
 
@@ -184,11 +185,11 @@ export class GridComponent implements OnInit {
 
         const ngRequest = new Request(ngRequestOptions);
 
-        console.log("doing request");
-        return this.http.request(ngRequest).map(response => {
-            console.log("done request");
+        const result = this.dataService.getData(ngRequest);
+
+        return result.map(response => {
             this.isLoading = false;
-            return response.json();
+            return response;
         });
     }
 

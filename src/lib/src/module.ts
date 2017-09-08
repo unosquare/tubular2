@@ -14,6 +14,7 @@ import { GridPageSizeSelectorComponent } from './grid-page-size-selector/grid-pa
 import { GridExportButtonDirective } from './grid-export/grid-export';
 import { GridPrintButtonDirective } from './grid-print/grid-print';
 import { MDatePipe } from './mdate/mdate';
+import { DataService } from './services/data.service';
 
 // NbBootstrap special guest (https://github.com/ng-bootstrap/ng-bootstrap)
 import { NgbPopover, NgbPopoverWindow } from './popover/popover';
@@ -40,6 +41,7 @@ import { NgbPopover, NgbPopoverWindow } from './popover/popover';
     ],
     entryComponents: [
         NgbPopoverWindow
-    ]
+    ],
+    providers: [DataService]
 })
 export class TubularModule { }
