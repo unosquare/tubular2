@@ -184,7 +184,9 @@ export class GridComponent implements OnInit {
 
         const ngRequest = new Request(ngRequestOptions);
 
+        console.log("doing request");
         return this.http.request(ngRequest).map(response => {
+            console.log("done request");
             this.isLoading = false;
             return response.json();
         });

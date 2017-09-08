@@ -68,6 +68,8 @@ System.config({
     '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
 
     '@angular/material': 'npm:@angular/material/bundles/material.umd.js',
+    '@angular/cdk': 'npm:@angular/cdk/bundles/cdk.umd.js',
+    '@angular/cdk/table': 'npm:@angular/cdk/bundles/cdk-table.umd.js',
     '@angular/cdk/a11y': 'npm:@angular/cdk/bundles/cdk-a11y.umd.js',
     '@angular/cdk/bidi': 'npm:@angular/cdk/bundles/cdk-bidi.umd.js',
     '@angular/cdk/coercion': 'npm:@angular/cdk/bundles/cdk-coercion.umd.js',
