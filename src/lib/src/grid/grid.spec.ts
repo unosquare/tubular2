@@ -130,7 +130,16 @@ describe('Component: GridComponent', () => {
         TestBed.configureTestingModule({
             declarations: [SimpleGridApp, GridComponent, TestGrid, ColumnFilterDialogComponent, NgbPopover],
 
-            imports: [MaterialModule, HttpModule, MdTableModule, CdkTableModule, FormsModule, ReactiveFormsModule, PopupModule, BrowserAnimationsModule],
+            imports: [
+                MaterialModule,
+                HttpModule,
+                MdTableModule,
+                CdkTableModule,
+                FormsModule,
+                ReactiveFormsModule,
+                PopupModule,
+                BrowserAnimationsModule
+            ],
             providers: [DataService]
         }).compileComponents();
     }));
@@ -266,7 +275,6 @@ describe('Component: GridComponent', () => {
             expectTextContent(cells[1], `20`);
             expectTextContent(cells[2], `Microsoft`);
         }).then(() => {
-            console.log("done")
             const orderIdHeader = headerRow[2].querySelector('md-icon') as HTMLElement;
             orderIdHeader.click();
             fixture.detectChanges();
