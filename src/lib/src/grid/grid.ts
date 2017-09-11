@@ -140,7 +140,7 @@ export class GridComponent implements OnInit {
 
     ngOnInit() {
         // just a logging
-        this.dataStream.subscribe(p => console.log('New data', p));
+        this.dataStream.subscribe(p => console.log('New data'));
 
         // subscriptions to events
         this.pageSize.subscribe(() => {

@@ -26,8 +26,40 @@ describe('Component: GridComponent', () => {
     let simpleGridApp: SimpleGridApp;
     let fixture: ComponentFixture<SimpleGridApp>;
     let spy: jasmine.Spy;
+    let dataService: DataService;
 
-    const mockJson = {
+    const mockJsonDefault = {
+        "Counter": 0,
+        "Payload": [
+            [1, "Microsoft", "2016-03-19T20:00:00", "Guadalajara, JAL, Mexico", 300.00],
+            [2, "Microsoft", "2016-04-23T11:00:00", "Guadalajara, JAL, Mexico", 0.00],
+            [3, "Microsoft", "2016-12-22T09:00:00", "Guadalajara, JAL, Mexico", 300.00],
+            [4, "Unosquare LLC", "2016-02-01T19:00:00", "Los Angeles, CA, USA", 0.00],
+            [5, "Microsoft", "2016-11-10T19:00:00", "Guadalajara, JAL, Mexico", 92.00],
+            [6, "Unosquare LLC", "2016-11-06T19:00:00", "Los Angeles, CA, USA", 18.00],
+            [7, "Unosquare LLC", "2016-11-11T19:00:00", "Leon, GTO, Mexico", 50.00],
+            [8, "Unosquare LLC", "2016-11-08T19:00:00", "Portland, OR, USA", 9.00],
+            [9, "Vesta", "2016-11-07T19:00:00", "Guadalajara, JAL, Mexico", 108.00],
+            [10, "Unosquare LLC", "2016-11-05T19:00:00", "Portland, OR, USA", 15.00],
+            [11, "Unosquare LLC", "2016-11-11T19:00:00", "Guadalajara, JAL, Mexico", 60.00],
+            [12, "Vesta", "2016-11-09T19:00:00", "Leon, GTO, Mexico", 174.00],
+            [13, "Super La Playa", "2016-11-04T19:00:00", "Portland, OR, USA", 16.00],
+            [14, "Advanced Technology Systems", "2016-11-09T19:00:00", "Leon, GTO, Mexico", 0.00],
+            [15, "Unosquare LLC", "2016-11-08T19:00:00", "Leon, GTO, Mexico", 78.00],
+            [16, "Super La Playa", "2016-11-08T19:00:00", "Guadalajara, JAL, Mexico", 41.00],
+            [17, "Microsoft", "2016-11-07T19:00:00", "Guadalajara, JAL, Mexico", 0.00],
+            [18, "Microsoft", "2016-11-03T19:00:00", "Guadalajara, JAL, Mexico", 64.00],
+            [19, "Oxxo", "2016-11-10T19:00:00", "Los Angeles, CA, USA", 25.00],
+            [20, "Microsoft", "2016-11-08T19:00:00", "Guadalajara, JAL, Mexico", 3.00]
+        ],
+        "TotalRecordCount": 500,
+        "FilteredRecordCount": 500,
+        "TotalPages": 25,
+        "CurrentPage": 1,
+        "AggregationPayload": {}
+    };
+
+    const mockJsonOrderedByOrderId = {
         Counter: 0,
         Payload: [
             [500, 'Vesta', '2016-11-03T00:00:00', '2015-12-30T00:00:00', 'Los Angeles, CA, USA'],
@@ -68,14 +100,14 @@ describe('Component: GridComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(SimpleGridApp);
-        let dataService = fixture.debugElement.injector.get(DataService);
-
-        // Setup spy on the `getQuote` method
-        spy = spyOn(dataService, 'getData')
-            .and.returnValue(Observable.of(mockJson));
+        dataService = fixture.debugElement.injector.get(DataService);
     });
 
     it('should instantiate grid', async(() => {
+
+        spy = spyOn(dataService, 'getData')
+            .and.returnValue(Observable.of(mockJsonDefault));
+
         fixture.detectChanges();
 
         const myGrid = fixture.nativeElement.querySelector('.mat-table');
@@ -96,12 +128,77 @@ describe('Component: GridComponent', () => {
             const lastRow = rows[rows.length - 1];
 
             let cells = firstRow.querySelectorAll('.mat-cell');
-            expectTextContent(cells[1], `500`);
-            expectTextContent(cells[2], `Vesta`);
+            expectTextContent(cells[1], `1`);
+            expectTextContent(cells[2], `Microsoft`);
 
             cells = lastRow.querySelectorAll('.mat-cell');
-            expectTextContent(cells[1], `481`);
-            expectTextContent(cells[2], `Oxxo`);
+            expectTextContent(cells[1], `20`);
+            expectTextContent(cells[2], `Microsoft`);
+        });
+    }));
+
+    it('should sort by numeric column', async(() => {
+
+        spy = spyOn(dataService, 'getData')
+            .and.callFake(request => {
+                const columns = request._body.columns as Array<ColumnModel>;
+                const sortableColumns = columns.filter(f => f.sortOrder > 0);
+
+                if (sortableColumns.some(c => c.name == 'OrderID' && c.sortDirection == 'Descending'))
+                    return Observable.of(mockJsonOrderedByOrderId);
+
+                return Observable.of(mockJsonDefault);
+
+            });
+
+        fixture.detectChanges();
+
+        const myGrid = fixture.nativeElement.querySelector('.mat-table');
+        expect(myGrid).toBeDefined();
+
+        const headerRow = myGrid.querySelectorAll('.mat-header-cell');
+
+        expectTextContent(headerRow[0], 'Options');
+        expectTextContent(headerRow[1], 'Order ID');
+        expectTextContent(headerRow[2], 'Customer Name');
+
+        expect(spy.calls.any()).toBe(true, 'getData called');
+
+        fixture.whenStable().then(() => {
+            const rows = myGrid.querySelectorAll('.mat-row');
+
+            const firstRow = rows[0];
+            const lastRow = rows[rows.length - 1];
+
+            let cells = firstRow.querySelectorAll('.mat-cell');
+            expectTextContent(cells[1], `1`);
+            expectTextContent(cells[2], `Microsoft`);
+
+            cells = lastRow.querySelectorAll('.mat-cell');
+            expectTextContent(cells[1], `20`);
+            expectTextContent(cells[2], `Microsoft`);
+        }).then(() => {
+            const orderIdHeader = headerRow[1].querySelector('button.mat-sort-header-button') as HTMLElement;
+            orderIdHeader.click();
+            fixture.detectChanges();
+
+            orderIdHeader.click();
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                const rows = myGrid.querySelectorAll('.mat-row');
+
+                const firstRow = rows[0];
+                const lastRow = rows[rows.length - 1];
+
+                let cells = firstRow.querySelectorAll('.mat-cell');
+                expectTextContent(cells[1], `500`);
+                expectTextContent(cells[2], `Vesta`);
+
+                cells = lastRow.querySelectorAll('.mat-cell');
+                expectTextContent(cells[1], `481`);
+                expectTextContent(cells[2], `Oxxo`);
+            });
         });
     }));
 });
@@ -130,7 +227,7 @@ class SimpleGridApp {
 @Component({
     selector: 'my-grid',
     template: `
-        <md-table [dataSource]="dataSource">
+        <md-table [dataSource]="dataSource" mdSort>
             <ng-container cdkColumnDef="options">
                 <md-header-cell *cdkHeaderCellDef> Options </md-header-cell>
                 <md-cell *cdkCellDef="let row"> <button md-button (click)="edit(row)"><md-icon>mode_edit</md-icon></button> </md-cell>
@@ -138,7 +235,9 @@ class SimpleGridApp {
 
             <ng-container cdkColumnDef="OrderID">
                 <md-header-cell *cdkHeaderCellDef>
+                    <span md-sort-header>
                         Order ID
+                    </span>
                 </md-header-cell>
                 <md-cell *cdkCellDef="let row"> {{row.OrderID}} </md-cell>
             </ng-container>
