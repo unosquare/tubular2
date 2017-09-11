@@ -1,4 +1,5 @@
 import {
+    NgModule,
     Component,
     Directive,
     Input,
@@ -159,3 +160,14 @@ export class NgbPopover implements OnInit, OnDestroy {
         }
     }
 }
+
+
+/**
+ * Added to work with component tests (Workaround)
+ * see: https://stackoverflow.com/questions/42398059/angular-2-testmodulemetadata-does-not-have-an-entrycomponents-property
+ */
+@NgModule({
+    declarations: [NgbPopoverWindow],
+    entryComponents: [NgbPopoverWindow]
+})
+export class PopupModule { }

@@ -1,12 +1,15 @@
 import { ComponentFixture, TestBed, getTestBed, inject, tick, async, fakeAsync } from '@angular/core/testing';
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 import { DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { MaterialModule, MdDialog, MdTableModule } from '@angular/material';
 import { CdkTableModule } from '@angular/cdk/table';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions, Http, HttpModule, ResponseOptions, Response } from '@angular/http';
@@ -15,7 +18,8 @@ import { GridComponent } from './grid';
 import { DataService } from '../services/data.service';
 
 import { ColumnModel, ColumnFilterMode, ColumnDataType } from './column';
-// import { GridPrintButtonDirective } from '../grid-print/grid-print';
+import { ColumnFilterDialogComponent } from '../column-filter-dialog/column-filter-dialog';
+import { NgbPopover, NgbPopoverWindow, PopupModule } from '../popover/popover';
 // import { GridExportButtonDirective } from '../grid-export/grid-export';
 import { TubularDataSource } from '../grid-table/grid-table';
 import { GridTable } from '../grid-table/grid-table';
@@ -27,6 +31,7 @@ describe('Component: GridComponent', () => {
     let fixture: ComponentFixture<SimpleGridApp>;
     let spy: jasmine.Spy;
     let dataService: DataService;
+
 
     const mockJsonDefault = {
         Counter: 0,
@@ -90,10 +95,42 @@ describe('Component: GridComponent', () => {
         AggregationPayload: {}
     };
 
+    const mockJsonFilteredByCustomerName = {
+        Counter: 0,
+        Payload: [
+            [4, 'Unosquare LLC', '2016-02-01T19:00:00', 'Los Angeles, CA, USA', 0.00],
+            [6, 'Unosquare LLC', '2016-11-06T19:00:00', 'Los Angeles, CA, USA', 18.00],
+            [7, 'Unosquare LLC', '2016-11-11T19:00:00', 'Leon, GTO, Mexico', 50.00],
+            [8, 'Unosquare LLC', '2016-11-08T19:00:00', 'Portland, OR, USA', 9.00],
+            [10, 'Unosquare LLC', '2016-11-05T19:00:00', 'Portland, OR, USA', 15.00],
+            [11, 'Unosquare LLC', '2016-11-11T19:00:00', 'Guadalajara, JAL, Mexico', 60.00],
+            [15, 'Unosquare LLC', '2016-11-08T19:00:00', 'Leon, GTO, Mexico', 78.00],
+            [21, 'Unosquare LLC', '2016-11-11T19:00:00', 'Leon, GTO, Mexico', 70.00],
+            [22, 'Unosquare LLC', '2016-11-03T19:00:00', 'Guadalajara, JAL, Mexico', 17.00],
+            [25, 'Unosquare LLC', '2016-11-08T19:00:00', 'Los Angeles, CA, USA', 34.00],
+            [44, 'Unosquare LLC', '2016-11-04T19:00:00', 'Los Angeles, CA, USA', 82.00],
+            [45, 'Unosquare LLC', '2016-11-11T19:00:00', 'Los Angeles, CA, USA', 8.00],
+            [48, 'Unosquare LLC', '2016-11-11T19:00:00', 'Leon, GTO, Mexico', 18.00],
+            [56, 'Unosquare LLC', '2016-11-07T19:00:00', 'Los Angeles, CA, USA', 72.00],
+            [57, 'Unosquare LLC', '2016-11-02T19:00:00', 'Portland, OR, USA', 133.00],
+            [66, 'Unosquare LLC', '2016-11-02T19:00:00', 'Guadalajara, JAL, Mexico', 117.00],
+            [73, 'Unosquare LLC', '2016-11-04T19:00:00', 'Guadalajara, JAL, Mexico', 8.00],
+            [75, 'Unosquare LLC', '2016-11-07T19:00:00', 'Portland, OR, USA', 102.00],
+            [82, 'Unosquare LLC', '2016-11-05T19:00:00', 'Los Angeles, CA, USA', 126.00],
+            [89, 'Unosquare LLC', '2016-11-03T19:00:00', 'Portland, OR, USA', 38.00]
+        ],
+        TotalRecordCount: 500,
+        FilteredRecordCount: 500,
+        TotalPages: 25,
+        CurrentPage: 1,
+        AggregationPayload: {}
+    };
+
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [SimpleGridApp, GridComponent, TestGrid],
-            imports: [MaterialModule, HttpModule, MdTableModule, CdkTableModule],
+            declarations: [SimpleGridApp, GridComponent, TestGrid, ColumnFilterDialogComponent, NgbPopover],
+
+            imports: [MaterialModule, HttpModule, MdTableModule, CdkTableModule, FormsModule, ReactiveFormsModule, PopupModule, BrowserAnimationsModule],
             providers: [DataService]
         }).compileComponents();
     }));
@@ -101,12 +138,22 @@ describe('Component: GridComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(SimpleGridApp);
         dataService = fixture.debugElement.injector.get(DataService);
+
+        spy = spyOn(dataService, 'getData')
+            .and.callFake(request => {
+                const columns = request._body.columns as Array<ColumnModel>;
+                const sortableColumns = columns.filter(f => f.sortOrder > 0);
+
+                if (sortableColumns.some(c => c.name === 'OrderID' && c.sortDirection === 'Descending')) {
+                    return Observable.of(mockJsonOrderedByOrderId);
+                }
+
+                return Observable.of(mockJsonDefault);
+
+            });
     });
 
     it('should instantiate grid', async(() => {
-
-        spy = spyOn(dataService, 'getData')
-            .and.returnValue(Observable.of(mockJsonDefault));
 
         fixture.detectChanges();
 
@@ -117,7 +164,7 @@ describe('Component: GridComponent', () => {
 
         expectTextContent(headerRow[0], 'Options');
         expectTextContent(headerRow[1], 'Order ID');
-        expectTextContent(headerRow[2], 'Customer Name');
+        expectTextContent(headerRow[2].querySelector('span'), 'Customer Name');
 
         expect(spy.calls.any()).toBe(true, 'getData called');
 
@@ -139,19 +186,6 @@ describe('Component: GridComponent', () => {
 
     it('should sort by numeric column', async(() => {
 
-        spy = spyOn(dataService, 'getData')
-            .and.callFake(request => {
-                const columns = request._body.columns as Array<ColumnModel>;
-                const sortableColumns = columns.filter(f => f.sortOrder > 0);
-
-                if (sortableColumns.some(c => c.name === 'OrderID' && c.sortDirection === 'Descending')) {
-                    return Observable.of(mockJsonOrderedByOrderId);
-                }
-
-                return Observable.of(mockJsonDefault);
-
-            });
-
         fixture.detectChanges();
 
         const myGrid = fixture.nativeElement.querySelector('.mat-table');
@@ -161,7 +195,7 @@ describe('Component: GridComponent', () => {
 
         expectTextContent(headerRow[0], 'Options');
         expectTextContent(headerRow[1], 'Order ID');
-        expectTextContent(headerRow[2], 'Customer Name');
+        expectTextContent(headerRow[2].querySelector('span'), 'Customer Name');
 
         expect(spy.calls.any()).toBe(true, 'getData called');
 
@@ -202,10 +236,65 @@ describe('Component: GridComponent', () => {
             });
         });
     }));
+
+    it('should filter by text column', async(() => {
+
+        fixture.detectChanges();
+
+        const myGrid = fixture.nativeElement.querySelector('.mat-table');
+        expect(myGrid).toBeDefined();
+
+        const headerRow = myGrid.querySelectorAll('.mat-header-cell');
+
+        expectTextContent(headerRow[0], 'Options');
+        expectTextContent(headerRow[1], 'Order ID');
+        expectTextContent(headerRow[2].querySelector('span'), 'Customer Name');
+
+        expect(spy.calls.any()).toBe(true, 'getData called');
+
+        fixture.whenStable().then(() => {
+            const rows = myGrid.querySelectorAll('.mat-row');
+
+            const firstRow = rows[0];
+            const lastRow = rows[rows.length - 1];
+
+            let cells = firstRow.querySelectorAll('.mat-cell');
+            expectTextContent(cells[1], `1`);
+            expectTextContent(cells[2], `Microsoft`);
+
+            cells = lastRow.querySelectorAll('.mat-cell');
+            expectTextContent(cells[1], `20`);
+            expectTextContent(cells[2], `Microsoft`);
+        }).then(() => {
+            console.log("done")
+            const orderIdHeader = headerRow[2].querySelector('md-icon') as HTMLElement;
+            orderIdHeader.click();
+            fixture.detectChanges();
+
+            // orderIdHeader.click();
+            // fixture.detectChanges();
+
+            // fixture.whenStable().then(() => {
+            //     const rows = myGrid.querySelectorAll('.mat-row');
+
+            //     const firstRow = rows[0];
+            //     const lastRow = rows[rows.length - 1];
+
+            //     let cells = firstRow.querySelectorAll('.mat-cell');
+            //     expectTextContent(cells[1], `500`);
+            //     expectTextContent(cells[2], `Vesta`);
+
+            //     cells = lastRow.querySelectorAll('.mat-cell');
+            //     expectTextContent(cells[1], `481`);
+            //     expectTextContent(cells[2], `Oxxo`);
+            // });
+        });
+    }));
 });
 
 function expectTextContent(el, text) {
     if (el && el.textContent) {
+        console.log(el);
         expect(el.textContent.trim()).toBe(text);
     } else {
         fail(`Missing text content of ${text} in element ${el}`);
@@ -245,7 +334,11 @@ class SimpleGridApp {
 
             <ng-container cdkColumnDef="CustomerName">
                 <md-header-cell *cdkHeaderCellDef>
+                    <span>
                         Customer Name
+                    </span>
+                    <tb-filter-dialog column="CustomerName" (filterChange)="filterByColumnName($event)">
+                    </tb-filter-dialog>
                 </md-header-cell>
                 <md-cell *cdkCellDef="let row"> {{row.CustomerName}} </md-cell>
             </ng-container>
