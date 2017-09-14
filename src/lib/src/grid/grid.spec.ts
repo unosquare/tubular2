@@ -7,6 +7,7 @@ import { Directionality } from '@angular/cdk/bidi';
 import { ScrollDispatcher, ViewportRuler } from '@angular/cdk/scrolling';
 
 
+import { By } from '@angular/platform-browser';
 
 import { DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -147,12 +148,13 @@ describe('Component: GridComponent', () => {
             imports: [
                 MaterialModule,
                 MdSelectModule,
-                HttpModule,
                 MdTableModule,
                 CdkTableModule,
-                FormsModule,
                 ReactiveFormsModule,
-                PopoverModule.forRoot()
+                FormsModule,
+                PopoverModule.forRoot(),
+                HttpModule,
+                NoopAnimationsModule
             ],
             providers: [
                 DataService,
@@ -166,8 +168,6 @@ describe('Component: GridComponent', () => {
                         // remove body padding to keep consistent cross-browser
                         document.body.style.padding = '0';
                         document.body.style.margin = '0';
-
-                        console.log(overlayContainerElement);
 
                         return { getContainerElement: () => overlayContainerElement };
                     }
@@ -206,11 +206,11 @@ describe('Component: GridComponent', () => {
     });
 
     afterEach(() => {
-        document.body.removeChild(overlayContainerElement);
+        // document.body.removeChild(overlayContainerElement);
     });
 
 
-    it('should instantiate grid', async(() => {
+    xit('should instantiate grid', async(() => {
 
         fixture.detectChanges();
 
@@ -257,13 +257,6 @@ describe('Component: GridComponent', () => {
 
         expect(spy.calls.any()).toBe(true, 'getData called');
 
-        const customerNameHeader = headerRow[2].querySelector('md-icon') as HTMLElement;
-        customerNameHeader.click();
-        fixture.detectChanges();
-
-        customerNameHeader.click();
-        fixture.detectChanges();
-
         fixture.whenStable().then(() => {
             const rows = myGrid.querySelectorAll('.mat-row');
 
@@ -280,9 +273,6 @@ describe('Component: GridComponent', () => {
         }).then(() => {
             const orderIdHeader = headerRow[1].querySelector('button.mat-sort-header-button') as HTMLElement;
 
-            customerNameHeader.click();
-            fixture.detectChanges();
-
             orderIdHeader.click();
             fixture.detectChanges();
 
@@ -291,9 +281,7 @@ describe('Component: GridComponent', () => {
 
             fixture.whenStable().then(() => {
 
-                customerNameHeader.click();
                 const rows = myGrid.querySelectorAll('.mat-row');
-
 
                 const firstRow = rows[0];
                 const lastRow = rows[rows.length - 1];
@@ -309,7 +297,7 @@ describe('Component: GridComponent', () => {
         });
     }));
 
-    xit('should filter by text column', async(() => {
+    it('should open filter popup', async(() => {
 
         fixture.detectChanges();
 
@@ -323,6 +311,8 @@ describe('Component: GridComponent', () => {
         expectTextContent(headerRow[2].querySelector('span'), 'Customer Name');
 
         expect(spy.calls.any()).toBe(true, 'getData called');
+
+        const customerNameHeader = headerRow[2].querySelector('md-icon') as HTMLElement;
 
         fixture.whenStable().then(() => {
             const rows = myGrid.querySelectorAll('.mat-row');
@@ -338,23 +328,26 @@ describe('Component: GridComponent', () => {
             expectTextContent(cells[1], `20`);
             expectTextContent(cells[2], `Microsoft`);
         }).then(() => {
-            // orderIdHeader.click();
-            // fixture.detectChanges();
 
-            // fixture.whenStable().then(() => {
-            //     const rows = myGrid.querySelectorAll('.mat-row');
+            customerNameHeader.click();
+            fixture.detectChanges();
 
-            //     const firstRow = rows[0];
-            //     const lastRow = rows[rows.length - 1];
+            const trigger = fixture.debugElement.query(By.css('.mat-select-trigger')).nativeElement;
 
-            //     let cells = firstRow.querySelectorAll('.mat-cell');
-            //     expectTextContent(cells[1], `500`);
-            //     expectTextContent(cells[2], `Vesta`);
+            trigger.click();
+            fixture.detectChanges();
 
-            //     cells = lastRow.querySelectorAll('.mat-cell');
-            //     expectTextContent(cells[1], `481`);
-            //     expectTextContent(cells[2], `Oxxo`);
-            // });
+            const option1 = overlayContainerElement.querySelectorAll('md-option')[0] as HTMLElement;
+            const option2 = overlayContainerElement.querySelectorAll('md-option')[1] as HTMLElement;
+            const option3 = overlayContainerElement.querySelectorAll('md-option')[2] as HTMLElement;
+
+            expect(option1).toBeDefined();
+            expect(option2).toBeDefined();
+            expect(option3).toBeDefined();
+
+            expectTextContent(option1, 'None');
+            expectTextContent(option2, 'Contains');
+            expectTextContent(option3, 'Not Contains');
         });
     }));
 });
