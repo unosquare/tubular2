@@ -1,7 +1,3 @@
-<div class="column-menu" [hidden]="columnModel.filterMode == 0" #popover="ngbPopover" [ngbPopover]="filterPopover" placement="bottom"
-    popoverTitle="Filter" (click)="togglePopover()">
-    <md-icon color="{{ hasFilter ? 'primary' : '' }}">filter_list</md-icon>
-</div>
 <ng-template #filterPopover>
     <form [formGroup]="form" (ngSubmit)="submit()">
         <md-select placeholder="Operator" formControlName="operator" (change)="selectChange($event.value)">
@@ -21,3 +17,8 @@
         </div>
     </form>
 </ng-template>
+
+<div class="column-menu" [hidden]="columnModel.filterMode == 0" #popover="ngbPopover" [ngbPopover]="filterPopover" placement="bottom"
+    popoverTitle="Filter" (click)="togglePopover()">
+    <md-icon color="{{ hasFilter ? 'primary' : '' }}">filter_list</md-icon>
+</div>

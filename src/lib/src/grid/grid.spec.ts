@@ -1,13 +1,17 @@
 import { ComponentFixture, TestBed, getTestBed, inject, tick, async, fakeAsync } from '@angular/core/testing';
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { OverlayContainer } from '@angular/cdk/overlay';
+import { Directionality } from '@angular/cdk/bidi';
+import { ScrollDispatcher, ViewportRuler } from '@angular/cdk/scrolling';
+
 
 
 import { DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { MaterialModule, MdDialog, MdTableModule } from '@angular/material';
+import { MaterialModule, MdDialog, MdTableModule, MdSelectModule, MdSelect } from '@angular/material';
 import { CdkTableModule } from '@angular/cdk/table';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -19,11 +23,17 @@ import { DataService } from '../services/data.service';
 
 import { ColumnModel, ColumnFilterMode, ColumnDataType } from './column';
 import { ColumnFilterDialogComponent } from '../column-filter-dialog/column-filter-dialog';
-import { NgbPopover, NgbPopoverWindow, PopupModule } from '../popover/popover';
+import { PopoverModule } from '../popover/popover.module';
+import { NgbPopoverWindow, NgbPopover } from '../popover/popover';
+
+
 // import { GridExportButtonDirective } from '../grid-export/grid-export';
 import { TubularDataSource } from '../grid-table/grid-table';
 import { GridTable } from '../grid-table/grid-table';
 import 'rxjs/add/observable/of';
+
+import { Subject } from 'rxjs/Subject';
+
 
 
 describe('Component: GridComponent', () => {
@@ -31,6 +41,11 @@ describe('Component: GridComponent', () => {
     let fixture: ComponentFixture<SimpleGridApp>;
     let spy: jasmine.Spy;
     let dataService: DataService;
+    let overlayContainerElement: HTMLElement;
+    let dir: { value: 'ltr' | 'rtl' };
+    let scrolledSubject = new Subject();
+
+
 
 
     const mockJsonDefault = {
@@ -128,19 +143,47 @@ describe('Component: GridComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [SimpleGridApp, GridComponent, TestGrid, ColumnFilterDialogComponent, NgbPopover],
-
+            declarations: [SimpleGridApp, GridComponent, TestGrid, ColumnFilterDialogComponent],
             imports: [
                 MaterialModule,
+                MdSelectModule,
                 HttpModule,
                 MdTableModule,
                 CdkTableModule,
                 FormsModule,
                 ReactiveFormsModule,
-                PopupModule,
-                BrowserAnimationsModule
+                PopoverModule.forRoot()
             ],
-            providers: [DataService]
+            providers: [
+                DataService,
+                {
+                    provide: OverlayContainer, useFactory: () => {
+                        overlayContainerElement = document.createElement('div') as HTMLElement;
+                        overlayContainerElement.classList.add('cdk-overlay-container');
+
+                        document.body.appendChild(overlayContainerElement);
+
+                        // remove body padding to keep consistent cross-browser
+                        document.body.style.padding = '0';
+                        document.body.style.margin = '0';
+
+                        console.log(overlayContainerElement);
+
+                        return { getContainerElement: () => overlayContainerElement };
+                    }
+                }
+                ,
+                { provide: Directionality, useFactory: () => dir = { value: 'ltr' } },
+                {
+                    provide: ScrollDispatcher, useFactory: () => {
+                        return {
+                            scrolled: (_delay: number, callback: () => any) => {
+                                return scrolledSubject.asObservable().subscribe(callback);
+                            }
+                        };
+                    }
+                }
+            ]
         }).compileComponents();
     }));
 
@@ -162,6 +205,11 @@ describe('Component: GridComponent', () => {
             });
     });
 
+    afterEach(() => {
+        document.body.removeChild(overlayContainerElement);
+    });
+
+
     it('should instantiate grid', async(() => {
 
         fixture.detectChanges();
@@ -178,6 +226,7 @@ describe('Component: GridComponent', () => {
         expect(spy.calls.any()).toBe(true, 'getData called');
 
         fixture.whenStable().then(() => {
+
             const rows = myGrid.querySelectorAll('.mat-row');
 
             const firstRow = rows[0];
@@ -193,7 +242,7 @@ describe('Component: GridComponent', () => {
         });
     }));
 
-    it('should sort by numeric column', async(() => {
+    xit('should sort by numeric column', async(() => {
 
         fixture.detectChanges();
 
@@ -207,6 +256,13 @@ describe('Component: GridComponent', () => {
         expectTextContent(headerRow[2].querySelector('span'), 'Customer Name');
 
         expect(spy.calls.any()).toBe(true, 'getData called');
+
+        const customerNameHeader = headerRow[2].querySelector('md-icon') as HTMLElement;
+        customerNameHeader.click();
+        fixture.detectChanges();
+
+        customerNameHeader.click();
+        fixture.detectChanges();
 
         fixture.whenStable().then(() => {
             const rows = myGrid.querySelectorAll('.mat-row');
@@ -223,6 +279,10 @@ describe('Component: GridComponent', () => {
             expectTextContent(cells[2], `Microsoft`);
         }).then(() => {
             const orderIdHeader = headerRow[1].querySelector('button.mat-sort-header-button') as HTMLElement;
+
+            customerNameHeader.click();
+            fixture.detectChanges();
+
             orderIdHeader.click();
             fixture.detectChanges();
 
@@ -230,7 +290,10 @@ describe('Component: GridComponent', () => {
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
+
+                customerNameHeader.click();
                 const rows = myGrid.querySelectorAll('.mat-row');
+
 
                 const firstRow = rows[0];
                 const lastRow = rows[rows.length - 1];
@@ -246,7 +309,7 @@ describe('Component: GridComponent', () => {
         });
     }));
 
-    it('should filter by text column', async(() => {
+    xit('should filter by text column', async(() => {
 
         fixture.detectChanges();
 
@@ -275,10 +338,6 @@ describe('Component: GridComponent', () => {
             expectTextContent(cells[1], `20`);
             expectTextContent(cells[2], `Microsoft`);
         }).then(() => {
-            const orderIdHeader = headerRow[2].querySelector('md-icon') as HTMLElement;
-            orderIdHeader.click();
-            fixture.detectChanges();
-
             // orderIdHeader.click();
             // fixture.detectChanges();
 
@@ -302,7 +361,6 @@ describe('Component: GridComponent', () => {
 
 function expectTextContent(el, text) {
     if (el && el.textContent) {
-        console.log(el);
         expect(el.textContent.trim()).toBe(text);
     } else {
         fail(`Missing text content of ${text} in element ${el}`);

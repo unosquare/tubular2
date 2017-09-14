@@ -81,6 +81,8 @@ export class NgbPopover implements OnInit, OnDestroy {
         private _elementRef: ElementRef, private _renderer: Renderer2, injector: Injector,
         componentFactoryResolver: ComponentFactoryResolver, viewContainerRef: ViewContainerRef,
         ngZone: NgZone) {
+
+        // this.container = 'body';
         this._popupService = new PopupService<NgbPopoverWindow>(
             NgbPopoverWindow, injector, viewContainerRef, _renderer, componentFactoryResolver);
 
@@ -110,8 +112,8 @@ export class NgbPopover implements OnInit, OnDestroy {
                 window.document.querySelector(this.container).appendChild(this._windowRef.location.nativeElement);
             }
 
-            // we need to manually invoke change detection since events registered via
-            // Renderer::listen() are not picked up by change detection with the OnPush strategy
+            // apply styling to set basic css-classes on target element, before going for positioning
+            this._windowRef.changeDetectorRef.detectChanges();
             this._windowRef.changeDetectorRef.markForCheck();
             this.shown.emit();
         }
@@ -152,22 +154,8 @@ export class NgbPopover implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        // TODO: Check why this is being called before Init
-        if (this._unregisterListenersFn) {
-            this.close();
-            this._unregisterListenersFn();
-            this._zoneSubscription.unsubscribe();
-        }
+        this.close();
+        this._unregisterListenersFn();
+        this._zoneSubscription.unsubscribe();
     }
 }
-
-
-/**
- * Added to work with component tests (Workaround)
- * see: https://stackoverflow.com/questions/42398059/angular-2-testmodulemetadata-does-not-have-an-entrycomponents-property
- */
-@NgModule({
-    declarations: [NgbPopoverWindow],
-    entryComponents: [NgbPopoverWindow]
-})
-export class PopupModule { }
