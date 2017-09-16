@@ -12,7 +12,7 @@ import { By } from '@angular/platform-browser';
 import { DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { MaterialModule, MdDialog, MdTableModule, MdSelectModule, MdSelect } from '@angular/material';
+import { MaterialModule, MdDialog, MdTableModule, MdSelectModule, MdSelect, MdInput } from '@angular/material';
 import { CdkTableModule } from '@angular/cdk/table';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -45,9 +45,6 @@ describe('Component: GridComponent', () => {
     let overlayContainerElement: HTMLElement;
     let dir: { value: 'ltr' | 'rtl' };
     let scrolledSubject = new Subject();
-
-
-
 
     const mockJsonDefault = {
         Counter: 0,
@@ -195,6 +192,13 @@ describe('Component: GridComponent', () => {
             .and.callFake(request => {
                 const columns = request._body.columns as Array<ColumnModel>;
                 const sortableColumns = columns.filter(f => f.sortOrder > 0);
+                const searchableColumns = columns.filter(f => f.hasFilter);
+
+                if (searchableColumns.some(c => c.name === 'CustomerName'
+                    && c.filter.operator === 'Contains'
+                    && c.filter.text === 'Unosquare')) {
+                    return Observable.of(mockJsonFilteredByCustomerName);
+                }
 
                 if (sortableColumns.some(c => c.name === 'OrderID' && c.sortDirection === 'Descending')) {
                     return Observable.of(mockJsonOrderedByOrderId);
@@ -206,9 +210,8 @@ describe('Component: GridComponent', () => {
     });
 
     afterEach(() => {
-        // document.body.removeChild(overlayContainerElement);
+        document.body.removeChild(overlayContainerElement);
     });
-
 
     xit('should instantiate grid', async(() => {
 
@@ -348,6 +351,33 @@ describe('Component: GridComponent', () => {
             expectTextContent(option1, 'None');
             expectTextContent(option2, 'Contains');
             expectTextContent(option3, 'Not Contains');
+
+            option2.click();
+            fixture.detectChanges();
+
+            const tbFilterDialog = fixture.debugElement
+                .query(By.directive(ColumnFilterDialogComponent))
+                .componentInstance as ColumnFilterDialogComponent;
+
+            tbFilterDialog.form.controls['text'].setValue('Unosquare');
+            fixture.detectChanges();
+            tbFilterDialog.submit();
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                const rows = myGrid.querySelectorAll('.mat-row');
+
+                const firstRow = rows[0];
+                const lastRow = rows[rows.length - 1];
+
+                let cells = firstRow.querySelectorAll('.mat-cell');
+                expectTextContent(cells[1], `4`);
+                expectTextContent(cells[2], `Unosquare LLC`);
+
+                cells = lastRow.querySelectorAll('.mat-cell');
+                expectTextContent(cells[1], `89`);
+                expectTextContent(cells[2], `Unosquare LLC`);
+            });
         });
     }));
 });

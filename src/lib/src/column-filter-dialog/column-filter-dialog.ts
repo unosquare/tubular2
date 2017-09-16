@@ -48,6 +48,9 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
 
             this.isBetween = value.operator === 'Between';
             this.inputType = this.columnModel.getInputType();
+
+            this.columnModel.hasFilter =
+                this.columnModel.filter.text && this.columnModel.filter.operator !== 'None';
         });
     }
 
