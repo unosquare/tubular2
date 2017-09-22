@@ -14,6 +14,7 @@ import { SETTINGS_PROVIDER, ITubularSettingsProvider } from '../core/tubular-loc
 import { ColumnModel, ColumnDataType, ColumnSortDirection } from './column';
 import { GridPageInfo } from './grid-page-info';
 import { GridRequest, GridSearchParameter } from './grid-request';
+import { GridResponse } from './grid-response';
 import { DataService } from '../services/data.service';
 
 import 'rxjs/add/operator/debounceTime';
@@ -79,7 +80,7 @@ export class GridComponent implements OnInit {
         }
     }
 
-    public getCurrentPage(): Observable<Response> {
+    public getCurrentPage(): Observable<GridResponse> {
         this.isLoading = true;
 
         this.tbRequestRunning = {
@@ -94,7 +95,7 @@ export class GridComponent implements OnInit {
         return this.requestData(this.tbRequestRunning);
     }
 
-    public getFullDataSource(): Observable<Response> {
+    public getFullDataSource(): Observable<GridResponse> {
         const tbRequest = {
             count: this.requestCount++,
             columns: this.columns.getValue(),
@@ -169,7 +170,7 @@ export class GridComponent implements OnInit {
         this.goToPage(0);
     }
 
-    private requestData(tbRequest: GridRequest): Observable<Response> {
+    private requestData(tbRequest: GridRequest): Observable<GridResponse> {
         // transform direction values to strings
         tbRequest.columns.forEach(this.transformSortDirection);
 
