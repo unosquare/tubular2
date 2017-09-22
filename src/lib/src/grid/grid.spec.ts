@@ -213,39 +213,7 @@ describe('Component: GridComponent', () => {
         document.body.removeChild(overlayContainerElement);
     });
 
-    xit('should instantiate grid', async(() => {
-
-        fixture.detectChanges();
-
-        const myGrid = fixture.nativeElement.querySelector('.mat-table');
-        expect(myGrid).toBeDefined();
-
-        const headerRow = myGrid.querySelectorAll('.mat-header-cell');
-
-        expectTextContent(headerRow[0], 'Options');
-        expectTextContent(headerRow[1], 'Order ID');
-        expectTextContent(headerRow[2].querySelector('span'), 'Customer Name');
-
-        expect(spy.calls.any()).toBe(true, 'getData called');
-
-        fixture.whenStable().then(() => {
-
-            const rows = myGrid.querySelectorAll('.mat-row');
-
-            const firstRow = rows[0];
-            const lastRow = rows[rows.length - 1];
-
-            let cells = firstRow.querySelectorAll('.mat-cell');
-            expectTextContent(cells[1], `1`);
-            expectTextContent(cells[2], `Microsoft`);
-
-            cells = lastRow.querySelectorAll('.mat-cell');
-            expectTextContent(cells[1], `20`);
-            expectTextContent(cells[2], `Microsoft`);
-        });
-    }));
-
-    xit('should sort by numeric column', async(() => {
+    it('should sort by numeric column', async(() => {
 
         fixture.detectChanges();
 
@@ -300,7 +268,7 @@ describe('Component: GridComponent', () => {
         });
     }));
 
-    it('should open filter popup', async(() => {
+    it('should make use of filter dialog', async(() => {
 
         fixture.detectChanges();
 
@@ -377,6 +345,7 @@ describe('Component: GridComponent', () => {
                 cells = lastRow.querySelectorAll('.mat-cell');
                 expectTextContent(cells[1], `89`);
                 expectTextContent(cells[2], `Unosquare LLC`);
+
             });
         });
     }));
@@ -467,15 +436,5 @@ export class TestGrid extends GridTable {
             creationDate,
             cityColumn
         ]);
-    }
-
-    edit(row) {
-        // const modalRef = this.dialog.open(OrderComponent);
-        // modalRef.componentInstance.name = 'World';
-        // modalRef.componentInstance.model = row;
-    }
-
-    details(row) {
-
     }
 }
