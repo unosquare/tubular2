@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { MaterialModule } from '@angular/material';
+import { MaterialModule, MdSortModule} from '@angular/material';
 
 import { GridComponent } from './grid/index';
 import { GridSearchComponent } from './grid-search/grid-search';
@@ -25,7 +25,8 @@ import { NgbPopover, NgbPopoverWindow } from './popover/popover';
         FormsModule,
         ReactiveFormsModule,
         HttpModule,
-        MaterialModule
+        MaterialModule,
+        MdSortModule
     ],
     declarations: [
         GridComponent, GridSearchComponent,
