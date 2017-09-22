@@ -197,14 +197,14 @@ describe('Component: GridComponent', () => {
                 if (searchableColumns.some(c => c.name === 'CustomerName'
                     && c.filter.operator === 'Contains'
                     && c.filter.text === 'Unosquare')) {
-                    return Observable.of(mockJsonFilteredByCustomerName);
+                    return Observable.of(mockJsonFilteredByCustomerName).map(r => r);
                 }
 
                 if (sortableColumns.some(c => c.name === 'OrderID' && c.sortDirection === 'Descending')) {
-                    return Observable.of(mockJsonOrderedByOrderId);
+                    return Observable.of(mockJsonOrderedByOrderId).map(r => r);
                 }
 
-                return Observable.of(mockJsonDefault);
+                return Observable.of(mockJsonDefault).map(r => r);
 
             });
     });
