@@ -1,0 +1,14 @@
+<div class="example-container mat-elevation-z8">
+    <!-- <ng-template ad-host></ng-template> -->
+
+    <md-table #table [dataSource]="dataSource">
+
+        <ng-container cdkColumnDef="{{item.columnDef}}" *ngFor="let item of tbColumns">
+            <cdk-header-cell *cdkHeaderCellDef> {{item.header}} </cdk-header-cell>
+            <cdk-cell *cdkCellDef="let row"> {{row[item.columnDef]}} </cdk-cell>
+        </ng-container>
+
+        <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+        <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
+    </md-table>
+</div>
