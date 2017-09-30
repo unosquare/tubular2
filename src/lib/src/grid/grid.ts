@@ -1,6 +1,6 @@
 ﻿import {
     Component, Input, Output, EventEmitter,
-    OnInit, Inject, Optional
+    OnInit, Inject, Optional, ContentChild
 } from '@angular/core';
 import {
     RequestMethod, Http, RequestOptions,
@@ -9,6 +9,9 @@ import {
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import * as moment from 'moment';
+
+import { MdSort } from '@angular/material';
+import { DataSource } from '@angular/cdk/collections';
 
 import { SETTINGS_PROVIDER, ITubularSettingsProvider } from '../core/tubular-local-storage-service';
 import { ColumnModel, ColumnDataType, ColumnSortDirection } from './column';
@@ -28,23 +31,23 @@ import 'rxjs/add/operator/catch';
     styleUrls: ['./grid.css']
 })
 export class GridComponent implements OnInit {
+
     // data is just observable and children can't push
     private data = new BehaviorSubject([]);
-    public dataStream = this.data.asObservable();
     private _pageInfo = new BehaviorSubject(new GridPageInfo());
-    public pageInfo = this._pageInfo.asObservable();
-
     private tbRequestRunning: GridRequest;
+    private requestCount = 0;
 
+    public pageInfo = this._pageInfo.asObservable();
+    public dataStream = this.data.asObservable();
+    public dataSource: TubularDataSource | null;
     public _pageSize = new BehaviorSubject(this.getPageSizeSettingValue());
     public pageSize = this._pageSize.asObservable();
-
-    // values that to observe and allow to push from children
+    
     public page = new BehaviorSubject(this.getPageSettingValue());
-    public columns = new BehaviorSubject([]);
+    public columns: BehaviorSubject<ColumnModel[]> = new BehaviorSubject([]);
     public freeTextSearch = new BehaviorSubject('');
-
-    pageSet = false;
+    public pageSet = false;
 
     public isLoading = false;
     public search = {
@@ -52,13 +55,13 @@ export class GridComponent implements OnInit {
         operator: 'None'
     } as GridSearchParameter;
 
-    private requestCount = 0;
-
     @Input() public dataUrl: string;
     @Input() public requestMethod: string | RequestMethod;
     @Input() public requestTimeout: number;
 
     @Output() public beforeRequest = new EventEmitter<any>();
+
+    @ContentChild(MdSort) mdSort: MdSort;
 
     constructor(
         @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider,
@@ -66,21 +69,21 @@ export class GridComponent implements OnInit {
 
     }
 
-    public goToPage(page) {
+    goToPage(page) {
         this.pageSet = true;
         this.page.next(page);
     }
 
-    public refresh() {
+    refresh() {
         if (this.pageSet && this.columns.getValue().length > 0 && this._pageSize.getValue() > 0) {
             this.getCurrentPage()
                 .subscribe((data: any) => {
-                    this.transformDataset(data, this.tbRequestRunning);
+                    this._transformDataset(data, this.tbRequestRunning);
                 });
         }
     }
 
-    public getCurrentPage(): Observable<GridResponse> {
+    getCurrentPage(): Observable<GridResponse> {
         this.isLoading = true;
 
         this.tbRequestRunning = {
@@ -92,10 +95,10 @@ export class GridComponent implements OnInit {
             timezoneOffset: new Date().getTimezoneOffset()
         } as GridRequest;
 
-        return this.requestData(this.tbRequestRunning);
+        return this._requestData(this.tbRequestRunning);
     }
 
-    public getFullDataSource(): Observable<GridResponse> {
+    getFullDataSource(): Observable<GridResponse> {
         const tbRequest = {
             count: this.requestCount++,
             columns: this.columns.getValue(),
@@ -108,7 +111,7 @@ export class GridComponent implements OnInit {
             } as GridSearchParameter
         } as GridRequest;
 
-        return this.requestData(tbRequest);
+        return this._requestData(tbRequest);
     }
 
     changePagesData() {
@@ -140,6 +143,15 @@ export class GridComponent implements OnInit {
     }
 
     ngOnInit() {
+
+        this.dataSource = new TubularDataSource(this);
+
+        if (this.mdSort) {
+            this.mdSort.mdSortChange.subscribe(element => {
+                this.sortByColumnName(element.active);
+            })
+        }
+
         // just a logging
         this.dataStream.subscribe(p => console.log('New data'));
 
@@ -170,9 +182,69 @@ export class GridComponent implements OnInit {
         this.goToPage(0);
     }
 
-    private requestData(tbRequest: GridRequest): Observable<GridResponse> {
+    addColumns(columns: ColumnModel[]) {
+        // TODO: Should we clear before??
+        this.columns.getValue().push(...columns);
+    }
+
+    sortByColumnName(columnName: string) {
+        const value = this.columns.getValue();
+        const columnModel = value.find(c => c.name === columnName);
+
+        if (!columnModel) {
+            throw Error('Invalid column name');
+        }
+
+        this.sort(columnModel);
+    }
+
+    sort(column: ColumnModel) {
+        const value = this.columns.getValue();
+
+        if (!column.sortable) {
+            return;
+        }
+
+        if (column.direction === ColumnSortDirection.None) {
+            column.direction = ColumnSortDirection.Asc;
+        } else if (column.direction === ColumnSortDirection.Asc) {
+            column.direction = ColumnSortDirection.Desc;
+        } else if (column.direction === ColumnSortDirection.Desc) {
+            column.direction = ColumnSortDirection.None;
+        }
+
+        column.sortOrder = column.direction === ColumnSortDirection.None ? 0 : Number.MAX_VALUE;
+
+        if (!column.isMultiSort) {
+            value.forEach(
+                v => v.sortOrder = v.name === column.name ? v.sortOrder : 0);
+            value.forEach(
+                v => v.direction = v.name === column.name ?
+                    column.direction :
+                    ColumnSortDirection.None);
+        }
+
+        const currentlySortedColumns = value.filter(col => col.sortOrder > 0);
+        currentlySortedColumns.sort((a, b) => a.sortOrder === b.sortOrder ? 0 : 1);
+        currentlySortedColumns.forEach((col, index) => { col.sortOrder = index + 1; });
+
+        this.columns.next(value);
+    }
+
+    filterByColumnName(columnName: string) {
+        const value = this.columns.getValue();
+        const columnModel = value.find(c => c.name === columnName);
+
+        if (!columnModel) {
+            throw Error('Invalid column name');
+        }
+
+        this.columns.next(value);
+    }
+
+    private _requestData(tbRequest: GridRequest): Observable<GridResponse> {
         // transform direction values to strings
-        tbRequest.columns.forEach(this.transformSortDirection);
+        tbRequest.columns.forEach(this._transformSortDirection);
 
         const ngRequestOptions = new RequestOptions({
             body: tbRequest,
@@ -194,7 +266,7 @@ export class GridComponent implements OnInit {
         });
     }
 
-    private transformSortDirection(column: ColumnModel) {
+    private _transformSortDirection(column: ColumnModel) {
         switch (column.direction) {
             case ColumnSortDirection.Asc:
                 column.sortDirection = 'Ascending';
@@ -207,7 +279,7 @@ export class GridComponent implements OnInit {
         }
     }
 
-    private transformToObj(columns: ColumnModel[], data: any) {
+    private _transformToObj(columns: ColumnModel[], data: any) {
         const obj = {};
 
         columns.forEach((column, key) => {
@@ -225,8 +297,8 @@ export class GridComponent implements OnInit {
         return obj;
     }
 
-    private transformDataset(data, req) {
-        const transform = d => this.transformToObj(req.columns, d);
+    private _transformDataset(data, req) {
+        const transform = d => this._transformToObj(req.columns, d);
         const payload = (data.Payload || {}).map(transform);
         // push data
         this.data.next(payload);
@@ -252,4 +324,17 @@ export class GridComponent implements OnInit {
         // push page Info
         this._pageInfo.next(pageInfo);
     }
+}
+
+export class TubularDataSource extends DataSource<any> {
+    constructor(private _tbGrid: GridComponent) {
+        super();
+    }
+
+    /** Connect function called by the table to retrieve one stream containing the data to render. */
+    connect(): Observable<any[]> {
+        return this._tbGrid.dataStream;
+    }
+
+    disconnect() { }
 }

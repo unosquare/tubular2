@@ -29,8 +29,6 @@ import { NgbPopoverWindow, NgbPopover } from '../popover/popover';
 
 
 // import { GridExportButtonDirective } from '../grid-export/grid-export';
-import { TubularDataSource } from '../grid-table/grid-table';
-import { GridTable } from '../grid-table/grid-table';
 import 'rxjs/add/observable/of';
 
 import { Subject } from 'rxjs/Subject';
@@ -141,7 +139,7 @@ describe('Component: GridComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [SimpleGridApp, GridComponent, TestGrid, ColumnFilterDialogComponent],
+            declarations: [SimpleGridApp, GridComponent, ColumnFilterDialogComponent],
             imports: [
                 MaterialModule,
                 MdSelectModule,
@@ -210,7 +208,7 @@ describe('Component: GridComponent', () => {
     });
 
     afterEach(() => {
-        document.body.removeChild(overlayContainerElement);
+        // document.body.removeChild(overlayContainerElement);
     });
 
     it('should sort by numeric column', async(() => {
@@ -362,20 +360,7 @@ function expectTextContent(el, text) {
 @Component({
     template: `
     <tb-grid #grid dataUrl="http://tubular.azurewebsites.net/api/orders/paged">
-        <div fxLayout="row">
-            <my-grid></my-grid>
-        </div>
-    </tb-grid>
-    `
-})
-class SimpleGridApp {
-    @ViewChild(GridComponent) table: GridComponent;
-}
-
-@Component({
-    selector: 'my-grid',
-    template: `
-        <md-table [dataSource]="dataSource" mdSort>
+        <md-table [dataSource]="grid.dataSource" mdSort>
             <ng-container cdkColumnDef="options">
                 <md-header-cell *cdkHeaderCellDef> Options </md-header-cell>
                 <md-cell *cdkCellDef="let row"> <button md-button (click)="edit(row)"><md-icon>mode_edit</md-icon></button> </md-cell>
@@ -395,7 +380,7 @@ class SimpleGridApp {
                     <span>
                         Customer Name
                     </span>
-                    <tb-filter-dialog column="CustomerName" (filterChange)="filterByColumnName($event)">
+                    <tb-filter-dialog column="CustomerName" (filterChange)="grid.filterByColumnName($event)">
                     </tb-filter-dialog>
                 </md-header-cell>
                 <md-cell *cdkCellDef="let row"> {{row.CustomerName}} </md-cell>
@@ -404,14 +389,13 @@ class SimpleGridApp {
             <md-header-row *cdkHeaderRowDef="['options', 'OrderID', 'CustomerName']"></md-header-row>
             <md-row *cdkRowDef="let row; columns: ['options', 'OrderID', 'CustomerName'];"></md-row>
         </md-table>
+    </tb-grid>
     `
 })
-export class TestGrid extends GridTable {
-    public editModalRef;
+class SimpleGridApp {
+    @ViewChild(GridComponent) tbGrid: GridComponent;
 
-    constructor(public tbGrid: GridComponent, public dialog: MdDialog) {
-        super(tbGrid);
-
+    ngOnInit() {
         const orderIdColumn = new ColumnModel('OrderID', false);
         orderIdColumn.filterMode = ColumnFilterMode.Number;
 
@@ -429,7 +413,7 @@ export class TestGrid extends GridTable {
         const cityColumn = new ColumnModel('ShipperCity');
         cityColumn.filterMode = ColumnFilterMode.String;
 
-        this.addColumns([
+        this.tbGrid.addColumns([
             orderIdColumn,
             customerColumn,
             dateColumn,

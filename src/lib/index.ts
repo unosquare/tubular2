@@ -15,5 +15,4 @@ export * from './src/grid-pager/grid-pager';
 export * from './src/grid-pager-info/grid-pager-info';
 export * from './src/grid-print/grid-print';
 export * from './src/grid-search/grid-search';
-export * from './src/grid-table/grid-table';
 export * from './src/popover/index';
