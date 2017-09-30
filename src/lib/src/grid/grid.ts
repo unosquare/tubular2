@@ -43,7 +43,7 @@ export class GridComponent implements OnInit {
     public dataSource: TubularDataSource | null;
     public _pageSize = new BehaviorSubject(this.getPageSizeSettingValue());
     public pageSize = this._pageSize.asObservable();
-    
+
     public page = new BehaviorSubject(this.getPageSettingValue());
     public columns: BehaviorSubject<ColumnModel[]> = new BehaviorSubject([]);
     public freeTextSearch = new BehaviorSubject('');
