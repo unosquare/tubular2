@@ -20,5 +20,6 @@
 
 <div class="column-menu" [hidden]="columnModel.filterMode == 0" #popover="ngbPopover" [ngbPopover]="filterPopover" placement="bottom"
     popoverTitle="Filter" (click)="togglePopover()">
-    <md-icon color="{{ hasFilter ? 'primary' : '' }}">filter_list</md-icon>
+    <!-- <md-icon color="{{ hasFilter ? 'primary' : '' }}">filter_list</md-icon> -->
+    <md-icon>filter_list</md-icon>
 </div>

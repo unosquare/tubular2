@@ -4,15 +4,16 @@ import { Router } from '@angular/router';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Directionality } from '@angular/cdk/bidi';
-import { ScrollDispatcher, ViewportRuler } from '@angular/cdk/scrolling';
+import { ScrollDispatcher } from '@angular/cdk/scrolling';
 
 
 import { By } from '@angular/platform-browser';
 
-import { DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { MaterialModule, MdDialog, MdTableModule, MdSelectModule, MdSelect, MdInput } from '@angular/material';
+import { MdDialog, MdTableModule, MdSelectModule } from '@angular/material';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
 import { CdkTableModule } from '@angular/cdk/table';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -141,9 +142,9 @@ describe('Component: GridComponent', () => {
         TestBed.configureTestingModule({
             declarations: [SimpleGridApp, GridComponent, ColumnFilterDialogComponent],
             imports: [
-                MaterialModule,
                 MdSelectModule,
-                MdTableModule,
+                MatSortModule,
+                MatTableModule,
                 CdkTableModule,
                 ReactiveFormsModule,
                 FormsModule,
@@ -215,7 +216,7 @@ describe('Component: GridComponent', () => {
 
         fixture.detectChanges();
 
-        const myGrid = fixture.nativeElement.querySelector('.mat-table');
+        const myGrid = fixture.nativeElement.querySelector('md-table');
         expect(myGrid).toBeDefined();
 
         const headerRow = myGrid.querySelectorAll('.mat-header-cell');
@@ -270,7 +271,7 @@ describe('Component: GridComponent', () => {
 
         fixture.detectChanges();
 
-        const myGrid = fixture.nativeElement.querySelector('.mat-table');
+        const myGrid = fixture.nativeElement.querySelector('md-table');
         expect(myGrid).toBeDefined();
 
         const headerRow = myGrid.querySelectorAll('.mat-header-cell');
@@ -306,9 +307,9 @@ describe('Component: GridComponent', () => {
             trigger.click();
             fixture.detectChanges();
 
-            const option1 = overlayContainerElement.querySelectorAll('md-option')[0] as HTMLElement;
-            const option2 = overlayContainerElement.querySelectorAll('md-option')[1] as HTMLElement;
-            const option3 = overlayContainerElement.querySelectorAll('md-option')[2] as HTMLElement;
+            const option1 = overlayContainerElement.querySelectorAll('.mat-option')[0] as HTMLElement;
+            const option2 = overlayContainerElement.querySelectorAll('.mat-option')[1] as HTMLElement;
+            const option3 = overlayContainerElement.querySelectorAll('.mat-option')[2] as HTMLElement;
 
             expect(option1).toBeDefined();
             expect(option2).toBeDefined();
@@ -360,15 +361,15 @@ function expectTextContent(el, text) {
 @Component({
     template: `
     <tb-grid #grid dataUrl="http://tubular.azurewebsites.net/api/orders/paged">
-        <md-table [dataSource]="grid.dataSource" mdSort>
+        <md-table [dataSource]="grid.dataSource" matSort>
             <ng-container cdkColumnDef="options">
                 <md-header-cell *cdkHeaderCellDef> Options </md-header-cell>
-                <md-cell *cdkCellDef="let row"> <button md-button (click)="edit(row)"><md-icon>mode_edit</md-icon></button> </md-cell>
+                <md-cell *cdkCellDef="let row"> <button md-buton (click)="edit(row)"><md-icon>mode_edit</md-icon></button> </md-cell>
             </ng-container>
 
             <ng-container cdkColumnDef="OrderID">
                 <md-header-cell *cdkHeaderCellDef>
-                    <span md-sort-header>
+                    <span mat-sort-header>
                         Order ID
                     </span>
                 </md-header-cell>

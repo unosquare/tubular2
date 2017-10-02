@@ -1,6 +1,6 @@
 ﻿import {
-    Component, Input, Output, EventEmitter,
-    OnInit, Inject, Optional, ContentChild
+    Component, Input, Output, EventEmitter, ViewChild, AfterViewChecked,
+    OnInit, Inject, Optional, ContentChild, AfterViewInit
 } from '@angular/core';
 import {
     RequestMethod, Http, RequestOptions,
@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import * as moment from 'moment';
 
-import { MdSort } from '@angular/material';
+import { MatSort } from '@angular/material/sort';
 import { DataSource } from '@angular/cdk/collections';
 
 import { SETTINGS_PROVIDER, ITubularSettingsProvider } from '../core/tubular-local-storage-service';
@@ -31,7 +31,6 @@ import 'rxjs/add/operator/catch';
     styleUrls: ['./grid.css']
 })
 export class GridComponent implements OnInit {
-
     // data is just observable and children can't push
     private data = new BehaviorSubject([]);
     private _pageInfo = new BehaviorSubject(new GridPageInfo());
@@ -61,7 +60,7 @@ export class GridComponent implements OnInit {
 
     @Output() public beforeRequest = new EventEmitter<any>();
 
-    @ContentChild(MdSort) mdSort: MdSort;
+    @ContentChild(MatSort) matSort: MatSort;
 
     constructor(
         @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider,
@@ -146,8 +145,8 @@ export class GridComponent implements OnInit {
 
         this.dataSource = new TubularDataSource(this);
 
-        if (this.mdSort) {
-            this.mdSort.mdSortChange.subscribe(element => {
+        if (this.matSort) {
+            this.matSort.sortChange.subscribe(element => {
                 this.sortByColumnName(element.active);
             })
         }
