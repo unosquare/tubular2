@@ -148,7 +148,7 @@ export class GridComponent implements OnInit {
         if (this.matSort) {
             this.matSort.sortChange.subscribe(element => {
                 this.sortByColumnName(element.active);
-            })
+            });
         }
 
         // just a logging

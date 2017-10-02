@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Request, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { GridResponse } from '../grid/grid-response'
+import { GridResponse } from '../grid/grid-response';
 
 @Injectable()
 export class DataService {
