@@ -106,14 +106,7 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
     }
 
     public togglePopover() {
-        // console.log("was open", this.popover.isOpen());
-        // console.log(this.popover);
-        // console.log(ColumnFilterDialogComponent.prevPopover);
-        // if (!this.popover.isOpen()) {
-        //     ColumnFilterDialogComponent.prevPopover = this.popover;
-        // }
-
-        // ColumnFilterDialogComponent.prevPopover.toggle();
+        // TODO: Fix behavior for multiple popovers.
         this.popover.toggle();
     }
 }
