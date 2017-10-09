@@ -31,6 +31,7 @@ import { NgbPopoverWindow, NgbPopover } from '../popover/popover';
 
 // import { GridExportButtonDirective } from '../grid-export/grid-export';
 import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/throw';
 
 import { Subject } from 'rxjs/Subject';
 
@@ -44,99 +45,6 @@ describe('Component: GridComponent', () => {
     let overlayContainerElement: HTMLElement;
     let dir: { value: 'ltr' | 'rtl' };
     let scrolledSubject = new Subject();
-
-    const mockJsonDefault = {
-        Counter: 0,
-        Payload: [
-            [1, 'Microsoft', '2016-03-19T20:00:00', 'Guadalajara, JAL, Mexico', 300.00],
-            [2, 'Microsoft', '2016-04-23T11:00:00', 'Guadalajara, JAL, Mexico', 0.00],
-            [3, 'Microsoft', '2016-12-22T09:00:00', 'Guadalajara, JAL, Mexico', 300.00],
-            [4, 'Unosquare LLC', '2016-02-01T19:00:00', 'Los Angeles, CA, USA', 0.00],
-            [5, 'Microsoft', '2016-11-10T19:00:00', 'Guadalajara, JAL, Mexico', 92.00],
-            [6, 'Unosquare LLC', '2016-11-06T19:00:00', 'Los Angeles, CA, USA', 18.00],
-            [7, 'Unosquare LLC', '2016-11-11T19:00:00', 'Leon, GTO, Mexico', 50.00],
-            [8, 'Unosquare LLC', '2016-11-08T19:00:00', 'Portland, OR, USA', 9.00],
-            [9, 'Vesta', '2016-11-07T19:00:00', 'Guadalajara, JAL, Mexico', 108.00],
-            [10, 'Unosquare LLC', '2016-11-05T19:00:00', 'Portland, OR, USA', 15.00],
-            [11, 'Unosquare LLC', '2016-11-11T19:00:00', 'Guadalajara, JAL, Mexico', 60.00],
-            [12, 'Vesta', '2016-11-09T19:00:00', 'Leon, GTO, Mexico', 174.00],
-            [13, 'Super La Playa', '2016-11-04T19:00:00', 'Portland, OR, USA', 16.00],
-            [14, 'Advanced Technology Systems', '2016-11-09T19:00:00', 'Leon, GTO, Mexico', 0.00],
-            [15, 'Unosquare LLC', '2016-11-08T19:00:00', 'Leon, GTO, Mexico', 78.00],
-            [16, 'Super La Playa', '2016-11-08T19:00:00', 'Guadalajara, JAL, Mexico', 41.00],
-            [17, 'Microsoft', '2016-11-07T19:00:00', 'Guadalajara, JAL, Mexico', 0.00],
-            [18, 'Microsoft', '2016-11-03T19:00:00', 'Guadalajara, JAL, Mexico', 64.00],
-            [19, 'Oxxo', '2016-11-10T19:00:00', 'Los Angeles, CA, USA', 25.00],
-            [20, 'Microsoft', '2016-11-08T19:00:00', 'Guadalajara, JAL, Mexico', 3.00]
-        ],
-        TotalRecordCount: 500,
-        FilteredRecordCount: 500,
-        TotalPages: 25,
-        CurrentPage: 1,
-        AggregationPayload: {}
-    };
-
-    const mockJsonOrderedByOrderId = {
-        Counter: 0,
-        Payload: [
-            [500, 'Vesta', '2016-11-03T00:00:00', '2015-12-30T00:00:00', 'Los Angeles, CA, USA'],
-            [499, 'Oxxo', '2016-11-12T00:00:00', '2015-12-30T00:00:00', 'Portland, OR, USA'],
-            [498, 'Unosquare LLC', '2016-11-09T00:00:00', '2016-01-01T00:00:00', 'Portland, OR, USA'],
-            [497, 'Microsoft', '2016-11-04T00:00:00', '2016-01-01T00:00:00', 'Los Angeles, CA, USA'],
-            [496, 'Vesta', '2016-11-06T00:00:00', '2016-01-01T00:00:00', 'Guadalajara, JAL, Mexico'],
-            [495, 'Oxxo', '2016-11-11T00:00:00', '2015-12-30T00:00:00', 'Guadalajara, JAL, Mexico'],
-            [494, 'Vesta', '2016-11-04T00:00:00', '2015-12-30T00:00:00', 'Portland, OR, USA'],
-            [493, 'Vesta', '2016-11-12T00:00:00', '2016-01-01T00:00:00', 'Leon, GTO, Mexico'],
-            [492, 'Oxxo', '2016-11-10T00:00:00', '2015-12-30T00:00:00', 'Los Angeles, CA, USA'],
-            [491, 'Unosquare LLC', '2016-11-03T00:00:00', '2016-01-01T00:00:00', 'Los Angeles, CA, USA'],
-            [490, 'Vesta', '2016-11-06T00:00:00', '2015-12-30T00:00:00', 'Guadalajara, JAL, Mexico'],
-            [489, 'Unosquare LLC', '2016-11-11T00:00:00', '2016-01-01T00:00:00', 'Portland, OR, USA'],
-            [488, 'Microsoft', '2016-11-03T00:00:00', '2016-01-01T00:00:00', 'Guadalajara, JAL, Mexico'],
-            [487, 'Unosquare LLC', '2016-11-06T00:00:00', '2016-01-01T00:00:00', 'Portland, OR, USA'],
-            [486, 'Oxxo', '2016-11-11T00:00:00', '2015-12-30T00:00:00', 'Los Angeles, CA, USA'],
-            [485, 'Advanced Technology Systems', '2016-11-05T00:00:00', '2016-01-01T00:00:00', 'Portland, OR, USA'],
-            [484, 'Advanced Technology Systems', '2016-11-04T00:00:00', '2016-01-01T00:00:00', 'Leon, GTO, Mexico'],
-            [483, 'Vesta', '2016-11-12T00:00:00', '2015-12-30T00:00:00', 'Los Angeles, CA, USA'],
-            [482, 'Super La Playa', '2016-11-07T00:00:00', '2016-01-01T00:00:00', 'Leon, GTO, Mexico'],
-            [481, 'Oxxo', '2015-02-24T12:00:00', '2015-12-30T00:00:00', 'Guadalajara, JAL, Mexico']
-        ],
-        TotalRecordCount: 500,
-        FilteredRecordCount: 500,
-        TotalPages: 25,
-        CurrentPage: 1,
-        AggregationPayload: {}
-    };
-
-    const mockJsonFilteredByCustomerName = {
-        Counter: 0,
-        Payload: [
-            [4, 'Unosquare LLC', '2016-02-01T19:00:00', 'Los Angeles, CA, USA', 0.00],
-            [6, 'Unosquare LLC', '2016-11-06T19:00:00', 'Los Angeles, CA, USA', 18.00],
-            [7, 'Unosquare LLC', '2016-11-11T19:00:00', 'Leon, GTO, Mexico', 50.00],
-            [8, 'Unosquare LLC', '2016-11-08T19:00:00', 'Portland, OR, USA', 9.00],
-            [10, 'Unosquare LLC', '2016-11-05T19:00:00', 'Portland, OR, USA', 15.00],
-            [11, 'Unosquare LLC', '2016-11-11T19:00:00', 'Guadalajara, JAL, Mexico', 60.00],
-            [15, 'Unosquare LLC', '2016-11-08T19:00:00', 'Leon, GTO, Mexico', 78.00],
-            [21, 'Unosquare LLC', '2016-11-11T19:00:00', 'Leon, GTO, Mexico', 70.00],
-            [22, 'Unosquare LLC', '2016-11-03T19:00:00', 'Guadalajara, JAL, Mexico', 17.00],
-            [25, 'Unosquare LLC', '2016-11-08T19:00:00', 'Los Angeles, CA, USA', 34.00],
-            [44, 'Unosquare LLC', '2016-11-04T19:00:00', 'Los Angeles, CA, USA', 82.00],
-            [45, 'Unosquare LLC', '2016-11-11T19:00:00', 'Los Angeles, CA, USA', 8.00],
-            [48, 'Unosquare LLC', '2016-11-11T19:00:00', 'Leon, GTO, Mexico', 18.00],
-            [56, 'Unosquare LLC', '2016-11-07T19:00:00', 'Los Angeles, CA, USA', 72.00],
-            [57, 'Unosquare LLC', '2016-11-02T19:00:00', 'Portland, OR, USA', 133.00],
-            [66, 'Unosquare LLC', '2016-11-02T19:00:00', 'Guadalajara, JAL, Mexico', 117.00],
-            [73, 'Unosquare LLC', '2016-11-04T19:00:00', 'Guadalajara, JAL, Mexico', 8.00],
-            [75, 'Unosquare LLC', '2016-11-07T19:00:00', 'Portland, OR, USA', 102.00],
-            [82, 'Unosquare LLC', '2016-11-05T19:00:00', 'Los Angeles, CA, USA', 126.00],
-            [89, 'Unosquare LLC', '2016-11-03T19:00:00', 'Portland, OR, USA', 38.00]
-        ],
-        TotalRecordCount: 500,
-        FilteredRecordCount: 500,
-        TotalPages: 25,
-        CurrentPage: 1,
-        AggregationPayload: {}
-    };
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -186,26 +94,6 @@ describe('Component: GridComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(SimpleGridApp);
         dataService = fixture.debugElement.injector.get(DataService);
-
-        spy = spyOn(dataService, 'getData')
-            .and.callFake(request => {
-                const columns = request._body.columns as Array<ColumnModel>;
-                const sortableColumns = columns.filter(f => f.sortOrder > 0);
-                const searchableColumns = columns.filter(f => f.hasFilter);
-
-                if (searchableColumns.some(c => c.name === 'CustomerName'
-                    && c.filter.operator === 'Contains'
-                    && c.filter.text === 'Unosquare')) {
-                    return Observable.of(mockJsonFilteredByCustomerName).map(r => r);
-                }
-
-                if (sortableColumns.some(c => c.name === 'OrderID' && c.sortDirection === 'Descending')) {
-                    return Observable.of(mockJsonOrderedByOrderId).map(r => r);
-                }
-
-                return Observable.of(mockJsonDefault).map(r => r);
-
-            });
     });
 
     afterEach(() => {
@@ -213,6 +101,9 @@ describe('Component: GridComponent', () => {
     });
 
     it('should sort by numeric column', async(() => {
+
+        spy = spyOn(dataService, 'getData')
+            .and.callFake(fakeSuccessfulGetData);
 
         fixture.detectChanges();
 
@@ -268,6 +159,9 @@ describe('Component: GridComponent', () => {
     }));
 
     it('should make use of filter dialog', async(() => {
+
+        spy = spyOn(dataService, 'getData')
+            .and.callFake(fakeSuccessfulGetData);
 
         fixture.detectChanges();
 
@@ -348,6 +242,17 @@ describe('Component: GridComponent', () => {
             });
         });
     }));
+
+    it('should emit errors', () => {
+
+        spy = spyOn(dataService, 'getData')
+            .and.callFake(fakeFailGetData);
+
+        fixture.detectChanges();
+
+        expect(spy.calls.any()).toBe(true, 'getData called');
+        expect(fixture.componentInstance.handleError).toBeDefined();
+    });
 });
 
 function expectTextContent(el, text) {
@@ -358,9 +263,132 @@ function expectTextContent(el, text) {
     }
 }
 
+const mockJsonDefault = {
+    Counter: 0,
+    Payload: [
+        [1, 'Microsoft', '2016-03-19T20:00:00', 'Guadalajara, JAL, Mexico', 300.00],
+        [2, 'Microsoft', '2016-04-23T11:00:00', 'Guadalajara, JAL, Mexico', 0.00],
+        [3, 'Microsoft', '2016-12-22T09:00:00', 'Guadalajara, JAL, Mexico', 300.00],
+        [4, 'Unosquare LLC', '2016-02-01T19:00:00', 'Los Angeles, CA, USA', 0.00],
+        [5, 'Microsoft', '2016-11-10T19:00:00', 'Guadalajara, JAL, Mexico', 92.00],
+        [6, 'Unosquare LLC', '2016-11-06T19:00:00', 'Los Angeles, CA, USA', 18.00],
+        [7, 'Unosquare LLC', '2016-11-11T19:00:00', 'Leon, GTO, Mexico', 50.00],
+        [8, 'Unosquare LLC', '2016-11-08T19:00:00', 'Portland, OR, USA', 9.00],
+        [9, 'Vesta', '2016-11-07T19:00:00', 'Guadalajara, JAL, Mexico', 108.00],
+        [10, 'Unosquare LLC', '2016-11-05T19:00:00', 'Portland, OR, USA', 15.00],
+        [11, 'Unosquare LLC', '2016-11-11T19:00:00', 'Guadalajara, JAL, Mexico', 60.00],
+        [12, 'Vesta', '2016-11-09T19:00:00', 'Leon, GTO, Mexico', 174.00],
+        [13, 'Super La Playa', '2016-11-04T19:00:00', 'Portland, OR, USA', 16.00],
+        [14, 'Advanced Technology Systems', '2016-11-09T19:00:00', 'Leon, GTO, Mexico', 0.00],
+        [15, 'Unosquare LLC', '2016-11-08T19:00:00', 'Leon, GTO, Mexico', 78.00],
+        [16, 'Super La Playa', '2016-11-08T19:00:00', 'Guadalajara, JAL, Mexico', 41.00],
+        [17, 'Microsoft', '2016-11-07T19:00:00', 'Guadalajara, JAL, Mexico', 0.00],
+        [18, 'Microsoft', '2016-11-03T19:00:00', 'Guadalajara, JAL, Mexico', 64.00],
+        [19, 'Oxxo', '2016-11-10T19:00:00', 'Los Angeles, CA, USA', 25.00],
+        [20, 'Microsoft', '2016-11-08T19:00:00', 'Guadalajara, JAL, Mexico', 3.00]
+    ],
+    TotalRecordCount: 500,
+    FilteredRecordCount: 500,
+    TotalPages: 25,
+    CurrentPage: 1,
+    AggregationPayload: {}
+};
+
+const mockJsonOrderedByOrderId = {
+    Counter: 0,
+    Payload: [
+        [500, 'Vesta', '2016-11-03T00:00:00', '2015-12-30T00:00:00', 'Los Angeles, CA, USA'],
+        [499, 'Oxxo', '2016-11-12T00:00:00', '2015-12-30T00:00:00', 'Portland, OR, USA'],
+        [498, 'Unosquare LLC', '2016-11-09T00:00:00', '2016-01-01T00:00:00', 'Portland, OR, USA'],
+        [497, 'Microsoft', '2016-11-04T00:00:00', '2016-01-01T00:00:00', 'Los Angeles, CA, USA'],
+        [496, 'Vesta', '2016-11-06T00:00:00', '2016-01-01T00:00:00', 'Guadalajara, JAL, Mexico'],
+        [495, 'Oxxo', '2016-11-11T00:00:00', '2015-12-30T00:00:00', 'Guadalajara, JAL, Mexico'],
+        [494, 'Vesta', '2016-11-04T00:00:00', '2015-12-30T00:00:00', 'Portland, OR, USA'],
+        [493, 'Vesta', '2016-11-12T00:00:00', '2016-01-01T00:00:00', 'Leon, GTO, Mexico'],
+        [492, 'Oxxo', '2016-11-10T00:00:00', '2015-12-30T00:00:00', 'Los Angeles, CA, USA'],
+        [491, 'Unosquare LLC', '2016-11-03T00:00:00', '2016-01-01T00:00:00', 'Los Angeles, CA, USA'],
+        [490, 'Vesta', '2016-11-06T00:00:00', '2015-12-30T00:00:00', 'Guadalajara, JAL, Mexico'],
+        [489, 'Unosquare LLC', '2016-11-11T00:00:00', '2016-01-01T00:00:00', 'Portland, OR, USA'],
+        [488, 'Microsoft', '2016-11-03T00:00:00', '2016-01-01T00:00:00', 'Guadalajara, JAL, Mexico'],
+        [487, 'Unosquare LLC', '2016-11-06T00:00:00', '2016-01-01T00:00:00', 'Portland, OR, USA'],
+        [486, 'Oxxo', '2016-11-11T00:00:00', '2015-12-30T00:00:00', 'Los Angeles, CA, USA'],
+        [485, 'Advanced Technology Systems', '2016-11-05T00:00:00', '2016-01-01T00:00:00', 'Portland, OR, USA'],
+        [484, 'Advanced Technology Systems', '2016-11-04T00:00:00', '2016-01-01T00:00:00', 'Leon, GTO, Mexico'],
+        [483, 'Vesta', '2016-11-12T00:00:00', '2015-12-30T00:00:00', 'Los Angeles, CA, USA'],
+        [482, 'Super La Playa', '2016-11-07T00:00:00', '2016-01-01T00:00:00', 'Leon, GTO, Mexico'],
+        [481, 'Oxxo', '2015-02-24T12:00:00', '2015-12-30T00:00:00', 'Guadalajara, JAL, Mexico']
+    ],
+    TotalRecordCount: 500,
+    FilteredRecordCount: 500,
+    TotalPages: 25,
+    CurrentPage: 1,
+    AggregationPayload: {}
+};
+
+const mockJsonFilteredByCustomerName = {
+    Counter: 0,
+    Payload: [
+        [4, 'Unosquare LLC', '2016-02-01T19:00:00', 'Los Angeles, CA, USA', 0.00],
+        [6, 'Unosquare LLC', '2016-11-06T19:00:00', 'Los Angeles, CA, USA', 18.00],
+        [7, 'Unosquare LLC', '2016-11-11T19:00:00', 'Leon, GTO, Mexico', 50.00],
+        [8, 'Unosquare LLC', '2016-11-08T19:00:00', 'Portland, OR, USA', 9.00],
+        [10, 'Unosquare LLC', '2016-11-05T19:00:00', 'Portland, OR, USA', 15.00],
+        [11, 'Unosquare LLC', '2016-11-11T19:00:00', 'Guadalajara, JAL, Mexico', 60.00],
+        [15, 'Unosquare LLC', '2016-11-08T19:00:00', 'Leon, GTO, Mexico', 78.00],
+        [21, 'Unosquare LLC', '2016-11-11T19:00:00', 'Leon, GTO, Mexico', 70.00],
+        [22, 'Unosquare LLC', '2016-11-03T19:00:00', 'Guadalajara, JAL, Mexico', 17.00],
+        [25, 'Unosquare LLC', '2016-11-08T19:00:00', 'Los Angeles, CA, USA', 34.00],
+        [44, 'Unosquare LLC', '2016-11-04T19:00:00', 'Los Angeles, CA, USA', 82.00],
+        [45, 'Unosquare LLC', '2016-11-11T19:00:00', 'Los Angeles, CA, USA', 8.00],
+        [48, 'Unosquare LLC', '2016-11-11T19:00:00', 'Leon, GTO, Mexico', 18.00],
+        [56, 'Unosquare LLC', '2016-11-07T19:00:00', 'Los Angeles, CA, USA', 72.00],
+        [57, 'Unosquare LLC', '2016-11-02T19:00:00', 'Portland, OR, USA', 133.00],
+        [66, 'Unosquare LLC', '2016-11-02T19:00:00', 'Guadalajara, JAL, Mexico', 117.00],
+        [73, 'Unosquare LLC', '2016-11-04T19:00:00', 'Guadalajara, JAL, Mexico', 8.00],
+        [75, 'Unosquare LLC', '2016-11-07T19:00:00', 'Portland, OR, USA', 102.00],
+        [82, 'Unosquare LLC', '2016-11-05T19:00:00', 'Los Angeles, CA, USA', 126.00],
+        [89, 'Unosquare LLC', '2016-11-03T19:00:00', 'Portland, OR, USA', 38.00]
+    ],
+    TotalRecordCount: 500,
+    FilteredRecordCount: 500,
+    TotalPages: 25,
+    CurrentPage: 1,
+    AggregationPayload: {}
+};
+
+function fakeFailGetData(request) {
+    return Observable.throw('Error on getting data');
+}
+
+function fakeSuccessfulGetData(request) {
+
+    const columns = request._body.columns as Array<ColumnModel>;
+    const sortableColumns = columns.filter(f => f.sortOrder > 0);
+    const searchableColumns = columns.filter(f => f.hasFilter);
+
+    if (searchableColumns.some(c => c.name === 'CustomerName'
+        && c.filter.operator === 'Contains'
+        && c.filter.text === 'ThrowError')) {
+        return Observable.of(mockJsonFilteredByCustomerName).map(r => r);
+    }
+
+    if (searchableColumns.some(c => c.name === 'CustomerName'
+        && c.filter.operator === 'Contains'
+        && c.filter.text === 'Unosquare')) {
+        return Observable.of(mockJsonFilteredByCustomerName).map(r => r);
+    }
+
+    if (sortableColumns.some(c => c.name === 'OrderID' && c.sortDirection === 'Descending')) {
+        return Observable.of(mockJsonOrderedByOrderId).map(r => r);
+    }
+
+    return Observable.of(mockJsonDefault).map(r => r);
+
+}
+
 @Component({
     template: `
-    <tb-grid #grid dataUrl="http://tubular.azurewebsites.net/api/orders/paged">
+    <tb-grid #grid dataUrl="http://tubular.azurewebsites.net/api/orders/paged" (onRequestDataError)="handleError($event)">
         <md-table [dataSource]="grid.dataSource" matSort>
             <ng-container cdkColumnDef="options">
                 <md-header-cell *cdkHeaderCellDef> Options </md-header-cell>
@@ -395,6 +423,10 @@ function expectTextContent(el, text) {
 })
 class SimpleGridApp {
     @ViewChild(GridComponent) tbGrid: GridComponent;
+
+    handleError(error) {
+        console.log(error);
+    }
 
     ngOnInit() {
         const orderIdColumn = new ColumnModel('OrderID', false);

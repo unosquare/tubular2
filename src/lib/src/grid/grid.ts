@@ -59,6 +59,7 @@ export class GridComponent implements OnInit {
     @Input() public requestTimeout: number;
 
     @Output() public beforeRequest = new EventEmitter<any>();
+    @Output() public onRequestDataError = new EventEmitter<any>();
 
     @ContentChild(MatSort) matSort: MatSort;
 
@@ -76,9 +77,12 @@ export class GridComponent implements OnInit {
     refresh() {
         if (this.pageSet && this.columns.getValue().length > 0 && this._pageSize.getValue() > 0) {
             this.getCurrentPage()
-                .subscribe((data: any) => {
+                .subscribe(
+                (data: any) => {
                     this._transformDataset(data, this.tbRequestRunning);
-                });
+                },
+                error => this._handleRequestDataError(error)
+                );
         }
     }
 
@@ -241,7 +245,7 @@ export class GridComponent implements OnInit {
         this.columns.next(value);
     }
 
-    private _requestData(tbRequest: GridRequest): Observable<GridResponse> {
+    private _requestData(tbRequest: GridRequest) {
         // transform direction values to strings
         tbRequest.columns.forEach(this._transformSortDirection);
 
@@ -263,6 +267,12 @@ export class GridComponent implements OnInit {
             this.isLoading = false;
             return response;
         });
+    }
+
+    private _handleRequestDataError(error) {
+        if (this.onRequestDataError) {
+            this.onRequestDataError.emit(error);
+        }
     }
 
     private _transformSortDirection(column: ColumnModel) {
