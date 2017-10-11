@@ -11,7 +11,8 @@ import { By } from '@angular/platform-browser';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { MdDialog, MdTableModule, MdSelectModule } from '@angular/material';
+import { MdDialog } from '@angular/material/dialog';
+import { MdSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { CdkTableModule } from '@angular/cdk/table';
