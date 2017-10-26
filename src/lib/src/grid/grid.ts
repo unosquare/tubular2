@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import * as moment from 'moment';
 
-import { MatSort } from '@angular/material/sort';
+import { MatSort } from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
 
 import { SETTINGS_PROVIDER, ITubularSettingsProvider } from '../core/tubular-local-storage-service';

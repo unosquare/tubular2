@@ -9,13 +9,27 @@ import { ScrollDispatcher } from '@angular/cdk/scrolling';
 
 import { By } from '@angular/platform-browser';
 
+// import { NoConflictStyleCompatibilityMode  } from '@angular/material';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSortModule } from '@angular/material/sort';
-import { MatTableModule } from '@angular/material/table';
+import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { CdkTableModule } from '@angular/cdk/table';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import {
+    MatButtonModule,
+    MatCommonModule,
+    MatDialogModule,
+    MatFormField,
+    MatFormFieldControl,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatOption,
+    MatSelect, MatSelectModule,
+    MatSortModule, MatTableModule,
+} from '@angular/material';
+
 
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions, Http, HttpModule, ResponseOptions, Response } from '@angular/http';
@@ -37,9 +51,7 @@ import { Subject } from 'rxjs/Subject';
 
 
 
-describe('Component: GridComponent', () => {
-    let simpleGridApp: SimpleGridApp;
-    let fixture: ComponentFixture<SimpleGridApp>;
+describe('TbGridComponent', () => {
     let spy: jasmine.Spy;
     let dataService: DataService;
     let overlayContainerElement: HTMLElement;
@@ -48,20 +60,29 @@ describe('Component: GridComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [SimpleGridApp, GridComponent, ColumnFilterDialogComponent],
+            declarations: [
+                SimpleTbGridApp,
+                TbGridWithSortingApp,
+                TbGridWithFiltering,
+                GridComponent,
+                ColumnFilterDialogComponent
+            ],
             imports: [
+                FormsModule,
+                MatIconModule,
                 MatSelectModule,
+                MatInputModule,
                 MatSortModule,
                 MatTableModule,
                 CdkTableModule,
                 ReactiveFormsModule,
-                FormsModule,
                 PopoverModule.forRoot(),
                 HttpModule,
                 NoopAnimationsModule
             ],
             providers: [
                 DataService,
+                ErrorStateMatcher,
                 {
                     provide: OverlayContainer, useFactory: () => {
                         overlayContainerElement = document.createElement('div') as HTMLElement;
@@ -92,166 +113,214 @@ describe('Component: GridComponent', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(SimpleGridApp);
-        dataService = fixture.debugElement.injector.get(DataService);
+        // fixture = TestBed.createComponent(SimpleGridApp);
+        // dataService = fixture.debugElement.injector.get(DataService);
     });
 
     afterEach(() => {
         // document.body.removeChild(overlayContainerElement);
     });
 
-    it('should sort by numeric column', async(() => {
+    describe('basic', () => {
+        it('should be able to create a table', async(() => {
+            let fixture = TestBed.createComponent(SimpleTbGridApp);
 
-        spy = spyOn(dataService, 'getData')
-            .and.callFake(fakeSuccessfulGetData);
+            dataService = fixture.debugElement.injector.get(DataService);
 
-        fixture.detectChanges();
+            spy = spyOn(dataService, 'getData')
+                .and.callFake(fakeSuccessfulGetData);
 
-        const myGrid = fixture.nativeElement.querySelector('md-table');
-        expect(myGrid).toBeDefined();
-
-        const headerRow = myGrid.querySelectorAll('.mat-header-cell');
-
-        expectTextContent(headerRow[0], 'Options');
-        expectTextContent(headerRow[1], 'Order ID');
-        expectTextContent(headerRow[2].querySelector('span'), 'Customer Name');
-
-        expect(spy.calls.any()).toBe(true, 'getData called');
-
-        fixture.whenStable().then(() => {
-            const rows = myGrid.querySelectorAll('.mat-row');
-
-            const firstRow = rows[0];
-            const lastRow = rows[rows.length - 1];
-
-            let cells = firstRow.querySelectorAll('.mat-cell');
-            expectTextContent(cells[1], `1`);
-            expectTextContent(cells[2], `Microsoft`);
-
-            cells = lastRow.querySelectorAll('.mat-cell');
-            expectTextContent(cells[1], `20`);
-            expectTextContent(cells[2], `Microsoft`);
-        }).then(() => {
-            const orderIdHeader = headerRow[1].querySelector('button.mat-sort-header-button') as HTMLElement;
-
-            orderIdHeader.click();
             fixture.detectChanges();
 
-            orderIdHeader.click();
-            fixture.detectChanges();
+            const myGrid = fixture.nativeElement.querySelector('mat-table');
+            expect(myGrid).toBeDefined();
+
+            const headerRow = myGrid.querySelectorAll('.mat-header-cell');
+
+            expectTextContent(headerRow[0], 'Options');
+            expectTextContent(headerRow[1], 'Order ID');
+            expectTextContent(headerRow[2], 'Customer Name');
+
+            expect(spy.calls.any()).toBe(true, 'getData called');
 
             fixture.whenStable().then(() => {
-
                 const rows = myGrid.querySelectorAll('.mat-row');
 
                 const firstRow = rows[0];
                 const lastRow = rows[rows.length - 1];
 
                 let cells = firstRow.querySelectorAll('.mat-cell');
-                expectTextContent(cells[1], `500`);
-                expectTextContent(cells[2], `Vesta`);
+                expectTextContent(cells[1], `1`);
+                expectTextContent(cells[2], `Microsoft`);
 
                 cells = lastRow.querySelectorAll('.mat-cell');
-                expectTextContent(cells[1], `481`);
-                expectTextContent(cells[2], `Oxxo`);
+                expectTextContent(cells[1], `20`);
+                expectTextContent(cells[2], `Microsoft`);
             });
+        }));
+
+        it('should emit error if failure on getting data', () => {
+
+            let fixture = TestBed.createComponent(SimpleTbGridApp);
+
+            dataService = fixture.debugElement.injector.get(DataService);
+
+            spy = spyOn(dataService, 'getData')
+                .and.callFake(fakeFailGetData);
+
+            fixture.detectChanges();
+
+            expect(spy.calls.any()).toBe(true, 'getData called');
+            expect(fixture.componentInstance.handleError).toBeDefined();
+            expect(fixture.componentInstance.errorWhenGettingData).toBe(true);
         });
-    }));
+    });
 
-    it('should make use of filter dialog', async(() => {
+    describe('with sorting', () => {
+        it('should be able to sort by numeric column', async(() => {
 
-        spy = spyOn(dataService, 'getData')
-            .and.callFake(fakeSuccessfulGetData);
+            let fixture = TestBed.createComponent(TbGridWithSortingApp);
 
-        fixture.detectChanges();
+            dataService = fixture.debugElement.injector.get(DataService);
 
-        const myGrid = fixture.nativeElement.querySelector('md-table');
-        expect(myGrid).toBeDefined();
+            spy = spyOn(dataService, 'getData')
+                .and.callFake(fakeSuccessfulGetData);
 
-        const headerRow = myGrid.querySelectorAll('.mat-header-cell');
-
-        expectTextContent(headerRow[0], 'Options');
-        expectTextContent(headerRow[1], 'Order ID');
-        expectTextContent(headerRow[2].querySelector('span'), 'Customer Name');
-
-        expect(spy.calls.any()).toBe(true, 'getData called');
-
-        const customerNameHeader = headerRow[2].querySelector('md-icon') as HTMLElement;
-
-        fixture.whenStable().then(() => {
-            const rows = myGrid.querySelectorAll('.mat-row');
-
-            const firstRow = rows[0];
-            const lastRow = rows[rows.length - 1];
-
-            let cells = firstRow.querySelectorAll('.mat-cell');
-            expectTextContent(cells[1], `1`);
-            expectTextContent(cells[2], `Microsoft`);
-
-            cells = lastRow.querySelectorAll('.mat-cell');
-            expectTextContent(cells[1], `20`);
-            expectTextContent(cells[2], `Microsoft`);
-        }).then(() => {
-
-            customerNameHeader.click();
             fixture.detectChanges();
 
-            const trigger = fixture.debugElement.query(By.css('.mat-select-trigger')).nativeElement;
+            const myGrid = fixture.nativeElement.querySelector('mat-table');
+            expect(myGrid).toBeDefined();
 
-            trigger.click();
-            fixture.detectChanges();
+            const headerRow = myGrid.querySelectorAll('.mat-header-cell');
 
-            const option1 = overlayContainerElement.querySelectorAll('.mat-option')[0] as HTMLElement;
-            const option2 = overlayContainerElement.querySelectorAll('.mat-option')[1] as HTMLElement;
-            const option3 = overlayContainerElement.querySelectorAll('.mat-option')[2] as HTMLElement;
-
-            expect(option1).toBeDefined();
-            expect(option2).toBeDefined();
-            expect(option3).toBeDefined();
-
-            expectTextContent(option1, 'None');
-            expectTextContent(option2, 'Contains');
-            expectTextContent(option3, 'Not Contains');
-
-            option2.click();
-            fixture.detectChanges();
-
-            const tbFilterDialog = fixture.debugElement
-                .query(By.directive(ColumnFilterDialogComponent))
-                .componentInstance as ColumnFilterDialogComponent;
-
-            tbFilterDialog.form.controls['text'].setValue('Unosquare');
-            fixture.detectChanges();
-            tbFilterDialog.submit();
+            expect(spy.calls.any()).toBe(true, 'getData called');
 
             fixture.whenStable().then(() => {
+                const rows = myGrid.querySelectorAll('.mat-row');
+
+                const firstRow = rows[0];
+                const lastRow = rows[rows.length - 1];
+
+                let cells = firstRow.querySelectorAll('.mat-cell');
+                expectTextContent(cells[1], `1`);
+                expectTextContent(cells[2], `Microsoft`);
+
+                cells = lastRow.querySelectorAll('.mat-cell');
+                expectTextContent(cells[1], `20`);
+                expectTextContent(cells[2], `Microsoft`);
+            }).then(() => {
+                const orderIdHeader = headerRow[1].querySelector('button.mat-sort-header-button') as HTMLElement;
+
+                orderIdHeader.click();
                 fixture.detectChanges();
+
+                orderIdHeader.click();
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+
+                    const rows = myGrid.querySelectorAll('.mat-row');
+
+                    const firstRow = rows[0];
+                    const lastRow = rows[rows.length - 1];
+
+                    let cells = firstRow.querySelectorAll('.mat-cell');
+                    expectTextContent(cells[1], `500`);
+                    expectTextContent(cells[2], `Vesta`);
+
+                    cells = lastRow.querySelectorAll('.mat-cell');
+                    expectTextContent(cells[1], `481`);
+                    expectTextContent(cells[2], `Oxxo`);
+                });
+            });
+        }));
+    });
+
+    describe('with filtering', () => {
+        it('should make use of filter dialog', async(() => {
+
+            let fixture = TestBed.createComponent(TbGridWithFiltering);
+
+            dataService = fixture.debugElement.injector.get(DataService);
+
+            spy = spyOn(dataService, 'getData')
+                .and.callFake(fakeSuccessfulGetData);
+
+            fixture.detectChanges();
+
+            const myGrid = fixture.nativeElement.querySelector('mat-table');
+            expect(myGrid).toBeDefined();
+
+            const headerRow = myGrid.querySelectorAll('.mat-header-cell');
+
+            expect(spy.calls.any()).toBe(true, 'getData called');
+
+            const customerNameHeader = headerRow[2].querySelector('mat-icon') as HTMLElement;
+
+            fixture.whenStable().then(() => {
                 const rows = myGrid.querySelectorAll('.mat-row');
 
                 const firstRow = rows[0];
                 const lastRow = rows[rows.length - 1];
 
                 let cells = firstRow.querySelectorAll('.mat-cell');
-                expectTextContent(cells[1], `4`);
-                expectTextContent(cells[2], `Unosquare LLC`);
+                expectTextContent(cells[1], `1`);
+                expectTextContent(cells[2], `Microsoft`);
 
                 cells = lastRow.querySelectorAll('.mat-cell');
-                expectTextContent(cells[1], `89`);
-                expectTextContent(cells[2], `Unosquare LLC`);
+                expectTextContent(cells[1], `20`);
+                expectTextContent(cells[2], `Microsoft`);
+            }).then(() => {
 
+                customerNameHeader.click();
+                fixture.detectChanges();
+
+                const trigger = fixture.debugElement.query(By.css('.mat-select-trigger')).nativeElement;
+
+                trigger.click();
+                fixture.detectChanges();
+
+                const option1 = overlayContainerElement.querySelectorAll('.mat-option')[0] as HTMLElement;
+                const option2 = overlayContainerElement.querySelectorAll('.mat-option')[1] as HTMLElement;
+                const option3 = overlayContainerElement.querySelectorAll('.mat-option')[2] as HTMLElement;
+
+                expect(option1).toBeDefined();
+                expect(option2).toBeDefined();
+                expect(option3).toBeDefined();
+
+                expectTextContent(option1, 'None');
+                expectTextContent(option2, 'Contains');
+                expectTextContent(option3, 'Not Contains');
+
+                option2.click();
+                fixture.detectChanges();
+
+                const tbFilterDialog = fixture.debugElement
+                    .query(By.directive(ColumnFilterDialogComponent))
+                    .componentInstance as ColumnFilterDialogComponent;
+
+                tbFilterDialog.form.controls['text'].setValue('Unosquare');
+                fixture.detectChanges();
+                tbFilterDialog.submit();
+
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    const rows = myGrid.querySelectorAll('.mat-row');
+
+                    const firstRow = rows[0];
+                    const lastRow = rows[rows.length - 1];
+
+                    let cells = firstRow.querySelectorAll('.mat-cell');
+                    expectTextContent(cells[1], `4`);
+                    expectTextContent(cells[2], `Unosquare LLC`);
+
+                    cells = lastRow.querySelectorAll('.mat-cell');
+                    expectTextContent(cells[1], `89`);
+                    expectTextContent(cells[2], `Unosquare LLC`);
+
+                });
             });
-        });
-    }));
-
-    it('should emit errors', () => {
-
-        spy = spyOn(dataService, 'getData')
-            .and.callFake(fakeFailGetData);
-
-        fixture.detectChanges();
-
-        expect(spy.calls.any()).toBe(true, 'getData called');
-        expect(fixture.componentInstance.handleError).toBeDefined();
+        }));
     });
 });
 
@@ -389,39 +458,166 @@ function fakeSuccessfulGetData(request) {
 @Component({
     template: `
     <tb-grid #grid dataUrl="http://tubular.azurewebsites.net/api/orders/paged" (onRequestDataError)="handleError($event)">
-        <md-table [dataSource]="grid.dataSource" matSort>
+        <mat-table [dataSource]="grid.dataSource">
             <ng-container cdkColumnDef="options">
-                <md-header-cell *cdkHeaderCellDef> Options </md-header-cell>
-                <md-cell *cdkCellDef="let row"> <button md-buton (click)="edit(row)"><md-icon>mode_edit</md-icon></button> </md-cell>
+                <mat-header-cell *cdkHeaderCellDef> Options </mat-header-cell>
+                <mat-cell *cdkCellDef="let row"> <button mat-buton (click)="edit(row)"><mat-icon>mode_edit</mat-icon></button> </mat-cell>
             </ng-container>
 
             <ng-container cdkColumnDef="OrderID">
-                <md-header-cell *cdkHeaderCellDef>
-                    <span mat-sort-header>
-                        Order ID
-                    </span>
-                </md-header-cell>
-                <md-cell *cdkCellDef="let row"> {{row.OrderID}} </md-cell>
+                <mat-header-cell *cdkHeaderCellDef> Order ID </mat-header-cell>
+                <mat-cell *cdkCellDef="let row"> {{row.OrderID}} </mat-cell>
             </ng-container>
 
             <ng-container cdkColumnDef="CustomerName">
-                <md-header-cell *cdkHeaderCellDef>
+                <mat-header-cell *cdkHeaderCellDef> Customer Name </mat-header-cell>
+                <mat-cell *cdkCellDef="let row"> {{row.CustomerName}} </mat-cell>
+            </ng-container>
+
+            <mat-header-row *cdkHeaderRowDef="['options', 'OrderID', 'CustomerName']"></mat-header-row>
+            <mat-row *cdkRowDef="let row; columns: ['options', 'OrderID', 'CustomerName'];"></mat-row>
+        </mat-table>
+    </tb-grid>
+    `
+})
+class SimpleTbGridApp {
+    @ViewChild(GridComponent) tbGrid: GridComponent;
+
+    public errorWhenGettingData = false;
+
+    handleError(error) {
+        this.errorWhenGettingData = true;
+    }
+
+    ngOnInit() {
+        const orderIdColumn = new ColumnModel('OrderID', false);
+        orderIdColumn.filterMode = ColumnFilterMode.Number;
+
+        const customerColumn = new ColumnModel('CustomerName');
+        customerColumn.filterMode = ColumnFilterMode.String;
+
+        const dateColumn = new ColumnModel('ShippedDate', false);
+        dateColumn.filterMode = ColumnFilterMode.DateTime;
+        dateColumn.dataType = ColumnDataType.DateTime;
+
+        const creationDate = new ColumnModel('CreationDate', false);
+        creationDate.filterMode = ColumnFilterMode.Date;
+        creationDate.dataType = ColumnDataType.Date;
+
+        const cityColumn = new ColumnModel('ShipperCity');
+        cityColumn.filterMode = ColumnFilterMode.String;
+
+        this.tbGrid.addColumns([
+            orderIdColumn,
+            customerColumn,
+            dateColumn,
+            creationDate,
+            cityColumn
+        ]);
+    }
+}
+
+@Component({
+    template: `
+    <tb-grid #grid dataUrl="http://tubular.azurewebsites.net/api/orders/paged" (onRequestDataError)="handleError($event)">
+        <mat-table [dataSource]="grid.dataSource" matSort>
+            <ng-container cdkColumnDef="options">
+                <mat-header-cell *cdkHeaderCellDef> Options </mat-header-cell>
+                <mat-cell *cdkCellDef="let row"> <button mat-buton (click)="edit(row)"><mat-icon>mode_edit</mat-icon></button> </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="OrderID">
+                <mat-header-cell *cdkHeaderCellDef>
+                    <span mat-sort-header>
+                        Order ID
+                    </span>
+                </mat-header-cell>
+                <mat-cell *cdkCellDef="let row"> {{row.OrderID}} </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="CustomerName">
+                <mat-header-cell *cdkHeaderCellDef>
+                    <span mat-sort-header>
+                        Customer Name
+                    </span>
+                </mat-header-cell>
+                <mat-cell *cdkCellDef="let row"> {{row.CustomerName}} </mat-cell>
+            </ng-container>
+
+            <mat-header-row *cdkHeaderRowDef="['options', 'OrderID', 'CustomerName']"></mat-header-row>
+            <mat-row *cdkRowDef="let row; columns: ['options', 'OrderID', 'CustomerName'];"></mat-row>
+        </mat-table>
+    </tb-grid>
+    `
+})
+class TbGridWithSortingApp {
+    @ViewChild(GridComponent) tbGrid: GridComponent;
+
+    handleError(error) {
+        console.log(error);
+    }
+
+    ngOnInit() {
+        const orderIdColumn = new ColumnModel('OrderID', false);
+        orderIdColumn.filterMode = ColumnFilterMode.Number;
+        orderIdColumn.sortable = true;
+
+        const customerColumn = new ColumnModel('CustomerName');
+        customerColumn.filterMode = ColumnFilterMode.String;
+
+        const dateColumn = new ColumnModel('ShippedDate', false);
+        dateColumn.filterMode = ColumnFilterMode.DateTime;
+        dateColumn.dataType = ColumnDataType.DateTime;
+
+        const creationDate = new ColumnModel('CreationDate', false);
+        creationDate.filterMode = ColumnFilterMode.Date;
+        creationDate.dataType = ColumnDataType.Date;
+
+        const cityColumn = new ColumnModel('ShipperCity');
+        cityColumn.filterMode = ColumnFilterMode.String;
+
+        this.tbGrid.addColumns([
+            orderIdColumn,
+            customerColumn,
+            dateColumn,
+            creationDate,
+            cityColumn
+        ]);
+    }
+}
+
+@Component({
+    template: `
+    <tb-grid #grid dataUrl="http://tubular.azurewebsites.net/api/orders/paged" (onRequestDataError)="handleError($event)">
+        <mat-table [dataSource]="grid.dataSource">
+            <ng-container cdkColumnDef="options">
+                <mat-header-cell *cdkHeaderCellDef> Options </mat-header-cell>
+                <mat-cell *cdkCellDef="let row"> <button mat-buton (click)="edit(row)"><mat-icon>mode_edit</mat-icon></button> </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="OrderID">
+                <mat-header-cell *cdkHeaderCellDef> Order ID </mat-header-cell>
+                <mat-cell *cdkCellDef="let row"> {{row.OrderID}} </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="CustomerName">
+                <mat-header-cell *cdkHeaderCellDef>
                     <span>
                         Customer Name
                     </span>
                     <tb-filter-dialog column="CustomerName" (filterChange)="grid.filterByColumnName($event)">
                     </tb-filter-dialog>
-                </md-header-cell>
-                <md-cell *cdkCellDef="let row"> {{row.CustomerName}} </md-cell>
+                </mat-header-cell>
+                <mat-cell *cdkCellDef="let row"> {{row.CustomerName}} </mat-cell>
             </ng-container>
 
-            <md-header-row *cdkHeaderRowDef="['options', 'OrderID', 'CustomerName']"></md-header-row>
-            <md-row *cdkRowDef="let row; columns: ['options', 'OrderID', 'CustomerName'];"></md-row>
-        </md-table>
+            <mat-header-row *cdkHeaderRowDef="['options', 'OrderID', 'CustomerName']"></mat-header-row>
+            <mat-row *cdkRowDef="let row; columns: ['options', 'OrderID', 'CustomerName'];"></mat-row>
+        </mat-table>
     </tb-grid>
     `
 })
-class SimpleGridApp {
+class TbGridWithFiltering {
     @ViewChild(GridComponent) tbGrid: GridComponent;
 
     handleError(error) {
