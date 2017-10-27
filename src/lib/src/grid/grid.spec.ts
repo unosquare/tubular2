@@ -1,21 +1,18 @@
+// NG
 import { ComponentFixture, TestBed, getTestBed, inject, tick, async, fakeAsync } from '@angular/core/testing';
 import { Component, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { By } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+
+// CDK
+import { CdkTableModule } from '@angular/cdk/table';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Directionality } from '@angular/cdk/bidi';
 import { ScrollDispatcher } from '@angular/cdk/scrolling';
 
-
-import { By } from '@angular/platform-browser';
-
-// import { NoConflictStyleCompatibilityMode  } from '@angular/material';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
-import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
-import { CdkTableModule } from '@angular/cdk/table';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+// Material
 import {
     MatButtonModule,
     MatCommonModule,
@@ -29,27 +26,21 @@ import {
     MatSelect, MatSelectModule,
     MatSortModule, MatTableModule,
 } from '@angular/material';
+import { ErrorStateMatcher } from '@angular/material/core';
 
-
-import { MockBackend, MockConnection } from '@angular/http/testing';
-import { BaseRequestOptions, Http, HttpModule, ResponseOptions, Response } from '@angular/http';
-
+// TB2
 import { GridComponent } from './grid';
 import { DataService } from '../services/data.service';
-
 import { ColumnModel, ColumnFilterMode, ColumnDataType } from './column';
 import { ColumnFilterDialogComponent } from '../column-filter-dialog/column-filter-dialog';
 import { PopoverModule } from '../popover/popover.module';
 import { NgbPopoverWindow, NgbPopover } from '../popover/popover';
 
-
-// import { GridExportButtonDirective } from '../grid-export/grid-export';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
-
-import { Subject } from 'rxjs/Subject';
-
-
 
 describe('TbGridComponent', () => {
     let spy: jasmine.Spy;
@@ -111,15 +102,6 @@ describe('TbGridComponent', () => {
             ]
         }).compileComponents();
     }));
-
-    beforeEach(() => {
-        // fixture = TestBed.createComponent(SimpleGridApp);
-        // dataService = fixture.debugElement.injector.get(DataService);
-    });
-
-    afterEach(() => {
-        // document.body.removeChild(overlayContainerElement);
-    });
 
     describe('basic', () => {
         it('should be able to create a table', async(() => {

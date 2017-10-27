@@ -1,25 +1,26 @@
 ﻿import {
-    Component, Input, Output, EventEmitter, ViewChild, AfterViewChecked,
-    OnInit, Inject, Optional, ContentChild, AfterViewInit
+    Component, Input, Output, EventEmitter, ViewChild,
+    OnInit, Inject, Optional, ContentChild
 } from '@angular/core';
 import {
     RequestMethod, Http, RequestOptions,
     ResponseContentType, Request, Response
 } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
 import * as moment from 'moment';
 
 import { MatSort } from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
 
 import { SETTINGS_PROVIDER, ITubularSettingsProvider } from '../core/tubular-local-storage-service';
+import { DataService } from '../services/data.service';
 import { ColumnModel, ColumnDataType, ColumnSortDirection } from './column';
 import { GridPageInfo } from './grid-page-info';
 import { GridRequest, GridSearchParameter } from './grid-request';
 import { GridResponse } from './grid-response';
-import { DataService } from '../services/data.service';
 
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';

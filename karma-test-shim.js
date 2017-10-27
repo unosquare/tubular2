@@ -69,7 +69,6 @@ System.config({
     '@angular/platform-browser': 'npm:@angular/platform-browser/bundles/platform-browser.umd.js',
     '@angular/platform-browser-dynamic': 'npm:@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js',
 
-
     // Path mappings for local packages that can be imported inside of tests.
     // TODO(devversion): replace once the index.ts file for the Material package has been added.
     '@angular/material': 'npm:@angular/material/bundles/material.umd.js',
@@ -79,7 +78,6 @@ System.config({
     '@angular/cdk/coercion': 'npm:@angular/cdk/bundles/cdk-coercion.umd.js',
     '@angular/cdk/collections': 'npm:@angular/cdk/bundles/cdk-collections.umd.js',
     '@angular/cdk/keycodes': 'npm:@angular/cdk/bundles/cdk-keycodes.umd.js',
-    '@angular/cdk/layout': 'npm:@angular/cdk/bundles/cdk-layout.umd.js',
     '@angular/cdk/observers': 'npm:@angular/cdk/bundles/cdk-observers.umd.js',
     '@angular/cdk/overlay': 'npm:@angular/cdk/bundles/cdk-overlay.umd.js',
     '@angular/cdk/platform': 'npm:@angular/cdk/bundles/cdk-platform.umd.js',
@@ -90,37 +88,19 @@ System.config({
     '@angular/cdk/table': 'npm:@angular/cdk/bundles/cdk-table.umd.js',
     // '@angular/cdk/testing': 'npm:@angular/cdk/testing.umd.js',
 
-    '@angular/material/autocomplete': 'npm:@angular/material/bundles/material-autocomplete.umd.js',
     '@angular/material/button': 'npm:@angular/material/bundles/material-button.umd.js',
     '@angular/material/button-toggle': 'npm:@angular/material/bundles/material-button-toggle.umd.js',
-    '@angular/material/card': 'npm:@angular/material/bundles/material-card.umd.js',
-    '@angular/material/checkbox': 'npm:@angular/material/bundles/material-checkbox.umd.js',
-    '@angular/material/chips': 'npm:@angular/material/bundles/material-chips.umd.js',
     '@angular/material/core': 'npm:@angular/material/bundles/material-core.umd.js',
     '@angular/material/datepicker': 'npm:@angular/material/bundles/material-datepicker.umd.js',
     '@angular/material/dialog': 'npm:@angular/material/bundles/material-dialog.umd.js',
-    '@angular/material/expansion': 'npm:@angular/material/bundles/material-expansion.umd.js',
     '@angular/material/form-field': 'npm:@angular/material/bundles/material-form-field.umd.js',
-    '@angular/material/grid-list': 'npm:@angular/material/bundles/material-grid-list.umd.js',
     '@angular/material/icon': 'npm:@angular/material/bundles/material-icon.umd.js',
     '@angular/material/input': 'npm:@angular/material/bundles/material-input.umd.js',
-    '@angular/material/list': 'npm:@angular/material/bundles/material-list.umd.js',
-    '@angular/material/menu': 'npm:@angular/material/bundles/material-menu.umd.js',
     '@angular/material/paginator': 'npm:@angular/material/bundles/material-paginator.umd.js',
     '@angular/material/progress-bar': 'npm:@angular/material/bundles/material-progress-bar.umd.js',
-    '@angular/material/progress-spinner': 'npm:@angular/material/bundles/material-progress-spinner.umd.js',
-    '@angular/material/radio': 'npm:@angular/material/bundles/material-radio.umd.js',
     '@angular/material/select': 'npm:@angular/material/bundles/material-select.umd.js',
-    '@angular/material/sidenav': 'npm:@angular/material/bundles/material-sidenav.umd.js',
-    '@angular/material/slide-toggle': 'npm:@angular/material/bundles/material-slide-toggle.umd.js',
-    '@angular/material/slider': 'npm:@angular/material/bundles/material-slider.umd.js',
-    '@angular/material/snack-bar': 'npm:@angular/material/bundles/material-snack-bar.umd.js',
     '@angular/material/sort': 'npm:@angular/material/bundles/material-sort.umd.js',
-    '@angular/material/stepper': 'npm:@angular/material/bundles/material-stepper.umd.js',
     '@angular/material/table': 'npm:@angular/material/bundles/material-table.umd.js',
-    '@angular/material/tabs': 'npm:@angular/material/bundles/material-tabs.umd.js',
-    '@angular/material/toolbar': 'npm:@angular/material/bundles/material-toolbar.umd.js',
-    '@angular/material/tooltip': 'npm:@angular/material/bundles/material-tooltip.umd.js',
 
     // Testing bundles
     '@angular/core/testing': 'npm:@angular/core/bundles/core-testing.umd.js',
