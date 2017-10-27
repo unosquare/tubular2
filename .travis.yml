@@ -23,8 +23,7 @@ install:
   - npm install
 script:
   - npm run lint
-  - npm run build
   - npm run test:once
-  - cat ./report/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+  - npm run coverage
   - chmod +x ./publish.sh
   - ./publish.sh

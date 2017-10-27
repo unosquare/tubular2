@@ -18,6 +18,7 @@
   },
   "scripts": {
     "clean": "rimraf out-tsc dist/*",
+    "coverage": "karma start karma-coverage.conf.js --single-run",
     "prebuild": "npm run clean",
     "build": "node build.js",
     "build-demo": "tsc -p src/demo/",
@@ -67,6 +68,7 @@
     "karma-html-reporter": "^0.2.7",
     "karma-jasmine": "^1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "karma-remap-coverage": "^0.1.4",
     "lite-server": "^2.2.2",
     "moment": "^2.18.1",
     "rimraf": "^2.6.1",
