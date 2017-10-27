@@ -25,5 +25,5 @@ module.exports = function (config) {
       html: './coverage/html',
       cobertura: './coverage/coverage.xml'
     }
-  });
-};
+  })
+}
