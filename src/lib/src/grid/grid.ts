@@ -1,6 +1,6 @@
 ﻿import {
-    Component, Input, Output, EventEmitter, ViewChild,
-    OnInit, Inject, Optional, ContentChild
+    Component, Input, Output, EventEmitter, ViewChild, QueryList,
+    OnInit, AfterContentInit, Inject, Optional, ContentChild, ContentChildren
 } from '@angular/core';
 import {
     RequestMethod, Http, RequestOptions,
@@ -9,7 +9,7 @@ import {
 
 import * as moment from 'moment';
 
-import { MatSort } from '@angular/material';
+import { MatSort, MatPaginator } from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
 
 import { SETTINGS_PROVIDER, ITubularSettingsProvider } from '../core/tubular-local-storage-service';
@@ -31,7 +31,7 @@ import 'rxjs/add/operator/catch';
     templateUrl: './grid.html',
     styleUrls: ['./grid.css']
 })
-export class GridComponent implements OnInit {
+export class GridComponent implements OnInit, AfterContentInit {
     // data is just observable and children can't push
     private data = new BehaviorSubject([]);
     private _pageInfo = new BehaviorSubject(new GridPageInfo());
@@ -63,6 +63,7 @@ export class GridComponent implements OnInit {
     @Output() public onRequestDataError = new EventEmitter<any>();
 
     @ContentChild(MatSort) matSort: MatSort;
+    @ContentChildren(MatPaginator) matPaginators: QueryList<MatPaginator>;
 
     constructor(
         @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider,
@@ -184,6 +185,27 @@ export class GridComponent implements OnInit {
             });
 
         this.goToPage(0);
+    }
+
+    ngAfterContentInit(): void {
+
+
+        if (this.matPaginators) {
+            this.matPaginators.forEach(paginator => {
+
+                // Update paginator when event is coming from TB
+                this.pageInfo.subscribe(pageInfo => {
+                    paginator.length = pageInfo.totalRecordCount;
+                    paginator.pageIndex = pageInfo.currentPage;
+                    paginator.pageSize = this._pageSize.getValue();
+                });
+
+                // Handle the event when fired by the paginator
+                paginator.page.subscribe(() => {
+                    this.goToPage(paginator.pageIndex);
+                });
+            });
+        }
     }
 
     addColumns(columns: ColumnModel[]) {
@@ -310,11 +332,13 @@ export class GridComponent implements OnInit {
     private _transformDataset(data, req) {
         const transform = d => this._transformToObj(req.columns, d);
         const payload = (data.Payload || {}).map(transform);
+        const pageInfo = new GridPageInfo();
+
         // push data
         this.data.next(payload);
 
-        const pageInfo = new GridPageInfo();
-        pageInfo.currentPage = data.CurrentPage;
+        // Server side is not working with 0 index.
+        pageInfo.currentPage = data.CurrentPage - 1;
         pageInfo.totalPages = data.TotalPages;
         pageInfo.filteredRecordCount = data.FilteredRecordCount;
         pageInfo.totalRecordCount = data.TotalRecordCount;
