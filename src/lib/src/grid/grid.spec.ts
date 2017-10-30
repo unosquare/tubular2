@@ -1,5 +1,5 @@
 // NG
-import { ComponentFixture, TestBed, getTestBed, inject, tick, async, fakeAsync, flushMicrotasks } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { Component, ViewChild } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
@@ -45,8 +45,6 @@ describe('TbGridComponent', () => {
     let spy: jasmine.Spy;
     let dataService: DataService;
     let overlayContainerElement: HTMLElement;
-    let dir: { value: 'ltr' | 'rtl' };
-    let scrolledSubject = new Subject();
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -528,6 +526,33 @@ function expectTextContent(el, text) {
     }
 }
 
+function setupInitialColumns(tbGrid) {
+    const orderIdColumn = new ColumnModel('OrderID', false);
+    orderIdColumn.filterMode = ColumnFilterMode.Number;
+
+    const customerColumn = new ColumnModel('CustomerName');
+    customerColumn.filterMode = ColumnFilterMode.String;
+
+    const dateColumn = new ColumnModel('ShippedDate', false);
+    dateColumn.filterMode = ColumnFilterMode.DateTime;
+    dateColumn.dataType = ColumnDataType.DateTime;
+
+    const creationDate = new ColumnModel('CreationDate', false);
+    creationDate.filterMode = ColumnFilterMode.Date;
+    creationDate.dataType = ColumnDataType.Date;
+
+    const cityColumn = new ColumnModel('ShipperCity');
+    cityColumn.filterMode = ColumnFilterMode.String;
+
+    tbGrid.addColumns([
+        orderIdColumn,
+        customerColumn,
+        dateColumn,
+        creationDate,
+        cityColumn
+    ]);
+}
+
 const mockJsonDefault = {
     Counter: 0,
     Payload: [
@@ -721,30 +746,7 @@ class SimpleTbGridApp {
     }
 
     ngOnInit() {
-        const orderIdColumn = new ColumnModel('OrderID', false);
-        orderIdColumn.filterMode = ColumnFilterMode.Number;
-
-        const customerColumn = new ColumnModel('CustomerName');
-        customerColumn.filterMode = ColumnFilterMode.String;
-
-        const dateColumn = new ColumnModel('ShippedDate', false);
-        dateColumn.filterMode = ColumnFilterMode.DateTime;
-        dateColumn.dataType = ColumnDataType.DateTime;
-
-        const creationDate = new ColumnModel('CreationDate', false);
-        creationDate.filterMode = ColumnFilterMode.Date;
-        creationDate.dataType = ColumnDataType.Date;
-
-        const cityColumn = new ColumnModel('ShipperCity');
-        cityColumn.filterMode = ColumnFilterMode.String;
-
-        this.tbGrid.addColumns([
-            orderIdColumn,
-            customerColumn,
-            dateColumn,
-            creationDate,
-            cityColumn
-        ]);
+        setupInitialColumns(this.tbGrid);
     }
 }
 
@@ -789,31 +791,7 @@ class TbGridWithSortingApp {
     }
 
     ngOnInit() {
-        const orderIdColumn = new ColumnModel('OrderID', false);
-        orderIdColumn.filterMode = ColumnFilterMode.Number;
-        orderIdColumn.sortable = true;
-
-        const customerColumn = new ColumnModel('CustomerName');
-        customerColumn.filterMode = ColumnFilterMode.String;
-
-        const dateColumn = new ColumnModel('ShippedDate', false);
-        dateColumn.filterMode = ColumnFilterMode.DateTime;
-        dateColumn.dataType = ColumnDataType.DateTime;
-
-        const creationDate = new ColumnModel('CreationDate', false);
-        creationDate.filterMode = ColumnFilterMode.Date;
-        creationDate.dataType = ColumnDataType.Date;
-
-        const cityColumn = new ColumnModel('ShipperCity');
-        cityColumn.filterMode = ColumnFilterMode.String;
-
-        this.tbGrid.addColumns([
-            orderIdColumn,
-            customerColumn,
-            dateColumn,
-            creationDate,
-            cityColumn
-        ]);
+        setupInitialColumns(this.tbGrid);
     }
 }
 
@@ -856,30 +834,7 @@ class TbGridWithFiltering {
     }
 
     ngOnInit() {
-        const orderIdColumn = new ColumnModel('OrderID', false);
-        orderIdColumn.filterMode = ColumnFilterMode.Number;
-
-        const customerColumn = new ColumnModel('CustomerName');
-        customerColumn.filterMode = ColumnFilterMode.String;
-
-        const dateColumn = new ColumnModel('ShippedDate', false);
-        dateColumn.filterMode = ColumnFilterMode.DateTime;
-        dateColumn.dataType = ColumnDataType.DateTime;
-
-        const creationDate = new ColumnModel('CreationDate', false);
-        creationDate.filterMode = ColumnFilterMode.Date;
-        creationDate.dataType = ColumnDataType.Date;
-
-        const cityColumn = new ColumnModel('ShipperCity');
-        cityColumn.filterMode = ColumnFilterMode.String;
-
-        this.tbGrid.addColumns([
-            orderIdColumn,
-            customerColumn,
-            dateColumn,
-            creationDate,
-            cityColumn
-        ]);
+        setupInitialColumns(this.tbGrid);
     }
 }
 
@@ -925,30 +880,7 @@ class TbGridWithPaginator {
     }
 
     ngOnInit() {
-        const orderIdColumn = new ColumnModel('OrderID', false);
-        orderIdColumn.filterMode = ColumnFilterMode.Number;
-
-        const customerColumn = new ColumnModel('CustomerName');
-        customerColumn.filterMode = ColumnFilterMode.String;
-
-        const dateColumn = new ColumnModel('ShippedDate', false);
-        dateColumn.filterMode = ColumnFilterMode.DateTime;
-        dateColumn.dataType = ColumnDataType.DateTime;
-
-        const creationDate = new ColumnModel('CreationDate', false);
-        creationDate.filterMode = ColumnFilterMode.Date;
-        creationDate.dataType = ColumnDataType.Date;
-
-        const cityColumn = new ColumnModel('ShipperCity');
-        cityColumn.filterMode = ColumnFilterMode.String;
-
-        this.tbGrid.addColumns([
-            orderIdColumn,
-            customerColumn,
-            dateColumn,
-            creationDate,
-            cityColumn
-        ]);
+        setupInitialColumns(this.tbGrid);
     }
 }
 
@@ -999,29 +931,6 @@ class TbGridWithTwoPaginators {
     }
 
     ngOnInit() {
-        const orderIdColumn = new ColumnModel('OrderID', false);
-        orderIdColumn.filterMode = ColumnFilterMode.Number;
-
-        const customerColumn = new ColumnModel('CustomerName');
-        customerColumn.filterMode = ColumnFilterMode.String;
-
-        const dateColumn = new ColumnModel('ShippedDate', false);
-        dateColumn.filterMode = ColumnFilterMode.DateTime;
-        dateColumn.dataType = ColumnDataType.DateTime;
-
-        const creationDate = new ColumnModel('CreationDate', false);
-        creationDate.filterMode = ColumnFilterMode.Date;
-        creationDate.dataType = ColumnDataType.Date;
-
-        const cityColumn = new ColumnModel('ShipperCity');
-        cityColumn.filterMode = ColumnFilterMode.String;
-
-        this.tbGrid.addColumns([
-            orderIdColumn,
-            customerColumn,
-            dateColumn,
-            creationDate,
-            cityColumn
-        ]);
+        setupInitialColumns(this.tbGrid);
     }
 }
