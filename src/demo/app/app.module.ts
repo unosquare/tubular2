@@ -40,7 +40,7 @@ import {
   OverlayContainer
 } from '@angular/material';
 
-import {CdkTableModule} from '@angular/cdk';
+import { CdkTableModule } from '@angular/cdk/table';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 

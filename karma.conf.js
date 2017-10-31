@@ -59,6 +59,9 @@ module.exports = function (config) {
 
       'karma-test-shim.js', // optionally extend SystemJS mapping e.g., with barrels
 
+      // Include a Material theme in the test suite.
+      { pattern: './node_modules/@angular/material/prebuilt-themes/indigo-pink.css', included: true, watched: true },
+
       // transpiled application & spec code paths loaded via module imports
       { pattern: libBase + '**/*.js', included: false, watched: true },
 
@@ -81,7 +84,7 @@ module.exports = function (config) {
     },
 
     exclude: [],
-    
+
     preprocessors: {
       [libBase + '/**/!(*spec|*bundle).js']: ['coverage']
     },

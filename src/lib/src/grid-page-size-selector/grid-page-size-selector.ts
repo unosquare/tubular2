@@ -29,11 +29,11 @@ export class GridPageSizeSelectorComponent {
     }
 
     private ngOnInit() {
-        this.selected = this.tbGrid._pageSize.getValue();
+        this.selected = this.tbGrid.pageSize.getValue();
     }
 
     private onChange(newVal: number) {
         // TODO: Fix
-        this.tbGrid._pageSize.next(newVal);
+        this.tbGrid.pageSize.next(newVal);
     }
 }

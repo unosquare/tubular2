@@ -1,20 +1,26 @@
-﻿ import {
-    Component, Input, Output, EventEmitter,
-    OnInit, Inject, Optional
+﻿import {
+    Component, Input, Output, EventEmitter, ViewChild, QueryList,
+    OnInit, AfterContentInit, Inject, Optional, ContentChild, ContentChildren
 } from '@angular/core';
 import {
     RequestMethod, Http, RequestOptions,
     ResponseContentType, Request, Response
 } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
 import * as moment from 'moment';
 
+import { MatSort, MatPaginator } from '@angular/material';
+import { DataSource } from '@angular/cdk/collections';
+
 import { SETTINGS_PROVIDER, ITubularSettingsProvider } from '../core/tubular-local-storage-service';
+import { DataService } from '../services/data.service';
 import { ColumnModel, ColumnDataType, ColumnSortDirection } from './column';
 import { GridPageInfo } from './grid-page-info';
 import { GridRequest, GridSearchParameter } from './grid-request';
+import { GridResponse } from './grid-response';
 
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -23,135 +29,72 @@ import 'rxjs/add/operator/catch';
 @Component({
     selector: 'tb-grid',
     templateUrl: './grid.html',
-    styleUrls: [ './grid.css' ]
+    styleUrls: ['./grid.css']
 })
-export class GridComponent implements OnInit {
+export class GridComponent implements OnInit, AfterContentInit {
     // data is just observable and children can't push
-    private data = new BehaviorSubject([]);
-    public dataStream = this.data.asObservable();
+    private _dataStream = new BehaviorSubject([]);
+
+    // TODO: Check we really need to push internally, only
     private _pageInfo = new BehaviorSubject(new GridPageInfo());
+    private _tbRequestRunning: GridRequest;
+    private _requestCount = 0;
+
+    public dataStream = this._dataStream.asObservable();
     public pageInfo = this._pageInfo.asObservable();
+    public pageSize = new BehaviorSubject(this._getPageSizeSettingValue());
 
-    private tbRequestRunning: GridRequest;
-
-    public _pageSize = new BehaviorSubject(this.getPageSizeSettingValue());
-    public pageSize = this._pageSize.asObservable();
-
-    // values that to observe and allow to push from children
-    public page = new BehaviorSubject(this.getPageSettingValue());
-    public columns = new BehaviorSubject([]);
+    public dataSource: TubularDataSource | null;
+    public page = new BehaviorSubject(this._getPageSettingValue());
+    public columns: BehaviorSubject<ColumnModel[]> = new BehaviorSubject([]);
     public freeTextSearch = new BehaviorSubject('');
-
-    pageSet = false;
-
+    public pageSet = false;
     public isLoading = false;
+
     public search = {
         text: '',
         operator: 'None'
     } as GridSearchParameter;
-
-    private requestCount = 0;
 
     @Input() public dataUrl: string;
     @Input() public requestMethod: string | RequestMethod;
     @Input() public requestTimeout: number;
 
     @Output() public beforeRequest = new EventEmitter<any>();
+    @Output() public onRequestDataError = new EventEmitter<any>();
+
+    @ContentChild(MatSort) sorting: MatSort;
+    @ContentChildren(MatPaginator) paginators: QueryList<MatPaginator>;
 
     constructor(
         @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider,
-        private http: Http) {
-
-    }
-
-    public goToPage(page) {
-        this.pageSet = true;
-        this.page.next(page);
-    }
-
-    public refresh() {
-        if (this.pageSet && this.columns.getValue().length > 0 && this._pageSize.getValue() > 0) {
-            this.getCurrentPage()
-                .subscribe((data: any) => {
-                    this.transformDataset(data, this.tbRequestRunning);
-                });
-        }
-    }
-
-    public getCurrentPage(): Observable<Response> {
-        this.isLoading = true;
-
-        this.tbRequestRunning = {
-            count: this.requestCount++,
-            columns: this.columns.getValue(),
-            skip: this.page.getValue() * this._pageSize.getValue(),
-            take: this._pageSize.getValue(),
-            search: this.search,
-            timezoneOffset: new Date().getTimezoneOffset()
-        } as GridRequest;
-
-        return this.requestData(this.tbRequestRunning);
-    }
-
-    public getFullDataSource(): Observable<Response> {
-        const tbRequest = {
-            count: this.requestCount++,
-            columns: this.columns.getValue(),
-            skip: 0,
-            take: -1,
-            timezoneOffset: new Date().getTimezoneOffset(),
-            search: {
-                text: '',
-                operator: 'None'
-            } as GridSearchParameter
-        } as GridRequest;
-
-        return this.requestData(tbRequest);
-    }
-
-    changePagesData() {
-        if (this.settingsProvider != null) {
-            this.settingsProvider.put('gridPage', this.page.getValue());
-        }
-    }
-
-    changePageSizeData() {
-        if (this.settingsProvider != null) {
-            this.settingsProvider.put('gridPageSize', this._pageSize.getValue());
-        }
-    }
-
-    getPageSettingValue() {
-        if (this.settingsProvider != null) {
-            return this.settingsProvider.get('gridPage') || 0;
-        }
-
-        return 0;
-    }
-
-    getPageSizeSettingValue() {
-        if (this.settingsProvider != null) {
-            return this.settingsProvider.get('gridPageSize') || 10;
-        }
-
-        return 10;
+        private dataService: DataService) {
     }
 
     ngOnInit() {
+
+        this.dataSource = new TubularDataSource(this);
+
+        if (this.sorting) {
+            this.sorting.sortChange.subscribe(element => {
+                this.sortByColumnName(element.active);
+            });
+        }
+
         // just a logging
-        this.dataStream.subscribe(p => console.log('New data', p));
+        this.dataStream.subscribe(p => console.log('New data'));
 
         // subscriptions to events
         this.pageSize.subscribe(() => {
             this.refresh();
-            this.changePageSizeData();
+            this._changePageSizeData();
         });
 
         this.columns.subscribe(() => this.refresh());
 
         this.page.subscribe(() => {
             this.refresh();
-            this.changePagesData();
+            this._changePagesData();
         });
 
         this.freeTextSearch
@@ -168,9 +111,165 @@ export class GridComponent implements OnInit {
         this.goToPage(0);
     }
 
-    private requestData(tbRequest: GridRequest): Observable<Response> {
+    ngAfterContentInit(): void {
+
+        if (this.paginators) {
+            this.paginators.forEach(paginator => {
+
+                // Update paginator when event is coming from TB
+                this.pageInfo.subscribe(pageInfo => {
+                    paginator.length = pageInfo.totalRecordCount;
+                    paginator.pageIndex = pageInfo.currentPage;
+                    paginator.pageSize = this.pageSize.getValue();
+                });
+
+                // Handle the event when fired by the paginator
+                paginator.page.subscribe(() => {
+                    this.goToPage(paginator.pageIndex);
+                });
+            });
+        }
+    }
+
+    goToPage(page) {
+        this.pageSet = true;
+        this.page.next(page);
+    }
+
+    refresh() {
+        if (this.pageSet && this.columns.getValue().length > 0 && this.pageSize.getValue() > 0) {
+            this._getCurrentPage()
+                .subscribe(
+                (data: any) => {
+                    this._transformDataset(data, this._tbRequestRunning);
+                },
+                error => this._handleRequestDataError(error)
+                );
+        }
+    }
+
+    addColumns(columns: ColumnModel[]) {
+        // TODO: Should we clear before??
+        this.columns.getValue().push(...columns);
+    }
+
+    sortByColumnName(columnName: string) {
+        const value = this.columns.getValue();
+        const columnModel = value.find(c => c.name === columnName);
+
+        if (!columnModel) {
+            throw Error('Invalid column name');
+        }
+
+        this.sort(columnModel);
+    }
+
+    sort(column: ColumnModel) {
+        const value = this.columns.getValue();
+
+        if (!column.sortable) {
+            return;
+        }
+
+        if (column.direction === ColumnSortDirection.None) {
+            column.direction = ColumnSortDirection.Asc;
+        } else if (column.direction === ColumnSortDirection.Asc) {
+            column.direction = ColumnSortDirection.Desc;
+        } else if (column.direction === ColumnSortDirection.Desc) {
+            column.direction = ColumnSortDirection.None;
+        }
+
+        column.sortOrder = column.direction === ColumnSortDirection.None ? 0 : Number.MAX_VALUE;
+
+        if (!column.isMultiSort) {
+            value.forEach(
+                v => v.sortOrder = v.name === column.name ? v.sortOrder : 0);
+            value.forEach(
+                v => v.direction = v.name === column.name ?
+                    column.direction :
+                    ColumnSortDirection.None);
+        }
+
+        const currentlySortedColumns = value.filter(col => col.sortOrder > 0);
+        currentlySortedColumns.sort((a, b) => a.sortOrder === b.sortOrder ? 0 : 1);
+        currentlySortedColumns.forEach((col, index) => { col.sortOrder = index + 1; });
+
+        this.columns.next(value);
+    }
+
+    filterByColumnName(columnName: string) {
+        const value = this.columns.getValue();
+        const columnModel = value.find(c => c.name === columnName);
+
+        if (!columnModel) {
+            throw Error('Invalid column name');
+        }
+
+        this.columns.next(value);
+    }
+
+    getFullDataSource(): Observable<GridResponse> {
+        const tbRequest = {
+            count: this._requestCount++,
+            columns: this.columns.getValue(),
+            skip: 0,
+            take: -1,
+            timezoneOffset: new Date().getTimezoneOffset(),
+            search: {
+                text: '',
+                operator: 'None'
+            } as GridSearchParameter
+        } as GridRequest;
+
+        return this._requestData(tbRequest);
+    }
+
+    private _getCurrentPage(): Observable<GridResponse> {
+        this.isLoading = true;
+
+        this._tbRequestRunning = {
+            count: this._requestCount++,
+            columns: this.columns.getValue(),
+            skip: this.page.getValue() * this.pageSize.getValue(),
+            take: this.pageSize.getValue(),
+            search: this.search,
+            timezoneOffset: new Date().getTimezoneOffset()
+        } as GridRequest;
+
+        return this._requestData(this._tbRequestRunning);
+    }
+
+    private _changePagesData() {
+        if (this.settingsProvider != null) {
+            this.settingsProvider.put('gridPage', this.page.getValue());
+        }
+    }
+
+    private _changePageSizeData() {
+        if (this.settingsProvider != null) {
+            this.settingsProvider.put('gridPageSize', this.pageSize.getValue());
+        }
+    }
+
+    private _getPageSettingValue() {
+        if (this.settingsProvider != null) {
+            return this.settingsProvider.get('gridPage') || 0;
+        }
+
+        return 0;
+    }
+
+    private _getPageSizeSettingValue() {
+        if (this.settingsProvider != null) {
+            return this.settingsProvider.get('gridPageSize') || 10;
+        }
+
+        return 10;
+    }
+
+    private _requestData(tbRequest: GridRequest) {
         // transform direction values to strings
-        tbRequest.columns.forEach(this.transformSortDirection);
+        tbRequest.columns.forEach(this._transformSortDirection);
 
         const ngRequestOptions = new RequestOptions({
             body: tbRequest,
@@ -184,13 +283,21 @@ export class GridComponent implements OnInit {
 
         const ngRequest = new Request(ngRequestOptions);
 
-        return this.http.request(ngRequest).map(response => {
+        const result = this.dataService.getData(ngRequest);
+
+        return result.map(response => {
             this.isLoading = false;
-            return response.json();
+            return response;
         });
     }
 
-    private transformSortDirection(column: ColumnModel) {
+    private _handleRequestDataError(error) {
+        if (this.onRequestDataError) {
+            this.onRequestDataError.emit(error);
+        }
+    }
+
+    private _transformSortDirection(column: ColumnModel) {
         switch (column.direction) {
             case ColumnSortDirection.Asc:
                 column.sortDirection = 'Ascending';
@@ -203,7 +310,7 @@ export class GridComponent implements OnInit {
         }
     }
 
-    private transformToObj(columns: ColumnModel[], data: any) {
+    private _transformToObj(columns: ColumnModel[], data: any) {
         const obj = {};
 
         columns.forEach((column, key) => {
@@ -221,25 +328,27 @@ export class GridComponent implements OnInit {
         return obj;
     }
 
-    private transformDataset(data, req) {
-        const transform = d => this.transformToObj(req.columns, d);
+    private _transformDataset(data, req) {
+        const transform = d => this._transformToObj(req.columns, d);
         const payload = (data.Payload || {}).map(transform);
-        // push data
-        this.data.next(payload);
-
         const pageInfo = new GridPageInfo();
-        pageInfo.currentPage = data.CurrentPage;
+
+        // push data
+        this._dataStream.next(payload);
+
+        // Server side is not working with 0 index.
+        pageInfo.currentPage = data.CurrentPage - 1;
         pageInfo.totalPages = data.TotalPages;
         pageInfo.filteredRecordCount = data.FilteredRecordCount;
         pageInfo.totalRecordCount = data.TotalRecordCount;
 
-        pageInfo.currentInitial = ((pageInfo.currentPage - 1) * this._pageSize.getValue()) + 1;
+        pageInfo.currentInitial = ((pageInfo.currentPage - 1) * this.pageSize.getValue()) + 1;
 
         if (pageInfo.currentInitial <= 0) {
             pageInfo.currentInitial = data.TotalRecordCount > 0 ? 1 : 0;
         }
 
-        pageInfo.currentTop = this._pageSize.getValue() * pageInfo.currentPage;
+        pageInfo.currentTop = this.pageSize.getValue() * pageInfo.currentPage;
 
         if (pageInfo.currentTop <= 0 || pageInfo.currentTop > data.filteredRecordCount) {
             pageInfo.currentTop = data.filteredRecordCount;
@@ -248,4 +357,17 @@ export class GridComponent implements OnInit {
         // push page Info
         this._pageInfo.next(pageInfo);
     }
+}
+
+export class TubularDataSource extends DataSource<any> {
+    constructor(private _tbGrid: GridComponent) {
+        super();
+    }
+
+    /** Connect function called by the table to retrieve one stream containing the data to render. */
+    connect(): Observable<any[]> {
+        return this._tbGrid.dataStream;
+    }
+
+    disconnect() { }
 }

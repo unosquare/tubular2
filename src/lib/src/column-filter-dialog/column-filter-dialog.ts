@@ -2,6 +2,8 @@
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ColumnModel } from '../grid/index';
 import { GridComponent } from '../grid/grid';
+import { NgbPopover } from '../popover/popover';
+
 
 @Component({
     selector: 'tb-filter-dialog',
@@ -9,12 +11,12 @@ import { GridComponent } from '../grid/grid';
     styleUrls: ['./column-filter-dialog.css']
 })
 export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
-    private static prevPopover = null;
+    private static prevPopover: NgbPopover = null;
 
     @ContentChild('filterPopover')
     public filterPopoverTemplate: TemplateRef<Object>;
 
-    @ViewChild('popover') private popover: any;
+    @ViewChild('popover') private popover: NgbPopover;
 
     @Input()
     public column: string;
@@ -46,6 +48,9 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
 
             this.isBetween = value.operator === 'Between';
             this.inputType = this.columnModel.getInputType();
+
+            this.columnModel.hasFilter =
+                this.columnModel.filter.text && this.columnModel.filter.operator !== 'None';
         });
     }
 
@@ -101,13 +106,7 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
     }
 
     public togglePopover() {
-
-        if (ColumnFilterDialogComponent.prevPopover !== null && ColumnFilterDialogComponent.prevPopover !== this.popover) {
-            ColumnFilterDialogComponent.prevPopover.close();
-            ColumnFilterDialogComponent.prevPopover = null;
-        }
-
-        ColumnFilterDialogComponent.prevPopover = this.popover;
+        // TODO: Fix behavior for multiple popovers.
         this.popover.toggle();
     }
 }

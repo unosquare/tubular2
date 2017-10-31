@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 
 export class ContentRef {
-  constructor(public nodes: any[], public viewRef?: ViewRef, public componentRef?: ComponentRef<any>) {}
+  constructor(public nodes: any[], public viewRef?: ViewRef, public componentRef?: ComponentRef<any>) { }
 }
 
 export class PopupService<T> {
@@ -19,8 +19,8 @@ export class PopupService<T> {
   private _contentRef: ContentRef;
 
   constructor(
-      type: any, private _injector: Injector, private _viewContainerRef: ViewContainerRef, private _renderer: Renderer2,
-      componentFactoryResolver: ComponentFactoryResolver) {
+    type: any, private _injector: Injector, private _viewContainerRef: ViewContainerRef, private _renderer: Renderer2,
+    componentFactoryResolver: ComponentFactoryResolver) {
     this._windowFactory = componentFactoryResolver.resolveComponentFactory<T>(type);
   }
 
@@ -28,7 +28,7 @@ export class PopupService<T> {
     if (!this._windowRef) {
       this._contentRef = this._getContentRef(content, context);
       this._windowRef =
-          this._viewContainerRef.createComponent(this._windowFactory, 0, this._injector, this._contentRef.nodes);
+        this._viewContainerRef.createComponent(this._windowFactory, 0, this._injector, this._contentRef.nodes);
     }
 
     return this._windowRef;
@@ -50,7 +50,7 @@ export class PopupService<T> {
     if (!content) {
       return new ContentRef([]);
     } else if (content instanceof TemplateRef) {
-      const viewRef = this._viewContainerRef.createEmbeddedView(content as TemplateRef<T>, context);
+      const viewRef = this._viewContainerRef.createEmbeddedView(<TemplateRef<T>>content, context);
       return new ContentRef([viewRef.rootNodes], viewRef);
     } else {
       return new ContentRef([[this._renderer.createText(`${content}`)]]);

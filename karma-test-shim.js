@@ -9,7 +9,7 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000;
 // builtPaths: root paths for output ("built") files
 // get from karma.config.js, then prefix with '/base/' (default is 'src/')
 var builtPaths = (__karma__.config.builtPaths || ['src/'])
-                 .map(function(p) { return '/base/'+p;});
+  .map(function (p) { return '/base/' + p; });
 
 __karma__.loaded = function () { };
 
@@ -24,9 +24,9 @@ function isSpecFile(path) {
 // Is a "built" file if is JavaScript file in one of the "built" folders
 function isBuiltFile(path) {
   return isJsFile(path) &&
-         builtPaths.reduce(function(keep, bp) {
-           return keep || (path.substr(0, bp.length) === bp);
-         }, false);
+    builtPaths.reduce(function (keep, bp) {
+      return keep || (path.substr(0, bp.length) === bp);
+    }, false);
 }
 
 var allSpecFiles = Object.keys(window.__karma__.files)
@@ -45,13 +45,13 @@ System.config({
     rxjs: { defaultExtension: 'js' },
     '': { defaultExtension: 'js' },
     src: {
-        defaultExtension: 'js',
-        meta: {
-          './*.js': {
-            loader: 'system-loader'
-          }
+      defaultExtension: 'js',
+      meta: {
+        './*.js': {
+          loader: 'system-loader'
         }
       }
+    }
   },
   // Map the angular umd bundles
   map: {
@@ -59,11 +59,49 @@ System.config({
     '@angular/core': 'npm:@angular/core/bundles/core.umd.js',
     '@angular/common': 'npm:@angular/common/bundles/common.umd.js',
     '@angular/compiler': 'npm:@angular/compiler/bundles/compiler.umd.js',
-    '@angular/platform-browser': 'npm:@angular/platform-browser/bundles/platform-browser.umd.js',
-    '@angular/platform-browser-dynamic': 'npm:@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js',
     '@angular/http': 'npm:@angular/http/bundles/http.umd.js',
     '@angular/router': 'npm:@angular/router/bundles/router.umd.js',
     '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
+
+    '@angular/animations': 'npm:@angular/animations/bundles/animations.umd.js',
+    '@angular/animations/browser': 'npm:@angular/animations/bundles/animations-browser.umd.js',
+    '@angular/platform-browser/animations': 'npm:@angular/platform-browser/bundles/platform-browser-animations.umd',
+    '@angular/platform-browser': 'npm:@angular/platform-browser/bundles/platform-browser.umd.js',
+    '@angular/platform-browser-dynamic': 'npm:@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js',
+
+    // Path mappings for local packages that can be imported inside of tests.
+    // TODO(devversion): replace once the index.ts file for the Material package has been added.
+    '@angular/material': 'npm:@angular/material/bundles/material.umd.js',
+    '@angular/cdk': 'npm:@angular/cdk/bundles/cdk.umd.js',
+    '@angular/cdk/a11y': 'npm:@angular/cdk/bundles/cdk-a11y.umd.js',
+    '@angular/cdk/bidi': 'npm:@angular/cdk/bundles/cdk-bidi.umd.js',
+    '@angular/cdk/coercion': 'npm:@angular/cdk/bundles/cdk-coercion.umd.js',
+    '@angular/cdk/collections': 'npm:@angular/cdk/bundles/cdk-collections.umd.js',
+    '@angular/cdk/keycodes': 'npm:@angular/cdk/bundles/cdk-keycodes.umd.js',
+    '@angular/cdk/observers': 'npm:@angular/cdk/bundles/cdk-observers.umd.js',
+    '@angular/cdk/overlay': 'npm:@angular/cdk/bundles/cdk-overlay.umd.js',
+    '@angular/cdk/platform': 'npm:@angular/cdk/bundles/cdk-platform.umd.js',
+    '@angular/cdk/portal': 'npm:@angular/cdk/bundles/cdk-portal.umd.js',
+    '@angular/cdk/rxjs': 'npm:@angular/cdk/bundles/cdk-rxjs.umd.js',
+    '@angular/cdk/scrolling': 'npm:@angular/cdk/bundles/cdk-scrolling.umd.js',
+    '@angular/cdk/stepper': 'npm:@angular/cdk/bundles/cdk-stepper.umd.js',
+    '@angular/cdk/table': 'npm:@angular/cdk/bundles/cdk-table.umd.js',
+    // '@angular/cdk/testing': 'npm:@angular/cdk/testing.umd.js',
+
+    '@angular/material/button': 'npm:@angular/material/bundles/material-button.umd.js',
+    '@angular/material/button-toggle': 'npm:@angular/material/bundles/material-button-toggle.umd.js',
+    '@angular/material/core': 'npm:@angular/material/bundles/material-core.umd.js',
+    '@angular/material/datepicker': 'npm:@angular/material/bundles/material-datepicker.umd.js',
+    '@angular/material/dialog': 'npm:@angular/material/bundles/material-dialog.umd.js',
+    '@angular/material/form-field': 'npm:@angular/material/bundles/material-form-field.umd.js',
+    '@angular/material/icon': 'npm:@angular/material/bundles/material-icon.umd.js',
+    '@angular/material/input': 'npm:@angular/material/bundles/material-input.umd.js',
+    '@angular/material/paginator': 'npm:@angular/material/bundles/material-paginator.umd.js',
+    '@angular/material/progress-bar': 'npm:@angular/material/bundles/material-progress-bar.umd.js',
+    '@angular/material/select': 'npm:@angular/material/bundles/material-select.umd.js',
+    '@angular/material/sort': 'npm:@angular/material/bundles/material-sort.umd.js',
+    '@angular/material/table': 'npm:@angular/material/bundles/material-table.umd.js',
+
     // Testing bundles
     '@angular/core/testing': 'npm:@angular/core/bundles/core-testing.umd.js',
     '@angular/common/testing': 'npm:@angular/common/bundles/common-testing.umd.js',
@@ -80,28 +118,28 @@ System.config({
 
 initTestBed().then(initTesting);
 
-function initTestBed(){
+function initTestBed() {
   return Promise.all([
     System.import('@angular/core/testing'),
     System.import('@angular/platform-browser-dynamic/testing')
   ])
 
-  .then(function (providers) {
-    var coreTesting    = providers[0];
-    var browserTesting = providers[1];
+    .then(function (providers) {
+      var coreTesting = providers[0];
+      var browserTesting = providers[1];
 
-    coreTesting.TestBed.initTestEnvironment(
-      browserTesting.BrowserDynamicTestingModule,
-      browserTesting.platformBrowserDynamicTesting());
-  })
+      coreTesting.TestBed.initTestEnvironment(
+        browserTesting.BrowserDynamicTestingModule,
+        browserTesting.platformBrowserDynamicTesting());
+    })
 }
 
 // Import all spec files and start karma
-function initTesting () {
+function initTesting() {
   return Promise.all(
     allSpecFiles.map(function (moduleName) {
       return System.import(moduleName);
     })
   )
-  .then(__karma__.start, __karma__.error);
+    .then(__karma__.start, __karma__.error);
 }
