@@ -33,23 +33,24 @@ import 'rxjs/add/operator/catch';
 })
 export class GridComponent implements OnInit, AfterContentInit {
     // data is just observable and children can't push
-    private data = new BehaviorSubject([]);
+    private _dataStream = new BehaviorSubject([]);
+
+    // TODO: Check we really need to push internally, only
     private _pageInfo = new BehaviorSubject(new GridPageInfo());
-    private tbRequestRunning: GridRequest;
-    private requestCount = 0;
+    private _tbRequestRunning: GridRequest;
+    private _requestCount = 0;
 
+    public dataStream = this._dataStream.asObservable();
     public pageInfo = this._pageInfo.asObservable();
-    public dataStream = this.data.asObservable();
-    public dataSource: TubularDataSource | null;
-    public _pageSize = new BehaviorSubject(this.getPageSizeSettingValue());
-    public pageSize = this._pageSize.asObservable();
+    public pageSize = new BehaviorSubject(this._getPageSizeSettingValue());
 
-    public page = new BehaviorSubject(this.getPageSettingValue());
+    public dataSource: TubularDataSource | null;
+    public page = new BehaviorSubject(this._getPageSettingValue());
     public columns: BehaviorSubject<ColumnModel[]> = new BehaviorSubject([]);
     public freeTextSearch = new BehaviorSubject('');
     public pageSet = false;
-
     public isLoading = false;
+
     public search = {
         text: '',
         operator: 'None'
@@ -62,97 +63,20 @@ export class GridComponent implements OnInit, AfterContentInit {
     @Output() public beforeRequest = new EventEmitter<any>();
     @Output() public onRequestDataError = new EventEmitter<any>();
 
-    @ContentChild(MatSort) matSort: MatSort;
-    @ContentChildren(MatPaginator) matPaginators: QueryList<MatPaginator>;
+    @ContentChild(MatSort) sorting: MatSort;
+    @ContentChildren(MatPaginator) paginators: QueryList<MatPaginator>;
 
     constructor(
         @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider,
         private dataService: DataService) {
-
-    }
-
-    goToPage(page) {
-        this.pageSet = true;
-        this.page.next(page);
-    }
-
-    refresh() {
-        if (this.pageSet && this.columns.getValue().length > 0 && this._pageSize.getValue() > 0) {
-            this.getCurrentPage()
-                .subscribe(
-                (data: any) => {
-                    this._transformDataset(data, this.tbRequestRunning);
-                },
-                error => this._handleRequestDataError(error)
-                );
-        }
-    }
-
-    getCurrentPage(): Observable<GridResponse> {
-        this.isLoading = true;
-
-        this.tbRequestRunning = {
-            count: this.requestCount++,
-            columns: this.columns.getValue(),
-            skip: this.page.getValue() * this._pageSize.getValue(),
-            take: this._pageSize.getValue(),
-            search: this.search,
-            timezoneOffset: new Date().getTimezoneOffset()
-        } as GridRequest;
-
-        return this._requestData(this.tbRequestRunning);
-    }
-
-    getFullDataSource(): Observable<GridResponse> {
-        const tbRequest = {
-            count: this.requestCount++,
-            columns: this.columns.getValue(),
-            skip: 0,
-            take: -1,
-            timezoneOffset: new Date().getTimezoneOffset(),
-            search: {
-                text: '',
-                operator: 'None'
-            } as GridSearchParameter
-        } as GridRequest;
-
-        return this._requestData(tbRequest);
-    }
-
-    changePagesData() {
-        if (this.settingsProvider != null) {
-            this.settingsProvider.put('gridPage', this.page.getValue());
-        }
-    }
-
-    changePageSizeData() {
-        if (this.settingsProvider != null) {
-            this.settingsProvider.put('gridPageSize', this._pageSize.getValue());
-        }
-    }
-
-    getPageSettingValue() {
-        if (this.settingsProvider != null) {
-            return this.settingsProvider.get('gridPage') || 0;
-        }
-
-        return 0;
-    }
-
-    getPageSizeSettingValue() {
-        if (this.settingsProvider != null) {
-            return this.settingsProvider.get('gridPageSize') || 10;
-        }
-
-        return 10;
     }
 
     ngOnInit() {
 
         this.dataSource = new TubularDataSource(this);
 
-        if (this.matSort) {
-            this.matSort.sortChange.subscribe(element => {
+        if (this.sorting) {
+            this.sorting.sortChange.subscribe(element => {
                 this.sortByColumnName(element.active);
             });
         }
@@ -163,14 +87,14 @@ export class GridComponent implements OnInit, AfterContentInit {
         // subscriptions to events
         this.pageSize.subscribe(() => {
             this.refresh();
-            this.changePageSizeData();
+            this._changePageSizeData();
         });
 
         this.columns.subscribe(() => this.refresh());
 
         this.page.subscribe(() => {
             this.refresh();
-            this.changePagesData();
+            this._changePagesData();
         });
 
         this.freeTextSearch
@@ -189,15 +113,14 @@ export class GridComponent implements OnInit, AfterContentInit {
 
     ngAfterContentInit(): void {
 
-
-        if (this.matPaginators) {
-            this.matPaginators.forEach(paginator => {
+        if (this.paginators) {
+            this.paginators.forEach(paginator => {
 
                 // Update paginator when event is coming from TB
                 this.pageInfo.subscribe(pageInfo => {
                     paginator.length = pageInfo.totalRecordCount;
                     paginator.pageIndex = pageInfo.currentPage;
-                    paginator.pageSize = this._pageSize.getValue();
+                    paginator.pageSize = this.pageSize.getValue();
                 });
 
                 // Handle the event when fired by the paginator
@@ -205,6 +128,23 @@ export class GridComponent implements OnInit, AfterContentInit {
                     this.goToPage(paginator.pageIndex);
                 });
             });
+        }
+    }
+
+    goToPage(page) {
+        this.pageSet = true;
+        this.page.next(page);
+    }
+
+    refresh() {
+        if (this.pageSet && this.columns.getValue().length > 0 && this.pageSize.getValue() > 0) {
+            this._getCurrentPage()
+                .subscribe(
+                (data: any) => {
+                    this._transformDataset(data, this._tbRequestRunning);
+                },
+                error => this._handleRequestDataError(error)
+                );
         }
     }
 
@@ -266,6 +206,65 @@ export class GridComponent implements OnInit, AfterContentInit {
         }
 
         this.columns.next(value);
+    }
+
+    getFullDataSource(): Observable<GridResponse> {
+        const tbRequest = {
+            count: this._requestCount++,
+            columns: this.columns.getValue(),
+            skip: 0,
+            take: -1,
+            timezoneOffset: new Date().getTimezoneOffset(),
+            search: {
+                text: '',
+                operator: 'None'
+            } as GridSearchParameter
+        } as GridRequest;
+
+        return this._requestData(tbRequest);
+    }
+
+    private _getCurrentPage(): Observable<GridResponse> {
+        this.isLoading = true;
+
+        this._tbRequestRunning = {
+            count: this._requestCount++,
+            columns: this.columns.getValue(),
+            skip: this.page.getValue() * this.pageSize.getValue(),
+            take: this.pageSize.getValue(),
+            search: this.search,
+            timezoneOffset: new Date().getTimezoneOffset()
+        } as GridRequest;
+
+        return this._requestData(this._tbRequestRunning);
+    }
+
+    private _changePagesData() {
+        if (this.settingsProvider != null) {
+            this.settingsProvider.put('gridPage', this.page.getValue());
+        }
+    }
+
+    private _changePageSizeData() {
+        if (this.settingsProvider != null) {
+            this.settingsProvider.put('gridPageSize', this.pageSize.getValue());
+        }
+    }
+
+    private _getPageSettingValue() {
+        if (this.settingsProvider != null) {
+            return this.settingsProvider.get('gridPage') || 0;
+        }
+
+        return 0;
+    }
+
+    private _getPageSizeSettingValue() {
+        if (this.settingsProvider != null) {
+            return this.settingsProvider.get('gridPageSize') || 10;
+        }
+
+        return 10;
     }
 
     private _requestData(tbRequest: GridRequest) {
@@ -335,7 +334,7 @@ export class GridComponent implements OnInit, AfterContentInit {
         const pageInfo = new GridPageInfo();
 
         // push data
-        this.data.next(payload);
+        this._dataStream.next(payload);
 
         // Server side is not working with 0 index.
         pageInfo.currentPage = data.CurrentPage - 1;
@@ -343,13 +342,13 @@ export class GridComponent implements OnInit, AfterContentInit {
         pageInfo.filteredRecordCount = data.FilteredRecordCount;
         pageInfo.totalRecordCount = data.TotalRecordCount;
 
-        pageInfo.currentInitial = ((pageInfo.currentPage - 1) * this._pageSize.getValue()) + 1;
+        pageInfo.currentInitial = ((pageInfo.currentPage - 1) * this.pageSize.getValue()) + 1;
 
         if (pageInfo.currentInitial <= 0) {
             pageInfo.currentInitial = data.TotalRecordCount > 0 ? 1 : 0;
         }
 
-        pageInfo.currentTop = this._pageSize.getValue() * pageInfo.currentPage;
+        pageInfo.currentTop = this.pageSize.getValue() * pageInfo.currentPage;
 
         if (pageInfo.currentTop <= 0 || pageInfo.currentTop > data.filteredRecordCount) {
             pageInfo.currentTop = data.filteredRecordCount;
