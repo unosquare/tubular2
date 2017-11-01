@@ -27,12 +27,10 @@
       '@angular/platform-browser/animations': 'npm:@angular/platform-browser/bundles/platform-browser-animations.umd.js',
       '@angular/platform-browser-dynamic': 'npm:@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js',
 
-      '@angular/material': 'npm:@angular/material/bundles/material.umd.js',
       '@angular/flex-layout': 'npm:@angular/flex-layout/bundles/flex-layout.umd.js',
 
       '@angular/material': 'npm:@angular/material/bundles/material.umd.js',
       '@angular/cdk': 'npm:@angular/cdk/bundles/cdk.umd.js',
-      '@angular/cdk/table': 'npm:@angular/cdk/bundles/cdk-table.umd.js',
       '@angular/cdk/a11y': 'npm:@angular/cdk/bundles/cdk-a11y.umd.js',
       '@angular/cdk/bidi': 'npm:@angular/cdk/bundles/cdk-bidi.umd.js',
       '@angular/cdk/coercion': 'npm:@angular/cdk/bundles/cdk-coercion.umd.js',
@@ -44,10 +42,22 @@
       '@angular/cdk/portal': 'npm:@angular/cdk/bundles/cdk-portal.umd.js',
       '@angular/cdk/rxjs': 'npm:@angular/cdk/bundles/cdk-rxjs.umd.js',
       '@angular/cdk/scrolling': 'npm:@angular/cdk/bundles/cdk-scrolling.umd.js',
-      '@angular/cdk/stepper': 'npm:@angular/material/bundles/material-stepper.umd.js',
+      '@angular/cdk/stepper': 'npm:@angular/cdk/bundles/cdk-stepper.umd.js',
       '@angular/cdk/table': 'npm:@angular/cdk/bundles/cdk-table.umd.js',
-      '@angular/cdk/testing': 'npm:@angular/cdk/bundles/cdk-testing.umd.js',
-
+  
+      '@angular/material/button': 'npm:@angular/material/bundles/material-button.umd.js',
+      '@angular/material/button-toggle': 'npm:@angular/material/bundles/material-button-toggle.umd.js',
+      '@angular/material/core': 'npm:@angular/material/bundles/material-core.umd.js',
+      '@angular/material/datepicker': 'npm:@angular/material/bundles/material-datepicker.umd.js',
+      '@angular/material/dialog': 'npm:@angular/material/bundles/material-dialog.umd.js',
+      '@angular/material/form-field': 'npm:@angular/material/bundles/material-form-field.umd.js',
+      '@angular/material/icon': 'npm:@angular/material/bundles/material-icon.umd.js',
+      '@angular/material/input': 'npm:@angular/material/bundles/material-input.umd.js',
+      '@angular/material/paginator': 'npm:@angular/material/bundles/material-paginator.umd.js',
+      '@angular/material/progress-bar': 'npm:@angular/material/bundles/material-progress-bar.umd.js',
+      '@angular/material/select': 'npm:@angular/material/bundles/material-select.umd.js',
+      '@angular/material/sort': 'npm:@angular/material/bundles/material-sort.umd.js',
+      '@angular/material/table': 'npm:@angular/material/bundles/material-table.umd.js',
 
       'moment': 'npm:moment/moment.js',
 

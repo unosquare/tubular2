@@ -6,38 +6,19 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RequestOptions } from '@angular/http';
 
 import {
-  FullscreenOverlayContainer,
-  MdAutocompleteModule,
-  MdButtonModule,
-  MdButtonToggleModule,
-  MdCardModule,
-  MdCheckboxModule,
-  MdChipsModule,
-  MdCoreModule,
-  MdDatepickerModule,
-  MdDialogModule,
-  MdExpansionModule,
-  MdGridListModule,
-  MdIconModule,
-  MdInputModule,
-  MdListModule,
-  MdMenuModule,
-  MdNativeDateModule,
-  MdProgressBarModule,
-  MdProgressSpinnerModule,
-  MdRadioModule,
-  MdRippleModule,
-  MdSelectModule,
-  MdSidenavModule,
-  MdSliderModule,
-  MdSlideToggleModule,
-  MdSnackBarModule,
-  MdSortModule,
-  MdTableModule,
-  MdTabsModule,
-  MdToolbarModule,
-  MdTooltipModule,
-  OverlayContainer
+    MatButtonModule,
+    MatCardModule,
+    MatCommonModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatPaginatorModule,
+    MatProgressBarModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatSortModule,
+    MatTableModule
 } from '@angular/material';
 
 import { CdkTableModule } from '@angular/cdk/table';
@@ -49,47 +30,29 @@ import { TubularModule, SETTINGS_PROVIDER, TubularLocalStorageService, HttpOptio
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { SampleGrid } from './sampleGrid.component';
 import { MainGridComponent } from './main-grid.component';
 import { LoginComponent } from './login.component';
 import { OrderComponent } from './order.component';
 
 @NgModule({
-  exports: [
-    CdkTableModule,
-    MdAutocompleteModule,
-    MdButtonModule,
-    MdButtonToggleModule,
-    MdCardModule,
-    MdCheckboxModule,
-    MdChipsModule,
-    MdDatepickerModule,
-    MdDialogModule,
-    MdExpansionModule,
-    MdGridListModule,
-    MdIconModule,
-    MdInputModule,
-    MdListModule,
-    MdMenuModule,
-    MdCoreModule,
-    MdProgressBarModule,
-    MdProgressSpinnerModule,
-    MdRadioModule,
-    MdRippleModule,
-    MdSelectModule,
-    MdSidenavModule,
-    MdSlideToggleModule,
-    MdSliderModule,
-    MdSnackBarModule,
-    MdSortModule,
-    MdTableModule,
-    MdTabsModule,
-    MdToolbarModule,
-    MdTooltipModule,
-    MdNativeDateModule
-  ]
+    exports: [
+        CdkTableModule,
+        MatButtonModule,
+        MatCardModule,
+        MatCommonModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatPaginatorModule,
+        MatProgressBarModule,
+        MatRadioModule,
+        MatSelectModule,
+        MatSortModule,
+        MatTableModule
+    ]
 })
-export class CustomMaterialModule {}
+export class CustomMaterialModule { }
 
 @NgModule({
     imports: [
@@ -104,7 +67,7 @@ export class CustomMaterialModule {}
         FlexLayoutModule
     ],
     declarations: [
-        AppComponent, SampleGrid, MainGridComponent,
+        AppComponent, MainGridComponent,
         LoginComponent, OrderComponent
     ],
     entryComponents: [OrderComponent],

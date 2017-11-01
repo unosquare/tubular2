@@ -1,46 +1,49 @@
-﻿<md-card>
-    <md-card-header>
-        <md-card-title>Sample Grid using Angular Material</md-card-title>
-    </md-card-header>
-    <md-card-content>
+﻿<mat-card>
+    <mat-card-header>
+        <mat-card-title>Sample Grid using Angular Material</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
         <tb-grid #grid dataUrl="http://tubular.azurewebsites.net/api/orders/paged" (beforeRequest)="beforeRequest($event)">
-            <md-toolbar>
-                <div fxFlex>
-                    <tb-grid-pager [ellipses]="pagerShowEllipses" [boundaryLinks]="pagerBoundaryLinks" [maxSize]="10" [disabled]="grid.isLoading"></tb-grid-pager>
-                </div>
-                <div fxFlex>
-                <button md-icon-button (click)="add()" aria-label="Add New">
-                    <md-icon>add</md-icon>
-                </button>
-                    <button md-icon-button [grid-print]="grid" aria-label="Print">
-                    <md-icon>print</md-icon>
-                </button>
-                <button md-icon-button [grid-export]="grid" file-name="sampleCsv.csv" aria-label="Export">
-                    <md-icon>file_download</md-icon>
-                </button>
-                </div>
-                <div fxFlex>
-                    <tb-grid-search></tb-grid-search>
-                </div>
-            </md-toolbar>
-            <div fxLayout="row" >
-                <md-progress-bar [color]="primary" mode="indeterminate" *ngIf="grid.isLoading" class="tb-progress-bar">
-                </md-progress-bar>
-            </div>
-            <div fxLayout="row">
-                <my-grid fxFlex></my-grid>
-            </div>
-            <md-toolbar>
-                <div fxFlex>
-                    <tb-grid-pager [ellipses]="!pagerShowEllipses" [boundaryLinks]="!pagerBoundaryLinks"></tb-grid-pager>
-                </div>
-                <div fxFlex>
-                    <tb-page-size-selector></tb-page-size-selector>
-                </div>
-                <div fxFlex>
-                    <tb-grid-pager-info></tb-grid-pager-info>
-                </div>
-            </md-toolbar>
+            <mat-paginator [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]">
+            </mat-paginator>
+            <mat-table [dataSource]="grid.dataSource" matSort>
+                <ng-container cdkColumnDef="options">
+                    <mat-header-cell *cdkHeaderCellDef> Options </mat-header-cell>
+                    <mat-cell *cdkCellDef="let row">
+                        <button mat-button (click)="edit(row)">
+                            <mat-icon>mode_edit</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container cdkColumnDef="OrderID">
+                    <mat-header-cell *cdkHeaderCellDef>
+                        <span mat-sort-header>
+                            Order ID
+                        </span>
+                        <tb-filter-dialog column="OrderID" (filterChange)="grid.filterByColumnName($event)">
+                        </tb-filter-dialog>
+                    </mat-header-cell>
+                    <mat-cell *cdkCellDef="let row"> {{row.OrderID}} </mat-cell>
+                </ng-container>
+
+                <ng-container cdkColumnDef="CustomerName">
+                    <mat-header-cell *cdkHeaderCellDef>
+                        <span mat-sort-header>
+                            Customer Name
+                        </span>
+                        <tb-filter-dialog column="CustomerName" (filterChange)="grid.filterByColumnName($event)">
+                        </tb-filter-dialog>
+                    </mat-header-cell>
+                    <mat-cell *cdkCellDef="let row"> {{row.CustomerName}} </mat-cell>
+                </ng-container>
+
+                <mat-header-row *cdkHeaderRowDef="['options', 'OrderID', 'CustomerName']"></mat-header-row>
+                <mat-row *cdkRowDef="let row; columns: ['options', 'OrderID', 'CustomerName'];"></mat-row>
+            </mat-table>
+
+            <mat-paginator [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]">
+            </mat-paginator>
         </tb-grid>
-    </md-card-content>
-</md-card>
+    </mat-card-content>
+</mat-card>
