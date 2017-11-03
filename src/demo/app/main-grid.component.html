@@ -21,7 +21,7 @@
                         <span mat-sort-header>
                             Order ID
                         </span>
-                        <tb-filter-dialog column="OrderID" (filterChange)="grid.filterByColumnName($event)">
+                        <tb-filter-dialog column="OrderID">
                         </tb-filter-dialog>
                     </mat-header-cell>
                     <mat-cell *cdkCellDef="let row"> {{row.OrderID}} </mat-cell>
@@ -32,7 +32,7 @@
                         <span mat-sort-header>
                             Customer Name
                         </span>
-                        <tb-filter-dialog column="CustomerName" (filterChange)="grid.filterByColumnName($event)">
+                        <tb-filter-dialog column="CustomerName">
                         </tb-filter-dialog>
                     </mat-header-cell>
                     <mat-cell *cdkCellDef="let row"> {{row.CustomerName}} </mat-cell>

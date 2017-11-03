@@ -169,6 +169,6 @@
     margin-top: -5px;
 }
 
-md-header-cell span {
+mat-header-cell span {
     display:inline-block;
 }

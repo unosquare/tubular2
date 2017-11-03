@@ -22,8 +22,6 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
     public column: string;
     private columnModel: ColumnModel;
 
-    @Output()
-    public filterChange = new EventEmitter<string>();
     public form: FormGroup;
     public isBetween = false;
     public inputType: string;
@@ -67,7 +65,7 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
     }
 
     public submit() {
-        this.filterChange.emit(this.column);
+        this.tbGrid.filterByColumnName(this.column);
     }
 
     public reset() {
@@ -75,7 +73,7 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
         this.columnModel.filter.argument = null;
         this.columnModel.filter.operator = 'None';
 
-        this.filterChange.emit(this.column);
+        this.tbGrid.filterByColumnName(this.column);
     }
 
     public selectChange(newVal: any) {

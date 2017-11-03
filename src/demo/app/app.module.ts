@@ -18,7 +18,8 @@ import {
     MatRadioModule,
     MatSelectModule,
     MatSortModule,
-    MatTableModule
+    MatTableModule,
+    MatToolbarModule
 } from '@angular/material';
 
 import { CdkTableModule } from '@angular/cdk/table';
@@ -49,7 +50,8 @@ import { OrderComponent } from './order.component';
         MatRadioModule,
         MatSelectModule,
         MatSortModule,
-        MatTableModule
+        MatTableModule,
+        MatToolbarModule
     ]
 })
 export class CustomMaterialModule { }
