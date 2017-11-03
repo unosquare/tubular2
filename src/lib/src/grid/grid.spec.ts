@@ -401,6 +401,68 @@ describe('TbGridComponent', () => {
                 expectTextContent(cells[2], `Microsoft Page 2`);
             });
         }));
+
+        it('should navigate to next page using tb grid api', async(() => {
+
+            let fixture = TestBed.createComponent(TbGridWithPaginator);
+
+            dataService = fixture.debugElement.injector.get(DataService);
+
+            spy = spyOn(dataService, 'getData')
+                .and.callFake(fakeSuccessfulGetData);
+
+            fixture.detectChanges();
+
+            const myGrid = fixture.nativeElement.querySelector('mat-table');
+            expect(myGrid).toBeDefined();
+
+            const headerRow = myGrid.querySelectorAll('.mat-header-cell');
+
+            expect(spy.calls.any()).toBe(true, 'getData called');
+
+            const customerNameHeader = headerRow[2].querySelector('mat-icon') as HTMLElement;
+            const paginator = fixture.componentInstance.matPaginator;
+            const tbGrid = fixture.componentInstance.tbGrid;
+
+            fixture.whenStable().then(() => {
+
+                fixture.detectChanges();
+
+                const rows = myGrid.querySelectorAll('.mat-row');
+                const firstRow = rows[0];
+                const lastRow = rows[rows.length - 1];
+
+                let cells = firstRow.querySelectorAll('.mat-cell');
+                expectTextContent(cells[1], `1`);
+                expectTextContent(cells[2], `Microsoft`);
+
+                cells = lastRow.querySelectorAll('.mat-cell');
+                expectTextContent(cells[1], `20`);
+                expectTextContent(cells[2], `Microsoft`);
+
+                expect(paginator.pageIndex).toBe(0);
+                expect(tbGrid.page.getValue()).toBe(0);
+
+                tbGrid.goToPage(1);
+            }).then(() => {
+                fixture.detectChanges();
+
+                expect(paginator.pageIndex).toBe(1);
+                expect(tbGrid.page.getValue()).toBe(1);
+
+                const rows = myGrid.querySelectorAll('.mat-row');
+                const firstRow = rows[0];
+                const lastRow = rows[rows.length - 1];
+
+                let cells = firstRow.querySelectorAll('.mat-cell');
+                expectTextContent(cells[1], `1`);
+                expectTextContent(cells[2], `Microsoft Page 2`);
+
+                cells = lastRow.querySelectorAll('.mat-cell');
+                expectTextContent(cells[1], `20`);
+                expectTextContent(cells[2], `Microsoft Page 2`);
+            });
+        }));
     });
 
     describe('with two paginators', () => {
@@ -814,7 +876,7 @@ class TbGridWithSortingApp {
                     <span>
                         Customer Name
                     </span>
-                    <tb-filter-dialog column="CustomerName" (filterChange)="grid.filterByColumnName($event)">
+                    <tb-filter-dialog column="CustomerName">
                     </tb-filter-dialog>
                 </mat-header-cell>
                 <mat-cell *cdkCellDef="let row"> {{row.CustomerName}} </mat-cell>

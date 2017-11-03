@@ -9,7 +9,7 @@ import {
 
 import * as moment from 'moment';
 
-import { MatSort, MatPaginator } from '@angular/material';
+import { MatSort, MatPaginator, PageEvent } from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
 
 import { SETTINGS_PROVIDER, ITubularSettingsProvider } from '../core/tubular-local-storage-service';
@@ -24,6 +24,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import { Subject } from 'rxjs/Subject';
 
 // TODO: Add animation to sortable
 @Component({
@@ -34,13 +35,16 @@ import 'rxjs/add/operator/catch';
 export class GridComponent implements OnInit, AfterContentInit {
     // data is just observable and children can't push
     private _dataStream = new BehaviorSubject([]);
+    private _totalRecords = new BehaviorSubject(0);
 
     // TODO: Check we really need to push internally, only
     private _pageInfo = new BehaviorSubject(new GridPageInfo());
     private _tbRequestRunning: GridRequest;
     private _requestCount = 0;
+    private _pageEvent = new Subject<PageEvent>();
 
     public dataStream = this._dataStream.asObservable();
+    public totalRecords = this._totalRecords.asObservable();
     public pageInfo = this._pageInfo.asObservable();
     public pageSize = new BehaviorSubject(this._getPageSizeSettingValue());
 
@@ -48,7 +52,6 @@ export class GridComponent implements OnInit, AfterContentInit {
     public page = new BehaviorSubject(this._getPageSettingValue());
     public columns: BehaviorSubject<ColumnModel[]> = new BehaviorSubject([]);
     public freeTextSearch = new BehaviorSubject('');
-    public pageSet = false;
     public isLoading = false;
 
     public search = {
@@ -75,27 +78,38 @@ export class GridComponent implements OnInit, AfterContentInit {
 
         this.dataSource = new TubularDataSource(this);
 
+        // subscriptions to events
         if (this.sorting) {
             this.sorting.sortChange.subscribe(element => {
                 this.sortByColumnName(element.active);
             });
         }
 
-        // just a logging
         this.dataStream.subscribe(p => console.log('New data'));
 
-        // subscriptions to events
-        this.pageSize.subscribe(() => {
+        this._pageEvent.subscribe((pageEvent: PageEvent) => {
+            if (pageEvent.pageSize !== this.pageSize.getValue()) {
+                this.pageSize.next(pageEvent.pageSize);
+            }
+
+            if (pageEvent.pageIndex !== this.page.getValue()) {
+                this.page.next(pageEvent.pageIndex);
+            }
+
             this.refresh();
+        });
+
+        // TODO: see if we really need an observable here
+        this.pageSize.subscribe(() => {
             this._changePageSizeData();
         });
 
-        this.columns.subscribe(() => this.refresh());
-
+        // TODO: see if we really need an observable here
         this.page.subscribe(() => {
-            this.refresh();
             this._changePagesData();
         });
+
+        this.columns.subscribe(() => this.refresh());
 
         this.freeTextSearch
             .subscribe(c => {
@@ -108,7 +122,7 @@ export class GridComponent implements OnInit, AfterContentInit {
                 this.refresh();
             });
 
-        this.goToPage(0);
+        this.refresh();
     }
 
     ngAfterContentInit(): void {
@@ -117,27 +131,25 @@ export class GridComponent implements OnInit, AfterContentInit {
             this.paginators.forEach(paginator => {
 
                 // Update paginator when event is coming from TB
-                this.pageInfo.subscribe(pageInfo => {
-                    paginator.length = pageInfo.totalRecordCount;
-                    paginator.pageIndex = pageInfo.currentPage;
-                    paginator.pageSize = this.pageSize.getValue();
-                });
+                this.totalRecords.subscribe((totalRecords: number) => paginator.length = totalRecords);
+                this.page.subscribe((page: number) => paginator.pageIndex = page);
+                this.pageSize.subscribe((pageSize: number) => paginator.pageSize = pageSize);
 
                 // Handle the event when fired by the paginator
-                paginator.page.subscribe(() => {
-                    this.goToPage(paginator.pageIndex);
+                paginator.page.subscribe((pageEvent: PageEvent) => {
+                    this._pageEvent.next(pageEvent);
                 });
             });
         }
     }
 
     goToPage(page) {
-        this.pageSet = true;
         this.page.next(page);
+        this.refresh();
     }
 
     refresh() {
-        if (this.pageSet && this.columns.getValue().length > 0 && this.pageSize.getValue() > 0) {
+        if (this.columns.getValue().length > 0) {
             this._getCurrentPage()
                 .subscribe(
                 (data: any) => {
@@ -225,6 +237,11 @@ export class GridComponent implements OnInit, AfterContentInit {
     }
 
     private _getCurrentPage(): Observable<GridResponse> {
+
+        if (this.columns.getValue().length === 0) {
+            return;
+        }
+
         this.isLoading = true;
 
         this._tbRequestRunning = {
@@ -328,34 +345,19 @@ export class GridComponent implements OnInit, AfterContentInit {
         return obj;
     }
 
-    private _transformDataset(data, req) {
+    private _transformDataset(response: GridResponse, req) {
         const transform = d => this._transformToObj(req.columns, d);
-        const payload = (data.Payload || {}).map(transform);
+        const payload = (response.Payload).map(transform);
         const pageInfo = new GridPageInfo();
 
         // push data
         this._dataStream.next(payload);
 
-        // Server side is not working with 0 index.
-        pageInfo.currentPage = data.CurrentPage - 1;
-        pageInfo.totalPages = data.TotalPages;
-        pageInfo.filteredRecordCount = data.FilteredRecordCount;
-        pageInfo.totalRecordCount = data.TotalRecordCount;
+        let totalRecords = this.columns.getValue().some(c => c.hasFilter) ?
+            response.FilteredRecordCount :
+            response.TotalRecordCount;
 
-        pageInfo.currentInitial = ((pageInfo.currentPage - 1) * this.pageSize.getValue()) + 1;
-
-        if (pageInfo.currentInitial <= 0) {
-            pageInfo.currentInitial = data.TotalRecordCount > 0 ? 1 : 0;
-        }
-
-        pageInfo.currentTop = this.pageSize.getValue() * pageInfo.currentPage;
-
-        if (pageInfo.currentTop <= 0 || pageInfo.currentTop > data.filteredRecordCount) {
-            pageInfo.currentTop = data.filteredRecordCount;
-        }
-
-        // push page Info
-        this._pageInfo.next(pageInfo);
+        this._totalRecords.next(totalRecords);
     }
 }
 

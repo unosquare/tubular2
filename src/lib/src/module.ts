@@ -3,14 +3,28 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { MatSortModule } from '@angular/material/sort';
+import { CdkTableModule } from '@angular/cdk/table';
+
+// Material
+import {
+    MatButtonModule,
+    MatDialogModule,
+    MatFormField,
+    MatFormFieldControl,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatPaginatorModule,
+    MatProgressBarModule,
+    MatOption,
+    MatSelect, MatSelectModule,
+    MatSortModule, MatTableModule, MatPaginator
+} from '@angular/material';
 
 import { GridComponent } from './grid/index';
 import { GridSearchComponent } from './grid-search/grid-search';
-import { GridPagerComponent } from './grid-pager/grid-pager';
 import { ColumnFilterDialogComponent } from './column-filter-dialog/column-filter-dialog';
 import { GridPagerInfoComponent } from './grid-pager-info/grid-pager-info';
-import { GridPageSizeSelectorComponent } from './grid-page-size-selector/grid-page-size-selector';
 import { GridExportButtonDirective } from './grid-export/grid-export';
 import { GridPrintButtonDirective } from './grid-print/grid-print';
 import { MDatePipe } from './mdate/mdate';
@@ -20,23 +34,41 @@ import { DataService } from './services/data.service';
 import { NgbPopover, NgbPopoverWindow } from './popover/popover';
 
 @NgModule({
+    exports: [
+        CdkTableModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatProgressBarModule,
+        MatSelectModule,
+        MatSortModule,
+    ]
+})
+export class CustomMaterialModule { }
+
+
+@NgModule({
     imports: [
         BrowserModule,
         FormsModule,
         ReactiveFormsModule,
         HttpModule,
-        MatSortModule
+        CustomMaterialModule
     ],
     declarations: [
         GridComponent, GridSearchComponent,
-        GridPagerComponent, GridPagerInfoComponent, ColumnFilterDialogComponent,
-        GridPageSizeSelectorComponent, GridExportButtonDirective, GridPrintButtonDirective,
+        GridPagerInfoComponent, ColumnFilterDialogComponent,
+        GridExportButtonDirective, GridPrintButtonDirective,
         MDatePipe, NgbPopover, NgbPopoverWindow
     ],
     exports: [
         GridComponent, GridSearchComponent,
-        GridPagerComponent, GridPagerInfoComponent, ColumnFilterDialogComponent,
-        GridPageSizeSelectorComponent, GridExportButtonDirective, GridPrintButtonDirective,
+        GridPagerInfoComponent, ColumnFilterDialogComponent,
+        GridExportButtonDirective, GridPrintButtonDirective,
         MDatePipe, NgbPopover
     ],
     entryComponents: [
