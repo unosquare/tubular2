@@ -345,35 +345,19 @@ export class GridComponent implements OnInit, AfterContentInit {
         return obj;
     }
 
-    private _transformDataset(data, req) {
+    private _transformDataset(response: GridResponse, req) {
         const transform = d => this._transformToObj(req.columns, d);
-        const payload = (data.Payload || {}).map(transform);
+        const payload = (response.Payload).map(transform);
         const pageInfo = new GridPageInfo();
 
         // push data
         this._dataStream.next(payload);
 
-        this._totalRecords.next(data.TotalRecordCount);
-        // Server side is not working with 0 index.
-        // pageInfo.currentPage = data.CurrentPage - 1;
-        // pageInfo.totalPages = data.TotalPages;
-        // pageInfo.filteredRecordCount = data.FilteredRecordCount;
-        // pageInfo.totalRecordCount = data.TotalRecordCount;
+        let totalRecords = this.columns.getValue().some(c => c.hasFilter) ?
+            response.FilteredRecordCount :
+            response.TotalRecordCount;
 
-        // pageInfo.currentInitial = ((pageInfo.currentPage - 1) * this.pageSize.getValue()) + 1;
-
-        // if (pageInfo.currentInitial <= 0) {
-        //     pageInfo.currentInitial = data.TotalRecordCount > 0 ? 1 : 0;
-        // }
-
-        // pageInfo.currentTop = this.pageSize.getValue() * pageInfo.currentPage;
-
-        // if (pageInfo.currentTop <= 0 || pageInfo.currentTop > data.filteredRecordCount) {
-        //     pageInfo.currentTop = data.filteredRecordCount;
-        // }
-
-        // // push page Info
-        // this._pageInfo.next(pageInfo);
+        this._totalRecords.next(totalRecords);
     }
 }
 

@@ -50,7 +50,7 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
             this.inputType = this.columnModel.getInputType();
 
             this.columnModel.hasFilter =
-                this.columnModel.filter.text && this.columnModel.filter.operator !== 'None';
+                this.columnModel.filter.text != null && this.columnModel.filter.operator !== 'None';
         });
     }
 

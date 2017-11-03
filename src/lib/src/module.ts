@@ -15,6 +15,7 @@ import {
     MatIconModule,
     MatInputModule,
     MatPaginatorModule,
+    MatProgressBarModule,
     MatOption,
     MatSelect, MatSelectModule,
     MatSortModule, MatTableModule, MatPaginator
@@ -42,6 +43,7 @@ import { NgbPopover, NgbPopoverWindow } from './popover/popover';
         MatInputModule,
         MatTableModule,
         MatPaginatorModule,
+        MatProgressBarModule,
         MatSelectModule,
         MatSortModule,
     ]
