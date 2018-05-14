@@ -1,0 +1,49 @@
+﻿<mat-card>
+    <mat-card-header>
+        <mat-card-title>Sample Grid using Angular Material</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <tb-grid #grid dataUrl="http://tubular.azurewebsites.net/api/orders/paged" (beforeRequest)="beforeRequest($event)">
+            <mat-paginator [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]">
+            </mat-paginator>
+            <mat-table [dataSource]="grid.dataSource" matSort>
+                <ng-container cdkColumnDef="options">
+                    <mat-header-cell *cdkHeaderCellDef> Options </mat-header-cell>
+                    <mat-cell *cdkCellDef="let row">
+                        <button mat-button (click)="edit(row)">
+                            <mat-icon>mode_edit</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container cdkColumnDef="OrderID">
+                    <mat-header-cell *cdkHeaderCellDef>
+                        <span mat-sort-header>
+                            Order ID
+                        </span>
+                        <tb-filter-dialog column="OrderID">
+                        </tb-filter-dialog>
+                    </mat-header-cell>
+                    <mat-cell *cdkCellDef="let row"> {{row.OrderID}} </mat-cell>
+                </ng-container>
+
+                <ng-container cdkColumnDef="CustomerName">
+                    <mat-header-cell *cdkHeaderCellDef>
+                        <span mat-sort-header>
+                            Customer Name
+                        </span>
+                        <tb-filter-dialog column="CustomerName">
+                        </tb-filter-dialog>
+                    </mat-header-cell>
+                    <mat-cell *cdkCellDef="let row"> {{row.CustomerName}} </mat-cell>
+                </ng-container>
+
+                <mat-header-row *cdkHeaderRowDef="['options', 'OrderID', 'CustomerName']"></mat-header-row>
+                <mat-row *cdkRowDef="let row; columns: ['options', 'OrderID', 'CustomerName'];"></mat-row>
+            </mat-table>
+
+            <mat-paginator [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]">
+            </mat-paginator>
+        </tb-grid>
+    </mat-card-content>
+</mat-card>

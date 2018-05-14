@@ -1,0 +1,19 @@
+<h4 mat-dialog-title>Details</h4>
+
+<form [formGroup]="orderForm">
+    <div mat-dialog-content fxLayout="column">
+    <mat-input-container>
+        <input type="text" mdInput placeholder="Customer Name" formControlName="CustomerName" required />
+    </mat-input-container>
+    <mat-input-container>
+        <input type="datetime-local" mdInput placeholder="Shipped Date" formControlName="ShippedDate" required />
+    </mat-input-container>
+    <mat-input-container>
+        <input type="text" mdInput placeholder="Shipper City" formControlName="ShipperCity" required />
+    </mat-input-container>
+    </div>
+    <div fxLayout="row" mat-dialog-actions>
+        <button fxFlex type="button" mat-button color="primary" mat-dialog-close>Save and close</button>
+        <button fxFlex type="button" mat-button mat-dialog-close>Close</button>
+    </div>
+</form>

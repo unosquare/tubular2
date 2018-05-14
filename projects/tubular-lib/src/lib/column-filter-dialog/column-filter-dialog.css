@@ -1,0 +1,4 @@
+form { min-width: 200px; }
+
+.column-menu { position: relative; display: inline-block; text-align: center; vertical-align: top; }
+.column-menu .mat-icon { font-size: 14px; cursor: pointer; }
