@@ -2,7 +2,7 @@ dist: trusty
 sudo: required
 language: node_js
 node_js:
-  - "6"
+  - "8"
 notifications:
   slack: unolabs:cbusXPH6pBwZ35rVDzi4k4ve
 env:
