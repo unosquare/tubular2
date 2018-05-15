@@ -24,7 +24,6 @@ install:
   - npm install
 script:
   - npm run lint
-  - npm run build:tubular-lib 
   - npm run build
   - npm run test
   - cat ./report/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
