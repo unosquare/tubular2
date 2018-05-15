@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "build:tubular-lib": "ng build tubular-lib",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
