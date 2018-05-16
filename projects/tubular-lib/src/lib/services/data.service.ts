@@ -7,7 +7,7 @@ import { GridResponse } from '../grid/grid-response';
 export class DataService {
     constructor(private http: HttpClient) { }
 
-    getData(ngRequest: HttpRequest<any>) {
-        return this.http.request<GridResponse>(ngRequest);
-    }
+    // getData(ngRequest: HttpRequest<any>) {
+    //     return this.http.request<GridResponse>(ngRequest);
+    // }
 }

@@ -2,10 +2,7 @@
     Component, Input, Output, EventEmitter, ViewChild, QueryList,
     OnInit, AfterContentInit, Inject, Optional, ContentChild, ContentChildren
 } from '@angular/core';
-import {
-    RequestMethod, Http, RequestOptions,
-    ResponseContentType, Request, Response
-} from '@angular/http';
+import { HttpRequest, HttpClient } from '@angular/common/http';
 
 import * as momentNs from 'moment';
 const moment = momentNs;
@@ -58,7 +55,7 @@ export class GridComponent implements OnInit, AfterContentInit {
     } as GridSearchParameter;
 
     @Input() public dataUrl: string;
-    @Input() public requestMethod: string | RequestMethod;
+    @Input() public requestMethod: string;
     @Input() public requestTimeout: number;
 
     @Output() public beforeRequest = new EventEmitter<any>();
@@ -69,7 +66,7 @@ export class GridComponent implements OnInit, AfterContentInit {
 
     constructor(
         @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider,
-        private dataService: DataService) {
+        private dataService: DataService, private http: HttpClient) {
     }
 
     ngOnInit() {
@@ -218,7 +215,7 @@ export class GridComponent implements OnInit, AfterContentInit {
         this.columns.next(value);
     }
 
-    getFullDataSource(): Observable<GridResponse> {
+    getFullDataSource(): Observable<object> {
         const tbRequest = {
             count: this._requestCount++,
             columns: this.columns.getValue(),
@@ -282,28 +279,26 @@ export class GridComponent implements OnInit, AfterContentInit {
         return 10;
     }
 
-    private _requestData(tbRequest: GridRequest) {
+    private _requestData(tbRequest: GridRequest): Observable<GridResponse> {
         // transform direction values to strings
         tbRequest.columns.forEach(this._transformSortDirection);
 
-        const ngRequestOptions = new RequestOptions({
-            body: tbRequest,
-            url: this.dataUrl,
-            method: this.requestMethod || 'POST',
-            withCredentials: false,
-            responseType: ResponseContentType.Json
-        });
+        // const result = this.dataService.getData(ngRequest);
+        const result = this.http.request<GridResponse>(
+            this.requestMethod || 'POST',
+            this.dataUrl,
+            {
+                body: tbRequest,
+                withCredentials: false,
+                responseType: 'json'
+            }
+        );
 
-        this.beforeRequest.emit(ngRequestOptions);
-
-        const ngRequest = new Request(ngRequestOptions);
-
-        const result = this.dataService.getData(ngRequest);
-
-        return result.map(response => {
-            this.isLoading = false;
-            return response;
-        });
+        return result.pipe(
+            map(response => {
+                this.isLoading = false;
+                return response;
+            }));
     }
 
     private _handleRequestDataError(error) {
@@ -351,7 +346,7 @@ export class GridComponent implements OnInit, AfterContentInit {
         // push data
         this._dataStream.next(payload);
 
-        let totalRecords = this.columns.getValue().some(c => c.hasFilter) ?
+        const totalRecords = this.columns.getValue().some(c => c.hasFilter) ?
             response.FilteredRecordCount :
             response.TotalRecordCount;
 
