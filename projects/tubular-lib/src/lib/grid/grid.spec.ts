@@ -4,7 +4,7 @@ import { Component, ViewChild } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 // CDK
 import { CdkTableModule } from '@angular/cdk/table';
@@ -68,7 +68,7 @@ describe('TbGridComponent', () => {
                 CdkTableModule,
                 ReactiveFormsModule,
                 PopoverModule.forRoot(),
-                HttpModule,
+                HttpClientModule,
                 NoopAnimationsModule
             ],
             providers: [
