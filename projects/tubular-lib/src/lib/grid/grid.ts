@@ -20,12 +20,9 @@ import { GridPageInfo } from './grid-page-info';
 import { GridRequest, GridSearchParameter } from './grid-request';
 import { GridResponse } from './grid-response';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subject } from 'rxjs';
+import { map, debounceTime } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import { Subject } from 'rxjs/Subject';
 
 // TODO: Add animation to sortable
 @Component({
