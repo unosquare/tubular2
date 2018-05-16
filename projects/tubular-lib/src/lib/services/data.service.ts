@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Http, Request, Response } from '@angular/http';
+import { HttpRequest, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { GridResponse } from '../grid/grid-response';
 
 @Injectable()
 export class DataService {
-    constructor(private http: Http) { }
+    constructor(private http: HttpClient) { }
 
-    getData(ngRequest: Request): Observable<GridResponse> {
-        return this.http.request(ngRequest)
-            .map(r => r.json() as GridResponse);
+    getData(ngRequest: HttpRequest<any>) {
+        return this.http.request<GridResponse>(ngRequest);
     }
 }
