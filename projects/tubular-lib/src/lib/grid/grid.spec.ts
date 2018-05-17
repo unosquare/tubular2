@@ -4,7 +4,7 @@ import { Component, ViewChild } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // CDK
 import { CdkTableModule } from '@angular/cdk/table';
@@ -35,11 +35,8 @@ import { ColumnFilterDialogComponent } from '../column-filter-dialog/column-filt
 import { PopoverModule } from '../popover/popover.module';
 import { NgbPopoverWindow, NgbPopover } from '../popover/popover';
 
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/throw';
+import { Observable, Subject, BehaviorSubject, throwError, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 describe('TbGridComponent', () => {
     let spy: jasmine.Spy;
@@ -72,7 +69,7 @@ describe('TbGridComponent', () => {
                 NoopAnimationsModule
             ],
             providers: [
-                DataService,
+                { provide: HTTP_INTERCEPTORS, useClass: DataService, multi: true },
                 ErrorStateMatcher,
                 {
                     provide: OverlayContainer, useFactory: () => {
@@ -98,9 +95,6 @@ describe('TbGridComponent', () => {
 
             dataService = fixture.debugElement.injector.get(DataService);
 
-            spy = spyOn(dataService, 'getData')
-                .and.callFake(fakeSuccessfulGetData);
-
             fixture.detectChanges();
 
             const myGrid = fixture.nativeElement.querySelector('mat-table');
@@ -111,8 +105,6 @@ describe('TbGridComponent', () => {
             expectTextContent(headerRow[0], 'Options');
             expectTextContent(headerRow[1], 'Order ID');
             expectTextContent(headerRow[2], 'Customer Name');
-
-            expect(spy.calls.any()).toBe(true, 'getData called');
 
             fixture.whenStable().then(() => {
                 const rows = myGrid.querySelectorAll('.mat-row');
@@ -136,12 +128,8 @@ describe('TbGridComponent', () => {
 
             dataService = fixture.debugElement.injector.get(DataService);
 
-            spy = spyOn(dataService, 'getData')
-                .and.callFake(fakeFailGetData);
-
             fixture.detectChanges();
 
-            expect(spy.calls.any()).toBe(true, 'getData called');
             expect(fixture.componentInstance.handleError).toBeDefined();
             expect(fixture.componentInstance.errorWhenGettingData).toBe(true);
         });
@@ -154,17 +142,12 @@ describe('TbGridComponent', () => {
 
             dataService = fixture.debugElement.injector.get(DataService);
 
-            spy = spyOn(dataService, 'getData')
-                .and.callFake(fakeSuccessfulGetData);
-
             fixture.detectChanges();
 
             const myGrid = fixture.nativeElement.querySelector('mat-table');
             expect(myGrid).toBeDefined();
 
             const headerRow = myGrid.querySelectorAll('.mat-header-cell');
-
-            expect(spy.calls.any()).toBe(true, 'getData called');
 
             fixture.whenStable().then(() => {
                 const rows = myGrid.querySelectorAll('.mat-row');
@@ -214,17 +197,12 @@ describe('TbGridComponent', () => {
 
             dataService = fixture.debugElement.injector.get(DataService);
 
-            spy = spyOn(dataService, 'getData')
-                .and.callFake(fakeSuccessfulGetData);
-
             fixture.detectChanges();
 
             const myGrid = fixture.nativeElement.querySelector('mat-table');
             expect(myGrid).toBeDefined();
 
             const headerRow = myGrid.querySelectorAll('.mat-header-cell');
-
-            expect(spy.calls.any()).toBe(true, 'getData called');
 
             const customerNameHeader = headerRow[2].querySelector('mat-icon') as HTMLElement;
 
@@ -301,17 +279,12 @@ describe('TbGridComponent', () => {
 
             dataService = fixture.debugElement.injector.get(DataService);
 
-            spy = spyOn(dataService, 'getData')
-                .and.callFake(fakeSuccessfulGetData);
-
             fixture.detectChanges();
 
             const myGrid = fixture.nativeElement.querySelector('mat-table');
             expect(myGrid).toBeDefined();
 
             const headerRow = myGrid.querySelectorAll('.mat-header-cell');
-
-            expect(spy.calls.any()).toBe(true, 'getData called');
 
             const customerNameHeader = headerRow[2].querySelector('mat-icon') as HTMLElement;
             const paginator = fixture.componentInstance.matPaginator;
@@ -346,17 +319,12 @@ describe('TbGridComponent', () => {
 
             dataService = fixture.debugElement.injector.get(DataService);
 
-            spy = spyOn(dataService, 'getData')
-                .and.callFake(fakeSuccessfulGetData);
-
             fixture.detectChanges();
 
             const myGrid = fixture.nativeElement.querySelector('mat-table');
             expect(myGrid).toBeDefined();
 
             const headerRow = myGrid.querySelectorAll('.mat-header-cell');
-
-            expect(spy.calls.any()).toBe(true, 'getData called');
 
             const customerNameHeader = headerRow[2].querySelector('mat-icon') as HTMLElement;
             const paginator = fixture.componentInstance.matPaginator;
@@ -408,17 +376,12 @@ describe('TbGridComponent', () => {
 
             dataService = fixture.debugElement.injector.get(DataService);
 
-            spy = spyOn(dataService, 'getData')
-                .and.callFake(fakeSuccessfulGetData);
-
             fixture.detectChanges();
 
             const myGrid = fixture.nativeElement.querySelector('mat-table');
             expect(myGrid).toBeDefined();
 
             const headerRow = myGrid.querySelectorAll('.mat-header-cell');
-
-            expect(spy.calls.any()).toBe(true, 'getData called');
 
             const customerNameHeader = headerRow[2].querySelector('mat-icon') as HTMLElement;
             const paginator = fixture.componentInstance.matPaginator;
@@ -472,17 +435,12 @@ describe('TbGridComponent', () => {
 
             dataService = fixture.debugElement.injector.get(DataService);
 
-            spy = spyOn(dataService, 'getData')
-                .and.callFake(fakeSuccessfulGetData);
-
             fixture.detectChanges();
 
             const myGrid = fixture.nativeElement.querySelector('mat-table');
             expect(myGrid).toBeDefined();
 
             const headerRow = myGrid.querySelectorAll('.mat-header-cell');
-
-            expect(spy.calls.any()).toBe(true, 'getData called');
 
             const customerNameHeader = headerRow[2].querySelector('mat-icon') as HTMLElement;
             const topPaginator = fixture.componentInstance.topPaginator;
@@ -519,17 +477,12 @@ describe('TbGridComponent', () => {
 
             dataService = fixture.debugElement.injector.get(DataService);
 
-            spy = spyOn(dataService, 'getData')
-                .and.callFake(fakeSuccessfulGetData);
-
             fixture.detectChanges();
 
             const myGrid = fixture.nativeElement.querySelector('mat-table');
             expect(myGrid).toBeDefined();
 
             const headerRow = myGrid.querySelectorAll('.mat-header-cell');
-
-            expect(spy.calls.any()).toBe(true, 'getData called');
 
             const customerNameHeader = headerRow[2].querySelector('mat-icon') as HTMLElement;
             const topPaginator = fixture.componentInstance.topPaginator;
@@ -750,26 +703,26 @@ function fakeSuccessfulGetData(request) {
     const searchableColumns = columns.filter(f => f.hasFilter);
 
     if (request._body.skip as number > 0) {
-        return Observable.of(mockJsonPage2).map(r => r);
+        return of(mockJsonPage2).pipe(map(r => r));
     }
 
     if (searchableColumns.some(c => c.name === 'CustomerName'
         && c.filter.operator === 'Contains'
         && c.filter.text === 'ThrowError')) {
-        return Observable.of(mockJsonFilteredByCustomerName).map(r => r);
+        return of(mockJsonFilteredByCustomerName).pipe(map(r => r));
     }
 
     if (searchableColumns.some(c => c.name === 'CustomerName'
         && c.filter.operator === 'Contains'
         && c.filter.text === 'Unosquare')) {
-        return Observable.of(mockJsonFilteredByCustomerName).map(r => r);
+        return of(mockJsonFilteredByCustomerName).pipe(map(r => r));
     }
 
     if (sortableColumns.some(c => c.name === 'OrderID' && c.sortDirection === 'Descending')) {
-        return Observable.of(mockJsonOrderedByOrderId).map(r => r);
+        return of(mockJsonOrderedByOrderId).pipe(map(r => r));
     }
 
-    return Observable.of(mockJsonDefault).map(r => r);
+    return of(mockJsonDefault).pipe(map(r => r));
 
 }
 
