@@ -17,9 +17,8 @@ import { GridPageInfo } from './grid-page-info';
 import { GridRequest, GridSearchParameter } from './grid-request';
 import { GridResponse } from './grid-response';
 
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { map, debounceTime } from 'rxjs/operators';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 // TODO: Add animation to sortable
 @Component({
@@ -79,8 +78,6 @@ export class GridComponent implements OnInit, AfterContentInit {
                 this.sortByColumnName(element.active);
             });
         }
-
-        // this.dataStream.subscribe(p => console.log('New data'));
 
         this._pageEvent.subscribe((pageEvent: PageEvent) => {
             if (pageEvent.pageSize !== this.pageSize.getValue()) {

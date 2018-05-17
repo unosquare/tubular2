@@ -1,5 +1,4 @@
 ﻿import { Component, ContentChild, ViewChild, OnInit } from '@angular/core';
-import { RequestOptions } from '@angular/http';
 
 import { MatDialog } from '@angular/material';
 
@@ -55,9 +54,5 @@ export class MainGridComponent implements OnInit {
         const modalRef = this.dialog.open(OrderComponent);
         modalRef.componentInstance.name = 'Add new';
         modalRef.componentInstance.isNew = true;
-    }
-
-    beforeRequest(requestOptions: RequestOptions) {
-        // Do something before the request is sent
     }
 }

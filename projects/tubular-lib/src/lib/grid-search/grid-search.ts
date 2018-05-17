@@ -1,6 +1,6 @@
 ﻿ import { Component, Inject, Optional, OnInit } from '@angular/core';
 
-import { GridComponent }           from '../grid/index';
+import { GridComponent } from '../grid/index';
 import { SETTINGS_PROVIDER, ITubularSettingsProvider } from '../core/tubular-local-storage-service';
 
 @Component({

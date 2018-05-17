@@ -1,11 +1,11 @@
 import { Component, OnInit, Injectable, Inject, Optional } from '@angular/core';
-import { Http, RequestOptions, RequestOptionsArgs, Headers } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { SETTINGS_PROVIDER, ITubularSettingsProvider } from 'tubular-lib';
 
-import 'rxjs/add/operator/map';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'login',
@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
     constructor(
         @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider,
         private fb: FormBuilder,
-        private http: Http,
+        private http: HttpClient,
         private router: Router) {
     }
 
@@ -43,16 +43,16 @@ export class LoginComponent implements OnInit {
         const password = data.value.password;
 
         const requestArgs = {
-            headers: new Headers(
+            headers: new HttpHeaders(
                 {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 })
-        } as RequestOptionsArgs;
+        };
 
         this.http.post('http://tubular.azurewebsites.net/api/token',
             `grant_type=password&username=${username}&password=${password}`,
-            requestArgs)
-            .map(response => this.handleSuccessCallback(response))
+            requestArgs).
+            pipe(map(response => this.handleSuccessCallback(response)))
             .subscribe(
             response => {
                 console.log('Authenticated', response);

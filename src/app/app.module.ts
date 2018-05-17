@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RequestOptions } from '@angular/http';
 
 import {
     MatButtonModule,
@@ -74,8 +73,7 @@ export class CustomMaterialModule { }
     ],
     entryComponents: [OrderComponent],
     providers: [
-        { provide: SETTINGS_PROVIDER, useClass: TubularLocalStorageService },
-        { provide: RequestOptions, useClass: HttpOptions }
+        { provide: SETTINGS_PROVIDER, useClass: TubularLocalStorageService }
     ],
     bootstrap: [AppComponent]
 })
