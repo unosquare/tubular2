@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { CdkTableModule } from '@angular/cdk/table';
 
@@ -74,6 +74,8 @@ export class CustomMaterialModule { }
     entryComponents: [
         NgbPopoverWindow
     ],
-    providers: [DataService]
+    providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: DataService, multi: true }
+    ]
 })
 export class TubularModule { }

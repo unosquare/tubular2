@@ -66,7 +66,7 @@ export class GridComponent implements OnInit, AfterContentInit {
 
     constructor(
         @Optional() @Inject(SETTINGS_PROVIDER) private settingsProvider: ITubularSettingsProvider,
-        private dataService: DataService, private http: HttpClient) {
+        private http: HttpClient) {
     }
 
     ngOnInit() {
@@ -80,7 +80,7 @@ export class GridComponent implements OnInit, AfterContentInit {
             });
         }
 
-        this.dataStream.subscribe(p => console.log('New data'));
+        // this.dataStream.subscribe(p => console.log('New data'));
 
         this._pageEvent.subscribe((pageEvent: PageEvent) => {
             if (pageEvent.pageSize !== this.pageSize.getValue()) {
