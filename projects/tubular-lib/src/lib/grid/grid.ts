@@ -11,7 +11,6 @@ import { MatSort, MatPaginator, PageEvent } from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
 
 import { SETTINGS_PROVIDER, ITubularSettingsProvider } from '../core/tubular-local-storage-service';
-import { DataService } from '../services/data.service';
 import { ColumnModel, ColumnDataType, ColumnSortDirection } from './column';
 import { GridPageInfo } from './grid-page-info';
 import { GridRequest, GridSearchParameter } from './grid-request';

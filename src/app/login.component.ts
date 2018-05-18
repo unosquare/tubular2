@@ -56,18 +56,16 @@ export class LoginComponent implements OnInit {
             .subscribe(
             response => {
                 console.log('Authenticated', response);
-                this.router.navigate(['/exp']);
+                this.router.navigate(['/grid']);
             },
             error => {
-                const errorJson = error.json();
-                alert(error.status + ' - ' + errorJson.error_description);
+                    alert(error.status + ' - ' + error.error.error_description);
                 this.router.navigate(['/login']);
             }
             );
     }
 
     private handleSuccessCallback(data) {
-        data = JSON.parse(data._body);
         this.userData.isAuthenticated = true;
         this.userData.username = data.userName;
         this.userData.bearerToken = data.access_token;
