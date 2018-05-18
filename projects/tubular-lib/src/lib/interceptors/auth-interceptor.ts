@@ -10,7 +10,7 @@ export class AuthInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const authData = JSON.parse(localStorage.getItem('auth_data'));
 
-        if (!authData) {
+        if (authData) {
             let authReq;
             let headers = req.headers;
             headers.append('Authorization', authData.bearerToken);

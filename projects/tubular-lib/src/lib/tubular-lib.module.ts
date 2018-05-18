@@ -28,7 +28,7 @@ import { GridPagerInfoComponent } from './grid-pager-info/grid-pager-info';
 import { GridExportButtonDirective } from './grid-export/grid-export';
 import { GridPrintButtonDirective } from './grid-print/grid-print';
 import { MDatePipe } from './mdate/mdate';
-import { AuthInterceptor } from './interceptors/interceptor';
+import { AuthInterceptor } from './interceptors/auth-interceptor';
 
 // NbBootstrap special guest (https://github.com/ng-bootstrap/ng-bootstrap)
 import { NgbPopover, NgbPopoverWindow } from './popover/popover';
