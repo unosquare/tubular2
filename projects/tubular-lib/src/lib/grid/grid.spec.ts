@@ -29,7 +29,6 @@ import { ErrorStateMatcher } from '@angular/material/core';
 
 // TB2
 import { GridComponent } from './grid';
-import { DataService } from '../services/data.service';
 import { ColumnModel, ColumnFilterMode, ColumnDataType } from './column';
 import { ColumnFilterDialogComponent } from '../column-filter-dialog/column-filter-dialog';
 import { PopoverModule } from '../popover/popover.module';
@@ -40,7 +39,6 @@ import { map } from 'rxjs/operators';
 
 describe('TbGridComponent', () => {
     let spy: jasmine.Spy;
-    let dataService: DataService;
     let overlayContainerElement: HTMLElement;
 
     beforeEach(async(() => {
@@ -69,7 +67,6 @@ describe('TbGridComponent', () => {
                 NoopAnimationsModule
             ],
             providers: [
-                { provide: HTTP_INTERCEPTORS, useClass: DataService, multi: true },
                 ErrorStateMatcher,
                 {
                     provide: OverlayContainer, useFactory: () => {
@@ -92,8 +89,6 @@ describe('TbGridComponent', () => {
     describe('basic', () => {
         it('should be able to create a table', async(() => {
             let fixture = TestBed.createComponent(SimpleTbGridApp);
-
-            dataService = fixture.debugElement.injector.get(DataService);
 
             fixture.detectChanges();
 
@@ -126,8 +121,6 @@ describe('TbGridComponent', () => {
 
             let fixture = TestBed.createComponent(SimpleTbGridApp);
 
-            dataService = fixture.debugElement.injector.get(DataService);
-
             fixture.detectChanges();
 
             expect(fixture.componentInstance.handleError).toBeDefined();
@@ -139,8 +132,6 @@ describe('TbGridComponent', () => {
         it('should be able to sort by numeric column', async(() => {
 
             let fixture = TestBed.createComponent(TbGridWithSortingApp);
-
-            dataService = fixture.debugElement.injector.get(DataService);
 
             fixture.detectChanges();
 
@@ -194,8 +185,6 @@ describe('TbGridComponent', () => {
         it('should make use of filter dialog', async(() => {
 
             let fixture = TestBed.createComponent(TbGridWithFiltering);
-
-            dataService = fixture.debugElement.injector.get(DataService);
 
             fixture.detectChanges();
 
@@ -277,8 +266,6 @@ describe('TbGridComponent', () => {
 
             let fixture = TestBed.createComponent(TbGridWithPaginator);
 
-            dataService = fixture.debugElement.injector.get(DataService);
-
             fixture.detectChanges();
 
             const myGrid = fixture.nativeElement.querySelector('mat-table');
@@ -316,8 +303,6 @@ describe('TbGridComponent', () => {
         it('should navigate to next page', async(() => {
 
             let fixture = TestBed.createComponent(TbGridWithPaginator);
-
-            dataService = fixture.debugElement.injector.get(DataService);
 
             fixture.detectChanges();
 
@@ -373,8 +358,6 @@ describe('TbGridComponent', () => {
         it('should navigate to next page using tb grid api', async(() => {
 
             let fixture = TestBed.createComponent(TbGridWithPaginator);
-
-            dataService = fixture.debugElement.injector.get(DataService);
 
             fixture.detectChanges();
 
@@ -433,8 +416,6 @@ describe('TbGridComponent', () => {
 
             let fixture = TestBed.createComponent(TbGridWithTwoPaginators);
 
-            dataService = fixture.debugElement.injector.get(DataService);
-
             fixture.detectChanges();
 
             const myGrid = fixture.nativeElement.querySelector('mat-table');
@@ -474,8 +455,6 @@ describe('TbGridComponent', () => {
         it('should navigate to next page', async(() => {
 
             let fixture = TestBed.createComponent(TbGridWithTwoPaginators);
-
-            dataService = fixture.debugElement.injector.get(DataService);
 
             fixture.detectChanges();
 
