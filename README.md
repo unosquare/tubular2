@@ -7,11 +7,11 @@
 
 *:star:Please star this project if you find it useful!*
 
-New Tubular2 with Angular4 (Angular2) and Angular Material 2 featuring:
+New Tubular2 with Angular6 (Angular2) and Angular Material 2 featuring:
 
 * Full Grid with sorting, filtering, exporting just like the previous Tubular 1 component.
 
-**Important Notice** - Although Tubular 1 contains several inputs and form related-components, this new version will contain ONLY a grid component. Current implementations of Material2 and Angular4 have enough support for forms. We recommend using [Reactive Forms](https://angular.io/guide/reactive-forms).
+**Important Notice** - Although Tubular 1 contains several inputs and form related-components, this new version will contain ONLY a grid component. Current implementations of Material2 and Angular6 have enough support for forms. We recommend using [Reactive Forms](https://angular.io/guide/reactive-forms).
 
 You can try [Plunker demo](http://plnkr.co/edit/iuy8LWcsbaUc4NAJpkvi?p=preview).
 
@@ -24,8 +24,7 @@ If you are looking for Angular 1 support, please see [Tubular 1](https://github.
 Common tasks are present as npm scripts:
 
 - `npm start` to run a live-reload server with the sample app
-- `npm run build` to build the library
-- `npm run lint` to lint 
-- `npm run clean` to clean
+- `npm build` to build the library
+- `npm lint` to lint 
+- `npm test` to test
 
-This project is using [Angular QuickStart Library seed](https://github.com/filipesilva/angular-quickstart-lib)

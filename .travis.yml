@@ -2,7 +2,7 @@ dist: trusty
 sudo: required
 language: node_js
 node_js:
-  - "6"
+  - "8"
 notifications:
   slack: unolabs:cbusXPH6pBwZ35rVDzi4k4ve
 env:
@@ -19,12 +19,13 @@ before_install:
   - sudo apt-get install -y libappindicator1 fonts-liberation
   - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   - sudo dpkg -i google-chrome*.deb
+  - npm i -g npm@latest
 install:
   - npm install
 script:
   - npm run lint
   - npm run build
-  - npm run test:once
+  - npm run test
   - cat ./report/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
   - chmod +x ./publish.sh
   - ./publish.sh
