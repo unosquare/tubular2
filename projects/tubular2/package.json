@@ -1,0 +1,15 @@
+{
+  "name": "tubular2",
+  "version": "0.20.0",
+  "description": "Grid library with Angular6 and Material2",
+  "author": "Unosquare",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/unosquare/tubular2.git"
+  },
+  "peerDependencies": {
+    "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
+    "@angular/core": "^6.0.0-rc.0 || ^6.0.0"
+  }
+}

@@ -1,9 +1,9 @@
 /*
- * Public API Surface of tubular-lib
+ * Public API Surface of tubular2
  */
 
-export * from './lib/tubular-lib.service';
-export * from './lib/tubular-lib.module';
+export * from './lib/tubular2.service';
+export * from './lib/tubular2.module';
 export * from './lib/core/tubular-local-storage-service';
 export * from './lib/core/util';
 

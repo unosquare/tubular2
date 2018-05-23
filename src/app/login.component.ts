@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { SETTINGS_PROVIDER, ITubularSettingsProvider } from 'tubular-lib';
+import { SETTINGS_PROVIDER, ITubularSettingsProvider } from 'tubular2';
 
 import { map } from 'rxjs/operators';
 

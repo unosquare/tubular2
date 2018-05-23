@@ -17,8 +17,8 @@
       "dom"
     ],
     "paths": {
-      "tubular-lib": [
-        "dist/tubular-lib"
+      "tubular2": [
+        "dist/tubular2"
       ]
     }
   }

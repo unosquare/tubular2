@@ -3,7 +3,7 @@
         <mat-card-title>Sample Grid using Angular Material</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <tb-grid #grid dataUrl="http://tubular.azurewebsites.net/api/orders/paged" (beforeRequest)="beforeRequest($event)">
+        <tb-grid #grid dataUrl="http://tubular.azurewebsites.net/api/orders/paged">
             <mat-paginator [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]">
             </mat-paginator>
             <mat-table [dataSource]="grid.dataSource" matSort>

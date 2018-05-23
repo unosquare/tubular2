@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material';
 
 import { OrderComponent } from './order.component';
 
-import { GridComponent, ColumnFilterMode, ColumnDataType, ColumnModel } from 'tubular-lib';
+import { GridComponent, ColumnFilterMode, ColumnDataType, ColumnModel } from 'tubular2';
 
 @Component({
     selector: 'my-tbGrid',
