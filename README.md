@@ -7,9 +7,9 @@
 
 *:star:Please star this project if you find it useful!*
 
-New Tubular2 with Angular6 (Angular2) and Angular Material 2 featuring:
+Tubular for Angular6 (formerly Tubular2) is a set of components based on [Angular Material 2](https://material.angular.io) featuring:
 
-* Full Grid with sorting, filtering, exporting just like the previous Tubular 1 component.
+* Full Grid with sorting, filtering, exporting just like the previous Tubular for AngularJs component.
 
 **Important Notice** - Although Tubular 1 contains several inputs and form related-components, this new version will contain ONLY a grid component. Current implementations of Material2 and Angular6 have enough support for forms. We recommend using [Reactive Forms](https://angular.io/guide/reactive-forms).
 
