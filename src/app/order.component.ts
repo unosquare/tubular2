@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
-    selector: 'tb-order-modal',
+    selector: 'app-order-modal',
     templateUrl: './order.component.html'
 })
 export class OrderComponent implements OnInit {

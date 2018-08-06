@@ -4,7 +4,6 @@ import { ColumnModel } from '../grid/index';
 import { GridComponent } from '../grid/grid';
 import { NgbPopover } from '../popover/popover';
 
-
 @Component({
     selector: 'tb-filter-dialog',
     templateUrl: './column-filter-dialog.html',

@@ -7,7 +7,7 @@ import { OrderComponent } from './order.component';
 import { GridComponent, ColumnFilterMode, ColumnDataType, ColumnModel } from 'tubular2';
 
 @Component({
-    selector: 'my-tbGrid',
+    selector: 'app-grid',
     templateUrl: './main-grid.component.html'
 })
 export class MainGridComponent implements OnInit {

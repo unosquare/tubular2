@@ -2,10 +2,10 @@
 import { GridComponent } from '../grid/index';
 
 @Directive({
-    selector: '[grid-print]'
+    selector: '[tbGridPrint]'
 })
 export class GridPrintButtonDirective {
-    @Input('grid-print') gridInstance: GridComponent;
+    @Input() gridInstance: GridComponent;
 
     @HostListener('click', ['$event.target'])
     onClick(event: MouseEvent) {

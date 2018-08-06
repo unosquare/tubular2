@@ -2,11 +2,11 @@
 import { GridComponent } from '../grid/index';
 
 @Directive({
-    selector: '[grid-export]'
+    selector: '[tbGridExport]'
 })
 export class GridExportButtonDirective {
-    @Input('grid-export') gridInstance: GridComponent;
-    @Input('file-name') fileName: string;
+    @Input() gridInstance: GridComponent;
+    @Input() fileName: string;
 
     @HostListener('click', ['$event.target'])
     onClick(event: MouseEvent) {
