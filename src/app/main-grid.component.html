@@ -6,6 +6,8 @@
         <tb-grid #grid dataUrl="http://tubular.azurewebsites.net/api/orders/paged">
             <mat-paginator [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]">
             </mat-paginator>
+            <tb-grid-search>
+            </tb-grid-search>
             <mat-table [dataSource]="grid.dataSource" matSort>
                 <ng-container cdkColumnDef="options">
                     <mat-header-cell *cdkHeaderCellDef> Options </mat-header-cell>
