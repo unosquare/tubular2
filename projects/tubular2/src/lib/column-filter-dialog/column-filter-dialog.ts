@@ -10,7 +10,7 @@ import { NgbPopover } from '../popover/popover';
     styleUrls: ['./column-filter-dialog.css']
 })
 export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
-    private static prevPopover: NgbPopover = null;
+    //private static prevPopover: NgbPopover = null;
 
     @ContentChild('filterPopover')
     public filterPopoverTemplate: TemplateRef<Object>;
@@ -65,6 +65,7 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
 
     public submit() {
         this.tbGrid.filterByColumnName(this.column);
+        this.closePopover();
     }
 
     public reset() {
@@ -76,7 +77,7 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
     }
 
     public selectChange(newVal: any) {
-        if (newVal === 'None') {
+        if (newVal == 'None') {
             this.form.controls['text'].disable();
         } else {
             this.form.controls['text'].enable();
@@ -103,7 +104,19 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
     }
 
     public togglePopover() {
-        // TODO: Fix behavior for multiple popovers.
+        // Only used to activate the form on click
         this.popover.toggle();
+    }
+
+    public openPopover() {
+        if (!this.popover.isOpen()){
+            this.popover.open();
+        }
+    }
+
+    public closePopover() {
+        if (this.popover.isOpen()){
+            this.popover.close();
+        }
     }
 }
