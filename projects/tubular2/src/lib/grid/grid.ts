@@ -13,8 +13,8 @@ import { DataSource } from '@angular/cdk/collections';
 import { SETTINGS_PROVIDER, ITubularSettingsProvider } from '../core/tubular-local-storage-service';
 import { ColumnModel, ColumnDataType, ColumnSortDirection } from './column';
 import { GridPageInfo } from './grid-page-info';
-import { GridRequest, GridSearchParameter } from './grid-request';
-import { GridResponse } from './grid-response';
+import { GridRequest } from 'tubular-common';
+import { GridResponse } from 'tubular-common';
 
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { map, debounceTime } from 'rxjs/operators';
@@ -50,7 +50,7 @@ export class GridComponent implements OnInit, AfterContentInit {
     public search = {
         text: '',
         operator: 'None'
-    } as GridSearchParameter;
+    };
 
     @Input() public dataUrl: string;
     @Input() public requestMethod: string;
@@ -213,16 +213,16 @@ export class GridComponent implements OnInit, AfterContentInit {
 
     getFullDataSource(): Observable<object> {
         const tbRequest = {
-            count: this._requestCount++,
-            columns: this.columns.getValue(),
-            skip: 0,
-            take: -1,
-            timezoneOffset: new Date().getTimezoneOffset(),
-            search: {
+            Counter: this._requestCount++,
+            Columns: this.columns.getValue(),
+            Skip: 0,
+            Take: -1,
+            TimezoneOffset: new Date().getTimezoneOffset(),
+            Search: {
                 text: '',
                 operator: 'None'
-            } as GridSearchParameter
-        } as GridRequest;
+            }
+        };
 
         return this._requestData(tbRequest);
     }
@@ -277,8 +277,7 @@ export class GridComponent implements OnInit, AfterContentInit {
 
     private _requestData(tbRequest: GridRequest): Observable<GridResponse> {
         // transform direction values to strings
-        tbRequest.columns.forEach(this._transformSortDirection);
-
+   
         // const result = this.dataService.getData(ngRequest);
         const result = this.http.request<GridResponse>(
             this.requestMethod || 'POST',
@@ -300,19 +299,6 @@ export class GridComponent implements OnInit, AfterContentInit {
     private _handleRequestDataError(error) {
         if (this.onRequestDataError) {
             this.onRequestDataError.emit(error);
-        }
-    }
-
-    private _transformSortDirection(column: ColumnModel) {
-        switch (column.direction) {
-            case ColumnSortDirection.Asc:
-                column.sortDirection = 'Ascending';
-                break;
-            case ColumnSortDirection.Desc:
-                column.sortDirection = 'Descending';
-                break;
-            default:
-                column.sortDirection = 'None';
         }
     }
 
