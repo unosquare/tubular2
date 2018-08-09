@@ -18,7 +18,7 @@
     </form>
 </ng-template>
 
-<div class="column-menu" [hidden]="columnModel.filterMode == 0" #popover="ngbPopover" [ngbPopover]="filterPopover" placement="bottom"
+<div class="column-menu" [hidden]="columnModel.Filter == 0" #popover="ngbPopover" [ngbPopover]="filterPopover" placement="bottom"
     popoverTitle="Filter" (click)="togglePopover()">
     <!-- <md-icon color="{{ hasFilter ? 'primary' : '' }}">filter_list</md-icon> -->
     <mat-icon>filter_list</mat-icon>

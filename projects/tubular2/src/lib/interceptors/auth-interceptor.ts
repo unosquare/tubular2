@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { GridResponse } from '../grid/grid-response';
+import { GridResponse } from 'tubular-common';
 import { tap, finalize } from 'rxjs/operators';
 
 @Injectable()

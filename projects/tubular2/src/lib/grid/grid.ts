@@ -11,9 +11,9 @@ import { MatSort, MatPaginator, PageEvent } from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
 
 import { SETTINGS_PROVIDER, ITubularSettingsProvider } from '../core/tubular-local-storage-service';
-import { ColumnModel, ColumnDataType, ColumnSortDirection } from './column';
+//import { /*ColumnModel,*/ ColumnDataType,  } from './column';
 import { GridPageInfo } from './grid-page-info';
-import { GridRequest } from 'tubular-common';
+import { GridRequest, ColumnModel, ColumnSortDirection, ColumnDataType } from 'tubular-common';
 import { GridResponse } from 'tubular-common';
 
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
@@ -158,31 +158,33 @@ export class GridComponent implements OnInit, AfterContentInit {
 
     sortByColumnName(columnName: string) {
         const value = this.columns.getValue();
-        const columnModel = value.find(c => c.name === columnName);
-
+        const columnModel = value.find(c => c.Name === columnName);
+        console.log(value);
+        console.log(columnModel);
         if (!columnModel) {
             throw Error('Invalid column name');
         }
+        this.columns.next( ColumnModel.sortColumnArray(columnName, value, true));
 
-        this.sort(columnModel);
+        // this.refresh();
     }
 
     sort(column: ColumnModel) {
         const value = this.columns.getValue();
 
-        if (!column.sortable) {
+        if (!column.Sortable) {
             return;
         }
 
-        if (column.direction === ColumnSortDirection.None) {
-            column.direction = ColumnSortDirection.Asc;
-        } else if (column.direction === ColumnSortDirection.Asc) {
-            column.direction = ColumnSortDirection.Desc;
-        } else if (column.direction === ColumnSortDirection.Desc) {
-            column.direction = ColumnSortDirection.None;
+        if (column.SortDirection === ColumnSortDirection.NONE) {
+            column.SortDirection = ColumnSortDirection.ASCENDING;
+        } else if (column.SortDirection === ColumnSortDirection.ASCENDING) {
+            column.SortDirection = ColumnSortDirection.DESCENDING;
+        } else if (column.SortDirection === ColumnSortDirection.DESCENDING) {
+            column.SortDirection = ColumnSortDirection.NONE;
         }
 
-        column.sortOrder = column.direction === ColumnSortDirection.None ? 0 : Number.MAX_VALUE;
+        column.SortOrder = column.SortDirection === ColumnSortDirection.NONE ? 0 : Number.MAX_VALUE;
 
         if (!column.isMultiSort) {
             value.forEach(
@@ -193,16 +195,16 @@ export class GridComponent implements OnInit, AfterContentInit {
                     ColumnSortDirection.None);
         }
 
-        const currentlySortedColumns = value.filter(col => col.sortOrder > 0);
-        currentlySortedColumns.sort((a, b) => a.sortOrder === b.sortOrder ? 0 : 1);
-        currentlySortedColumns.forEach((col, index) => { col.sortOrder = index + 1; });
+        const currentlySortedColumns = value.filter(col => col.SortOrder > 0);
+        currentlySortedColumns.sort((a, b) => a.SortOrder === b.SortOrder ? 0 : 1);
+        currentlySortedColumns.forEach((col, index) => { col.SortOrder = index + 1; });
 
         this.columns.next(value);
     }
 
     filterByColumnName(columnName: string) {
         const value = this.columns.getValue();
-        const columnModel = value.find(c => c.name === columnName);
+        const columnModel = value.find(c => c.Name === columnName);
 
         if (!columnModel) {
             throw Error('Invalid column name');
@@ -212,16 +214,16 @@ export class GridComponent implements OnInit, AfterContentInit {
     }
 
     getFullDataSource(): Observable<object> {
-        const tbRequest = {
+        const tbRequest: GridRequest = {
             Counter: this._requestCount++,
             Columns: this.columns.getValue(),
             Skip: 0,
             Take: -1,
-            TimezoneOffset: new Date().getTimezoneOffset(),
             Search: {
                 text: '',
                 operator: 'None'
-            }
+            },
+            TimezoneOffset: new Date().getTimezoneOffset()
         };
 
         return this._requestData(tbRequest);
@@ -236,12 +238,12 @@ export class GridComponent implements OnInit, AfterContentInit {
         this.isLoading = true;
 
         this._tbRequestRunning = {
-            count: this._requestCount++,
-            columns: this.columns.getValue(),
-            skip: this.page.getValue() * this.pageSize.getValue(),
-            take: this.pageSize.getValue(),
-            search: this.search,
-            timezoneOffset: new Date().getTimezoneOffset()
+            Columns: this.columns.getValue(),
+            Counter: this._requestCount++,
+            Search: this.search,
+            Skip: this.page.getValue() * this.pageSize.getValue(),
+            Take: this.pageSize.getValue(),
+            TimezoneOffset: new Date().getTimezoneOffset()
         } as GridRequest;
 
         return this._requestData(this._tbRequestRunning);
@@ -277,7 +279,6 @@ export class GridComponent implements OnInit, AfterContentInit {
 
     private _requestData(tbRequest: GridRequest): Observable<GridResponse> {
         // transform direction values to strings
-   
         // const result = this.dataService.getData(ngRequest);
         const result = this.http.request<GridResponse>(
             this.requestMethod || 'POST',
@@ -306,14 +307,14 @@ export class GridComponent implements OnInit, AfterContentInit {
         const obj = {};
 
         columns.forEach((column, key) => {
-            obj[column.name] = data[key] || data[column.name];
+            obj[column.Name] = data[key] || data[column.Name];
 
-            if (column.dataType === ColumnDataType.DateTimeUtc) {
-                obj[column.name] = moment.utc(obj[column.name]);
+            if (column.DataType === ColumnDataType.DATE_TIME_UTC) {
+                obj[column.Name] = moment.utc(obj[column.Name]);
             }
 
-            if (column.dataType === ColumnDataType.Date || column.dataType === ColumnDataType.DateTime) {
-                obj[column.name] = moment(obj[column.name]);
+            if (column.DataType === ColumnDataType.DATE || column.DataType === ColumnDataType.DATE_TIME) {
+                obj[column.Name] = moment(obj[column.Name]);
             }
         });
 
@@ -321,7 +322,7 @@ export class GridComponent implements OnInit, AfterContentInit {
     }
 
     private _transformDataset(response: GridResponse, req) {
-        const transform = d => this._transformToObj(req.columns, d);
+        const transform = d => this._transformToObj(req.Columns, d);
         const payload = (response.Payload).map(transform);
         const pageInfo = new GridPageInfo();
 

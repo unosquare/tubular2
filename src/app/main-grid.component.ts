@@ -4,7 +4,8 @@ import { MatDialog } from '@angular/material';
 
 import { OrderComponent } from './order.component';
 
-import { GridComponent, ColumnFilterMode, ColumnDataType, ColumnModel } from 'tubular2';
+import {  ColumnDataType, ColumnModel } from 'tubular-common';
+import { GridComponent, ColumnFilter } from 'tubular2';
 
 @Component({
     selector: 'my-tbGrid',
@@ -20,22 +21,22 @@ export class MainGridComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        const orderIdColumn = new ColumnModel('OrderID', false);
-        orderIdColumn.filterMode = ColumnFilterMode.Number;
+        const orderIdColumn = new ColumnModel('OrderID');
+        orderIdColumn.Filter = new ColumnFilter();
 
         const customerColumn = new ColumnModel('CustomerName');
-        customerColumn.filterMode = ColumnFilterMode.String;
+        customerColumn.Filter = new ColumnFilter();
 
-        const dateColumn = new ColumnModel('ShippedDate', false);
-        dateColumn.filterMode = ColumnFilterMode.DateTime;
-        dateColumn.dataType = ColumnDataType.DateTime;
+        const dateColumn = new ColumnModel('ShippedDate');
+        dateColumn.Filter = new ColumnFilter();
+        dateColumn.DataType = ColumnDataType.DATE_TIME;
 
-        const creationDate = new ColumnModel('CreationDate', false);
-        creationDate.filterMode = ColumnFilterMode.Date;
-        creationDate.dataType = ColumnDataType.Date;
+        const creationDate = new ColumnModel('CreationDate');
+        creationDate.Filter = new ColumnFilter();
+        creationDate.DataType = ColumnDataType.DATE;
 
         const cityColumn = new ColumnModel('ShipperCity');
-        cityColumn.filterMode = ColumnFilterMode.String;
+        cityColumn.Filter = new ColumnFilter();
 
         this.tbGrid.addColumns([
             orderIdColumn,
