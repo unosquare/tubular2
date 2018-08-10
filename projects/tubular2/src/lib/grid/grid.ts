@@ -11,9 +11,8 @@ import { MatSort, MatPaginator, PageEvent } from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
 
 import { SETTINGS_PROVIDER, ITubularSettingsProvider } from '../core/tubular-local-storage-service';
-//import { /*ColumnModel,*/ ColumnDataType,  } from './column';
 import { GridPageInfo } from './grid-page-info';
-import { GridRequest, ColumnModel, ColumnSortDirection, ColumnDataType } from 'tubular-common';
+import { GridRequest, ColumnModel, ColumnDataType } from 'tubular-common';
 import { GridResponse } from 'tubular-common';
 
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
@@ -169,7 +168,7 @@ export class GridComponent implements OnInit, AfterContentInit {
         // this.refresh();
     }
 
-    sort(column: ColumnModel) {
+  /*  sort(column: ColumnModel) {
         const value = this.columns.getValue();
 
         if (!column.Sortable) {
@@ -200,7 +199,7 @@ export class GridComponent implements OnInit, AfterContentInit {
         currentlySortedColumns.forEach((col, index) => { col.SortOrder = index + 1; });
 
         this.columns.next(value);
-    }
+    }*/
 
     filterByColumnName(columnName: string) {
         const value = this.columns.getValue();

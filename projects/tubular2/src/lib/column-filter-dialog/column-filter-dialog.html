@@ -1,7 +1,7 @@
 <ng-template #filterPopover>
     <form [formGroup]="form" (ngSubmit)="submit()">
-        <mat-select placeholder="Operator" formControlName="operator" (change)="selectChange($event.value)">
-            <mat-option *ngFor="let operator of operators" [value]="operator.value">
+        <mat-select placeholder="Operator" formControlName="filter" (change)="selectChange($event.value)">
+            <mat-option *ngFor="let operator of operators" [value]="operator.filter">
                 {{operator.name}}
             </mat-option>
         </mat-select>

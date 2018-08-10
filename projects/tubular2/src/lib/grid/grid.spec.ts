@@ -29,7 +29,8 @@ import { ErrorStateMatcher } from '@angular/material/core';
 
 // TB2
 import { GridComponent } from './grid';
-import { ColumnModel, ColumnFilterMode, ColumnDataType } from './column';
+import { /*ColumnModel,*/ ColumnFilterMode, /*ColumnDataType*/ } from './column';
+import { ColumnModel, ColumnDataType } from 'tubular-common';
 import { ColumnFilterDialogComponent } from '../column-filter-dialog/column-filter-dialog';
 import { PopoverModule } from '../popover/popover.module';
 import { NgbPopoverWindow, NgbPopover } from '../popover/popover';
@@ -88,7 +89,7 @@ describe('TbGridComponent', () => {
 
     describe('basic', () => {
         it('should be able to create a table', async(() => {
-            let fixture = TestBed.createComponent(SimpleTbGridApp);
+            const fixture = TestBed.createComponent(SimpleTbGridApp);
 
             fixture.detectChanges();
 
@@ -119,7 +120,7 @@ describe('TbGridComponent', () => {
 
         it('should emit error if failure on getting data', () => {
 
-            let fixture = TestBed.createComponent(SimpleTbGridApp);
+            const fixture = TestBed.createComponent(SimpleTbGridApp);
 
             fixture.detectChanges();
 
@@ -131,7 +132,7 @@ describe('TbGridComponent', () => {
     describe('with sorting', () => {
         it('should be able to sort by numeric column', async(() => {
 
-            let fixture = TestBed.createComponent(TbGridWithSortingApp);
+            const fixture = TestBed.createComponent(TbGridWithSortingApp);
 
             fixture.detectChanges();
 
@@ -184,7 +185,7 @@ describe('TbGridComponent', () => {
     describe('with filtering', () => {
         it('should make use of filter dialog', async(() => {
 
-            let fixture = TestBed.createComponent(TbGridWithFiltering);
+            const fixture = TestBed.createComponent(TbGridWithFiltering);
 
             fixture.detectChanges();
 
@@ -264,7 +265,7 @@ describe('TbGridComponent', () => {
     describe('with paginator', () => {
         it('should default to first page', async(() => {
 
-            let fixture = TestBed.createComponent(TbGridWithPaginator);
+            const fixture = TestBed.createComponent(TbGridWithPaginator);
 
             fixture.detectChanges();
 
@@ -302,7 +303,7 @@ describe('TbGridComponent', () => {
 
         it('should navigate to next page', async(() => {
 
-            let fixture = TestBed.createComponent(TbGridWithPaginator);
+            const fixture = TestBed.createComponent(TbGridWithPaginator);
 
             fixture.detectChanges();
 
@@ -357,7 +358,7 @@ describe('TbGridComponent', () => {
 
         it('should navigate to next page using tb grid api', async(() => {
 
-            let fixture = TestBed.createComponent(TbGridWithPaginator);
+            const fixture = TestBed.createComponent(TbGridWithPaginator);
 
             fixture.detectChanges();
 
@@ -414,7 +415,7 @@ describe('TbGridComponent', () => {
     describe('with two paginators', () => {
         it('should default to first page', async(() => {
 
-            let fixture = TestBed.createComponent(TbGridWithTwoPaginators);
+            const fixture = TestBed.createComponent(TbGridWithTwoPaginators);
 
             fixture.detectChanges();
 
@@ -454,7 +455,7 @@ describe('TbGridComponent', () => {
 
         it('should navigate to next page', async(() => {
 
-            let fixture = TestBed.createComponent(TbGridWithTwoPaginators);
+            const fixture = TestBed.createComponent(TbGridWithTwoPaginators);
 
             fixture.detectChanges();
 
@@ -521,22 +522,22 @@ function expectTextContent(el, text) {
 }
 
 function setupInitialColumns(tbGrid) {
-    const orderIdColumn = new ColumnModel('OrderID', false);
-    orderIdColumn.filterMode = ColumnFilterMode.Number;
+    const orderIdColumn = new ColumnModel('OrderID');
+    orderIdColumn.Filter = ColumnDataType.NUMERIC;
 
     const customerColumn = new ColumnModel('CustomerName');
-    customerColumn.filterMode = ColumnFilterMode.String;
+    customerColumn.Filter = ColumnDataType.STRING;
 
-    const dateColumn = new ColumnModel('ShippedDate', false);
-    dateColumn.filterMode = ColumnFilterMode.DateTime;
-    dateColumn.dataType = ColumnDataType.DateTime;
+    const dateColumn = new ColumnModel('ShippedDate');
+    dateColumn.Filter = ColumnDataType.DATE_TIME;
+    dateColumn.DataType = ColumnDataType.DATE_TIME;
 
-    const creationDate = new ColumnModel('CreationDate', false);
-    creationDate.filterMode = ColumnFilterMode.Date;
-    creationDate.dataType = ColumnDataType.Date;
+    const creationDate = new ColumnModel('CreationDate');
+    creationDate.Filter = ColumnDataType.DATE;
+    creationDate.DataType = ColumnDataType.DATE;
 
     const cityColumn = new ColumnModel('ShipperCity');
-    cityColumn.filterMode = ColumnFilterMode.String;
+    cityColumn.Filter = ColumnDataType.STRING;
 
     tbGrid.addColumns([
         orderIdColumn,
@@ -677,27 +678,27 @@ function fakeFailGetData(request) {
 
 function fakeSuccessfulGetData(request) {
 
-    const columns = request._body.columns as Array<ColumnModel>;
-    const sortableColumns = columns.filter(f => f.sortOrder > 0);
+    const columns = request._body.Columns as Array<ColumnModel>;
+    const sortableColumns = columns.filter(f => f.SortOrder > 0);
     const searchableColumns = columns.filter(f => f.hasFilter);
 
     if (request._body.skip as number > 0) {
         return of(mockJsonPage2).pipe(map(r => r));
     }
 
-    if (searchableColumns.some(c => c.name === 'CustomerName'
+    if (searchableColumns.some(c => c.Name === 'CustomerName'
         && c.filter.operator === 'Contains'
         && c.filter.text === 'ThrowError')) {
         return of(mockJsonFilteredByCustomerName).pipe(map(r => r));
     }
 
-    if (searchableColumns.some(c => c.name === 'CustomerName'
+    if (searchableColumns.some(c => c.Name === 'CustomerName'
         && c.filter.operator === 'Contains'
         && c.filter.text === 'Unosquare')) {
         return of(mockJsonFilteredByCustomerName).pipe(map(r => r));
     }
 
-    if (sortableColumns.some(c => c.name === 'OrderID' && c.sortDirection === 'Descending')) {
+    if (sortableColumns.some(c => c.Name === 'OrderID' && c.SortDirection === 'Descending')) {
         return of(mockJsonOrderedByOrderId).pipe(map(r => r));
     }
 

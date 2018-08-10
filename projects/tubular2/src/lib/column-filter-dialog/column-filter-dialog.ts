@@ -32,29 +32,31 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
     constructor(fb: FormBuilder, private tbGrid: GridComponent) {
 
         this.form = fb.group({
-            text: ['', Validators.required],
-            argument: [''],
-            operator: ['None', Validators.required]
+            filter: ['', Validators.required]
+            //text: ['', Validators.required],
+            //argument: [''],
+            //operator: ['None', Validators.required]
         });
 
         this.form.valueChanges.subscribe(value => {
             console.log('filter');
-            if (value.text) {
-                this.columnModel.Filter = value.text;
-            }
-            if (value.operator) {
-                this.columnModel.Filter = value.operator;
-
-            }
+            this.columnModel.Filter = value.filter;
+            //if (value.text) {
+            //    this.columnModel.Filter = value.text;
+            //}
+            //if (value.operator) {
+            //    this.columnModel.Filter = value.operator;
+//
+            //}
             //this.columnModel.Filter = new ColumnFilter();
             //this.columnModel.Filter.text = value.text;
             //this.columnModel.Filter.operator = value.operator;
 
-            if (value.argument) {
-                this.columnModel.Filter = [value.argument];
-            }
+           // if (value.argument) {
+           //     this.columnModel.Filter = [value.argument];
+           // }
 
-            this.isBetween = value.operator === 'Between';
+            //this.isBetween = value.operator === 'Between';
             this.inputType = this.columnModel.DataType;
 
             this.columnModel.hasFilter = this.columnModel.Filter != null && this.columnModel.Filter !== 'None';
@@ -80,8 +82,8 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
 
     public reset() {
         this.form.reset();
-        this.columnModel.Filter.argument = null;
-        this.columnModel.Filter.operator = 'None';
+        this.columnModel.Filter = null;//.argument = null;
+       // this.columnModel.Filter.operator = 'None';
 
         this.tbGrid.filterByColumnName(this.column);
     }
@@ -102,14 +104,15 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
 
             // set initial value in form with a timeout
             this.form.patchValue({
-                text: this.columnModel.Filter.text,
-                argument: this.columnModel.Filter.argument,
-                operator: this.columnModel.Filter.operator || 'None'
+                filter: this.columnModel.Filter
+                //text: this.columnModel.Filter.text,
+                //argument: this.columnModel.Filter.argument,
+                //operator: this.columnModel.Filter.operator || 'None'
             });
 
-            if (this.columnModel.Filter.operator === 'None') {
-                this.form.controls['text'].disable();
-            }
+            //if (this.columnModel.Filter.operator === 'None') {
+            //    this.form.controls['text'].disable();
+            //}
         });
     }
 

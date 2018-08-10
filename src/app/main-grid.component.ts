@@ -21,6 +21,7 @@ export class MainGridComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        console.log('on init');
         const orderIdColumn = new ColumnModel('OrderID');
         orderIdColumn.Filter = new ColumnFilter();
 
