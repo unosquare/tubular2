@@ -161,6 +161,7 @@ export class GridComponent implements OnInit, AfterContentInit {
         if (!columnModel) {
             throw Error('Invalid column name');
         }
+
         this.columns.next(ColumnModel.sortColumnArray(columnName, value, true));
         this.refresh();
     }
