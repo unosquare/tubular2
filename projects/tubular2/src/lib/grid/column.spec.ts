@@ -1,4 +1,3 @@
-// import { ColumnFilterMode } from './column';
 import { ColumnModel, ColumnDataType } from 'tubular-common';
 describe('Column Model', () => {
     let columnModel: ColumnModel;

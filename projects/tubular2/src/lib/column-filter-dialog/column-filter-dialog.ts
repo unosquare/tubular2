@@ -12,8 +12,6 @@ import { MAT_CHECKBOX_CLICK_ACTION } from '../../../../../node_modules/@angular/
     styleUrls: ['./column-filter-dialog.css']
 })
 export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
-    //public prevPopover: NgbPopover;
-
     @ContentChild('filterPopover')
     public filterPopoverTemplate: TemplateRef<Object>;
 
@@ -36,34 +34,14 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
 
         this.form = fb.group({
             filter: ['', Validators.required]
-            // text: ['', Validators.required],
-            // argument: [''],
-            // operator: ['None', Validators.required]
         });
 
         this.form.valueChanges.subscribe(value => {
             console.log('filter');
             this.columnModel.Filter = value.filter;
-            // if (value.text) {
-            //    this.columnModel.Filter = value.text;
-            // }
-            // if (value.operator) {
-            //    this.columnModel.Filter = value.operator;
-//
-            // }
-            // this.columnModel.Filter = new ColumnFilter();
-            // this.columnModel.Filter.text = value.text;
-            // this.columnModel.Filter.operator = value.operator;
-
-           // if (value.argument) {
-           //     this.columnModel.Filter = [value.argument];
-           // }
-
-            // this.isBetween = value.operator === 'Between';
             this.inputType = this.columnModel.DataType;
 
             this.columnModel.hasFilter = this.columnModel.Filter != null && this.columnModel.Filter !== 'None';
-            // this.columnModel.Filter.text != null && this.columnModel.Filter.operator !== 'None';
         });
     }
 
@@ -87,7 +65,6 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
     public reset() {
         this.form.reset();
         this.columnModel.Filter = null;
-       // this.columnModel.Filter.operator = 'None';
 
         this.tbGrid.filterByColumnName(this.column);
     }
@@ -112,20 +89,12 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
     public ngAfterViewInit() {
         // set initial value in form with a timeout
         setTimeout(_ => {
-            // load operator directly from the column
-            // this.operators = this.columnModel.getOperators();
 
             // set initial value in form with a timeout
             this.form.patchValue({
                 filter: this.columnModel.Filter
-                // text: this.columnModel.Filter.text,
-                // argument: this.columnModel.Filter.argument,
-                // operator: this.columnModel.Filter.operator || 'None'
             });
 
-            // if (this.columnModel.Filter.operator === 'None') {
-            //    this.form.controls['text'].disable();
-            // }
         });
     }
 

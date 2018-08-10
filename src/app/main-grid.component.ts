@@ -22,9 +22,9 @@ export class MainGridComponent implements OnInit {
     ngOnInit(): void {
         this.orderFilterDialogOpen = false;
         this.customerFilterDialogOpen = false;
-        
+
         const orderIdColumn = new ColumnModel('OrderID');
-        orderIdColumn.filterMode = ColumnFilterMode.Number;
+        orderIdColumn.Filter =new ColumnFilter();
 
         const customerColumn = new ColumnModel('CustomerName');
         customerColumn.Filter = new ColumnFilter();
@@ -43,8 +43,6 @@ export class MainGridComponent implements OnInit {
         this.tbGrid.addColumns([
             orderIdColumn,
             customerColumn,
-          //  dateColumn,
-           // creationDate,
             cityColumn
         ]);
     }

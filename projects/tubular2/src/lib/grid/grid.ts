@@ -246,7 +246,6 @@ export class GridComponent implements OnInit, AfterContentInit {
 
     private _requestData(tbRequest: GridRequest): Observable<GridResponse> {
         // transform direction values to strings
-        // const result = this.dataService.getData(ngRequest);
         const result = this.http.request<GridResponse>(
             this.requestMethod || 'POST',
             this.dataUrl,
