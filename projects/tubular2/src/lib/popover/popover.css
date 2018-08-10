@@ -1,0 +1,7 @@
+.popover {
+    position: absolute;
+    width: auto;
+    max-width: 200px;
+    padding: 15px 20px;;
+    background: #f2f2f2;
+}

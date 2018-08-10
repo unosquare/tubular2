@@ -1,6 +1,5 @@
 // NG
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { Component, ViewChild } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -38,18 +37,22 @@ import { NgbPopoverWindow, NgbPopover } from '../popover/popover';
 import { Observable, Subject, BehaviorSubject, throwError, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+// mocks
+import { SimpleTbGridComponent, TbGridWithSortingComponent,
+     TbGridWithFilteringComponent, TbGridWithPaginatorComponent, TbGridWithTwoPaginatorsComponent } from './spec-helpers/mock.components';
+
 describe('TbGridComponent', () => {
-    let spy: jasmine.Spy;
+    const spy: jasmine.Spy;
     let overlayContainerElement: HTMLElement;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                SimpleTbGridApp,
-                TbGridWithSortingApp,
-                TbGridWithFiltering,
-                TbGridWithPaginator,
-                TbGridWithTwoPaginators,
+                SimpleTbGridComponent,
+                TbGridWithSortingComponent,
+                TbGridWithFilteringComponent,
+                TbGridWithPaginatorComponent,
+                TbGridWithTwoPaginatorsComponent,
                 GridComponent,
                 ColumnFilterDialogComponent
             ],
@@ -89,7 +92,7 @@ describe('TbGridComponent', () => {
 
     describe('basic', () => {
         it('should be able to create a table', async(() => {
-            const fixture = TestBed.createComponent(SimpleTbGridApp);
+            const fixture = TestBed.createComponent(SimpleTbGridComponent);
 
             fixture.detectChanges();
 
@@ -120,7 +123,7 @@ describe('TbGridComponent', () => {
 
         it('should emit error if failure on getting data', () => {
 
-            const fixture = TestBed.createComponent(SimpleTbGridApp);
+            const fixture = TestBed.createComponent(SimpleTbGridComponent);
 
             fixture.detectChanges();
 
@@ -131,8 +134,7 @@ describe('TbGridComponent', () => {
 
     describe('with sorting', () => {
         it('should be able to sort by numeric column', async(() => {
-
-            const fixture = TestBed.createComponent(TbGridWithSortingApp);
+            const fixture = TestBed.createComponent(TbGridWithSortingComponent);
 
             fixture.detectChanges();
 
@@ -185,7 +187,7 @@ describe('TbGridComponent', () => {
     describe('with filtering', () => {
         it('should make use of filter dialog', async(() => {
 
-            const fixture = TestBed.createComponent(TbGridWithFiltering);
+            const fixture = TestBed.createComponent(TbGridWithFilteringComponent);
 
             fixture.detectChanges();
 
@@ -265,7 +267,7 @@ describe('TbGridComponent', () => {
     describe('with paginator', () => {
         it('should default to first page', async(() => {
 
-            const fixture = TestBed.createComponent(TbGridWithPaginator);
+            const fixture = TestBed.createComponent(TbGridWithPaginatorComponent);
 
             fixture.detectChanges();
 
@@ -303,7 +305,7 @@ describe('TbGridComponent', () => {
 
         it('should navigate to next page', async(() => {
 
-            const fixture = TestBed.createComponent(TbGridWithPaginator);
+            const fixture = TestBed.createComponent(TbGridWithPaginatorComponent);
 
             fixture.detectChanges();
 
@@ -358,7 +360,7 @@ describe('TbGridComponent', () => {
 
         it('should navigate to next page using tb grid api', async(() => {
 
-            const fixture = TestBed.createComponent(TbGridWithPaginator);
+            const fixture = TestBed.createComponent(TbGridWithPaginatorComponent);
 
             fixture.detectChanges();
 
@@ -415,7 +417,7 @@ describe('TbGridComponent', () => {
     describe('with two paginators', () => {
         it('should default to first page', async(() => {
 
-            const fixture = TestBed.createComponent(TbGridWithTwoPaginators);
+            const fixture = TestBed.createComponent(TbGridWithTwoPaginatorsComponent);
 
             fixture.detectChanges();
 
@@ -455,7 +457,7 @@ describe('TbGridComponent', () => {
 
         it('should navigate to next page', async(() => {
 
-            const fixture = TestBed.createComponent(TbGridWithTwoPaginators);
+            const fixture = TestBed.createComponent(TbGridWithTwoPaginatorsComponent);
 
             fixture.detectChanges();
 
@@ -673,7 +675,7 @@ const mockJsonPage2 = {
 };
 
 function fakeFailGetData(request) {
-    return Observable.throw('Error on getting data');
+    return Observable.throwError('Error on getting data');
 }
 
 function fakeSuccessfulGetData(request) {
@@ -703,8 +705,8 @@ function fakeSuccessfulGetData(request) {
     }
 
     return of(mockJsonDefault).pipe(map(r => r));
-
 }
+
 
 @Component({
     template: `
@@ -731,7 +733,7 @@ function fakeSuccessfulGetData(request) {
     </tb-grid>
     `
 })
-class SimpleTbGridApp {
+class SimpleTbGridComponent {
     @ViewChild(GridComponent) tbGrid: GridComponent;
 
     public errorWhenGettingData = false;
@@ -740,7 +742,7 @@ class SimpleTbGridApp {
         this.errorWhenGettingData = true;
     }
 
-    ngOnInit() {
+    OnInit() {
         setupInitialColumns(this.tbGrid);
     }
 }
@@ -778,14 +780,14 @@ class SimpleTbGridApp {
     </tb-grid>
     `
 })
-class TbGridWithSortingApp {
+class TbGridWithSortingComponent {
     @ViewChild(GridComponent) tbGrid: GridComponent;
 
     handleError(error) {
         console.log(error);
     }
 
-    ngOnInit() {
+    OnInit() {
         setupInitialColumns(this.tbGrid);
     }
 }
@@ -821,14 +823,14 @@ class TbGridWithSortingApp {
     </tb-grid>
     `
 })
-class TbGridWithFiltering {
+class TbGridWithFilteringComponent {
     @ViewChild(GridComponent) tbGrid: GridComponent;
 
     handleError(error) {
         console.log(error);
     }
 
-    ngOnInit() {
+    OnInit() {
         setupInitialColumns(this.tbGrid);
     }
 }
@@ -865,7 +867,7 @@ class TbGridWithFiltering {
     </tb-grid>
     `
 })
-class TbGridWithPaginator {
+class TbGridWithPaginatorComponent {
     @ViewChild(GridComponent) tbGrid: GridComponent;
 
     @ViewChild(MatPaginator) matPaginator: MatPaginator;
@@ -874,7 +876,7 @@ class TbGridWithPaginator {
         console.log(error);
     }
 
-    ngOnInit() {
+    OnInit() {
         setupInitialColumns(this.tbGrid);
     }
 }
@@ -915,7 +917,7 @@ class TbGridWithPaginator {
     </tb-grid>
     `
 })
-class TbGridWithTwoPaginators {
+class TbGridWithTwoPaginatorsComponent {
     @ViewChild(GridComponent) tbGrid: GridComponent;
 
     @ViewChild('topPaginator') topPaginator: MatPaginator;
@@ -925,7 +927,7 @@ class TbGridWithTwoPaginators {
         console.log(error);
     }
 
-    ngOnInit() {
+    OnInit() {
         setupInitialColumns(this.tbGrid);
     }
 }
