@@ -41,35 +41,4 @@ export class MainGridComponent implements OnInit {
         modalRef.componentInstance.name = 'Add new';
         modalRef.componentInstance.isNew = true;
     }
-
-    // Change the state of the popovers - OMIT
-    togglePopovers(control: number) {
-        switch (control) {
-            case 0: {
-                this.orderFilterDialogOpen = true;
-                this.customerFilterDialogOpen = false;
-                console.log(
-                    `Turned on order's filter
-                Turned off customer's filter.`
-                );
-                break;
-            }
-
-            case 1: {
-                this.orderFilterDialogOpen = false;
-                this.customerFilterDialogOpen = true;
-                console.log(
-                    `Turned on customer's filter
-                Turned off order's filter.`
-                );
-                break;
-            }
-
-            default: {
-                this.orderFilterDialogOpen = false;
-                this.customerFilterDialogOpen = false;
-                break;
-            }
-        }
-    }
 }

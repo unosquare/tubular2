@@ -46,7 +46,6 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
         });
 
         this.form.valueChanges.subscribe(value => {
-            console.log('filter');
             this.columnModel.Filter = value.filter;
             this.inputType = this.columnModel.DataType;
 
