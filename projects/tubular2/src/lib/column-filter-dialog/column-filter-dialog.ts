@@ -63,6 +63,7 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
         }
 
         this.columnModel = columnModel;
+        this.operators = ColumnModel.getOperators(columnModel);
     }
 
     public submit() {
