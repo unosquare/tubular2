@@ -1,10 +1,19 @@
-﻿import { Component, Input, Output, EventEmitter, HostBinding, AfterViewInit, OnInit, ContentChild, TemplateRef, ViewChild } from '@angular/core';
+﻿import {
+    Component,
+    Input, Output,
+    EventEmitter,
+    HostBinding,
+    AfterViewInit,
+    OnInit,
+    ContentChild,
+    TemplateRef,
+    ViewChild
+} from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ColumnModel } from 'tubular-common';
 import { GridComponent } from '../grid/grid';
 import { NgbPopover } from '../popover/popover';
-import { ColumnFilter } from '../grid';
-import { MAT_CHECKBOX_CLICK_ACTION } from '../../../../../node_modules/@angular/material';
+import { MAT_CHECKBOX_CLICK_ACTION } from '@angular/material';
 
 @Component({
     selector: 'tb-filter-dialog',
@@ -48,7 +57,7 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
     ngOnInit(): void {
         this.isDialogOpen = false;
         const value = this.tbGrid.columns.getValue();
-        const columnModel = value.find(c => c.Name === this.column);
+        const columnModel = value.find((c: ColumnModel) => c.Name === this.column);
 
         if (!columnModel) {
             throw Error('Invalid column name');
@@ -79,7 +88,7 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
     }
 
     public selectChange(newVal: any) {
-        if (newVal == 'None') {
+        if (newVal === 'None') {
             this.form.controls['text'].disable();
         } else {
             this.form.controls['text'].enable();
@@ -106,9 +115,7 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
     public togglePopover() {
         if (this.isDialogOpen) {
             this.popover.open();
-        }
-
-        else {
+        } else {
             this.popover.close();
         }
     }

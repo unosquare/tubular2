@@ -12,8 +12,7 @@ import { DataSource } from '@angular/cdk/collections';
 
 import { SETTINGS_PROVIDER, ITubularSettingsProvider } from '../core/tubular-local-storage-service';
 import { GridPageInfo } from './grid-page-info';
-import { GridRequest, ColumnModel, ColumnDataType } from 'tubular-common';
-import { GridResponse } from 'tubular-common';
+import { GridRequest, GridResponse, ColumnModel, ColumnDataType } from 'tubular-common';
 
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { map, debounceTime } from 'rxjs/operators';
@@ -142,10 +141,10 @@ export class GridComponent implements OnInit, AfterContentInit {
         if (this.columns.getValue().length > 0) {
             this._getCurrentPage()
                 .subscribe(
-                (data: any) => {
-                    this._transformDataset(data, this._tbRequestRunning);
-                },
-                error => this._handleRequestDataError(error)
+                    (data: any) => {
+                        this._transformDataset(data, this._tbRequestRunning);
+                    },
+                    error => this._handleRequestDataError(error)
                 );
         }
     }
@@ -158,14 +157,12 @@ export class GridComponent implements OnInit, AfterContentInit {
     sortByColumnName(columnName: string) {
         const value = this.columns.getValue();
         const columnModel = value.find(c => c.Name === columnName);
-        console.log(value);
-        console.log(columnModel);
+
         if (!columnModel) {
             throw Error('Invalid column name');
         }
-        this.columns.next( ColumnModel.sortColumnArray(columnName, value, true));
-
-        // this.refresh();
+        this.columns.next(ColumnModel.sortColumnArray(columnName, value, true));
+        this.refresh();
     }
 
 
