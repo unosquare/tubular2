@@ -28,7 +28,6 @@ import { ErrorStateMatcher } from '@angular/material/core';
 
 // TB2
 import { GridComponent } from './grid';
-import { /*ColumnModel,*/ ColumnFilterMode, /*ColumnDataType*/ } from './column';
 import { ColumnModel, ColumnDataType } from 'tubular-common';
 import { ColumnFilterDialogComponent } from '../column-filter-dialog/column-filter-dialog';
 import { PopoverModule } from '../popover/popover.module';
@@ -524,29 +523,12 @@ function expectTextContent(el, text) {
 }
 
 function setupInitialColumns(tbGrid) {
-    const orderIdColumn = new ColumnModel('OrderID');
-    orderIdColumn.Filter = ColumnDataType.NUMERIC;
-
-    const customerColumn = new ColumnModel('CustomerName');
-    customerColumn.Filter = ColumnDataType.STRING;
-
-    const dateColumn = new ColumnModel('ShippedDate');
-    dateColumn.Filter = ColumnDataType.DATE_TIME;
-    dateColumn.DataType = ColumnDataType.DATE_TIME;
-
-    const creationDate = new ColumnModel('CreationDate');
-    creationDate.Filter = ColumnDataType.DATE;
-    creationDate.DataType = ColumnDataType.DATE;
-
-    const cityColumn = new ColumnModel('ShipperCity');
-    cityColumn.Filter = ColumnDataType.STRING;
-
     tbGrid.addColumns([
-        orderIdColumn,
-        customerColumn,
-        dateColumn,
-        creationDate,
-        cityColumn
+        new ColumnModel('OrderID'),
+        new ColumnModel('CustomerName'),
+        new ColumnModel('ShippedDate'),
+        new ColumnModel('CreationDate'),
+        new ColumnModel('ShipperCity')
     ]);
 }
 

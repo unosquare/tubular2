@@ -1,8 +1,8 @@
 ﻿import { Component, EventEmitter, Input, Output, ContentChild, ViewChild, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { OrderComponent } from './order.component';
-import {  ColumnDataType, ColumnModel } from 'tubular-common';
-import { GridComponent, ColumnFilter } from 'tubular2';
+import { ColumnDataType, ColumnModel } from 'tubular-common';
+import { GridComponent } from 'tubular2';
 
 @Component({
     selector: 'app-grid',
@@ -23,27 +23,12 @@ export class MainGridComponent implements OnInit {
         this.orderFilterDialogOpen = false;
         this.customerFilterDialogOpen = false;
 
-        const orderIdColumn = new ColumnModel('OrderID');
-        orderIdColumn.Filter =new ColumnFilter();
-
-        const customerColumn = new ColumnModel('CustomerName');
-        customerColumn.Filter = new ColumnFilter();
-
-        const dateColumn = new ColumnModel('ShippedDate');
-        dateColumn.Filter = new ColumnFilter();
-        dateColumn.DataType = ColumnDataType.DATE_TIME;
-
-        const creationDate = new ColumnModel('CreationDate');
-        creationDate.Filter = new ColumnFilter();
-        creationDate.DataType = ColumnDataType.DATE;
-
-        const cityColumn = new ColumnModel('ShipperCity');
-        cityColumn.Filter = new ColumnFilter();
-
         this.tbGrid.addColumns([
-            orderIdColumn,
-            customerColumn,
-            cityColumn
+            new ColumnModel('OrderID'),
+            new ColumnModel('CustomerName'),
+            new ColumnModel('ShippedDate'),
+            new ColumnModel('CreationDate'),
+            new ColumnModel('ShipperCity')
         ]);
     }
 
@@ -59,7 +44,7 @@ export class MainGridComponent implements OnInit {
 
     // Change the state of the popovers - OMIT
     togglePopovers(control: number) {
-        switch(control) {
+        switch (control) {
             case 0: {
                 this.orderFilterDialogOpen = true;
                 this.customerFilterDialogOpen = false;
