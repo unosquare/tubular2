@@ -1,0 +1,17 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <mat-select placeholder="Operator" formControlName="operator" (change)="selectChange($event.value)">
+        <mat-option *ngFor="let operator of operators" [value]="operator.Value">
+            {{operator.Title}}
+        </mat-option>
+    </mat-select>
+    <mat-form-field>
+            <input matInput type="{{columnModel.DataType}}" formControlName="text" placeholder="Value" />                
+    </mat-form-field>
+    <mat-form-field *ngIf="isBetween">
+        <input matInput type="text" formControlName="argument" placeholder="Argument" />
+    </mat-form-field>
+    <div fxLayout="row">
+        <button type="submit" mat-button fxFlex [disabled]="!form.valid">Filter</button>
+        <button type="button" mat-button fxFlex (click)="reset()">Clear</button>
+    </div>
+</form>

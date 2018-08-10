@@ -25,30 +25,23 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
     @Input()
     public column: string;
     public columnModel: ColumnModel;
-
     public form: FormGroup;
     public isBetween = false;
-    public inputType: string;
-
     public operators: Object[];
-    @HostBinding('class.is-open') @Input() isDialogOpen = false;
 
     constructor(fb: FormBuilder, private tbGrid: GridComponent) {
-
         this.form = fb.group({
             filter: ['', Validators.required]
         });
 
         this.form.valueChanges.subscribe(value => {
             this.columnModel.Filter = value.filter;
-            this.inputType = this.columnModel.DataType;
 
-            this.columnModel.hasFilter = this.columnModel.Filter != null && this.columnModel.Filter !== 'None';
+            this.columnModel.hasFilter = this.columnModel.Filter && this.columnModel.Filter !== 'None';
         });
     }
 
     ngOnInit(): void {
-        this.isDialogOpen = false;
         const value = this.tbGrid.columns.getValue();
         const columnModel = value.find((c: ColumnModel) => c.Name === this.column);
 
