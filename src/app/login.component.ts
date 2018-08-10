@@ -8,7 +8,7 @@ import { SETTINGS_PROVIDER, ITubularSettingsProvider } from 'tubular2';
 import { map } from 'rxjs/operators';
 
 @Component({
-    selector: 'login',
+    selector: 'app-login',
     templateUrl: './login.component.html'
 })
 

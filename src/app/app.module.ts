@@ -33,6 +33,7 @@ import { AppComponent } from './app.component';
 import { MainGridComponent } from './main-grid.component';
 import { LoginComponent } from './login.component';
 import { OrderComponent } from './order.component';
+import { FilterToggleComponent } from './filter-toggle-component';
 
 @NgModule({
     exports: [
@@ -69,7 +70,8 @@ export class CustomMaterialModule { }
     ],
     declarations: [
         AppComponent, MainGridComponent,
-        LoginComponent, OrderComponent
+        LoginComponent, OrderComponent,
+        FilterToggleComponent
     ],
     entryComponents: [OrderComponent],
     providers: [

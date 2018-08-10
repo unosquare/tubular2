@@ -1,9 +1,9 @@
-﻿import { Component, Input, Output, EventEmitter, AfterViewInit, OnInit, ContentChild, TemplateRef, ViewChild } from '@angular/core';
+﻿import { Component, Input, Output, EventEmitter, HostBinding, AfterViewInit, OnInit, ContentChild, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ColumnModel } from '../grid/index';
 import { GridComponent } from '../grid/grid';
 import { NgbPopover } from '../popover/popover';
-
+import { MAT_CHECKBOX_CLICK_ACTION } from '../../../../../node_modules/@angular/material';
 
 @Component({
     selector: 'tb-filter-dialog',
@@ -11,12 +11,14 @@ import { NgbPopover } from '../popover/popover';
     styleUrls: ['./column-filter-dialog.css']
 })
 export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
-    private static prevPopover: NgbPopover = null;
+    //public prevPopover: NgbPopover;
 
     @ContentChild('filterPopover')
     public filterPopoverTemplate: TemplateRef<Object>;
 
     @ViewChild('popover') private popover: NgbPopover;
+
+    @Output() toggleEvent: EventEmitter<any> = new EventEmitter();
 
     @Input()
     public column: string;
@@ -27,6 +29,7 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
     public inputType: string;
 
     public operators: Object[];
+    @HostBinding('class.is-open') @Input() isDialogOpen = false;
 
     constructor(fb: FormBuilder, private tbGrid: GridComponent) {
 
@@ -53,7 +56,7 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
     }
 
     ngOnInit(): void {
-
+        this.isDialogOpen = false;
         const value = this.tbGrid.columns.getValue();
         const columnModel = value.find(c => c.name === this.column);
 
@@ -66,6 +69,7 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
 
     public submit() {
         this.tbGrid.filterByColumnName(this.column);
+        this.popover.close();
     }
 
     public reset() {
@@ -76,8 +80,17 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
         this.tbGrid.filterByColumnName(this.column);
     }
 
+    public cancel() {
+        this.form.reset();
+        this.columnModel.filter.argument = null;
+        this.columnModel.filter.operator = 'None';
+
+        this.tbGrid.filterByColumnName(this.column);
+        this.popover.close();
+    }
+
     public selectChange(newVal: any) {
-        if (newVal === 'None') {
+        if (newVal == 'None') {
             this.form.controls['text'].disable();
         } else {
             this.form.controls['text'].enable();
@@ -103,8 +116,18 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
         });
     }
 
+    public toggleClick() {
+        this.isDialogOpen = !this.isDialogOpen;
+        this.togglePopover();
+    }
+
     public togglePopover() {
-        // TODO: Fix behavior for multiple popovers.
-        this.popover.toggle();
+        if (this.isDialogOpen) {
+            this.popover.open();
+        }
+
+        else {
+            this.popover.close();
+        }
     }
 }
