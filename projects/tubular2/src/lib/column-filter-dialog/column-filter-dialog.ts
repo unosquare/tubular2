@@ -38,19 +38,27 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
         });
 
         this.form.valueChanges.subscribe(value => {
-            this.columnModel.Filter = new ColumnFilter();
-            this.columnModel.Filter.text = value.text;
-            this.columnModel.Filter.operator = value.operator;
+            console.log('filter');
+            if (value.text) {
+                this.columnModel.Filter = value.text;
+            }
+            if (value.operator) {
+                this.columnModel.Filter = value.operator;
+
+            }
+            //this.columnModel.Filter = new ColumnFilter();
+            //this.columnModel.Filter.text = value.text;
+            //this.columnModel.Filter.operator = value.operator;
 
             if (value.argument) {
-                this.columnModel.Filter.argument = [value.argument];
+                this.columnModel.Filter = [value.argument];
             }
 
             this.isBetween = value.operator === 'Between';
             this.inputType = this.columnModel.DataType;
 
-            this.columnModel.hasFilter =
-                this.columnModel.Filter.text != null && this.columnModel.Filter.operator !== 'None';
+            this.columnModel.hasFilter = this.columnModel.Filter != null && this.columnModel.Filter !== 'None';
+            // this.columnModel.Filter.text != null && this.columnModel.Filter.operator !== 'None';
         });
     }
 

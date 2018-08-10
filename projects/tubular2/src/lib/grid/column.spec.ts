@@ -1,47 +1,47 @@
-import { ColumnFilterMode, ColumnModel } from './column';
-
+// import { ColumnFilterMode } from './column';
+import { ColumnModel, ColumnDataType } from 'tubular-common';
 describe('Column Model', () => {
     let columnModel: ColumnModel;
 
     beforeAll(() => {
-        columnModel = new ColumnModel('mock', false, false);
+        columnModel = new ColumnModel('mock');
     });
 
     describe('constructor', () => {
 
         it('should not be searchable', () => {
-            expect(columnModel.searchable).toBeFalsy();
+            expect(columnModel.Searchable).toBeFalsy();
         });
 
         it('should not be sortable', () => {
-            expect(columnModel.sortable).toBeFalsy();
+            expect(columnModel.Sortable).toBeFalsy();
         });
     });
 
     describe('get input type', () => {
 
         it('should be number', () => {
-            columnModel.filterMode = ColumnFilterMode.Number;
-            expect(columnModel.getInputType()).toBe('number');
+            columnModel.Filter = ColumnDataType.NUMERIC;
+            expect(columnModel.DataType).toBe('number');
         });
 
         it('should be date', () => {
-            columnModel.filterMode = ColumnFilterMode.Date;
-            expect(columnModel.getInputType()).toBe('date');
+            columnModel.Filter = ColumnDataType.DATE;
+            expect(columnModel.DataType).toBe('date');
         });
 
         it('should be datetime-local', () => {
-            columnModel.filterMode = ColumnFilterMode.DateTime;
-            expect(columnModel.getInputType()).toBe('datetime-local');
+            columnModel.Filter = ColumnDataType.DATE_TIME;
+            expect(columnModel.DataType).toBe('datetime-local');
         });
 
         it('should be text', () => {
-            columnModel.filterMode = ColumnFilterMode.None;
-            expect(columnModel.getInputType()).toBe('text');
-            columnModel.filterMode = ColumnFilterMode.String;
-            expect(columnModel.getInputType()).toBe('text');
-            columnModel.filterMode = ColumnFilterMode.Boolean;
-            expect(columnModel.getInputType()).toBe('text');
+            columnModel.Filter = null;
+            expect(columnModel.DataType).toBe('text');
+            columnModel.Filter = ColumnDataType.STRING;
+            expect(columnModel.DataType).toBe('text');
+            columnModel.Filter = ColumnDataType.BOOLEAN;
+            expect(columnModel.DataType).toBe('text');
         });
     });
 
@@ -49,7 +49,7 @@ describe('Column Model', () => {
         let operators;
 
         it('by String', () => {
-            columnModel.filterMode = ColumnFilterMode.String;
+            columnModel.Filter = ColumnDataType.STRING;
             operators = columnModel.getOperators();
             expect(operators.length).toBe(9);
             expect(operators[0].name).toBe('None');
@@ -59,7 +59,7 @@ describe('Column Model', () => {
         });
 
         it('by Number', () => {
-            columnModel.filterMode = ColumnFilterMode.Number;
+            columnModel.Filter = ColumnDataType.NUMERIC;
             operators = columnModel.getOperators();
             expect(operators.length).toBe(7);
             expect(operators[0].name).toBe('None');
@@ -69,7 +69,7 @@ describe('Column Model', () => {
         });
 
         it('by Date', () => {
-            columnModel.filterMode = ColumnFilterMode.Date;
+            columnModel.Filter = ColumnDataType.DATE;
             operators = columnModel.getOperators();
             expect(operators.length).toBe(8);
             expect(operators[0].name).toBe('None');
@@ -79,7 +79,7 @@ describe('Column Model', () => {
         });
 
         it('by DateTime', () => {
-            columnModel.filterMode = ColumnFilterMode.DateTime;
+            columnModel.Filter = ColumnDataType.DATE_TIME;
             operators = columnModel.getOperators();
             expect(operators.length).toBe(8);
             expect(operators[0].name).toBe('None');
@@ -89,7 +89,7 @@ describe('Column Model', () => {
         });
 
         it('by Boolean', () => {
-            columnModel.filterMode = ColumnFilterMode.Boolean;
+            columnModel.Filter = ColumnDataType.BOOLEAN;
             operators = columnModel.getOperators();
             expect(operators.length).toBe(3);
             expect(operators[0].name).toBe('None');
