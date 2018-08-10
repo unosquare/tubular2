@@ -39,9 +39,19 @@
                     </mat-header-cell>
                     <mat-cell *cdkCellDef="let row"> {{row.CustomerName}} </mat-cell>
                 </ng-container>
+                <ng-container cdkColumnDef="ShipperCity">
+                    <mat-header-cell *cdkHeaderCellDef>
+                        <span mat-sort-header>
+                            Shipper City
+                        </span>
+                        <tb-filter-dialog column="ShipperCity">
+                        </tb-filter-dialog>
+                    </mat-header-cell>
+                    <mat-cell *cdkCellDef="let row"> {{row.ShipperCity}} </mat-cell>
+                </ng-container>
 
-                <mat-header-row *cdkHeaderRowDef="['options', 'OrderID', 'CustomerName']"></mat-header-row>
-                <mat-row *cdkRowDef="let row; columns: ['options', 'OrderID', 'CustomerName'];"></mat-row>
+                <mat-header-row *cdkHeaderRowDef="['options', 'OrderID', 'CustomerName', 'ShipperCity']"></mat-header-row>
+                <mat-row *cdkRowDef="let row; columns: ['options', 'OrderID', 'CustomerName', 'ShipperCity'];"></mat-row>
             </mat-table>
 
             <mat-paginator [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]">

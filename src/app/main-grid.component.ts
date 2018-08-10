@@ -1,9 +1,6 @@
 ﻿import { Component, ContentChild, ViewChild, OnInit } from '@angular/core';
-
 import { MatDialog } from '@angular/material';
-
 import { OrderComponent } from './order.component';
-
 import {  ColumnDataType, ColumnModel } from 'tubular-common';
 import { GridComponent, ColumnFilter } from 'tubular2';
 
@@ -42,8 +39,8 @@ export class MainGridComponent implements OnInit {
         this.tbGrid.addColumns([
             orderIdColumn,
             customerColumn,
-            dateColumn,
-            creationDate,
+          //  dateColumn,
+           // creationDate,
             cityColumn
         ]);
     }

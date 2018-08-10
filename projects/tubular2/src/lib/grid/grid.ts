@@ -168,38 +168,6 @@ export class GridComponent implements OnInit, AfterContentInit {
         // this.refresh();
     }
 
-  /*  sort(column: ColumnModel) {
-        const value = this.columns.getValue();
-
-        if (!column.Sortable) {
-            return;
-        }
-
-        if (column.SortDirection === ColumnSortDirection.NONE) {
-            column.SortDirection = ColumnSortDirection.ASCENDING;
-        } else if (column.SortDirection === ColumnSortDirection.ASCENDING) {
-            column.SortDirection = ColumnSortDirection.DESCENDING;
-        } else if (column.SortDirection === ColumnSortDirection.DESCENDING) {
-            column.SortDirection = ColumnSortDirection.NONE;
-        }
-
-        column.SortOrder = column.SortDirection === ColumnSortDirection.NONE ? 0 : Number.MAX_VALUE;
-
-        if (!column.isMultiSort) {
-            value.forEach(
-                v => v.sortOrder = v.name === column.name ? v.sortOrder : 0);
-            value.forEach(
-                v => v.direction = v.name === column.name ?
-                    column.direction :
-                    ColumnSortDirection.None);
-        }
-
-        const currentlySortedColumns = value.filter(col => col.SortOrder > 0);
-        currentlySortedColumns.sort((a, b) => a.SortOrder === b.SortOrder ? 0 : 1);
-        currentlySortedColumns.forEach((col, index) => { col.SortOrder = index + 1; });
-
-        this.columns.next(value);
-    }*/
 
     filterByColumnName(columnName: string) {
         const value = this.columns.getValue();
