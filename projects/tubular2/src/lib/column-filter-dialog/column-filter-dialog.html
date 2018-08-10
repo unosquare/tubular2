@@ -14,12 +14,10 @@
         <div fxLayout="row">
             <button type="submit" mat-button fxFlex [disabled]="!form.valid">Filter</button>
             <button type="button" mat-button fxFlex (click)="reset()">Clear</button>
-            <button type="button" mat-button fxFlex (click)="cancel()">Cancel</button>
         </div>
     </form>
 </ng-template>
 
-<div class="column-menu" [hidden]="columnModel.filterMode == 0" #popover="ngbPopover" [ngbPopover]="filterPopover" placement="bottom"
-    popoverTitle="Filter" (click)="toggleClick()">
+<div class="column-menu" [hidden]="!columnModel.Filter.Name" (click)="toggleClick()">
     <mat-icon>filter_list</mat-icon>
 </div>
