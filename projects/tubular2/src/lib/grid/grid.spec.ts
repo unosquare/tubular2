@@ -28,7 +28,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 
 // TB2
 import { GridComponent } from './grid';
-import { ColumnModel, ColumnFilterMode, ColumnDataType } from './column';
+import { ColumnModel, ColumnDataType } from 'tubular-common';
 import { ColumnFilterDialogComponent } from '../column-filter-dialog/column-filter-dialog';
 import { PopoverModule } from '../popover/popover.module';
 import { NgbPopoverWindow, NgbPopover } from '../popover/popover';
@@ -133,7 +133,6 @@ describe('TbGridComponent', () => {
 
     describe('with sorting', () => {
         it('should be able to sort by numeric column', async(() => {
-
             const fixture = TestBed.createComponent(TbGridWithSortingComponent);
 
             fixture.detectChanges();
@@ -524,29 +523,12 @@ function expectTextContent(el, text) {
 }
 
 function setupInitialColumns(tbGrid) {
-    const orderIdColumn = new ColumnModel('OrderID', false);
-    orderIdColumn.filterMode = ColumnFilterMode.Number;
-
-    const customerColumn = new ColumnModel('CustomerName');
-    customerColumn.filterMode = ColumnFilterMode.String;
-
-    const dateColumn = new ColumnModel('ShippedDate', false);
-    dateColumn.filterMode = ColumnFilterMode.DateTime;
-    dateColumn.dataType = ColumnDataType.DateTime;
-
-    const creationDate = new ColumnModel('CreationDate', false);
-    creationDate.filterMode = ColumnFilterMode.Date;
-    creationDate.dataType = ColumnDataType.Date;
-
-    const cityColumn = new ColumnModel('ShipperCity');
-    cityColumn.filterMode = ColumnFilterMode.String;
-
     tbGrid.addColumns([
-        orderIdColumn,
-        customerColumn,
-        dateColumn,
-        creationDate,
-        cityColumn
+        new ColumnModel('OrderID'),
+        new ColumnModel('CustomerName'),
+        new ColumnModel('ShippedDate'),
+        new ColumnModel('CreationDate'),
+        new ColumnModel('ShipperCity')
     ]);
 }
 
@@ -680,27 +662,27 @@ function fakeFailGetData(request) {
 
 function fakeSuccessfulGetData(request) {
 
-    const columns = request._body.columns as Array<ColumnModel>;
-    const sortableColumns = columns.filter(f => f.sortOrder > 0);
+    const columns = request._body.Columns as Array<ColumnModel>;
+    const sortableColumns = columns.filter(f => f.SortOrder > 0);
     const searchableColumns = columns.filter(f => f.hasFilter);
 
     if (request._body.skip as number > 0) {
         return of(mockJsonPage2).pipe(map(r => r));
     }
 
-    if (searchableColumns.some(c => c.name === 'CustomerName'
+    if (searchableColumns.some(c => c.Name === 'CustomerName'
         && c.filter.operator === 'Contains'
         && c.filter.text === 'ThrowError')) {
         return of(mockJsonFilteredByCustomerName).pipe(map(r => r));
     }
 
-    if (searchableColumns.some(c => c.name === 'CustomerName'
+    if (searchableColumns.some(c => c.Name === 'CustomerName'
         && c.filter.operator === 'Contains'
         && c.filter.text === 'Unosquare')) {
         return of(mockJsonFilteredByCustomerName).pipe(map(r => r));
     }
 
-    if (sortableColumns.some(c => c.name === 'OrderID' && c.sortDirection === 'Descending')) {
+    if (sortableColumns.some(c => c.Name === 'OrderID' && c.SortDirection === 'Descending')) {
         return of(mockJsonOrderedByOrderId).pipe(map(r => r));
     }
 

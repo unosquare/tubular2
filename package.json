@@ -19,7 +19,6 @@
     "@angular/compiler": "^6.0.3",
     "@angular/core": "^6.0.3",
     "@angular/flex-layout": "^6.0.0-beta.16",
-    "@angular/material": "6.1.0",
     "@angular/forms": "^6.0.3",
     "@angular/http": "^6.0.3",
     "@angular/material": "6.4.3",
@@ -28,7 +27,9 @@
     "@angular/router": "^6.0.3",
     "angular": "^1.7.2",
     "core-js": "^2.5.6",
+    "date-fns": "^1.29.0",
     "rxjs": "^6.2.0",
+    "tubular-common": "^1.2.1",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
@@ -55,6 +56,6 @@
     "tsickle": ">=0.28.0",
     "tslib": "^1.9.1",
     "tslint": "~5.11.0",
-    "typescript": "~3.0.1"
+    "typescript": "^2.7.2"
   }
 }
