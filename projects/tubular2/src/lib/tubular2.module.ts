@@ -31,7 +31,6 @@ import { MDatePipe } from './mdate/mdate';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
 
 // NbBootstrap special guest (https://github.com/ng-bootstrap/ng-bootstrap)
-import { NgbPopover, NgbPopoverWindow } from './popover/popover';
 
 @NgModule({
     exports: [
@@ -63,16 +62,15 @@ export class CustomMaterialModule { }
         GridComponent, GridSearchComponent,
         GridPagerInfoComponent, ColumnFilterDialogComponent,
         GridExportButtonDirective, GridPrintButtonDirective,
-        MDatePipe, NgbPopover, NgbPopoverWindow
+        MDatePipe
     ],
     exports: [
         GridComponent, GridSearchComponent,
         GridPagerInfoComponent, ColumnFilterDialogComponent,
         GridExportButtonDirective, GridPrintButtonDirective,
-        MDatePipe, NgbPopover
+        MDatePipe,
     ],
     entryComponents: [
-        NgbPopoverWindow
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
