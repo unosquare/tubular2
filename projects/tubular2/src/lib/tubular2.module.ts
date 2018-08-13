@@ -29,6 +29,7 @@ import { GridExportButtonDirective } from './grid-export/grid-export';
 import { GridPrintButtonDirective } from './grid-print/grid-print';
 import { MDatePipe } from './mdate/mdate';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
+import { DialogComponent } from './column-filter-dialog/dialog-component';
 
 // NbBootstrap special guest (https://github.com/ng-bootstrap/ng-bootstrap)
 
@@ -62,7 +63,7 @@ export class CustomMaterialModule { }
         GridComponent, GridSearchComponent,
         GridPagerInfoComponent, ColumnFilterDialogComponent,
         GridExportButtonDirective, GridPrintButtonDirective,
-        MDatePipe
+        MDatePipe, DialogComponent
     ],
     exports: [
         GridComponent, GridSearchComponent,
@@ -71,6 +72,7 @@ export class CustomMaterialModule { }
         MDatePipe,
     ],
     entryComponents: [
+        DialogComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
