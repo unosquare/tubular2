@@ -21,7 +21,7 @@ import { DialogComponent } from './dialog-component';
     templateUrl: './column-filter-dialog.html',
     styleUrls: ['./column-filter-dialog.css']
 })
-export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
+export class ColumnFilterDialogComponent implements OnInit {
     @Output() toggleEvent: EventEmitter<any> = new EventEmitter();
 
     @Input()
@@ -58,42 +58,11 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
         this.operators = ColumnModel.getOperators(columnModel);
     }
 
-    // public submit() {
-    //     this.tbGrid.filterByColumnName(this.column);
-    // }
-
-    // public reset() {
-    //     this.form.reset();
-    //     this.columnModel.Filter = null;
-
-    //     this.tbGrid.filterByColumnName(this.column);
-    // }
-
-    // public selectChange(newVal: any) {
-    //     if (newVal === 'None') {
-    //         this.form.controls['text'].disable();
-    //     } else {
-    //         this.form.controls['text'].enable();
-    //     }
-    // }
-
-    public ngAfterViewInit() {
-        // set initial value in form with a timeout
-        setTimeout(_ => {
-            // set initial value in form with a timeout
-            this.form.patchValue({
-                filter: this.columnModel.Filter
-            });
-        });
-    }
 
     public toggleClick() {
-        console.log('open dialog');
-        // TODO: Change to Modal for now
-        // https://material.angular.io/components/dialog/overview
-        const dialogRef = this.dialog.open(DialogComponent, {
-            width: '250px',
-            data: { operator: this.operators, form: this.form, tbGrid: this.tbGrid, columnModel: this.columnModel },
+         const dialogRef = this.dialog.open(DialogComponent, {
+            width: '300px',
+            data: { operator: this.operators, form: this.form, tbGrid: this.tbGrid, columnModel: this.columnModel, column: this.column },
         });
     }
 }
