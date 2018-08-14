@@ -5,7 +5,10 @@
 import { HttpRequest, HttpClient } from '@angular/common/http';
 
 import * as momentNs from 'moment';
+import format from 'date-fns/format';
+import parse from 'date-fns/parse';
 const moment = momentNs;
+
 
 import { MatSort, MatPaginator, PageEvent } from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
@@ -278,7 +281,7 @@ export class GridComponent implements OnInit, AfterContentInit {
             }
 
             if (column.DataType === ColumnDataType.DATE || column.DataType === ColumnDataType.DATE_TIME) {
-                obj[column.Name] = moment(obj[column.Name]);
+                obj[column.Name] = parse(obj[column.Name]); //moment(obj[column.Name]);
             }
         });
 
