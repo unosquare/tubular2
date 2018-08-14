@@ -1,6 +1,6 @@
 <div>
-    <button (click)="onClose()">
-        <mat-icon>close</mat-icon>
+    <button class= 'close-dialog' (click)="onClose()">
+        <mat-icon class = 'close-button'>close</mat-icon>
     </button>
     <form [formGroup]="data.form" (ngSubmit)="submit()">
         <mat-select placeholder="Operator" formControlName="operator" (change)="selectChange($event.value)">
