@@ -16,8 +16,8 @@
             <input matInput type="text" formControlName="argument" placeholder="Argument" />
         </mat-form-field>
         <div fxLayout="row">
-            <button type="submit" mat-button fxFlex [disabled]="!data.form.valid">Filter</button>
-            <button type="button" mat-button fxFlex (click)="reset()">Clear</button>
+            <button class="clear" type="button" mat-button fxFlex (click)="reset()">CLEAR</button>
+            <button class="apply" type="submit" mat-button fxFlex [disabled]="!data.form.valid">APPLY</button>
         </div>
     </form>
 </div>
