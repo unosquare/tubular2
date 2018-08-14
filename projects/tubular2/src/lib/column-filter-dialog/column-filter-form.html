@@ -1,6 +1,6 @@
 <div>
-    <h2 class = 'filter-dialog'>Filter</h2>
-    <button class= 'close-dialog' (click)="onClose()">
+    <h2 class = 'filter-dialog' mat-dialog-title >Filter</h2>
+    <button class= 'close-dialog' (click)="onClose()" mat-dialog-close>
         <mat-icon class = 'close-button'>close</mat-icon>
     </button>
     <form [formGroup]="data.form" (ngSubmit)="submit()">
