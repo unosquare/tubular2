@@ -3,23 +3,25 @@
     Input, Output,
     EventEmitter,
     HostBinding,
+    Inject,
     AfterViewInit,
     OnInit,
     ContentChild,
     TemplateRef,
     ViewChild
 } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { ColumnModel } from 'tubular-common';
 import { GridComponent } from '../grid/grid';
-import { MAT_CHECKBOX_CLICK_ACTION } from '@angular/material';
+import { MatDialog } from '@angular/material';
+import { DialogComponent } from './dialog-component';
 
 @Component({
     selector: 'tb-filter-dialog',
     templateUrl: './column-filter-dialog.html',
     styleUrls: ['./column-filter-dialog.css']
 })
-export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
+export class ColumnFilterDialogComponent implements OnInit {
     @Output() toggleEvent: EventEmitter<any> = new EventEmitter();
 
     @Input()
@@ -29,9 +31,12 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
     public isBetween = false;
     public operators: Object[];
 
-    constructor(fb: FormBuilder, private tbGrid: GridComponent) {
+    constructor(fb: FormBuilder, private tbGrid: GridComponent, public dialog: MatDialog) {
         this.form = fb.group({
-            filter: ['', Validators.required]
+            filter: ['equal', Validators.required],
+            operator: [''],
+            text: [''],
+            argument: ['']
         });
 
         this.form.valueChanges.subscribe(value => {
@@ -53,37 +58,12 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
         this.operators = ColumnModel.getOperators(columnModel);
     }
 
-    public submit() {
-        this.tbGrid.filterByColumnName(this.column);
-    }
-
-    public reset() {
-        this.form.reset();
-        this.columnModel.Filter = null;
-
-        this.tbGrid.filterByColumnName(this.column);
-    }
-
-    public selectChange(newVal: any) {
-        if (newVal === 'None') {
-            this.form.controls['text'].disable();
-        } else {
-            this.form.controls['text'].enable();
-        }
-    }
-
-    public ngAfterViewInit() {
-        // set initial value in form with a timeout
-        setTimeout(_ => {
-            // set initial value in form with a timeout
-            this.form.patchValue({
-                filter: this.columnModel.Filter
-            });
-        });
-    }
 
     public toggleClick() {
-        // TODO: Change to Modal for now
-        // https://material.angular.io/components/dialog/overview
+         const dialogRef = this.dialog.open(DialogComponent, {
+            width: '300px',
+            data: { operator: this.operators, form: this.form, tbGrid: this.tbGrid, columnModel: this.columnModel, column: this.column },
+        });
     }
 }
+
