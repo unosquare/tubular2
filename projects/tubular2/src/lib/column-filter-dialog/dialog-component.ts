@@ -19,7 +19,6 @@ export class DialogComponent implements AfterViewInit {
     constructor(
         public dialogRef: MatDialogRef<DialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any) {
-        console.log(data);
     }
 
     onClose(): void {

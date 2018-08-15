@@ -16,6 +16,7 @@ import { GridRequest, GridResponse, ColumnModel, ColumnDataType } from 'tubular-
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+const isDate = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})/;
 // TODO: Add animation to sortable
 @Component({
     selector: 'tb-grid',
@@ -269,11 +270,24 @@ export class GridComponent implements OnInit, AfterContentInit {
     private _transformToObj(columns: ColumnModel[], data: any) {
         const obj = {};
         columns.forEach((column, key) => {
-            console.log(` was key ${data[key]}  was name ${data[column.Name]}`);
             obj[column.Name] = data[key] || data[column.Name];
 
             if (column.DataType === ColumnDataType.DATE_TIME_UTC) {
-                obj[column.Name] = format(obj[column.Name], 'MMMM Do YYYY, h:mm:ss a');
+                const x = obj[column.Name].toString();
+                const dateUTC: any = [];
+                if (x.match(isDate)) {
+                    for (let i = 1; i < x.match(isDate).length; i++) {
+                        dateUTC.push(x.match(isDate)[i]);
+                    }
+                    obj[column.Name] = format(new Date(Date.UTC(
+                        dateUTC[0], // year
+                        dateUTC[1], // month
+                        dateUTC[2], // day
+                        dateUTC[3], // hour
+                        dateUTC[4], // minute
+                        dateUTC[5]  // second
+                    )), 'MMMM Do YYYY, h:mm:ss a');
+                }
             }
 
             if (column.DataType === ColumnDataType.DATE || column.DataType === ColumnDataType.DATE_TIME) {
