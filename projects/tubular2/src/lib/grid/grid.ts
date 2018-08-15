@@ -268,17 +268,6 @@ export class GridComponent implements OnInit, AfterContentInit {
 
     private _transformToObj(columns: ColumnModel[], data: any) {
         const obj = {};
-        const value = (new Date('2016-11-05T19:00:00'));
-        const as = isValid(value);
-        const bs = moment.isMoment(value);
-        console.log(`in transform inside the clas MDatePipe ${as} ${bs}`);
-        const a = moment(value);
-        const b = moment.utc(value);
-        const c = format(value, 'YYYY-MM-DDTHH:mm:ss');
-        const d = parse('2016-11-05T19:00:00');
-        console.log(a);
-        console.log(b);
-        console.log(d);
         columns.forEach((column, key) => {
             console.log(` was key ${data[key]}  was name ${data[column.Name]}`);
             obj[column.Name] = data[key] || data[column.Name];
