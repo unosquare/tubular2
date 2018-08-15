@@ -4,10 +4,7 @@
 } from '@angular/core';
 import { HttpRequest, HttpClient } from '@angular/common/http';
 
-import * as momentNs from 'moment';
 import { format, parse, isValid } from 'date-fns';
-// import * as parse from 'date-fns/parse';
-const moment = momentNs;
 
 import { MatSort, MatPaginator, PageEvent } from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
@@ -17,8 +14,7 @@ import { GridPageInfo } from './grid-page-info';
 import { GridRequest, GridResponse, ColumnModel, ColumnDataType } from 'tubular-common';
 
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
-import { map, debounceTime } from 'rxjs/operators';
-//import { parse } from 'path';
+import { map } from 'rxjs/operators';
 
 // TODO: Add animation to sortable
 @Component({
@@ -288,11 +284,11 @@ export class GridComponent implements OnInit, AfterContentInit {
             obj[column.Name] = data[key] || data[column.Name];
 
             if (column.DataType === ColumnDataType.DATE_TIME_UTC) {
-                obj[column.Name] = parse(obj[column.Name]);
+                obj[column.Name] = format(obj[column.Name], 'MMMM Do YYYY, h:mm:ss a');
             }
 
             if (column.DataType === ColumnDataType.DATE || column.DataType === ColumnDataType.DATE_TIME) {
-                obj[column.Name] = format(obj[column.Name], 'YYYY-MM-DDTHH:mm:ss');
+                obj[column.Name] = format(obj[column.Name], 'MMMM Do YYYY, h:mm:ss a');
             }
         });
 
