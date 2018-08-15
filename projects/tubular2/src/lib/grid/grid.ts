@@ -4,7 +4,7 @@
 } from '@angular/core';
 import { HttpRequest, HttpClient } from '@angular/common/http';
 
-import { format, parse, isValid } from 'date-fns';
+import { format } from 'date-fns';
 
 import { MatSort, MatPaginator, PageEvent } from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
