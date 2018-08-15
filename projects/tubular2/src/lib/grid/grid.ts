@@ -5,10 +5,9 @@
 import { HttpRequest, HttpClient } from '@angular/common/http';
 
 import * as momentNs from 'moment';
-import format from 'date-fns/format';
-import parse from 'date-fns/parse';
+import { format, parse, isValid } from 'date-fns';
+// import * as parse from 'date-fns/parse';
 const moment = momentNs;
-
 
 import { MatSort, MatPaginator, PageEvent } from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
@@ -19,6 +18,7 @@ import { GridRequest, GridResponse, ColumnModel, ColumnDataType } from 'tubular-
 
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { map, debounceTime } from 'rxjs/operators';
+//import { parse } from 'path';
 
 // TODO: Add animation to sortable
 @Component({
@@ -272,16 +272,27 @@ export class GridComponent implements OnInit, AfterContentInit {
 
     private _transformToObj(columns: ColumnModel[], data: any) {
         const obj = {};
-
+        const value = (new Date('2016-11-05T19:00:00'));
+        const as = isValid(value);
+        const bs = moment.isMoment(value);
+        console.log(`in transform inside the clas MDatePipe ${as} ${bs}`);
+        const a = moment(value);
+        const b = moment.utc(value);
+        const c = format(value, 'YYYY-MM-DDTHH:mm:ss');
+        const d = parse('2016-11-05T19:00:00');
+        console.log(a);
+        console.log(b);
+        console.log(d);
         columns.forEach((column, key) => {
+            console.log(` was key ${data[key]}  was name ${data[column.Name]}`);
             obj[column.Name] = data[key] || data[column.Name];
 
             if (column.DataType === ColumnDataType.DATE_TIME_UTC) {
-                obj[column.Name] = moment.utc(obj[column.Name]);
+                obj[column.Name] = parse(obj[column.Name]);
             }
 
             if (column.DataType === ColumnDataType.DATE || column.DataType === ColumnDataType.DATE_TIME) {
-                obj[column.Name] = parse(obj[column.Name]); //moment(obj[column.Name]);
+                obj[column.Name] = format(obj[column.Name], 'YYYY-MM-DDTHH:mm:ss');
             }
         });
 
