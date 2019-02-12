@@ -2,6 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "importHelpers": true,
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -21,5 +22,11 @@
         "dist/tubular2"
       ]
     }
-  }
+  },
+  "angularCompilerOptions": {
+    "enableIvy": false
+  } ,
+  "whitelistedNonPeerDependencies": [
+    "@angular/common"
+]
 }
