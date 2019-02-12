@@ -1,10 +1,10 @@
 <ng-template #filterPopover>
     <form [formGroup]="form" (ngSubmit)="submit()">
-        <select placeholder="Operator" formControlName="operator" (change)="selectChange($event.value)">
+        <mat-select placeholder="Operator" formControlName="operator" (change)="selectChange($event.value)">
             <mat-option *ngFor="let operator of operators" [value]="operator.value">
                 {{operator.name}}
             </mat-option>
-        </select>
+        </mat-select>
         <mat-form-field>
             <input matInput type="{{inputType}}" formControlName="text" placeholder="Value" />
         </mat-form-field>
