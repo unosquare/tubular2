@@ -21,7 +21,6 @@ export class MainGridComponent implements OnInit {
     ngOnInit(): void {
         this.orderFilterDialogOpen = false;
         this.customerFilterDialogOpen = false;
-        
         const orderIdColumn = new ColumnModel('OrderID', false);
         orderIdColumn.filterMode = ColumnFilterMode.Number;
 

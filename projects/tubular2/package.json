@@ -13,6 +13,7 @@
         "@angular/core": "^6.0.0-rc.0 || ^6.0.0"
     },
     "dependencies": {
-        "@angular/common": "^7.2.4"
+        "@angular/common": "^7.2.4",
+        "lint": "^1.1.2"
     }
 }
