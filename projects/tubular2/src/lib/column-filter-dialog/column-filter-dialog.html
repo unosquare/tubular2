@@ -1,12 +1,12 @@
 <ng-template #filterPopover>
     <form [formGroup]="form" (ngSubmit)="submit()">
-        <mat-select placeholder="Operator" formControlName="operator" (change)="selectChange($event.value)">
+        <select placeholder="Operator" formControlName="operator" (change)="selectChange($event.value)">
             <mat-option *ngFor="let operator of operators" [value]="operator.value">
                 {{operator.name}}
             </mat-option>
-        </mat-select>
+        </select>
         <mat-form-field>
-                <input matInput type="{{inputType}}" formControlName="text" placeholder="Value" />                
+            <input matInput type="{{inputType}}" formControlName="text" placeholder="Value" />
         </mat-form-field>
         <mat-form-field *ngIf="isBetween">
             <input matInput type="text" formControlName="argument" placeholder="Argument" />
@@ -19,7 +19,6 @@
     </form>
 </ng-template>
 
-<div class="column-menu" [hidden]="columnModel.filterMode == 0" #popover="ngbPopover" [ngbPopover]="filterPopover" placement="bottom"
-    popoverTitle="Filter" (click)="toggleClick()">
+<div class="column-menu" [hidden]="columnModel.filterMode == 0" #popover="ngbPopover" [ngbPopover]="filterPopover" placement="bottom" popoverTitle="Filter" (click)="toggleClick()">
     <mat-icon>filter_list</mat-icon>
 </div>

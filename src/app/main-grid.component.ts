@@ -59,7 +59,7 @@ export class MainGridComponent implements OnInit {
 
     // Change the state of the popovers - OMIT
     togglePopovers(control: number) {
-        switch(control) {
+        switch (control) {
             case 0: {
                 this.orderFilterDialogOpen = true;
                 this.customerFilterDialogOpen = false;

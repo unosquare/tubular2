@@ -1,9 +1,9 @@
-﻿// tslint:disable-next-line:max-line-length
-import { Component, Input, Output, EventEmitter, HostBinding, AfterViewInit, OnInit, ContentChild, TemplateRef, ViewChild } from '@angular/core';
+﻿import { Component, Input, Output, EventEmitter, HostBinding, AfterViewInit, OnInit,
+        ContentChild, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ColumnModel } from '../grid/index';
 import { GridComponent } from '../grid/grid';
-import { NgbPopover } from '../popover/popover'; 
+import { NgbPopover } from '../popover/popover';
 
 @Component({
     selector: 'tb-filter-dialog',
@@ -11,7 +11,6 @@ import { NgbPopover } from '../popover/popover';
     styleUrls: ['./column-filter-dialog.css']
 })
 export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
-    // public prevPopover: NgbPopover;
 
     @ContentChild('filterPopover')
     public filterPopoverTemplate: TemplateRef<Object>;
