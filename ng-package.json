@@ -1,6 +1,6 @@
 {
     "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
     "lib": {
-      "entryFile": "./projects/tubular2/src/public_api.ts"
+        "entryFile": "./projects/tubular2/src/public_api.ts"
     }
-  }
+}

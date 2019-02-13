@@ -215,7 +215,7 @@ describe('TbGridComponent', () => {
                 customerNameHeader.click();
                 fixture.detectChanges();
 
-                const trigger = fixture.debugElement.query(By.css('.mat-select-trigger')).nativeElement;
+                const trigger = fixture.debugElement.query(By.css('.select-trigger')).nativeElement;
 
                 trigger.click();
                 fixture.detectChanges();
