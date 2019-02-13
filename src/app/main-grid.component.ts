@@ -21,7 +21,6 @@ export class MainGridComponent implements OnInit {
     ngOnInit(): void {
         this.orderFilterDialogOpen = false;
         this.customerFilterDialogOpen = false;
-        
         const orderIdColumn = new ColumnModel('OrderID', false);
         orderIdColumn.filterMode = ColumnFilterMode.Number;
 
@@ -60,7 +59,7 @@ export class MainGridComponent implements OnInit {
 
     // Change the state of the popovers - OMIT
     togglePopovers(control: number) {
-        switch(control) {
+        switch (control) {
             case 0: {
                 this.orderFilterDialogOpen = true;
                 this.customerFilterDialogOpen = false;

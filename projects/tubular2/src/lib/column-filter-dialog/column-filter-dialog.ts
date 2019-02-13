@@ -1,9 +1,9 @@
-﻿import { Component, Input, Output, EventEmitter, HostBinding, AfterViewInit, OnInit, ContentChild, TemplateRef, ViewChild } from '@angular/core';
+﻿import { Component, Input, Output, EventEmitter, HostBinding, AfterViewInit, OnInit,
+        ContentChild, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ColumnModel } from '../grid/index';
 import { GridComponent } from '../grid/grid';
 import { NgbPopover } from '../popover/popover';
-import { MAT_CHECKBOX_CLICK_ACTION } from '../../../../../node_modules/@angular/material';
 
 @Component({
     selector: 'tb-filter-dialog',
@@ -11,7 +11,6 @@ import { MAT_CHECKBOX_CLICK_ACTION } from '../../../../../node_modules/@angular/
     styleUrls: ['./column-filter-dialog.css']
 })
 export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
-    //public prevPopover: NgbPopover;
 
     @ContentChild('filterPopover')
     public filterPopoverTemplate: TemplateRef<Object>;
@@ -90,7 +89,7 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
     }
 
     public selectChange(newVal: any) {
-        if (newVal == 'None') {
+        if (newVal === 'None') {
             this.form.controls['text'].disable();
         } else {
             this.form.controls['text'].enable();
@@ -124,9 +123,7 @@ export class ColumnFilterDialogComponent implements AfterViewInit, OnInit {
     public togglePopover() {
         if (this.isDialogOpen) {
             this.popover.open();
-        }
-
-        else {
+        } else {
             this.popover.close();
         }
     }
