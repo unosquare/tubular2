@@ -2,12 +2,11 @@
     Component, Input, Output, EventEmitter, ViewChild, QueryList,
     OnInit, AfterContentInit, Inject, Optional, ContentChild, ContentChildren
 } from '@angular/core';
-import { HttpRequest, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { format } from 'date-fns';
 
 import { MatSort, MatPaginator, PageEvent } from '@angular/material';
-import { DataSource } from '@angular/cdk/collections';
 
 import { SETTINGS_PROVIDER, ITubularSettingsProvider } from '../core/tubular-local-storage-service';
 import { GridPageInfo } from './grid-page-info';
@@ -15,6 +14,7 @@ import { GridRequest, GridResponse, ColumnModel, ColumnDataType } from 'tubular-
 
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { TubularDataSource } from './TubularDataSource';
 
 const isDate = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})/;
 // TODO: Add animation to sortable
@@ -132,7 +132,7 @@ export class GridComponent implements OnInit, AfterContentInit {
         }
     }
 
-    goToPage(page) {
+    goToPage(page: number) {
         this.page.next(page);
         this.refresh();
     }
@@ -298,10 +298,9 @@ export class GridComponent implements OnInit, AfterContentInit {
         return obj;
     }
 
-    private _transformDataset(response: GridResponse, req) {
-        const transform = d => this._transformToObj(req.Columns, d);
+    private _transformDataset(response: GridResponse, req: GridRequest) {
+        const transform = (d: any) => this._transformToObj(req.Columns, d);
         const payload = (response.Payload).map(transform);
-        const pageInfo = new GridPageInfo();
 
         // push data
         this._dataStream.next(payload);
@@ -314,15 +313,3 @@ export class GridComponent implements OnInit, AfterContentInit {
     }
 }
 
-export class TubularDataSource extends DataSource<any> {
-    constructor(private _tbGrid: GridComponent) {
-        super();
-    }
-
-    /** Connect function called by the table to retrieve one stream containing the data to render. */
-    connect(): Observable<any[]> {
-        return this._tbGrid.dataStream;
-    }
-
-    disconnect() { }
-}

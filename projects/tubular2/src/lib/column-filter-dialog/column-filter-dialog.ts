@@ -2,13 +2,7 @@
     Component,
     Input, Output,
     EventEmitter,
-    HostBinding,
-    Inject,
-    AfterViewInit,
     OnInit,
-    ContentChild,
-    TemplateRef,
-    ViewChild
 } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { ColumnModel } from 'tubular-common';
