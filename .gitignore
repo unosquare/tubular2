@@ -11,4 +11,3 @@ src/**/*.js
 e2e/**/*.js
 e2e/**/*.js.map
 report/
-package-lock.json

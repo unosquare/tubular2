@@ -1,0 +1,6 @@
+div > button.close-dialog{float: right; height: 20px; width: 20px; margin-top: 10px; background-color: transparent; border: none;}
+div > button.close-dialog:focus{outline: none;}
+.mat-icon.close-button{position: relative; height: 15px; width: 15px; right:3px; font-size: 15px;}
+div > h2.filter-dialog{float: left; margin-top: 1px;}
+div > form > div > button.clear{color: #f50057;}
+div > form > div > button.apply{color:#3f51b5;}

@@ -2,23 +2,21 @@
     Component, Input, Output, EventEmitter, ViewChild, QueryList,
     OnInit, AfterContentInit, Inject, Optional, ContentChild, ContentChildren
 } from '@angular/core';
-import { HttpRequest, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
-import * as momentNs from 'moment';
-const moment = momentNs;
+import { format } from 'date-fns';
 
 import { MatSort, MatPaginator, PageEvent } from '@angular/material';
-import { DataSource } from '@angular/cdk/collections';
 
 import { SETTINGS_PROVIDER, ITubularSettingsProvider } from '../core/tubular-local-storage-service';
-import { ColumnModel, ColumnDataType, ColumnSortDirection } from './column';
 import { GridPageInfo } from './grid-page-info';
-import { GridRequest, GridSearchParameter } from './grid-request';
-import { GridResponse } from './grid-response';
+import { GridRequest, GridResponse, ColumnModel, ColumnDataType } from 'tubular-common';
 
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
-import { map, debounceTime } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { TubularDataSource } from './TubularDataSource';
 
+const isDate = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})/;
 // TODO: Add animation to sortable
 @Component({
     selector: 'tb-grid',
@@ -50,7 +48,7 @@ export class GridComponent implements OnInit, AfterContentInit {
     public search = {
         text: '',
         operator: 'None'
-    } as GridSearchParameter;
+    };
 
     @Input() public dataUrl: string;
     @Input() public requestMethod: string;
@@ -134,7 +132,7 @@ export class GridComponent implements OnInit, AfterContentInit {
         }
     }
 
-    goToPage(page) {
+    goToPage(page: number) {
         this.page.next(page);
         this.refresh();
     }
@@ -143,10 +141,10 @@ export class GridComponent implements OnInit, AfterContentInit {
         if (this.columns.getValue().length > 0) {
             this._getCurrentPage()
                 .subscribe(
-                (data: any) => {
-                    this._transformDataset(data, this._tbRequestRunning);
-                },
-                error => this._handleRequestDataError(error)
+                    (data: any) => {
+                        this._transformDataset(data, this._tbRequestRunning);
+                    },
+                    error => this._handleRequestDataError(error)
                 );
         }
     }
@@ -158,51 +156,20 @@ export class GridComponent implements OnInit, AfterContentInit {
 
     sortByColumnName(columnName: string) {
         const value = this.columns.getValue();
-        const columnModel = value.find(c => c.name === columnName);
+        const columnModel = value.find(c => c.Name === columnName);
 
         if (!columnModel) {
             throw Error('Invalid column name');
         }
 
-        this.sort(columnModel);
+        this.columns.next(ColumnModel.sortColumnArray(columnName, value, true));
+        this.refresh();
     }
 
-    sort(column: ColumnModel) {
-        const value = this.columns.getValue();
-
-        if (!column.sortable) {
-            return;
-        }
-
-        if (column.direction === ColumnSortDirection.None) {
-            column.direction = ColumnSortDirection.Asc;
-        } else if (column.direction === ColumnSortDirection.Asc) {
-            column.direction = ColumnSortDirection.Desc;
-        } else if (column.direction === ColumnSortDirection.Desc) {
-            column.direction = ColumnSortDirection.None;
-        }
-
-        column.sortOrder = column.direction === ColumnSortDirection.None ? 0 : Number.MAX_VALUE;
-
-        if (!column.isMultiSort) {
-            value.forEach(
-                v => v.sortOrder = v.name === column.name ? v.sortOrder : 0);
-            value.forEach(
-                v => v.direction = v.name === column.name ?
-                    column.direction :
-                    ColumnSortDirection.None);
-        }
-
-        const currentlySortedColumns = value.filter(col => col.sortOrder > 0);
-        currentlySortedColumns.sort((a, b) => a.sortOrder === b.sortOrder ? 0 : 1);
-        currentlySortedColumns.forEach((col, index) => { col.sortOrder = index + 1; });
-
-        this.columns.next(value);
-    }
 
     filterByColumnName(columnName: string) {
         const value = this.columns.getValue();
-        const columnModel = value.find(c => c.name === columnName);
+        const columnModel = value.find(c => c.Name === columnName);
 
         if (!columnModel) {
             throw Error('Invalid column name');
@@ -212,17 +179,17 @@ export class GridComponent implements OnInit, AfterContentInit {
     }
 
     getFullDataSource(): Observable<object> {
-        const tbRequest = {
-            count: this._requestCount++,
-            columns: this.columns.getValue(),
-            skip: 0,
-            take: -1,
-            timezoneOffset: new Date().getTimezoneOffset(),
-            search: {
+        const tbRequest: GridRequest = {
+            Counter: this._requestCount++,
+            Columns: this.columns.getValue(),
+            Skip: 0,
+            Take: -1,
+            Search: {
                 text: '',
                 operator: 'None'
-            } as GridSearchParameter
-        } as GridRequest;
+            },
+            TimezoneOffset: new Date().getTimezoneOffset()
+        };
 
         return this._requestData(tbRequest);
     }
@@ -236,12 +203,12 @@ export class GridComponent implements OnInit, AfterContentInit {
         this.isLoading = true;
 
         this._tbRequestRunning = {
-            count: this._requestCount++,
-            columns: this.columns.getValue(),
-            skip: this.page.getValue() * this.pageSize.getValue(),
-            take: this.pageSize.getValue(),
-            search: this.search,
-            timezoneOffset: new Date().getTimezoneOffset()
+            Columns: this.columns.getValue(),
+            Counter: this._requestCount++,
+            Search: this.search,
+            Skip: this.page.getValue() * this.pageSize.getValue(),
+            Take: this.pageSize.getValue(),
+            TimezoneOffset: new Date().getTimezoneOffset()
         } as GridRequest;
 
         return this._requestData(this._tbRequestRunning);
@@ -277,9 +244,6 @@ export class GridComponent implements OnInit, AfterContentInit {
 
     private _requestData(tbRequest: GridRequest): Observable<GridResponse> {
         // transform direction values to strings
-        tbRequest.columns.forEach(this._transformSortDirection);
-
-        // const result = this.dataService.getData(ngRequest);
         const result = this.http.request<GridResponse>(
             this.requestMethod || 'POST',
             this.dataUrl,
@@ -303,41 +267,40 @@ export class GridComponent implements OnInit, AfterContentInit {
         }
     }
 
-    private _transformSortDirection(column: ColumnModel) {
-        switch (column.direction) {
-            case ColumnSortDirection.Asc:
-                column.sortDirection = 'Ascending';
-                break;
-            case ColumnSortDirection.Desc:
-                column.sortDirection = 'Descending';
-                break;
-            default:
-                column.sortDirection = 'None';
-        }
-    }
-
     private _transformToObj(columns: ColumnModel[], data: any) {
         const obj = {};
-
         columns.forEach((column, key) => {
-            obj[column.name] = data[key] || data[column.name];
+            obj[column.Name] = data[key] || data[column.Name];
 
-            if (column.dataType === ColumnDataType.DateTimeUtc) {
-                obj[column.name] = moment.utc(obj[column.name]);
+            if (column.DataType === ColumnDataType.DATE_TIME_UTC) {
+                const x = obj[column.Name].toString();
+                const dateUTC: any = [];
+                if (x.match(isDate)) {
+                    for (let i = 1; i < x.match(isDate).length; i++) {
+                        dateUTC.push(x.match(isDate)[i]);
+                    }
+                    obj[column.Name] = format(new Date(Date.UTC(
+                        dateUTC[0], // year
+                        dateUTC[1], // month
+                        dateUTC[2], // day
+                        dateUTC[3], // hour
+                        dateUTC[4], // minute
+                        dateUTC[5]  // second
+                    )), 'MMMM Do YYYY, h:mm:ss a');
+                }
             }
 
-            if (column.dataType === ColumnDataType.Date || column.dataType === ColumnDataType.DateTime) {
-                obj[column.name] = moment(obj[column.name]);
+            if (column.DataType === ColumnDataType.DATE || column.DataType === ColumnDataType.DATE_TIME) {
+                obj[column.Name] = format(obj[column.Name], 'MMMM Do YYYY, h:mm:ss a');
             }
         });
 
         return obj;
     }
 
-    private _transformDataset(response: GridResponse, req) {
-        const transform = d => this._transformToObj(req.columns, d);
+    private _transformDataset(response: GridResponse, req: GridRequest) {
+        const transform = (d: any) => this._transformToObj(req.Columns, d);
         const payload = (response.Payload).map(transform);
-        const pageInfo = new GridPageInfo();
 
         // push data
         this._dataStream.next(payload);
@@ -350,15 +313,3 @@ export class GridComponent implements OnInit, AfterContentInit {
     }
 }
 
-export class TubularDataSource extends DataSource<any> {
-    constructor(private _tbGrid: GridComponent) {
-        super();
-    }
-
-    /** Connect function called by the table to retrieve one stream containing the data to render. */
-    connect(): Observable<any[]> {
-        return this._tbGrid.dataStream;
-    }
-
-    disconnect() { }
-}
