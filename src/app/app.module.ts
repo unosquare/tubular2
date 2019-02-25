@@ -25,7 +25,7 @@ import { CdkTableModule } from '@angular/cdk/table';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { TubularModule, SETTINGS_PROVIDER, TubularLocalStorageService } from 'tubular2';
+import { TubularModule, SETTINGS_PROVIDER, TubularLocalStorageService } from '../../projects/tubular2/src/public_api';
 
 import { AppRoutingModule } from './app-routing.module';
 

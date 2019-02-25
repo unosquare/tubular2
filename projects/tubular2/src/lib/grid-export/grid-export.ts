@@ -12,7 +12,7 @@ export class GridExportButtonDirective {
     onClick(event: MouseEvent) {
         this.gridInstance.getFullDataSource()
             .subscribe((data: any) => {
-                const headers = this.gridInstance.columns.getValue().reduce((a, b) => a + b.label + ',', '').slice(0, -1) + '\r\n';
+                const headers = this.gridInstance.columns.getValue().reduce((a, b) => a + b.Label + ',', '').slice(0, -1) + '\r\n';
                 const rows = data.Payload.map(row => row.reduce((a, b) => a + '"' + b + '"' + ',', '').slice(0, -1) + '\r\n');
                 const csv = rows.reduce((a, b) => a + b, headers);
 

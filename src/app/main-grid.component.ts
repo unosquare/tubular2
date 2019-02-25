@@ -1,8 +1,8 @@
 ﻿import { Component, EventEmitter, Input, Output, ContentChild, ViewChild, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { OrderComponent } from './order.component';
-import { ColumnDataType, ColumnModel } from 'tubular-common';
-import { GridComponent } from 'tubular2';
+import { ColumnModel } from 'tubular-common';
+import { GridComponent } from '../../projects/tubular2/src/public_api';
 
 @Component({
     selector: 'app-grid',
@@ -10,7 +10,7 @@ import { GridComponent } from 'tubular2';
 })
 export class MainGridComponent implements OnInit {
 
-    public newOrderModalRef;
+    public newOrderModalRef: any;
     public orderFilterDialogOpen: boolean;
     public customerFilterDialogOpen: boolean;
 
