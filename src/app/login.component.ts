@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
                 })
         };
 
-        this.http.post('http://tubular.azurewebsites.net/api/token',
+        this.http.post('https://tubular.azurewebsites.net/api/token',
             `grant_type=password&username=${username}&password=${password}`,
             requestArgs).
             pipe(map(response => this.handleSuccessCallback(response)))

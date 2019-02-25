@@ -692,7 +692,7 @@ function fakeSuccessfulGetData(request) {
 
 @Component({
     template: `
-    <tb-grid #grid dataUrl="http://tubular.azurewebsites.net/api/orders/paged" (onRequestDataError)="handleError($event)">
+    <tb-grid #grid dataUrl="https://tubular.azurewebsites.net/api/orders/paged" (onRequestDataError)="handleError($event)">
         <mat-table [dataSource]="grid.dataSource">
             <ng-container cdkColumnDef="options">
                 <mat-header-cell *cdkHeaderCellDef> Options </mat-header-cell>
@@ -731,7 +731,7 @@ class SimpleTbGridComponent {
 
 @Component({
     template: `
-    <tb-grid #grid dataUrl="http://tubular.azurewebsites.net/api/orders/paged" (onRequestDataError)="handleError($event)">
+    <tb-grid #grid dataUrl="https://tubular.azurewebsites.net/api/orders/paged" (onRequestDataError)="handleError($event)">
         <mat-table [dataSource]="grid.dataSource" matSort>
             <ng-container cdkColumnDef="options">
                 <mat-header-cell *cdkHeaderCellDef> Options </mat-header-cell>
@@ -776,7 +776,7 @@ class TbGridWithSortingComponent {
 
 @Component({
     template: `
-    <tb-grid #grid dataUrl="http://tubular.azurewebsites.net/api/orders/paged" (onRequestDataError)="handleError($event)">
+    <tb-grid #grid dataUrl="https://tubular.azurewebsites.net/api/orders/paged" (onRequestDataError)="handleError($event)">
         <mat-table [dataSource]="grid.dataSource">
             <ng-container cdkColumnDef="options">
                 <mat-header-cell *cdkHeaderCellDef> Options </mat-header-cell>
@@ -820,7 +820,7 @@ class TbGridWithFilteringComponent {
 
 @Component({
     template: `
-    <tb-grid #grid dataUrl="http://tubular.azurewebsites.net/api/orders/paged" (onRequestDataError)="handleError($event)">
+    <tb-grid #grid dataUrl="https://tubular.azurewebsites.net/api/orders/paged" (onRequestDataError)="handleError($event)">
         <mat-table [dataSource]="grid.dataSource">
             <ng-container cdkColumnDef="options">
                 <mat-header-cell *cdkHeaderCellDef> Options </mat-header-cell>
@@ -865,7 +865,7 @@ class TbGridWithPaginatorComponent {
 
 @Component({
     template: `
-    <tb-grid #grid dataUrl="http://tubular.azurewebsites.net/api/orders/paged" (onRequestDataError)="handleError($event)">
+    <tb-grid #grid dataUrl="https://tubular.azurewebsites.net/api/orders/paged" (onRequestDataError)="handleError($event)">
         <mat-paginator #topPaginator
             [pageIndex]="0"
             [pageSize]="25"

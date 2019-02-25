@@ -3,7 +3,7 @@
     "version": "0.10.0",
     "scripts": {
         "ng": "ng",
-        "start": "ng serve",
+        "start": "ng serve —-ssl true",
         "prebuild": "ng build tubular2",
         "build": "ng build --deployUrl=https://unosquare.github.io/tubular2/ --outputPath=docs",
         "test": "ng test",
