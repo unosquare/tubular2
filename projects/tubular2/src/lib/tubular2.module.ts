@@ -9,16 +9,14 @@ import { CdkTableModule } from '@angular/cdk/table';
 import {
     MatButtonModule,
     MatDialogModule,
-    MatFormField,
-    MatFormFieldControl,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
     MatPaginatorModule,
     MatProgressBarModule,
-    MatOption,
-    MatSelect, MatSelectModule,
-    MatSortModule, MatTableModule, MatPaginator
+    MatSelectModule,
+    MatSortModule,
+    MatTableModule
 } from '@angular/material';
 
 import { GridComponent } from './grid/index';

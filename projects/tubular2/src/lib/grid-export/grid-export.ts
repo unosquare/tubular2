@@ -13,15 +13,16 @@ export class GridExportButtonDirective {
         this.gridInstance.getFullDataSource()
             .subscribe((data: any) => {
                 const headers = this.gridInstance.columns.getValue().reduce((a, b) => a + b.Label + ',', '').slice(0, -1) + '\r\n';
-                const rows = data.Payload.map(row => row.reduce((a, b) => a + '"' + b + '"' + ',', '').slice(0, -1) + '\r\n');
-                const csv = rows.reduce((a, b) => a + b, headers);
+                const rows = data.Payload
+                    .map(row => row.reduce((a: string, b: string) => a + '"' + b + '"' + ',', '').slice(0, -1) + '\r\n');
+                const csv = rows.reduce((a: string, b: string) => a + b, headers);
 
                 const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
                 this.saveAs(blob);
             });
     }
 
-    private saveAs(blob) {
+    private saveAs(blob: Blob) {
         const fileURL = window.URL.createObjectURL(blob);
         const downloadLink = window.document.createElement('a');
 

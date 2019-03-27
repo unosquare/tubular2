@@ -311,12 +311,7 @@ function isDefined(value) {
     return value !== undefined && value !== null;
 }
 function padNumber(value) {
-    if (isNumber(value)) {
-        return ("0" + value).slice(-2);
-    }
-    else {
-        return '';
-    }
+    return isNumber(value) ? ("0" + value).slice(-2) : '';
 }
 function regExpEscape(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
@@ -349,7 +344,8 @@ var GridExportButtonDirective = /** @class */ (function () {
         this.gridInstance.getFullDataSource()
             .subscribe(function (data) {
             var headers = _this.gridInstance.columns.getValue().reduce(function (a, b) { return a + b.Label + ','; }, '').slice(0, -1) + '\r\n';
-            var rows = data.Payload.map(function (row) { return row.reduce(function (a, b) { return a + '"' + b + '"' + ','; }, '').slice(0, -1) + '\r\n'; });
+            var rows = data.Payload
+                .map(function (row) { return row.reduce(function (a, b) { return a + '"' + b + '"' + ','; }, '').slice(0, -1) + '\r\n'; });
             var csv = rows.reduce(function (a, b) { return a + b; }, headers);
             var blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
             _this.saveAs(blob);
@@ -550,14 +546,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _grid_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../grid/index */ "./projects/tubular2/src/lib/grid/index.ts");
-/* harmony import */ var _core_tubular_local_storage_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../core/tubular-local-storage-service */ "./projects/tubular2/src/lib/core/tubular-local-storage-service.ts");
-
 
 
 
 var GridSearchComponent = /** @class */ (function () {
-    function GridSearchComponent(settingsProvider, tbGrid) {
-        this.settingsProvider = settingsProvider;
+    function GridSearchComponent(tbGrid) {
         this.tbGrid = tbGrid;
     }
     GridSearchComponent.prototype.ngOnInit = function () {
@@ -576,8 +569,7 @@ var GridSearchComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./grid-search.html */ "./projects/tubular2/src/lib/grid-search/grid-search.html"),
             styles: [__webpack_require__(/*! ./grid-search.css */ "./projects/tubular2/src/lib/grid-search/grid-search.css")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Optional"])()), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_core_tubular_local_storage_service__WEBPACK_IMPORTED_MODULE_3__["SETTINGS_PROVIDER"])),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [Object, _grid_index__WEBPACK_IMPORTED_MODULE_2__["GridComponent"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_grid_index__WEBPACK_IMPORTED_MODULE_2__["GridComponent"]])
     ], GridSearchComponent);
     return GridSearchComponent;
 }());
@@ -1261,9 +1253,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_grid_search_grid_search__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./lib/grid-search/grid-search */ "./projects/tubular2/src/lib/grid-search/grid-search.ts");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GridSearchComponent", function() { return _lib_grid_search_grid_search__WEBPACK_IMPORTED_MODULE_9__["GridSearchComponent"]; });
 
-/*
- * Public API Surface of tubular2
- */
 
 
 
@@ -1536,7 +1525,7 @@ var FilterToggleComponent = /** @class */ (function () {
     ], FilterToggleComponent.prototype, "toggleFilter", void 0);
     FilterToggleComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-            selector: 'tb-filter-toggle',
+            selector: 'app-filter-toggle',
             template: __webpack_require__(/*! ./filter-toggle-component.html */ "./src/app/filter-toggle-component.html")
         })
     ], FilterToggleComponent);

@@ -312,4 +312,3 @@ export class GridComponent implements OnInit, AfterContentInit {
         this._totalRecords.next(totalRecords);
     }
 }
-

@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
-    selector: 'tb-filter-toggle',
+    selector: 'app-filter-toggle',
     templateUrl: './filter-toggle-component.html'
 })
 export class FilterToggleComponent {

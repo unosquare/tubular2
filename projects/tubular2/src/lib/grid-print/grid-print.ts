@@ -14,8 +14,8 @@ export class GridPrintButtonDirective {
                 const headers = this.gridInstance.columns.getValue().reduce(
                     (a, b) => a + '<th>' + b.Label + '</th>', '');
                 const rows = data.Payload.reduce(
-                    (prev, row) => prev + '<tr>' +
-                        row.reduce((a, b) => a + '<td>' + b + '</td>', '') + '</tr>', '');
+                    (prev: string, row) => prev + '<tr>' +
+                        row.reduce((a: string, b: string) => a + '<td>' + b + '</td>', '') + '</tr>', '');
 
                 const tableHtml =
                     `<table><thead><tr>${headers}</tr></thead><tbody>${rows}</tbody></table>`;
