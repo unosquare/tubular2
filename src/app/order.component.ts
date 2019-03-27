@@ -17,12 +17,10 @@ export class OrderComponent implements OnInit {
     }
 
     ngOnInit(): void {
-
         this.orderForm = this.fb.group({
             CustomerName: [this.isNew ? '' : this.model.CustomerName, Validators.required],
             ShipperCity: [this.isNew ? '' : this.model.ShipperCity, Validators.required],
             ShippedDate: [this.isNew ? '' : this.model.ShippedDate, Validators.required]
         });
     }
-
 }

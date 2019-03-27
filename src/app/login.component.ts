@@ -1,4 +1,4 @@
-import { Component, OnInit, Injectable, Inject, Optional } from '@angular/core';
+import { Component, OnInit, Inject, Optional } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -11,7 +11,6 @@ import { map } from 'rxjs/operators';
     selector: 'app-login',
     templateUrl: './login.component.html'
 })
-
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;
 
@@ -38,7 +37,7 @@ export class LoginComponent implements OnInit {
         });
     }
 
-    onSubmit(data) {
+    onSubmit(data: any) {
         const username = data.value.username;
         const password = data.value.password;
 
@@ -65,7 +64,7 @@ export class LoginComponent implements OnInit {
             );
     }
 
-    private handleSuccessCallback(data) {
+    private handleSuccessCallback(data: any) {
         this.userData.isAuthenticated = true;
         this.userData.username = data.userName;
         this.userData.bearerToken = data.access_token;
