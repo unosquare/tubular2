@@ -246,9 +246,6 @@ describe('TbGridComponent', () => {
             const myGrid = fixture.nativeElement.querySelector('mat-table');
             expect(myGrid).toBeDefined();
 
-            const headerRow = myGrid.querySelectorAll('.mat-header-cell');
-
-            const customerNameHeader = headerRow[2].querySelector('mat-icon') as HTMLElement;
             const paginator = fixture.componentInstance.matPaginator;
             const tbGrid = fixture.componentInstance.tbGrid;
 
@@ -276,7 +273,6 @@ describe('TbGridComponent', () => {
         }));
 
         it('should navigate to next page', async(() => {
-
             const fixture = TestBed.createComponent(TbGridWithPaginatorComponent);
 
             fixture.detectChanges();
@@ -284,9 +280,6 @@ describe('TbGridComponent', () => {
             const myGrid = fixture.nativeElement.querySelector('mat-table');
             expect(myGrid).toBeDefined();
 
-            const headerRow = myGrid.querySelectorAll('.mat-header-cell');
-
-            const customerNameHeader = headerRow[2].querySelector('mat-icon') as HTMLElement;
             const paginator = fixture.componentInstance.matPaginator;
             const tbGrid = fixture.componentInstance.tbGrid;
 
@@ -339,9 +332,6 @@ describe('TbGridComponent', () => {
             const myGrid = fixture.nativeElement.querySelector('mat-table');
             expect(myGrid).toBeDefined();
 
-            const headerRow = myGrid.querySelectorAll('.mat-header-cell');
-
-            const customerNameHeader = headerRow[2].querySelector('mat-icon') as HTMLElement;
             const paginator = fixture.componentInstance.matPaginator;
             const tbGrid = fixture.componentInstance.tbGrid;
 
@@ -396,9 +386,6 @@ describe('TbGridComponent', () => {
             const myGrid = fixture.nativeElement.querySelector('mat-table');
             expect(myGrid).toBeDefined();
 
-            const headerRow = myGrid.querySelectorAll('.mat-header-cell');
-
-            const customerNameHeader = headerRow[2].querySelector('mat-icon') as HTMLElement;
             const topPaginator = fixture.componentInstance.topPaginator;
             const bottomPaginator = fixture.componentInstance.bottomPaginator;
             const tbGrid = fixture.componentInstance.tbGrid;
@@ -428,7 +415,6 @@ describe('TbGridComponent', () => {
         }));
 
         it('should navigate to next page', async(() => {
-
             const fixture = TestBed.createComponent(TbGridWithTwoPaginatorsComponent);
 
             fixture.detectChanges();
@@ -436,9 +422,6 @@ describe('TbGridComponent', () => {
             const myGrid = fixture.nativeElement.querySelector('mat-table');
             expect(myGrid).toBeDefined();
 
-            const headerRow = myGrid.querySelectorAll('.mat-header-cell');
-
-            const customerNameHeader = headerRow[2].querySelector('mat-icon') as HTMLElement;
             const topPaginator = fixture.componentInstance.topPaginator;
             const bottomPaginator = fixture.componentInstance.bottomPaginator;
             const tbGrid = fixture.componentInstance.tbGrid;
