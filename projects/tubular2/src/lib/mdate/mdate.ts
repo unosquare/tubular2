@@ -4,7 +4,7 @@ import { isValid } from 'date-fns';
 @Pipe({ name: 'mdate' })
 export class MDatePipe implements PipeTransform {
   public transform(value: any, format?: string): any {
-    if (isValid(value)) {
+    if (isValid(new Date(value))) {
       return format ? value.format(format) : value.format();
     }
 
