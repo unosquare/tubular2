@@ -30,8 +30,6 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { GridComponent } from './grid';
 import { ColumnModel, ColumnDataType } from 'tubular-common';
 import { ColumnFilterDialogComponent } from '../column-filter-dialog/column-filter-dialog';
-import { PopoverModule } from '../popover/popover.module';
-import { NgbPopoverWindow, NgbPopover } from '../popover/popover';
 
 import { Observable, Subject, BehaviorSubject, throwError, of } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -65,7 +63,6 @@ describe('TbGridComponent', () => {
                 MatTableModule,
                 CdkTableModule,
                 ReactiveFormsModule,
-                PopoverModule.forRoot(),
                 HttpClientModule,
                 NoopAnimationsModule
             ],
@@ -671,14 +668,14 @@ function fakeSuccessfulGetData(request) {
     }
 
     if (searchableColumns.some(c => c.Name === 'CustomerName'
-        && c.filter.operator === 'Contains'
-        && c.filter.text === 'ThrowError')) {
+        && c.FilterOoperator === 'Contains'
+        && c.Filter.Text === 'ThrowError')) {
         return of(mockJsonFilteredByCustomerName).pipe(map(r => r));
     }
 
     if (searchableColumns.some(c => c.Name === 'CustomerName'
-        && c.filter.operator === 'Contains'
-        && c.filter.text === 'Unosquare')) {
+        && c.Filter.Operator === 'Contains'
+        && c.Filter.Text === 'Unosquare')) {
         return of(mockJsonFilteredByCustomerName).pipe(map(r => r));
     }
 
