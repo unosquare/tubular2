@@ -4,6 +4,9 @@
     "description": "Grid library with Angular7 and Material2",
     "author": "Unosquare",
     "license": "MIT",
+    "files": [
+        "src/**/*"
+    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/unosquare/tubular2.git"

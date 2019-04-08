@@ -17,7 +17,7 @@ import { map } from 'rxjs/operators';
 import { TubularDataSource } from './TubularDataSource';
 
 const isDate = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})/;
-// TODO: Add animation to sortable
+
 @Component({
     selector: 'tb-grid',
     templateUrl: './grid.html',
