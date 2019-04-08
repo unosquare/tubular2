@@ -2,27 +2,19 @@
 import { TestBed, async } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 // CDK
-import { CdkTableModule } from '@angular/cdk/table';
 import { OverlayContainer } from '@angular/cdk/overlay';
 
 // Material
-import {
-    MatIconModule,
-    MatInputModule,
-    MatPaginatorModule,
-    MatSelectModule,
-    MatSortModule,
-    MatTableModule,
-} from '@angular/material';
 import { ErrorStateMatcher } from '@angular/material/core';
 
 // TB2
 import { GridComponent } from './grid';
 import { ColumnFilterDialogComponent } from '../column-filter-dialog/column-filter-dialog';
+import { CustomMaterialModule } from '../tubular2.module';
 
 // mocks
 import {
@@ -45,14 +37,7 @@ describe('TbGridComponent', () => {
                 ColumnFilterDialogComponent
             ],
             imports: [
-                FormsModule,
-                MatIconModule,
-                MatSelectModule,
-                MatInputModule,
-                MatPaginatorModule,
-                MatSortModule,
-                MatTableModule,
-                CdkTableModule,
+                CustomMaterialModule,
                 ReactiveFormsModule,
                 HttpClientModule,
                 NoopAnimationsModule
