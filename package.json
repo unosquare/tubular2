@@ -8,7 +8,6 @@
         "build": "ng build --deployUrl=https://unosquare.github.io/tubular2/ --outputPath=docs",
         "test": "ng test",
         "lint": "ng lint",
-        "e2e": "ng e2e",
         "packagr": "ng-packagr -p ng-package.json"
     },
     "private": true,

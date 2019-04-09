@@ -63,7 +63,7 @@ describe('TbGridComponent', () => {
     }));
 
     describe('basic', () => {
-        it('should be able to create a table', async(() => {
+        xit('should be able to create a table', async(() => {
             const fixture = TestBed.createComponent(SimpleTbGridComponent);
 
             fixture.detectChanges();
@@ -93,8 +93,7 @@ describe('TbGridComponent', () => {
             });
         }));
 
-        it('should emit error if failure on getting data', () => {
-
+        xit('should emit error if failure on getting data', () => {
             const fixture = TestBed.createComponent(SimpleTbGridComponent);
 
             fixture.detectChanges();
@@ -105,7 +104,7 @@ describe('TbGridComponent', () => {
     });
 
     describe('with sorting', () => {
-        it('should be able to sort by numeric column', async(() => {
+        xit('should be able to sort by numeric column', async(() => {
             const fixture = TestBed.createComponent(TbGridWithSortingComponent);
 
             fixture.detectChanges();
@@ -237,7 +236,7 @@ describe('TbGridComponent', () => {
     });
 
     describe('with paginator', () => {
-        it('should default to first page', async(() => {
+        xit('should default to first page', async(() => {
 
             const fixture = TestBed.createComponent(TbGridWithPaginatorComponent);
 
@@ -272,7 +271,7 @@ describe('TbGridComponent', () => {
             });
         }));
 
-        it('should navigate to next page', async(() => {
+        xit('should navigate to next page', async(() => {
             const fixture = TestBed.createComponent(TbGridWithPaginatorComponent);
 
             fixture.detectChanges();
@@ -323,7 +322,7 @@ describe('TbGridComponent', () => {
             });
         }));
 
-        it('should navigate to next page using tb grid api', async(() => {
+        xit('should navigate to next page using tb grid api', async(() => {
 
             const fixture = TestBed.createComponent(TbGridWithPaginatorComponent);
 
@@ -377,7 +376,7 @@ describe('TbGridComponent', () => {
     });
 
     describe('with two paginators', () => {
-        it('should default to first page', async(() => {
+        xit('should default to first page', async(() => {
 
             const fixture = TestBed.createComponent(TbGridWithTwoPaginatorsComponent);
 
@@ -414,7 +413,7 @@ describe('TbGridComponent', () => {
             });
         }));
 
-        it('should navigate to next page', async(() => {
+        xit('should navigate to next page', async(() => {
             const fixture = TestBed.createComponent(TbGridWithTwoPaginatorsComponent);
 
             fixture.detectChanges();
