@@ -57,7 +57,7 @@ export class GridComponent implements OnInit, AfterContentInit {
     @Output() public beforeRequest = new EventEmitter<any>();
     @Output() public onRequestDataError = new EventEmitter<any>();
 
-    @ContentChild(MatSort) sorting: MatSort;
+    @ContentChild(MatSort, { static: true }) sorting: MatSort;
     @ContentChildren(MatPaginator) paginators: QueryList<MatPaginator>;
 
     constructor(

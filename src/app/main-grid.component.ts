@@ -13,7 +13,7 @@ export class MainGridComponent implements OnInit {
     public orderFilterDialogOpen: boolean;
     public customerFilterDialogOpen: boolean;
 
-    @ViewChild('grid') tbGrid: GridComponent;
+    @ViewChild('grid', { static: true }) tbGrid: GridComponent;
 
     constructor(public dialog: MatDialog) {
     }

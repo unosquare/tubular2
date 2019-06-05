@@ -22,6 +22,9 @@
               "src/favicon.ico",
               "src/assets"
             ],
+            "styles": [
+              "src/styles.css"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -98,7 +101,10 @@
           "options": {
             "main": "projects/tubular2/src/test.ts",
             "tsConfig": "projects/tubular2/tsconfig.spec.json",
-            "karmaConfig": "projects/tubular2/karma.conf.js"
+            "karmaConfig": "projects/tubular2/karma.conf.js",
+            "styles": [
+              "styles.css"
+            ]
           }
         },
         "lint": {
