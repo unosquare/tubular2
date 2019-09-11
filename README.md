@@ -3,7 +3,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/ds9qvyt6cd8woiwo?svg=true)](https://ci.appveyor.com/project/geoperez/tubular2)
 [![Coverage Status](https://coveralls.io/repos/github/unosquare/tubular2/badge.svg?branch=master)](https://coveralls.io/github/unosquare/tubular2?branch=master)
 
-![Tubular2](http://unosquare.github.io/tubular/assets/tubular2.png)
+![Tubular2](http://unosquare.github.io/tubular-angular/assets/tubular2.png)
 
 *:star:Please star this project if you find it useful!*
 
